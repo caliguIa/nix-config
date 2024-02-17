@@ -1,5 +1,5 @@
 {
-  description = "Starter Configuration for MacOS and NixOS";
+  description = "My personal Nix configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
@@ -25,17 +25,7 @@
   };
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
     let
-      user = "caligula";
       darwinSystems = [ "aarch64-darwin" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (darwinSystems) f;
-      # devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-      #   default = with pkgs; mkShell {
-      #     nativeBuildInputs = with pkgs; [ bashInteractive git ];
-      #     shellHook = with pkgs; ''
-      #       export EDITOR=vim
-      #     '';
-      #   };
-      # };
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
@@ -53,7 +43,6 @@
       };
     in
     {
-      # devShells = devShell;
       apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
       darwinConfigurations = let user = "caligula"; in {
@@ -80,5 +69,5 @@
           ];
         };
       };
-  };
+    };
 }
