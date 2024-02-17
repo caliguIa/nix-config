@@ -1,9 +1,5 @@
 # Nix Config for macOS (and soon NixOS)
 
-## Overview
-
-I use it on my M1 Macbook
-
 ## Layout
 
 ```
