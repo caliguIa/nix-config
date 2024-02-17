@@ -1,0 +1,11 @@
+# ./.tmuxinator.yml
+
+name: players
+root: ~/smrtzr/players/
+
+windows:
+  - services:
+      layout: even-horizontal
+      panes:
+        - npm run watch
+        - npm run serve

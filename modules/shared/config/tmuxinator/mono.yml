@@ -1,0 +1,12 @@
+# ./.tmuxinator.yml
+
+name: smrtzr
+root: ~/smrtzr/smrtzr/
+
+windows:
+  - services:
+      layout: main-vertical
+      panes:
+        - cd ~/smrtzr/smrtzr; nix develop
+        - cd ~/smrtzr/java/editor; nix develop
+        - cd ~/smrtzr/smrtzr/emulators/local/datastore; nix develop
