@@ -1,11 +1,13 @@
-{ user, pkgs, config, ... }:
+{ user, config, ... }:
 
 let
   xdg_confighome = "${config.users.users.${user}.home}/.config";
   neovimconfighome = "${config.users.users.${user}.home}/.config/nvim";
-  xdg_datahome   = "${config.users.users.${user}.home}/.local/share";
-  xdg_statehome  = "${config.users.users.${user}.home}/.local/state"; in
+in
 {
+  ".hushlogin" = {
+    text = "";
+  };
   "${neovimconfighome}/init.lua" = {
     text = builtins.readFile ./config/neovim/init.lua;
   };

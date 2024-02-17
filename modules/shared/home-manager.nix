@@ -1,15 +1,16 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 let
   name = "Cal";
-  user = "caligula";
   email = "accounts@cal.rip";
 in
 {
   zsh = {
     enable = true;
     autocd = false;
+    enableAutosuggestions = true;
     enableCompletion = true;
+    defaultKeymap = "emacs";
     history.path = "${config.xdg.dataHome}/zsh/zsh_history";
     dotDir = ".config/zsh";
 
@@ -82,8 +83,7 @@ in
       alias ~='cd ~';
       alias dl="cd ~/Downloads";
       alias dt="cd ~/Desktop";
-      alias dfo="cd ~/dotfiles";
-      alias df="cd ~/.config/nix-darwin";
+      alias df="cd ~/nixos-config";
       alias cf="cd ~/.config";
       alias dev="cd ~/dev";
       alias ..="cd ..";
@@ -122,13 +122,10 @@ in
       alias players="cd ~/smrtzr/players/";
       alias :q="exit";
       alias fuck="echo 'Running: \e[32msudo \e[35m\e[4m\$(fc -ln -1)\e[0m' && sudo \$(fc -ln -1)";
-      #alias nixrb="darwin-rebuild switch --flake ~/.config/nix-darwin";
-      #alias nixi="git add .; darwin-rebuild switch --flake ~/.config/nix-darwin";
-      alias nixi="cd ~/nixos-config; git add .; nix run .#build-switch";
+      alias nixbs="cd ~/nixos-config; git add .; nix run .#build-switch";
       alias pe="./gradlew run";
       alias ds="./startDatastore.sh";
       alias gitui="gitui -t mocha.ron";
-
 
       source $HOME/.config/zsh/env-vars.local.zsh
     '';
