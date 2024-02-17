@@ -21,7 +21,7 @@ xcode-select --install
 
 ### 2. Install Nix
 
-Thank you for the installer, [Determinate Systems](https://determinate.systems/)!
+Via [Determinate Systems'](https://determinate.systems/) installer
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
@@ -53,13 +53,13 @@ First-time installations require you to move the current `/etc/nix/nix.conf` out
 [ -f /etc/nix/nix.conf ] && sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
 ```
 
-Then, if you want to ensure the build works before deploying the configuration, run:
+### 7. Making changes
+
+Edit away, if you want to ensure the build works before deploying the configuration, run:
 
 ```sh
 nix run .#build
 ```
-
-### 7. Make changes
 
 Finally, alter your system with this command:
 
