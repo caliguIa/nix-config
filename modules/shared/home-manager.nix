@@ -10,6 +10,26 @@ in
     autocd = false;
     enableAutosuggestions = true;
     enableCompletion = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "docker"
+        "docker-compose"
+        "fd"
+        "fnm"
+        "gcloud"
+        "gh"
+        "git"
+        "node"
+        "ripgrep"
+        "rsync"
+        "rust"
+        "terraform"
+        "tmux"
+      ];
+      theme = "frisk";
+    };
+    syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";
     history.path = "${config.xdg.dataHome}/zsh/zsh_history";
     dotDir = ".config/zsh";
