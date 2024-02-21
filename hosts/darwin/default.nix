@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let user = "caligula"; in
 
@@ -40,9 +40,23 @@ let user = "caligula"; in
   # Enable fonts dir
   fonts.fontDir.enable = true;
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security = {
+    pam.enableSudoTouchIdAuth = true;
+    sudo.extraConfig = ''
+      Defaults    timestamp_timeout=30
+    '';
+  };
 
-  services.skhd.enable = true;
+  services.skhd = {
+    enable = true;
+    package = pkgs.skhd;
+    skhdConfig = ''
+      hyper - a : /usr/bin/open -a Alacritty
+      hyper - s : /usr/bin/open -a Arc
+      #hyper - d : /usr/bin/open -a Slack
+    '';
+
+  };
   services.karabiner-elements.enable = true;
 
   system = {
@@ -54,7 +68,7 @@ let user = "caligula"; in
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
         AppleShowAllExtensions = true;
-        ApplePressAndHoldEnabled = true;
+        ApplePressAndHoldEnabled = false;
         AppleEnableMouseSwipeNavigateWithScrolls = false;
         AppleEnableSwipeNavigateWithScrolls = false;
         AppleICUForce24HourTime = true;

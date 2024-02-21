@@ -98,7 +98,6 @@ in
 
       # ALIASES
 
-      alias ls='ls --color=auto'
       alias diff=difft
       alias ~='cd ~';
       alias dl="cd ~/Downloads";
@@ -146,6 +145,8 @@ in
       alias pe="./gradlew run";
       alias ds="./startDatastore.sh";
       alias gitui="gitui -t mocha.ron";
+
+      eval "$(fnm env --use-on-cd)"
 
       source $HOME/.config/zsh/env-vars.local.zsh
     '';
@@ -253,6 +254,14 @@ in
       };
 
       colors = {
+        primary = {
+          background = "0x16181a";
+          foreground = "0xffffff";
+          #  background = "#1E1E2E";
+          #  foreground = "#CDD6F4";
+          dim_foreground = "#CDD6F4";
+          bright_foreground = "#CDD6F4";
+        };
         cursor = {
           text = "#1E1E2E";
           cursor = "#F5E0DC";
@@ -280,12 +289,6 @@ in
         hints.end = {
           foreground = "#1E1E2E";
           background = "#A6ADC8";
-        };
-        primary = {
-          background = "#1E1E2E";
-          foreground = "#CDD6F4";
-          dim_foreground = "#CDD6F4";
-          bright_foreground = "#CDD6F4";
         };
         normal = {
           black = "#45475A";

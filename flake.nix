@@ -22,6 +22,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    #inputs.nixvim = {
+    #  url = "github:nix-community/nixvim";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
   };
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
     let
@@ -50,6 +54,7 @@
           system = "aarch64-darwin";
           specialArgs = inputs;
           modules = [
+            #inputs.nixvim.darwinModules.nixvim
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {

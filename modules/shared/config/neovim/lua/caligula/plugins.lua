@@ -43,6 +43,28 @@ require("lazy").setup({
 		end,
 	},
 
+	-- folds
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = {
+			"kevinhwang91/promise-async",
+			{
+				"luukvbaal/statuscol.nvim",
+				config = function()
+					local builtin = require("statuscol.builtin")
+					require("statuscol").setup({
+						relculright = true,
+						segments = {
+							{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+							{ text = { "%s" }, click = "v:lua.ScSa" },
+							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+						},
+					})
+				end,
+			},
+		},
+		event = "BufReadPost",
+	},
 	-- Todo comments
 	{
 		"folke/todo-comments.nvim",
@@ -243,23 +265,6 @@ require("lazy").setup({
 			end,
 		},
 	},
-
-	-- {
-	-- 	-- Colour Theme
-	-- 	"ribru17/bamboo.nvim",
-	-- 	lazy = false,
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		require("bamboo").setup({
-	-- 			style = "light",
-	-- 			transparent = true,
-	-- 			lualine = {
-	-- 				transparent = false, -- lualine center bar transparency
-	-- 			},
-	-- 		})
-	-- 		require("bamboo").load()
-	-- 	end,
-	-- },
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -270,6 +275,11 @@ require("lazy").setup({
 				integrations = {
 					harpoon = true,
 					mason = true,
+				},
+				color_overrides = {
+					mocha = {
+						base = "#16181a",
+					},
 				},
 			})
 		end,

@@ -44,6 +44,9 @@ in
   "${neovimconfighome}/after/plugin/treesitter.lua" = {
     text = builtins.readFile ./config/neovim/after/plugin/treesitter.lua;
   };
+  "${neovimconfighome}/after/plugin/folds.lua" = {
+    text = builtins.readFile ./config/neovim/after/plugin/folds.lua;
+  };
   "${xdg_confighome}/tmuxinator/mono.yml" = {
     text = builtins.readFile ./config/tmuxinator/mono.yml;
   };
