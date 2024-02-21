@@ -102,8 +102,8 @@ require("lazy").setup({
           width_nofocus = 8,
         },
         mappings = {
-          close = "<Esc>",
-          go_in_plus = "<CR>",
+          close = "q",
+          go_in_plus = "l",
         },
       })
       require("mini.basics").setup({
@@ -130,7 +130,7 @@ require("lazy").setup({
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
+      -- "rcarriga/nvim-notify",
     },
   },
 
@@ -182,34 +182,39 @@ require("lazy").setup({
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { "williamboman/mason.nvim", config = true },
+      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      "hrsh7th/nvim-cmp",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
       { "j-hui/fidget.nvim", tag = "legacy", event = "LspAttach", opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
       "folke/neodev.nvim",
     },
   },
 
-  {
-    -- Autocompletion
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-
-      -- Adds LSP completion capabilities
-      "hrsh7th/cmp-nvim-lsp",
-
-      -- Adds a number of user-friendly snippets
-      "rafamadriz/friendly-snippets",
-    },
-  },
+  -- {
+  --   -- Autocompletion
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = {
+  --     -- Snippet Engine & its associated nvim-cmp source
+  --     "L3MON4D3/LuaSnip",
+  --     "saadparwaiz1/cmp_luasnip",
+  --
+  --     -- Adds LSP completion capabilities
+  --     "hrsh7th/cmp-nvim-lsp",
+  --     "hrsh7th/cmp-cmdline",
+  --     "hrsh7th/cmp-buffer",
+  --     "hrsh7th/cmp-path",
+  --
+  --     -- Adds a number of user-friendly snippets
+  --     "rafamadriz/friendly-snippets",
+  --   },
+  -- },
 
   {
     -- Formatting
@@ -228,15 +233,15 @@ require("lazy").setup({
         typescriptreact = { { "prettierd", "prettier" } },
         css = { { "prettierd", "prettier" } },
         scss = { { "prettierd", "prettier" } },
+        sass = { { "prettierd", "prettier" } },
         json = { { "prettierd", "prettier" } },
         yaml = { { "prettierd", "prettier" } },
         markdown = { { "prettierd", "prettier" } },
         graphql = { { "prettierd", "prettier" } },
         nix = { "nixpkgs-fmt" },
       },
-      -- Set up format-on-save
       format_on_save = { timeout_ms = 500, lsp_fallback = true },
-      -- Customize formatters
+      notify_on_error = true,
       formatters = {
         nixpkgs_fmt = {
           command = "nixpkgs-fmt",
@@ -245,10 +250,10 @@ require("lazy").setup({
         },
       },
     },
-    init = function()
-      -- If you want the formatexpr, here is the place to set it
-      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-    end,
+    -- init = function()
+    --   -- If you want the formatexpr, here is the place to set it
+    --   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    -- end,
   },
 
   -- Useful plugin to show you pending keybinds.

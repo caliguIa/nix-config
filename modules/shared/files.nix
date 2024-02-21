@@ -47,6 +47,9 @@ in
   "${neovimconfighome}/after/plugin/folds.lua" = {
     text = builtins.readFile ./config/neovim/after/plugin/folds.lua;
   };
+  "${neovimconfighome}/after/plugin/noice.lua" = {
+    text = builtins.readFile ./config/neovim/after/plugin/noice.lua;
+  };
   "${xdg_confighome}/tmuxinator/mono.yml" = {
     text = builtins.readFile ./config/tmuxinator/mono.yml;
   };
