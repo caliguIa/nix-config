@@ -397,12 +397,15 @@ in
       set -sg escape-time 10
       set -g focus-events on
       set-option -g status "on"
-      set-option -g status-justify 'left'
+      #set-option -g status-justify 'left'
       set-window-option -g window-status-separator ""
       set -g status-bg default
       set -g status-style bg=default
       # Remove Vim mode delays
       set -g focus-events on
+      set -g status-left-length 90
+      set -g status-right-length 90
+      set -g status-justify centre
 
       # -----------------------------------------------------------------------------
       # Key bindings
