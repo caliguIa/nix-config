@@ -6,10 +6,10 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 -- FileTree keymaps
 vim.keymap.set(
-	{ "n", "v" },
-	"<leader>fe",
-	"<CMD>lua MiniFiles.open()<CR>",
-	{ silent = true, desc = "Toggle [F]ile [E]xplorer" }
+  { "n", "v" },
+  "<leader>fe",
+  "<CMD>lua MiniFiles.open()<CR>",
+  { silent = true, desc = "Toggle [F]ile [E]xplorer" }
 )
 
 -- Git keymaps
@@ -23,16 +23,16 @@ vim.keymap.set({ "n", "v" }, "<leader>,r", "<CMD>luafile %<CR>", { silent = true
 vim.keymap.set("n", "gd", "<CMD>Telescope lsp_definitions<CR>", { silent = true, desc = "[G]o to [D]efinition" })
 vim.keymap.set("n", "gr", "<CMD>Telescope lsp_references<CR>", { silent = true, desc = "[G]o to [R]eferences" })
 vim.keymap.set(
-	"n",
-	"gt",
-	"<CMD>Telescope lsp_type_definitions<CR>",
-	{ silent = true, desc = "[G]o to [T]ype definition" }
+  "n",
+  "gt",
+  "<CMD>Telescope lsp_type_definitions<CR>",
+  { silent = true, desc = "[G]o to [T]ype definition" }
 )
 vim.keymap.set(
-	"n",
-	"gi",
-	"<CMD>Telescope lsp_implementations<CR>",
-	{ silent = true, desc = "[G]o to [I]mplementations" }
+  "n",
+  "gi",
+  "<CMD>Telescope lsp_implementations<CR>",
+  { silent = true, desc = "[G]o to [I]mplementations" }
 )
 
 -- Remap for dealing with word wrap
