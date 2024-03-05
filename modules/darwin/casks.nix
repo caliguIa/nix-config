@@ -1,16 +1,15 @@
 _:
 
 [
+  "1password"
   "arc"
   "brave-browser"
   "firefox"
-  "nvidia-geforce-now"
-  "malwarebytes"
+  "karabiner-elements"
   "mullvadvpn"
   "onyx"
   "obsidian"
-  "steam"
-  "transmission"
+  "tableplus"
   "zed"
   "google-chrome"
 ]

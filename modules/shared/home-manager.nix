@@ -102,7 +102,7 @@ in
       alias ~='cd ~';
       alias dl="cd ~/Downloads";
       alias dt="cd ~/Desktop";
-      alias df="cd ~/nixos-config";
+      alias df="cd ~/nix-config";
       alias cf="cd ~/.config";
       alias dev="cd ~/dev";
       alias ..="cd ..";
@@ -141,7 +141,7 @@ in
       alias players="cd ~/smrtzr/players/";
       alias :q="exit";
       alias fuck="echo 'Running: \e[32msudo \e[35m\e[4m\$(fc -ln -1)\e[0m' && sudo \$(fc -ln -1)";
-      alias nixbs="cd ~/nixos-config; git add .; nix run .#build-switch";
+      alias nixbs="cd ~/nix-config; git add .; nix run .#build-switch";
       alias pe="./gradlew run";
       alias ds="./startDatastore.sh";
       alias gitui="gitui -t mocha.ron";

@@ -1,13 +1,8 @@
 { pkgs }:
 
 with pkgs; [
-  # General packages for development and system management
   _1password
-  #_1password-gui
-  #alacritty
   aria
-  #atuin
-  #bat
   bottom
   cmake
   colima
@@ -21,14 +16,12 @@ with pkgs; [
   fzf
   gh
   git
-  #gitui
   go
-  google-cloud-sdk
   helix
   htop
   iina
   image_optim
-  jetbrains.webstorm
+  jetbrains.phpstorm
   jq
   killport
   less
@@ -43,15 +36,9 @@ with pkgs; [
   ollama
   prettierd
   python3
-  #python3Packages.pip
-  #python311Packages.python-dotenv
-  #python311Packages.requests_ntlm
-  #python311Packages.prompt-toolkit
-  #python311Packages.pynvim
   ripgrep
   rustup
   spotify-player
-  #starship
   stylua
   terraform
   tmux

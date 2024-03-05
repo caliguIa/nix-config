@@ -51,13 +51,14 @@ let user = "caligula"; in
     enable = true;
     package = pkgs.skhd;
     skhdConfig = ''
-      hyper - a : /usr/bin/open -a Alacritty
-      hyper - s : /usr/bin/open -a Arc
-      #hyper - d : /usr/bin/open -a Slack
+      hyper - a : open -a Alacritty
+      hyper - s : open -a Arc
+      hyper - d : open -a Slack
+      hyper - q : open -a Calendar
+      hyper - w : open -a Mail
+      hyper - e : open -a Spotify
     '';
-
   };
-  services.karabiner-elements.enable = true;
 
   system = {
     stateVersion = 4;
@@ -65,7 +66,7 @@ let user = "caligula"; in
     defaults = {
       NSGlobalDomain = {
         "com.apple.mouse.tapBehavior" = 1;
-        "com.apple.sound.beep.volume" = 0.0;
+        "com.apple.sound.beep.volume" = 0.5;
         "com.apple.sound.beep.feedback" = 0;
         AppleShowAllExtensions = true;
         ApplePressAndHoldEnabled = false;
@@ -86,7 +87,6 @@ let user = "caligula"; in
         NSAutomaticWindowAnimationsEnabled = false;
         NSNavPanelExpandedStateForSaveMode = true;
         NSTableViewDefaultSizeMode = 1;
-        _HIHideMenuBar = true;
       };
 
       alf = {
