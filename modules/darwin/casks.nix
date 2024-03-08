@@ -6,6 +6,7 @@ _:
   "brave-browser"
   "firefox"
   "karabiner-elements"
+  "meetingbar"
   "mullvadvpn"
   "onyx"
   "obsidian"

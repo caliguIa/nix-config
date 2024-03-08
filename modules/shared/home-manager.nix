@@ -15,19 +15,13 @@ in
       plugins = [
         "docker"
         "docker-compose"
-        "fd"
         "fnm"
-        "gcloud"
         "gh"
         "git"
-        "node"
         "ripgrep"
-        "rsync"
         "rust"
-        "terraform"
         "tmux"
       ];
-      theme = "frisk";
     };
     syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";
@@ -45,24 +39,10 @@ in
       export PATH=$HOME/.cargo/bin:$PATH
       export PATH=$HOME/.local/share/fnm:$PATH
       export PATH=$HOME/.local/bin:$PATH
-      #export PATH  =/opt/homebrew/bin:$PATH
-
 
       #ENVARS
-      # Remove history data we don't want to see
-      export HISTIGNORE="pwd:ls:cd"
-      #export SHELL="/bin/zsh"
-      export GCLOUD_CONFIG_HOME=/Users/caligula/.config/gcloud
-      export PROJECT_ID="panda-development"
-      export DEV_STORAGE_SERVICE=/Users/caligula/.config/auth/panda-development-1af3ae8f0648.json
-      export EDITOR="nvim"
-      export FIREBASE_PROJECT="panda-dev-cal-local"
-      export FIREBASE_AUTH_CREDENTIALS=/Users/caligula/.config/auth/panda-dev-cal-local-c0d2a21988b5.json
-      export SSL_LOCAL_PREFIX=/Users/caligula/.ssl/ssl/
       export ZDOTDIR=/Users/caligula/.config/zsh
       export HISTFILE=/Users/caligula/.config/zsh/.zsh_history setopt appendhistory
-      export BUILD_VERSION=0
-      export LOCAL=1
 
       # FUNCTIONS
       shell() {
@@ -78,16 +58,6 @@ in
           -c:v libx264 \
           -c:a aac \
           -f flv rtmp://stream.smartzer.com:5222/app/$1
-      }
-
-      kills() {
-        echo "Stopping smrtzr shit"
-        echo "Killing all java processes"
-        pkill -f "java"
-        echo "Killing all webpack processes"
-        pkill -f "webpack"
-        echo "Killing ports"
-        killport 8484 8079 8082 8888 8893 8890 8090 8091 8894 8892 8492 8895 8896 8889
       }
 
       nixmv() {
@@ -128,28 +98,31 @@ in
       alias dps="docker ps";
       alias ip="curl ifconfig.io";
       alias localip="ipconfig getifaddr en0";
+      alias ous="cd ~/oneupsales/platform/resources/client";
+      alias ousp="cd ~/oneupsales/platform";
+      alias ousr="cd ~/oneupsales";
       alias update="softwareupdate -ia";
       alias updatel="softwareupdate -l";
       alias t="tmux attach || tmux new";
       alias tks="tmux kill-server";
-      alias vim="nvim";
-      alias vi="nvim";
-      alias smp="tmuxinator start players";
-      alias mono="tmuxinator start mono";
-      alias r18="tmuxinator start r18";
-      alias smrtzr="cd ~/smrtzr/smrtzr/";
-      alias players="cd ~/smrtzr/players/";
       alias :q="exit";
       alias fuck="echo 'Running: \e[32msudo \e[35m\e[4m\$(fc -ln -1)\e[0m' && sudo \$(fc -ln -1)";
       alias nixbs="cd ~/nix-config; git add .; nix run .#build-switch";
-      alias pe="./gradlew run";
-      alias ds="./startDatastore.sh";
       alias gitui="gitui -t mocha.ron";
 
       eval "$(fnm env --use-on-cd)"
-
-      source $HOME/.config/zsh/env-vars.local.zsh
     '';
+  };
+
+  neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    withNodeJs = true;
+    withPython3 = true;
+    extraPackages = [ pkgs.php82Packages.composer ];
   };
 
   git = {

@@ -5,17 +5,13 @@ with pkgs; [
   aria
   bottom
   cmake
-  colima
   diskonaut
-  docker
   du-dust
   eza
   fd
   ffmpeg
-  fnm
   fzf
   gh
-  git
   go
   helix
   htop
@@ -28,18 +24,17 @@ with pkgs; [
   lua
   neofetch
   neovide
-  neovim
   ngrok
   nixpkgs-fmt
-  nodejs
+  nodejs_18
   nushell
   ollama
   prettierd
   python3
+  php
   ripgrep
   rustup
   spotify-player
-  stylua
   terraform
   tmux
   tmuxinator
