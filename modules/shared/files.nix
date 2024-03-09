@@ -7,8 +7,7 @@ in
 {
   ".hushlogin".text = "";
   "${neovimConfigHome}/init.lua".source = ./config/neovim/init.lua;
-  "${neovimConfigHome}/lua".source =  ./config/neovim/lua;
-  "${neovimConfigHome}/after".source = ./config/neovim/after;
-  "${xdgConfigHome}/tmuxinator".source =  ./config/tmuxinator;
+  "${neovimConfigHome}/lua".source = ./config/neovim/lua;
+  "${xdgConfigHome}/tmuxinator".source = ./config/tmuxinator;
   "${xdgConfigHome}/spotify-player".source = ./config/spotify-player;
 }

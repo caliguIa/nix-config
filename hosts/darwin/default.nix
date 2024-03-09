@@ -96,7 +96,7 @@ let user = "caligula"; in
 
       dock = {
         orientation = "bottom";
-        autohide-delay = 1.00;
+        autohide-delay = 5.00;
         autohide = true;
         launchanim = false;
         mru-spaces = false;

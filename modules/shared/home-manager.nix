@@ -25,8 +25,48 @@ in
     };
     syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";
-    history.path = "${config.xdg.dataHome}/zsh/zsh_history";
+    history = {
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
+    };
     dotDir = ".config/zsh";
+    shellAliases = {
+      "~" = "cd ~";
+      dl = "cd ~/Downloads";
+      dt = "cd ~/Desktop";
+      df = "cd ~/nix-config";
+      nvcf = "cd ~/nix-config/modules/shared/config/neovim";
+      cf = "cd ~/.config";
+      dev = "cd ~/dev";
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      ls = "eza -la";
+      cat = "bat";
+      gaa = "git add --all";
+      gst = "git status";
+      gac = "git add .; git commit";
+      gco = "git checkout";
+      gs = "git switch";
+      gfp = "git fetch && git pull";
+      undocommit = "git reset --soft HEAD^";
+      dc = "docker-compose";
+      dcu = "docker-compose up";
+      dcb = "docker-compose build";
+      dps = "docker ps";
+      ip = "curl ifconfig.io";
+      localip = "ipconfig getifaddr en0";
+      ous = "cd ~/oneupsales/platform/resources/client";
+      ousp = "cd ~/oneupsales/platform";
+      ousr = "cd ~/oneupsales";
+      update = "softwareupdate -ia";
+      updatel = "softwareupdate -l";
+      t = "tmux attach || tmux new";
+      tks = "tmux kill-server";
+      ":q" = "exit";
+      fuck = "echo 'Running: \e[32msudo \e[35m\e[4m\$(fc -ln -1)\e[0m' && sudo \$(fc -ln -1)";
+      nixbs = "cd ~/nix-config; git add .; nix run .#build-switch";
+      #gitui = "gitui -t mocha.ron";
+    };
 
     initExtraFirst = ''
       if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
@@ -34,83 +74,12 @@ in
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
-      # PATH
-      export PATH=$HOME/.local/share/bin:$PATH
-      export PATH=$HOME/.cargo/bin:$PATH
-      export PATH=$HOME/.local/share/fnm:$PATH
-      export PATH=$HOME/.local/bin:$PATH
-
-      #ENVARS
-      export ZDOTDIR=/Users/caligula/.config/zsh
-      export HISTFILE=/Users/caligula/.config/zsh/.zsh_history setopt appendhistory
-
-      # FUNCTIONS
-      shell() {
-          nix-shell '<nixpkgs>' -A "$1"
-      }
-
-      stream() {
-        ffmpeg -re -stream_loop -1 \
-          -r 30 \
-          -f lavfi \
-          -i testsrc \
-          -vf scale=1920:1080 \
-          -c:v libx264 \
-          -c:a aac \
-          -f flv rtmp://stream.smartzer.com:5222/app/$1
-      }
-
       nixmv() {
         sudo mv /etc/zshenv /etc/zshenv.before-nix-darwin
         sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
         sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
       }
 
-      # ALIASES
-
-      alias diff=difft
-      alias ~='cd ~';
-      alias dl="cd ~/Downloads";
-      alias dt="cd ~/Desktop";
-      alias df="cd ~/nix-config";
-      alias cf="cd ~/.config";
-      alias dev="cd ~/dev";
-      alias ..="cd ..";
-      alias ...="cd ../..";
-      alias ....="cd ../../..";
-      alias ls="eza -la";
-      alias empty="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'";
-      alias cat="bat";
-      alias cp="cp -i";
-      alias mv="mv -i";
-      alias g="git";
-      alias ga="git add";
-      alias gaa="git add --all";
-      alias gst="git status";
-      alias gac="git add .; git commit";
-      alias gco="git checkout";
-      alias gs="git switch";
-      alias gfp="git fetch && git pull";
-      alias undocommit="git reset --soft HEAD^";
-      alias dc="docker-compose";
-      alias dcu="docker-compose up";
-      alias dcb="docker-compose build";
-      alias dps="docker ps";
-      alias ip="curl ifconfig.io";
-      alias localip="ipconfig getifaddr en0";
-      alias ous="cd ~/oneupsales/platform/resources/client";
-      alias ousp="cd ~/oneupsales/platform";
-      alias ousr="cd ~/oneupsales";
-      alias update="softwareupdate -ia";
-      alias updatel="softwareupdate -l";
-      alias t="tmux attach || tmux new";
-      alias tks="tmux kill-server";
-      alias :q="exit";
-      alias fuck="echo 'Running: \e[32msudo \e[35m\e[4m\$(fc -ln -1)\e[0m' && sudo \$(fc -ln -1)";
-      alias nixbs="cd ~/nix-config; git add .; nix run .#build-switch";
-      alias gitui="gitui -t mocha.ron";
-
-      eval "$(fnm env --use-on-cd)"
     '';
   };
 
