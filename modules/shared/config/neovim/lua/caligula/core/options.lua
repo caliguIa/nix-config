@@ -13,6 +13,7 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
+opt.autoread = true
 opt.undofile = true
 opt.ignorecase = true
 opt.smartcase = true
@@ -32,12 +33,3 @@ opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 vim.wo.signcolumn = "yes"
 vim.wo.number = true
 vim.diagnostic.config({ float = { border = "rounded" } })
-
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = highlight_group,
-    pattern = "*",
-})

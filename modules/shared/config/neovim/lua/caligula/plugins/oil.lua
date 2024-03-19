@@ -28,5 +28,7 @@ return {
                 show_hidden = true,
             },
         })
+
+        vim.keymap.set({ "n", "v" }, "<leader>fe", "<CMD>Oil<CR>", { silent = true, desc = "Toggle [F]ile [E]xplorer" })
     end,
 }

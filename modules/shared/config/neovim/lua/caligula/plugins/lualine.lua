@@ -11,16 +11,33 @@ return {
                 component_separators = "|",
                 section_separators = "",
             },
+            extensions = { "fugitive", "trouble", "oil" },
             sections = {
-                lualine_c = { { "filename", file_status = true, path = 1 } },
+                lualine_a = { "branch", "diff" },
+                lualine_b = { { "filename", file_status = true, path = 1 } },
+                lualline_c = {},
                 lualine_x = {
+                    {
+                        "searchcount",
+                        {
+                            "diagnostics",
+                            symbols = { error = " ", warn = " ", hint = "󰠠 ", info = " " },
+                        },
+                    },
+                },
+                lualine_y = {
                     {
                         lazy_status.updates,
                         cond = lazy_status.has_updates,
                     },
-                    { "encoding" },
-                    { "fileformat" },
-                    { "filetype" },
+                },
+                lualline_z = {
+                    {
+                        -- "fugitive",
+                        -- "trouble",
+                        -- "oil",
+                        -- "datetime",
+                    },
                 },
             },
         })

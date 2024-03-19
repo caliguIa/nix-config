@@ -17,6 +17,7 @@ return {
                     dismiss = "<C-]>",
                 },
             },
+            filetypes = { ["*"] = true },
         })
     end,
     -- {

@@ -1,27 +1,38 @@
+-- local rootFiles = { ".eslintrc.json", ".git", "package.json", "Makefile", "node_modules" }
+
 return {
-    "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-        local lint = require("lint")
-
-        lint.linters_by_ft = {
-            javascript = { "eslint_d" },
-            typescript = { "eslint_d" },
-            javascriptreact = { "eslint_d" },
-            typescriptreact = { "eslint_d" },
-        }
-
-        local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-
-        vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-            group = lint_augroup,
-            callback = function()
-                lint.try_lint()
-            end,
-        })
-
-        vim.keymap.set("n", "<leader>l", function()
-            lint.try_lint()
-        end, { desc = "Trigger [l]inting for current file" })
-    end,
+    -- "mfussenegger/nvim-lint",
+    -- event = { "BufReadPre", "BufNewFile" },
+    -- config = function()
+    --     local lint = require("lint")
+    --
+    --     lint.linters_by_ft = {
+    --         javascript = { "eslint_d" },
+    --         typescript = { "eslint_d" },
+    --         javascriptreact = { "eslint_d" },
+    --         typescriptreact = { "eslint_d" },
+    --         -- php = { "pint" },
+    --     }
+    --
+    --     -- local rooty = vim.fs.dirname(
+    --     --     vim.fs.find(
+    --     --         rootFiles,
+    --     --         { upward = true, stop = vim.loop.os_homedir(), path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)) }
+    --     --     )[1] or vim.fs.find(rootFiles, { path = vim.api.nvim_buf_get_name(0) })[1]
+    --     -- )
+    --     local rooty = vim.fs.dirname("/Users/caligula/oneupsales/platform/resources/client")
+    --
+    --     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+    --
+    --     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+    --         group = lint_augroup,
+    --         callback = function()
+    --             lint.try_lint(nil, { cwd = rooty })
+    --         end,
+    --     })
+    --
+    --     vim.keymap.set("n", "<leader>Lt", function()
+    --         lint.try_lint(nil, { cwd = rooty })
+    --     end, { desc = "Trigger [l]inting for current file" })
+    -- end,
 }
