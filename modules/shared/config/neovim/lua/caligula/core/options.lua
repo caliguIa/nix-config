@@ -25,12 +25,8 @@ opt.completeopt = "menuone,noselect"
 opt.termguicolors = true
 opt.swapfile = false
 opt.wrap = false
-opt.foldcolumn = "0"
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldenable = true
-opt.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
 
 vim.wo.signcolumn = "yes"
 vim.wo.number = true
+vim.wo.relativenumber = true
 vim.diagnostic.config({ float = { border = "rounded" } })

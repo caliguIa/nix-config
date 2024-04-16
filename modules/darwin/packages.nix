@@ -1,8 +1,8 @@
 { pkgs }:
 
 with pkgs;
-let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
-shared-packages ++ [
+let shared-packages = import ../shared/packages.nix { inherit pkgs; };
+in shared-packages ++ [
   discord
   grandperspective
   keka
@@ -10,7 +10,6 @@ shared-packages ++ [
   raycast
   rectangle
   slack
-  #skhd
   spotify
   stats
   utm

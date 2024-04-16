@@ -429,30 +429,17 @@ in {
       bind-key v split-window -h
 
       # Move around panes with vim-like bindings (h,j,k,l)
-      bind-key -n M-k select-pane -U
-      bind-key -n M-h select-pane -L
-      bind-key -n M-j select-pane -D
-      bind-key -n M-l select-pane -R
-
-      # Smart pane switching with awareness of Vim splits.
-      # This is copy paste from https://github.com/christoomey/vim-tmux-navigator
-      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
-      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
-      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
-      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-      tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-      if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-        "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
-      if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-        "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
-
-      bind-key -T copy-mode-vi 'C-h' select-pane -L
-      bind-key -T copy-mode-vi 'C-j' select-pane -D
-      bind-key -T copy-mode-vi 'C-k' select-pane -U
-      bind-key -T copy-mode-vi 'C-l' select-pane -R
-      bind-key -T copy-mode-vi 'C-\' select-pane -l
+      bind-key k select-pane -U
+      bind-key h select-pane -L
+      bind-key j select-pane -D
+      bind-key l select-pane -R
+      bind-key g display-popup -w 90% -h 90% "gitui"
+      bind-key t display-popup -E "tmux new-session -A -s scratch"
+      bind-key o display-popup -E "tms"
+      bind-key s display-popup -E "tms switch"
+      bind-key w display-popup -E "tms windows"
+      bind-key r command-prompt -p "Rename active session to: " "run-shell 'tms rename %1'"
+      bind-key q command-prompt "run-shell 'tms kill'"
     '';
   };
 
