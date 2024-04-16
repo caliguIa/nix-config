@@ -1,5 +1,7 @@
 return {
     "folke/trouble.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
         local trouble = require("trouble")
         trouble.setup()

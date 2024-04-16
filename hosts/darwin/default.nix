@@ -54,6 +54,7 @@ let user = "caligula"; in
       hyper - a : open -a Alacritty
       hyper - s : open -a Arc
       hyper - d : open -a Slack
+      hyper - d : /nix/store/lf41qhpskdf8b6r2mf8yf2vhqdx38yh8-neovide-0.12.2/bin/.neovide-wrapped
       hyper - q : open -a Calendar
       hyper - w : open -a Mail
       hyper - e : open -a Spotify

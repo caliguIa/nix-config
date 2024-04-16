@@ -24,11 +24,12 @@ opt.timeoutlen = 300
 opt.completeopt = "menuone,noselect"
 opt.termguicolors = true
 opt.swapfile = false
-opt.foldcolumn = "1"
+opt.wrap = false
+opt.foldcolumn = "0"
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
-opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+opt.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
 
 vim.wo.signcolumn = "yes"
 vim.wo.number = true

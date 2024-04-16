@@ -12,8 +12,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({ { import = "caligula.plugins" } }, {
+    ui = { border = "rounded" },
     install = {
-        colorscheme = { "catppuccin" },
+        colorscheme = { "kanagawa" },
     },
     checker = {
         enabled = true,
@@ -22,6 +23,18 @@ require("lazy").setup({ { import = "caligula.plugins" } }, {
     change_detection = {
         notify = false,
     },
+    performance = {
+        rtp = {
+            -- Stuff I don't use.
+            disabled_plugins = {
+                "gzip",
+                "netrwPlugin",
+                "rplugin",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        },
+    },
 })
-
-vim.cmd.colorscheme("catppuccin")

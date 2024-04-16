@@ -1,10 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   name = "Cal";
   email = "accounts@cal.rip";
-in
-{
+in {
   zsh = {
     enable = true;
     autocd = false;
@@ -12,22 +11,12 @@ in
     enableCompletion = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [
-        "docker"
-        "docker-compose"
-        "fnm"
-        "gh"
-        "git"
-        "ripgrep"
-        "rust"
-        "tmux"
-      ];
+      plugins =
+        [ "docker" "docker-compose" "fnm" "gh" "git" "ripgrep" "rust" "tmux" ];
     };
     syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";
-    history = {
-      path = "${config.xdg.dataHome}/zsh/zsh_history";
-    };
+    history = { path = "${config.xdg.dataHome}/zsh/zsh_history"; };
     dotDir = ".config/zsh";
     shellAliases = {
       "~" = "cd ~";
@@ -55,17 +44,16 @@ in
       dps = "docker ps";
       ip = "curl ifconfig.io";
       localip = "ipconfig getifaddr en0";
-      ous = "cd ~/oneupsales/platform/resources/client";
-      ousp = "cd ~/oneupsales/platform";
+      ous = "cd ~/oneupsales/platform";
       ousr = "cd ~/oneupsales";
       update = "softwareupdate -ia";
       updatel = "softwareupdate -l";
       t = "tmux attach || tmux new";
       tks = "tmux kill-server";
       ":q" = "exit";
-      fuck = "echo 'Running: \e[32msudo \e[35m\e[4m\$(fc -ln -1)\e[0m' && sudo \$(fc -ln -1)";
+      fuck =
+        "echo 'Running: e[32msudo e[35me[4m$(fc -ln -1)e[0m' && sudo $(fc -ln -1)";
       nixbs = "cd ~/nix-config; git add .; nix run .#build-switch";
-      #gitui = "gitui -t mocha.ron";
     };
 
     initExtraFirst = ''
@@ -94,13 +82,91 @@ in
     extraPackages = [ pkgs.php82Packages.composer ];
   };
 
+  helix = {
+    enable = true;
+    extraPackages = with pkgs; [
+      nodePackages.typescript-language-server
+      nodePackages.vscode-langservers-extracted
+      nodePackages.yaml-language-server
+      nodePackages.bash-language-server
+      taplo
+      rust-analyzer
+      marksman
+    ];
+    settings = {
+      theme = "base16_transparent";
+
+      editor = {
+        line-number = "relative";
+        completion-trigger-len = 1;
+        bufferline = "multiple";
+        color-modes = true;
+        statusline = {
+          left = [
+            "mode"
+            "spacer"
+            "diagnostics"
+            "version-control"
+            "file-name"
+            "read-only-indicator"
+            "file-modification-indicator"
+            "spinner"
+          ];
+          right = [ "file-encoding" "file-type" "selections" "position" ];
+        };
+        cursor-shape.insert = "bar";
+        whitespace.render.tab = "all";
+        indent-guides = {
+          render = true;
+          character = "┊";
+        };
+      };
+    };
+    languages.language = let
+      prettier = {
+        command = lib.getExe pkgs.nodePackages.prettier;
+        args = lib.cli.toGNUCommandLine { } { w = true; };
+      };
+      jsRoots = [
+        "package.json"
+        "package-lock.json"
+        "yarn.lock"
+        "deno.json"
+        "deno.lock"
+        "bun.lockb"
+      ];
+    in [
+      {
+        name = "javascript";
+        roots = jsRoots;
+        formatter = prettier;
+        auto-format = true;
+      }
+      {
+        name = "typescript";
+        roots = jsRoots;
+        formatter = prettier;
+        auto-format = true;
+      }
+      {
+        name = "markdown";
+        formatter = prettier;
+        auto-format = true;
+      }
+      {
+        name = "nix";
+        roots = [ "flake.nix" "flake.lock" ];
+        auto-format = true;
+        language-servers = [ "nixd" ];
+      }
+    ];
+  };
+
   git = {
     enable = true;
     userName = name;
     userEmail = email;
-    lfs = {
-      enable = true;
-    };
+    lfs = { enable = true; };
     delta = {
       enable = true;
       options = {
@@ -164,18 +230,16 @@ in
   alacritty = {
     enable = true;
     settings = {
-      cursor = {
-        style = "Block";
-      };
+      cursor = { style = "Block"; };
 
       window = {
-        opacity = 0.88;
-        blur = true;
+        opacity = 1.0;
+        blur = false;
         decorations = "none";
         startup_mode = "Maximized";
         padding = {
-          x = 4;
-          y = 4;
+          x = 0;
+          y = 0;
         };
       };
 
@@ -270,10 +334,9 @@ in
     enable = true;
     enableZshIntegration = true;
     settings = {
-      format = "$username$hostname$directory$git_branch$git_state$git_status$cmd_duration$line_break$character";
-      directory = {
-        style = "yellow";
-      };
+      format =
+        "$username$hostname$directory$git_branch$git_state$git_status$cmd_duration$line_break$character";
+      directory = { style = "yellow"; };
       character = {
         success_symbol = "[❯](yellow)";
         error_symbol = "[❯](red)";
@@ -284,7 +347,8 @@ in
         style = "green";
       };
       git_status = {
-        format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
+        format =
+          "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
         style = "cyan";
         conflicted = "​";
         untracked = "​";
@@ -295,7 +359,7 @@ in
         stashed = "≡";
       };
       git_state = {
-        format = "\([$state( $progress_current/$progress_total)]($style)\) ";
+        format = "([$state( $progress_current/$progress_total)]($style)) ";
         style = "bright-black";
       };
       cmd_duration = {
@@ -336,10 +400,12 @@ in
     extraConfig = ''
       set -g default-terminal "tmux-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
+      set-option -sa terminal-features ',alacritty:RGB'
+      set-option -ga terminal-features ",alacritty:usstyle"
       set -sg escape-time 10
       set -g focus-events on
       set-option -g status "on"
-      #set-option -g status-justify 'left'
+      set-option -g status-justify 'left'
       set-window-option -g window-status-separator ""
       set -g status-bg default
       set -g status-style bg=default
@@ -454,9 +520,7 @@ in
 
   bat = {
     enable = true;
-    config = {
-      theme = "catppuccin";
-    };
+    config = { theme = "catppuccin"; };
     themes = {
       catppuccin = {
         src = pkgs.fetchFromGitHub {

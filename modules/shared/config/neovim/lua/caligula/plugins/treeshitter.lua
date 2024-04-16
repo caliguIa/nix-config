@@ -3,7 +3,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
+        -- "nvim-treesitter/nvim-treesitter-textobjects",
         "windwp/nvim-ts-autotag",
     },
     config = function()
@@ -12,6 +12,16 @@ return {
         treesitter.setup({
             highlight = {
                 enable = true,
+                disable = function(_, buf)
+                    -- Don't disable for read-only buffers.
+                    if not vim.bo[buf].modifiable then
+                        return false
+                    end
+
+                    local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    -- Disable for files larger than 250 KB.
+                    return ok and stats and stats.size > (250 * 1024)
+                end,
             },
             indent = { enable = true },
             autotag = {
@@ -38,6 +48,7 @@ return {
                 "query",
                 "go",
                 "rust",
+                "regex",
                 "vimdoc",
                 "terraform",
                 "toml",
@@ -45,13 +56,7 @@ return {
                 "php",
             },
             incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = "<C-space>",
-                    node_incremental = "<C-space>",
-                    scope_incremental = false,
-                    node_decremental = "<bs>",
-                },
+                enable = false,
             },
         })
 

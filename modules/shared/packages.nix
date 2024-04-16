@@ -13,7 +13,6 @@ with pkgs; [
   fzf
   gh
   go
-  helix
   htop
   iina
   image_optim
@@ -25,7 +24,7 @@ with pkgs; [
   neofetch
   neovide
   ngrok
-  nixpkgs-fmt
+  nixfmt
   nodejs_18
   nushell
   ollama

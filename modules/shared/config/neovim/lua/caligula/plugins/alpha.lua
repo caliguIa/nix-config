@@ -1,3 +1,5 @@
+local icons = require("caligula.core.icons")
+
 return {
     "goolord/alpha-nvim",
     event = "VimEnter",
@@ -5,35 +7,24 @@ return {
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")
 
-        dashboard.section.header.val = {
-            "                                                                ",
-            "                                          ▄▄                    ",
-            "                                          ██                    ",
-            "                                                                ",
-            " ▀████████▄   ▄▄█▀██  ▄██▀██▄▀██▀   ▀██▀▀███ ▀████████▄█████▄   ",
-            "   ██    ██  ▄█▀   ████▀   ▀██ ██   ▄█    ██   ██    ██    ██   ",
-            "   ██    ██  ██▀▀▀▀▀▀██     ██  ██ ▄█     ██   ██    ██    ██   ",
-            "   ██    ██  ██▄    ▄██▄   ▄██   ███      ██   ██    ██    ██   ",
-            " ▄████  ████▄ ▀█████▀ ▀█████▀     █     ▄████▄████  ████  ████▄ ",
-            "                                                                ",
-        }
+        dashboard.section.header.val = { [[ neobim ]] }
 
         dashboard.section.buttons.val = {
-            dashboard.button("e", "  > New File", "<cmd>ene<CR>"),
+            dashboard.button("e", string.format("%s - New File", icons.symbol_kinds.File), "<cmd>ene<CR>"),
+
             dashboard.button(
-                "<Leader> sc",
-                "  > Restore session for CWD",
+                "r",
+                string.format("%s - Restore session for CWD", icons.symbol_kinds.Folder),
                 [[<cmd>lua require("persistence").load()<cr>]]
             ),
-            dashboard.button(
-                "<Leader> sl",
-                "  > Restore last session",
-                [[<cmd>lua require("persistence").load()<cr>]]
-            ),
-            dashboard.button("<Leader> fe", "  > Toggle file explorer", "<CMD>Oil<CR>"),
-            dashboard.button("<Leader> sf", "󰱼  > Search files", "<cmd>Telescope find_files<CR>"),
-            dashboard.button("<Leader> sg", "  > Search grep", "<cmd>Telescope live_grep<CR>"),
-            dashboard.button("q", "  > Quit neovim", "<cmd>qa<CR>"),
+
+            dashboard.button("fe", string.format("%s - File explorer", icons.symbol_kinds.Folder), "<CMD>Oil<CR>"),
+
+            dashboard.button("ff", string.format("%s - Find file", icons.misc.search_files), "<cmd>FzfLua files<cr>"),
+
+            dashboard.button("fg", string.format("%s - Grep", icons.misc.search), "<cmd>FzfLua live_grep_glob<cr>"),
+
+            dashboard.button("q", string.format("%s - Quit", icons.diagnostics.ERROR), "<cmd>qa<CR>"),
         }
 
         alpha.setup(dashboard.opts)

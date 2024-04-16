@@ -22,7 +22,8 @@ return {
                 yaml = jsFormatter,
                 markdown = jsFormatter,
                 graphql = jsFormatter,
-                -- nix = { "nixpkgs-fmt" },
+                nix = { "nixfmt" },
+                -- php = { "pint" },
             },
             format_on_save = { timeout_ms = 500, lsp_fallback = true },
             notify_on_error = true,
@@ -45,12 +46,12 @@ return {
             group = vim.api.nvim_create_augroup("MyAutocmdsJavaScripFormatting", {}),
         })
 
-        vim.keymap.set({ "n", "v" }, "<leader>ff", function()
+        vim.keymap.set({ "n", "v" }, "<leader>bf", function()
             conform.format({
                 lsp_fallback = true,
                 async = false,
                 timeout_ms = 1000,
             })
-        end, { desc = "[F]ormat [f]ile" })
+        end, { desc = "[B]uffer [F]ormat" })
     end,
 }

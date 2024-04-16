@@ -1,3 +1,5 @@
+local test_icons = require("caligula.core.icons").test
+
 return {
     "nvim-neotest/neotest",
     dependencies = {
@@ -57,19 +59,17 @@ return {
                     end,
                 }),
                 require("neotest-phpunit")({
-                    root_files = function()
-                        return { "phpunit.xml" }
-                    end,
+                    root_files = { "composer.json", "phpunit.xml", ".gitignore" },
                 }),
             },
             diagnostic = {
                 enabled = true,
             },
             icons = {
-                failed = "✖",
-                passed = "✔",
-                running = "",
-                skipped = "ﰸ",
+                failed = test_icons.failed,
+                passed = test_icons.passed,
+                running = test_icons.running,
+                skipped = test_icons.skipped,
             },
         })
     end,
