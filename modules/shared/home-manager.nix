@@ -18,6 +18,7 @@ in {
     defaultKeymap = "emacs";
     history = { path = "${config.xdg.dataHome}/zsh/zsh_history"; };
     dotDir = ".config/zsh";
+    localVariables = { ZSH_TMUX_AUTOSTART = true; };
     shellAliases = {
       "~" = "cd ~";
       dl = "cd ~/Downloads";
@@ -439,7 +440,7 @@ in {
       bind-key s display-popup -E "tms switch"
       bind-key w display-popup -E "tms windows"
       bind-key r command-prompt -p "Rename active session to: " "run-shell 'tms rename %1'"
-      bind-key q command-prompt "run-shell 'tms kill'"
+      bind-key q confirm-before -p "Kill session (y/n): " "tms kill"
     '';
   };
 
