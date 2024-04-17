@@ -21,6 +21,16 @@ return {
                         types = true,
                     },
                 },
+                config = function()
+                    require("neodev").setup({
+                        override = function(root_dir, library)
+                            if root_dir:find("/Users/caligula/nix-config", 1, true) == 1 then
+                                library.enabled = true
+                                library.plugins = true
+                            end
+                        end,
+                    })
+                end,
             },
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
