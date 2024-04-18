@@ -1,15 +1,14 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPre", "BufNewFile" },
-    build = ":TSUpdate",
-    dependencies = {
-        -- "nvim-treesitter/nvim-treesitter-textobjects",
-        "windwp/nvim-ts-autotag",
-    },
-    config = function()
-        local treesitter = require("nvim-treesitter.configs")
-
-        treesitter.setup({
+    {
+        "nvim-treesitter/nvim-treesitter",
+        event = { "BufReadPre", "BufNewFile" },
+        version = false,
+        build = ":TSUpdate",
+        dependencies = {
+            -- "nvim-treesitter/nvim-treesitter-textobjects",
+            "windwp/nvim-ts-autotag",
+        },
+        opts = {
             highlight = {
                 enable = true,
                 disable = function(_, buf)
@@ -54,12 +53,43 @@ return {
                 "toml",
                 "nix",
                 "php",
+                "c",
+                "diff",
+                "jsdoc",
+                "jsonc",
+                "luadoc",
+                "luap",
+                "python",
+                "tsx",
+                "vimdoc",
+                "xml",
             },
             incremental_selection = {
                 enable = false,
             },
-        })
+        },
+        config = function(_, opts)
+            require("nvim-treesitter.configs").setup(opts)
+            require("ts_context_commentstring").setup()
+        end,
+    },
 
-        require("ts_context_commentstring").setup({})
-    end,
+    {
+        "windwp/nvim-ts-autotag",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {},
+    },
+
+    {
+        "Wansmer/treesj",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        event = "BufReadPost",
+        opts = { use_default_keymaps = false },
+        -- stylua: ignore
+        keys = {
+            { mode = { "n" }, "<leader>ct", function () require("treesj").toggle() end,  desc = "[C]ode chunk toggle split/join"  },
+            { mode = { "n" }, "<leader>cs", function () require("treesj").split() end,  desc = "C]ode chunk [s]plit"  },
+            { mode = { "n" }, "<leader>cj", function () require("treesj").join() end,  desc = "[C]ode chunk [j]oin"  },
+        },
+    },
 }

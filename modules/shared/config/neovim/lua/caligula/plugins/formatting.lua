@@ -1,14 +1,12 @@
 local jsFormatter = { "eslint", { "prettierd", "prettier" } }
 
 return {
-    "stevearc/conform.nvim",
-    lazy = true,
-    event = { "BufWritePre", "BufNewFile" },
-    cmd = { "ConformInfo" },
-    config = function()
-        local conform = require("conform")
-
-        conform.setup({
+    {
+        "stevearc/conform.nvim",
+        lazy = true,
+        event = { "BufWritePre", "BufNewFile" },
+        cmd = { "ConformInfo" },
+        opts = {
             formatters_by_ft = {
                 lua = { "stylua" },
                 javascript = jsFormatter,
@@ -38,20 +36,33 @@ return {
                     end,
                 },
             },
-        })
+        },
+        config = function(_, opts)
+            local conform = require("conform")
 
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
-            command = "silent! EslintFixAll",
-            group = vim.api.nvim_create_augroup("MyAutocmdsJavaScripFormatting", {}),
-        })
+            conform.setup(opts)
 
-        vim.keymap.set({ "n", "v" }, "<leader>bf", function()
-            conform.format({
-                lsp_fallback = true,
-                async = false,
-                timeout_ms = 1000,
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
+                command = "silent! EslintFixAll",
+                group = vim.api.nvim_create_augroup("MyAutocmdsJavaScripFormatting", {}),
             })
-        end, { desc = "[B]uffer [F]ormat" })
-    end,
+
+            vim.keymap.set({ "n", "v" }, "<leader>bf", function()
+                conform.format({
+                    lsp_fallback = true,
+                    async = false,
+                    timeout_ms = 1000,
+                })
+            end, { desc = "[B]uffer [F]ormat" })
+        end,
+    },
+
+    {
+        "oliverhkraft/nvim-pint",
+        opts = {
+            silent = true,
+            exclude_folders = { "resources/views" },
+        },
+    },
 }

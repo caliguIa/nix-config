@@ -55,6 +55,11 @@ M.misc = {
     search_files = "󰱼 ",
     vertical_bar = "│",
     circle = "●",
+    lazy = "󰒲 ",
+    restore = " ",
+    text = " ",
+    quit = " ",
+    bolt = "⚡",
 }
 
 M.test = {
