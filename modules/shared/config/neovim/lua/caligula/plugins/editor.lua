@@ -15,38 +15,19 @@ return {
     {
         "ibhagwan/fzf-lua",
         cmd = "FzfLua",
+        -- stylua: ignore
         keys = {
             { "<leader>s.", "<cmd>FzfLua resume<cr>", desc = "Resume last command" },
-            {
-                "<leader>s/",
-                function()
-                    require("fzf-lua").lgrep_curbuf({
-                        winopts = {
-                            height = 0.8,
-                            width = 0.7,
-                            preview = { vertical = "up:70%" },
-                        },
-                    })
-                end,
-                desc = "Grep current buffer",
-            },
-            { "<leader>sc", "<cmd>FzfLua highlights<cr>", desc = "Highlights" },
-            { "<leader>sd", "<cmd>FzfLua lsp_document_diagnostics<cr>", desc = "Document diagnostics" },
-            { "<leader>sD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", desc = "Workspace diagnostics" },
-            { "<leader>sf", "<cmd>FzfLua files<cr>", desc = "Files" },
-            { "<leader>sg", "<cmd>FzfLua live_grep_glob<cr>", desc = "Live Grep" },
-            { "<leader>sv", "<cmd>FzfLua grep_visual<cr>", desc = "Visual Grep", mode = "x" },
-            { "<leader>sh", "<cmd>FzfLua help_tags<cr>", desc = "Help" },
-            { "<leader>sb", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
-            {
-                "<leader>sr",
-                function()
-                    -- Read from ShaDa to include files that were already deleted from the buffer list.
-                    vim.cmd("rshada!")
-                    require("fzf-lua").oldfiles()
-                end,
-                desc = "Recently opened files",
-            },
+            { "<leader>s/", function() require("fzf-lua").lgrep_curbuf({ winopts = { height = 0.8, width = 0.7, preview = { vertical = "up:70%" }, }, }) end, desc = "Grep current buffer", },
+            { "<leader>sc", function() require('fzf-lua').highlights({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Highlights" },
+            { "<leader>sd", function() require('fzf-lua').lsp_document_diagnostics({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Document diagnostics" },
+            { "<leader>sD", function() require('fzf-lua').lsp_workspace_diagnostics({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Workspace diagnostics" },
+            { "<leader>sf", function() require('fzf-lua').files({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Files" },
+            { "<leader>sg", function() require('fzf-lua').live_grep_glob({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Live Grep" },
+            { "<leader>sv", function() require('fzf-lua').grep_visual({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Visual Grep", mode = "x" },
+            { "<leader>sh", function() require('fzf-lua').help_tags({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Help" },
+            { "<leader>sb", function() require('fzf-lua').buffers({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Buffers" },
+            { "<leader>sr", function() vim.cmd("rshada!") require("fzf-lua").oldfiles() end, desc = "Recently opened files", },
         },
 
         opts = function()
@@ -238,6 +219,43 @@ return {
         },
         keys = {
             { "<leader>wm", "<CMD>WindowsMaximize<CR>", desc = "[W]indow [m]aximize" },
+        },
+    },
+
+    {
+        "RRethy/vim-illuminate",
+        event = { "BufReadPost", "BufNewFile" },
+        opts = {
+            delay = 200,
+            large_file_cutoff = 2000,
+            large_file_overrides = {
+                providers = { "lsp" },
+            },
+        },
+        config = function(_, opts)
+            require("illuminate").configure(opts)
+
+            local function map(key, dir, buffer)
+                vim.keymap.set("n", key, function()
+                    require("illuminate")["goto_" .. dir .. "_reference"](false)
+                end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+            end
+
+            map("]]", "next")
+            map("[[", "prev")
+
+            -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function()
+                    local buffer = vim.api.nvim_get_current_buf()
+                    map("]]", "next", buffer)
+                    map("[[", "prev", buffer)
+                end,
+            })
+        end,
+        keys = {
+            { "]]", desc = "Next Reference" },
+            { "[[", desc = "Prev Reference" },
         },
     },
 }

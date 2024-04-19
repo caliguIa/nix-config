@@ -262,71 +262,68 @@ in {
 
       colors = {
         primary = {
-          background = "0x16181a";
-          foreground = "0xffffff";
-          #  background = "#1E1E2E";
-          #  foreground = "#CDD6F4";
-          dim_foreground = "#CDD6F4";
-          bright_foreground = "#CDD6F4";
+          background = "#181616";
+          foreground = "0xdcd7ba";
         };
-        cursor = {
-          text = "#1E1E2E";
-          cursor = "#F5E0DC";
-        };
+        # cursor = {
+        #   text = "#1E1E2E";
+        #   cursor = "#F5E0DC";
+        # };
         selection = {
-          text = "#1E1E2E";
-          background = "#F5E0DC";
+          # text = "#1E1E2E";
+          foreground = "0xc8c093";
+          background = "0x2d4f67";
         };
-        search.matches = {
-          foreground = "#1E1E2E";
-          background = "#A6ADC8";
-        };
-        search.focused_match = {
-          foreground = "#1E1E2E";
-          background = "#A6E3A1";
-        };
-        footer_bar = {
-          foreground = "#1E1E2E";
-          background = "#A6ADC8";
-        };
-        hints.start = {
-          foreground = "#1E1E2E";
-          background = "#F9E2AF";
-        };
-        hints.end = {
-          foreground = "#1E1E2E";
-          background = "#A6ADC8";
-        };
+        # search.matches = {
+        #   foreground = "#1E1E2E";
+        #   background = "#A6ADC8";
+        # };
+        # search.focused_match = {
+        #   foreground = "#1E1E2E";
+        #   background = "#A6E3A1";
+        # };
+        # footer_bar = {
+        #   foreground = "#1E1E2E";
+        #   background = "#A6ADC8";
+        # };
+        # hints.start = {
+        #   foreground = "#1E1E2E";
+        #   background = "#F9E2AF";
+        # };
+        # hints.end = {
+        #   foreground = "#1E1E2E";
+        #   background = "#A6ADC8";
+        # };
         normal = {
-          black = "#45475A";
-          red = "#F38BA8";
-          green = "#A6E3A1";
-          yellow = "#F9E2AF";
-          blue = "#89B4FA";
-          magenta = "#F5C2E7";
-          cyan = "#94E2D5";
-          white = "#BAC2DE";
+          black = "0x090618";
+          red = "0xc34043";
+          green = "0x76946a";
+          yellow = "0xc0a36e";
+          blue = "0x7e9cd8";
+          magenta = "0x957fb8";
+          cyan = "0x6a9589";
+          white = "0xc8c093";
         };
         bright = {
-          black = "#585B70";
-          red = "#F38BA8";
-          green = "#A6E3A1";
-          yellow = "#F9E2AF";
-          blue = "#89B4FA";
-          magenta = "#F5C2E7";
-          cyan = "#94E2D5";
-          white = "#A6ADC8";
+          black = "0x727169";
+          red = "0xe82424";
+          green = "0x98bb6c";
+          yellow = "0xe6c384";
+          blue = "0x7fb4ca";
+          magenta = "0x938aa9";
+          cyan = "0x7aa89f";
+          white = "0xdcd7ba";
         };
-        dim = {
-          black = "#45475A";
-          red = "#F38BA8";
-          green = "#A6E3A1";
-          yellow = "#F9E2AF";
-          blue = "#89B4FA";
-          magenta = "#F5C2E7";
-          cyan = "#94E2D5";
-          white = "#BAC2DE";
-        };
+        # dim = {
+        #   black = "#45475A";
+        #   red = "#F38BA8";
+        #   green = "#A6E3A1";
+        #   yellow = "#F9E2AF";
+        #   blue = "#89B4FA";
+        #   magenta = "#F5C2E7";
+        #   cyan = "#94E2D5";
+        #   white = "#BAC2DE";
+        # };
       };
     };
   };
@@ -392,8 +389,8 @@ in {
     escapeTime = 10;
     historyLimit = 50000;
     plugins = with pkgs.tmuxPlugins; [
-      vim-tmux-navigator
-      catppuccin
+      # vim-tmux-navigator
+      # catppuccin
       sensible
       yank
       prefix-highlight
@@ -405,7 +402,7 @@ in {
       set-option -ga terminal-features ",alacritty:usstyle"
       set -sg escape-time 10
       set -g focus-events on
-      set-option -g status "on"
+      set-option -g status "off"
       set-option -g status-justify 'left'
       set-window-option -g window-status-separator ""
       set -g status-bg default

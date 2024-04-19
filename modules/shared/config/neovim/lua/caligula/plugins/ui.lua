@@ -160,7 +160,7 @@ return {
             options = {
                 icons_enabled = false,
                 theme = "kanagawa",
-                disabled_filetypes = { "oil" },
+                disabled_filetypes = { "oil", "dashboard", "DashboardLoaded", "dashboard" },
                 component_separators = "",
                 section_separators = "",
             },

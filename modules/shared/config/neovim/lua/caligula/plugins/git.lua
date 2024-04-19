@@ -63,12 +63,19 @@ return {
     {
         "pwntester/octo.nvim",
         cmd = "Octo",
-        event = "BufReadPost",
+        event = "VeryLazy",
         dependencies = {
             "nvim-lua/plenary.nvim",
             "ibhagwan/fzf-lua",
             "nvim-tree/nvim-web-devicons",
         },
         opts = { picker = "fzf-lua", picker_config = { use_emojis = true } },
+    },
+
+    {
+        "FabijanZulj/blame.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {},
+        keys = { { "<leader>gb", "<CMD>BlameToggle<CR>", desc = "[G]it [B]lame" } },
     },
 }

@@ -83,7 +83,7 @@ return {
     {
         "Wansmer/treesj",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        event = "BufReadPost",
+        event = { "BufReadPre", "BufNewFile" },
         opts = { use_default_keymaps = false },
         -- stylua: ignore
         keys = {
@@ -92,4 +92,10 @@ return {
             { mode = { "n" }, "<leader>cj", function () require("treesj").join() end,  desc = "[C]ode chunk [j]oin"  },
         },
     },
+
+    -- {
+    --     "yorickpeterse/nvim-tree-pairs",
+    --     event = { "BufReadPre", "BufNewFile" },
+    --     opts = {},
+    -- },
 }

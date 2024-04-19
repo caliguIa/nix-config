@@ -75,17 +75,17 @@ return {
                     map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
 
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    if client and client.server_capabilities.documentHighlightProvider then
-                        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                            buffer = event.buf,
-                            callback = vim.lsp.buf.document_highlight,
-                        })
-
-                        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-                            buffer = event.buf,
-                            callback = vim.lsp.buf.clear_references,
-                        })
-                    end
+                    -- if client and client.server_capabilities.documentHighlightProvider then
+                    --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+                    --         buffer = event.buf,
+                    --         callback = vim.lsp.buf.document_highlight,
+                    --     })
+                    --
+                    --     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+                    --         buffer = event.buf,
+                    --         callback = vim.lsp.buf.clear_references,
+                    --     })
+                    -- end
                     if client and client.server_capabilities.document_formatting then
                         vim.api.nvim_create_autocmd("BufWritePre", {
                             buffer = event.buf,
