@@ -6,6 +6,8 @@ in shared-packages ++ [
   discord
   grandperspective
   keka
+  gnused
+  (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
   pam-reattach
   raycast
   rectangle

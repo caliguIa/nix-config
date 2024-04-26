@@ -2,14 +2,15 @@
   description = "My personal Nix configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-    };
+    nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew"; };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -22,22 +23,21 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    #inputs.nixvim = {
-    #  url = "github:nix-community/nixvim";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core
+    , homebrew-cask, home-manager, nixpkgs }@inputs:
     let
       darwinSystems = [ "aarch64-darwin" ];
       mkApp = scriptName: system: {
         type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-          #!/usr/bin/env bash
-          PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
-        '')}/bin/${scriptName}";
+        program = "${
+            (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+              #!/usr/bin/env bash
+              PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
+              echo "Running ${scriptName} for ${system}"
+              exec ${self}/apps/${system}/${scriptName}
+            '')
+          }/bin/${scriptName}";
       };
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
@@ -45,16 +45,15 @@
         "build-switch" = mkApp "build-switch" system;
         "rollback" = mkApp "rollback" system;
       };
-    in
-    {
+    in {
       apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = let user = "caligula"; in {
+      darwinConfigurations = let user = "caligula";
+      in {
         macos = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = inputs;
           modules = [
-            #inputs.nixvim.darwinModules.nixvim
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {

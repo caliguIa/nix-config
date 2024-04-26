@@ -1,30 +1,30 @@
-local test_icons = require("caligula.core.icons").test
+local test_icons = require('caligula.core.icons').test
 
 return {
     {
-        "nvim-neotest/neotest",
+        'nvim-neotest/neotest',
         dependencies = {
-            "antoinemadec/FixCursorHold.nvim",
-            "nvim-neotest/neotest-jest",
-            "olimorris/neotest-phpunit",
-            "nvim-neotest/nvim-nio",
+            'antoinemadec/FixCursorHold.nvim',
+            'nvim-neotest/neotest-jest',
+            'olimorris/neotest-phpunit',
+            'nvim-neotest/nvim-nio',
         },
         opts = {
             adapters = {
-                ["neotest-jest"] = function()
-                    require("neotest-jest").adapter({
-                        jestCommand = "npm test --",
+                ['neotest-jest'] = function()
+                    require('neotest-jest').adapter {
+                        jestCommand = 'npm test --',
                         -- jestConfigFile = "config/jest.config.ts",
-                        env = { CI = "true" },
+                        env = { CI = 'true' },
                         cwd = function()
                             return vim.fn.getcwd()
                         end,
-                    })
+                    }
                 end,
-                ["neotest-phpunit"] = function()
-                    require("neotest-phpunit").adapter({
-                        root_files = { "composer.json", "phpunit.xml", ".gitignore" },
-                    })
+                ['neotest-phpunit'] = function()
+                    require('neotest-phpunit').adapter {
+                        root_files = { 'composer.json', 'phpunit.xml', '.gitignore' },
+                    }
                 end,
             },
             diagnostic = {

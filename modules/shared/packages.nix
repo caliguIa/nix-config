@@ -3,6 +3,7 @@
 with pkgs; [
   _1password
   aria
+  ast-grep
   bottom
   cmake
   diskonaut
@@ -10,7 +11,6 @@ with pkgs; [
   eza
   fd
   ffmpeg
-  fzf
   gh
   go
   htop
@@ -33,6 +33,7 @@ with pkgs; [
   php
   ripgrep
   rustup
+  sd
   spotify-player
   terraform
   tmux
@@ -45,5 +46,4 @@ with pkgs; [
   xplr
   yazi
   zoxide
-  zellij
 ]

@@ -1,7 +1,0 @@
-# ./.tmuxinator.yml
-
-name: spotify
-root: ~/
-
-windows:
-  - spotify-tui: /usr/local/bin/spt

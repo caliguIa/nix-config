@@ -1,16 +1,16 @@
-local icon = require("caligula.core.icons").misc.vertical_bar
+local icon = require('caligula.core.icons').misc.vertical_bar
 
 return {
     {
-        "sindrets/diffview.nvim",
-        event = "VeryLazy",
+        'sindrets/diffview.nvim',
+        event = 'VeryLazy',
         opts = {},
-        keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
+        keys = { { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'DiffView' } },
     },
 
     {
-        "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        'lewis6991/gitsigns.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
         opts = {
             signs = {
                 add = { text = icon },
@@ -22,7 +22,7 @@ return {
             },
             current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
             current_line_blame_opts = {
-                virt_text_pos = "right_align", -- 'eol' | 'overlay' | 'right_align'
+                virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
             },
             signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
             linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
@@ -43,14 +43,14 @@ return {
     },
 
     {
-        "NeogitOrg/neogit",
+        'NeogitOrg/neogit',
         dependencies = {
-            "nvim-lua/plenary.nvim", -- required
-            "sindrets/diffview.nvim", -- optional - Diff integration
-            "ibhagwan/fzf-lua",
+            'nvim-lua/plenary.nvim', -- required
+            'sindrets/diffview.nvim', -- optional - Diff integration
+            'ibhagwan/fzf-lua',
             -- "nvim-telescope/telescope.nvim", -- optional
         },
-        event = { "BufReadPost", "BufNewFile" },
+        event = { 'BufReadPost', 'BufNewFile' },
         opts = {},
         -- stylua: ignore
         keys = {
@@ -61,21 +61,21 @@ return {
     },
 
     {
-        "pwntester/octo.nvim",
-        cmd = "Octo",
-        event = "VeryLazy",
+        'pwntester/octo.nvim',
+        cmd = 'Octo',
+        event = 'VeryLazy',
         dependencies = {
-            "nvim-lua/plenary.nvim",
-            "ibhagwan/fzf-lua",
-            "nvim-tree/nvim-web-devicons",
+            'nvim-lua/plenary.nvim',
+            'ibhagwan/fzf-lua',
+            'nvim-tree/nvim-web-devicons',
         },
-        opts = { picker = "fzf-lua", picker_config = { use_emojis = true } },
+        opts = { picker = 'fzf-lua', picker_config = { use_emojis = true } },
     },
 
     {
-        "FabijanZulj/blame.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        'FabijanZulj/blame.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
         opts = {},
-        keys = { { "<leader>gb", "<CMD>BlameToggle<CR>", desc = "[G]it [B]lame" } },
+        keys = { { '<leader>gb', '<CMD>BlameToggle<CR>', desc = '[G]it [B]lame' } },
     },
 }

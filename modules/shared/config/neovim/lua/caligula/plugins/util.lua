@@ -1,7 +1,7 @@
 return {
     {
-        "folke/persistence.nvim",
-        event = "BufReadPre",
+        'folke/persistence.nvim',
+        event = 'BufReadPre',
         opts = { options = vim.opt.sessionoptions:get() },
         -- stylua: ignore
         keys = {
@@ -12,18 +12,18 @@ return {
     },
 
     {
-        "sontungexpt/url-open",
-        event = "VeryLazy",
-        cmd = "URLOpenUnderCursor",
+        'sontungexpt/url-open',
+        event = 'VeryLazy',
+        cmd = 'URLOpenUnderCursor',
         opts = {},
         keys = {
-            { "gx", "<ESC>:URLOpenUnderCursor<CR>", mode = { "n" }, desc = "Open URL under cursor" },
+            { 'gx', '<ESC>:URLOpenUnderCursor<CR>', mode = { 'n' }, desc = 'Open URL under cursor' },
         },
     },
 
-    "tpope/vim-sleuth",
+    'tpope/vim-sleuth',
 
-    "nvim-lua/plenary.nvim",
+    'nvim-lua/plenary.nvim',
 
-    { "echasnovski/mini.basics", version = "*" },
+    { 'echasnovski/mini.basics', version = '*' },
 }

@@ -1,2 +1,2 @@
-require("caligula.core")
-require("caligula.lazy")
+require 'caligula.core'
+require 'caligula.lazy'
