@@ -1,17 +1,27 @@
-{ config, ... }: {
+{ config, ... }:
+{
   enable = true;
   autocd = false;
-  enableAutosuggestions = true;
+  autosuggestion.enable = true;
   enableCompletion = true;
   oh-my-zsh = {
     enable = true;
-    plugins = [ "gh" "git" "ripgrep" "fzf" ];
+    plugins = [
+      "gh"
+      "git"
+      "ripgrep"
+      "fzf"
+    ];
   };
   syntaxHighlighting.enable = true;
   defaultKeymap = "emacs";
-  history = { path = "${config.xdg.dataHome}/zsh/zsh_history"; };
+  history = {
+    path = "${config.xdg.dataHome}/zsh/zsh_history";
+  };
   dotDir = ".config/zsh";
-  localVariables = { ZSH_TMUX_AUTOSTART = true; };
+  localVariables = {
+    ZSH_TMUX_AUTOSTART = true;
+  };
   shellAliases = {
     "~" = "cd ~";
     dl = "cd ~/Downloads";
@@ -23,8 +33,7 @@
     ".." = "cd ..";
     "..." = "cd ../..";
     "...." = "cd ../../..";
-    ls =
-      "eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
+    ls = "eza --color=always --long -a --git --no-filesize --icons=always --no-time --no-user --no-permissions";
     cat = "bat";
     gaa = "git add --all";
     gst = "git status";
@@ -46,8 +55,7 @@
     t = "tmux attach || tmux new";
     tks = "tmux kill-server";
     ":q" = "exit";
-    fuck =
-      "echo 'Running: e[32msudo e[35me[4m$(fc -ln -1)e[0m' && sudo $(fc -ln -1)";
+    fuck = "echo 'Running: e[32msudo e[35me[4m$(fc -ln -1)e[0m' && sudo $(fc -ln -1)";
     nixbs = "cd ~/nix-config; git add .; nix run .#build-switch";
   };
 
@@ -56,6 +64,8 @@
       . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
       . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
     fi
+
+    export PATH="/opt/homebrew/bin:$PATH"
 
     nixmv() {
       sudo mv /etc/zshenv /etc/zshenv.before-nix-darwin

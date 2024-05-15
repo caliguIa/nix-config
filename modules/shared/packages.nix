@@ -1,6 +1,7 @@
 { pkgs }:
 
-with pkgs; [
+with pkgs;
+[
   _1password
   aria
   ast-grep
@@ -17,27 +18,24 @@ with pkgs; [
   iina
   image_optim
   jetbrains.phpstorm
+  just
   jq
   killport
   less
   lua
   neofetch
   neovide
-  ngrok
-  nixfmt
+  nixfmt-rfc-style
   nodejs_18
   nushell
-  ollama
-  prettierd
   python3
   php
   ripgrep
   rustup
   sd
-  spotify-player
+  sshfs
   terraform
   tmux
-  tmuxinator
   tmux-sessionizer
   tokei
   vscode

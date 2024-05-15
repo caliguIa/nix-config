@@ -4,6 +4,7 @@ return {
     {
         'sindrets/diffview.nvim',
         event = 'VeryLazy',
+        cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
         opts = {},
         keys = { { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'DiffView' } },
     },
@@ -60,22 +61,37 @@ return {
         },
     },
 
-    {
-        'pwntester/octo.nvim',
-        cmd = 'Octo',
-        event = 'VeryLazy',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'ibhagwan/fzf-lua',
-            'nvim-tree/nvim-web-devicons',
-        },
-        opts = { picker = 'fzf-lua', picker_config = { use_emojis = true } },
-    },
+    -- {
+    --     'pwntester/octo.nvim',
+    --     cmd = 'Octo',
+    --     event = 'VeryLazy',
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         'ibhagwan/fzf-lua',
+    --         'nvim-tree/nvim-web-devicons',
+    --     },
+    --     opts = { picker = 'fzf-lua', picker_config = { use_emojis = true } },
+    -- },
 
     {
         'FabijanZulj/blame.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
         opts = {},
         keys = { { '<leader>gb', '<CMD>BlameToggle<CR>', desc = '[G]it [B]lame' } },
+    },
+
+    {
+        'ldelossa/gh.nvim',
+        dependencies = {
+            {
+                'ldelossa/litee.nvim',
+                config = function()
+                    require('litee.lib').setup()
+                end,
+            },
+        },
+        config = function()
+            require('litee.gh').setup()
+        end,
     },
 }

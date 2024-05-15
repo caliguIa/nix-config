@@ -1,6 +1,7 @@
-{ ... }: {
-  enable = false;
-  enableZshIntegration = true;
+{ ... }:
+{
+  enable = true;
+  enableZshIntegration = false;
   settings = {
     theme = "tokyonight";
     themes.custom.fg = "#c0caf5";

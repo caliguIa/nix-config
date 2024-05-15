@@ -1,83 +1,83 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        event = { 'BufReadPre', 'BufNewFile' },
-        version = false,
         build = ':TSUpdate',
         dependencies = {
-            -- "nvim-treesitter/nvim-treesitter-textobjects",
-            'windwp/nvim-ts-autotag',
+            {
+                'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
+                config = true,
+            },
+            {
+                'nvim-treesitter/nvim-treesitter-context',
+                opts = {
+                    event = { 'BufReadPre', 'BufNewFile' },
+                },
+            },
+            'nvim-treesitter/nvim-treesitter-textobjects', -- Syntax aware text-objects, select, move, swap, and peek support.
+            'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
+            {
+                'abecodes/tabout.nvim', -- Tab out from parenthesis, quotes, brackets...
+                opts = {
+                    tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+                    backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+                    completion = true, -- We use tab for completion so set this to true
+                },
+            },
         },
-        opts = {
-            highlight = {
-                enable = true,
-                disable = function(_, buf)
-                    -- Don't disable for read-only buffers.
-                    if not vim.bo[buf].modifiable then
-                        return false
-                    end
+        config = function()
+            ---@diagnostic disable-next-line: missing-fields
+            require('nvim-treesitter.configs').setup {
+                indent = { enable = true },
+                autotag = {
+                    enable = true,
+                    enable_rename = true,
+                    enable_close = true,
+                    enable_close_on_slash = true,
+                    filetypes = {
+                        'html',
+                        'javascript',
+                        'typescript',
+                        'javascriptreact',
+                        'typescriptreact',
+                        'svelte',
+                        'vue',
+                        'tsx',
+                        'jsx',
+                        'rescript',
+                        'xml',
+                        'php',
+                        'markdown',
+                        'astro',
+                        'glimmer',
+                        'handlebars',
+                        'hbs',
+                    },
+                },
+                ensure_installed = 'all',
+                ignore_install = { 'phpdoc' },
+                highlight = {
+                    enable = true,
+                    disable = function(_, buf)
+                        -- Don't disable for read-only buffers.
+                        if not vim.bo[buf].modifiable then return false end
 
-                    local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-                    -- Disable for files larger than 250 KB.
-                    return ok and stats and stats.size > (250 * 1024)
-                end,
-            },
-            indent = { enable = true },
-            autotag = {
-                enable = true,
-            },
-            ensure_installed = {
-                'json',
-                'javascript',
-                'typescript',
-                'tsx',
-                'yaml',
-                'html',
-                'css',
-                'prisma',
-                'markdown',
-                'markdown_inline',
-                'svelte',
-                'graphql',
-                'bash',
-                'lua',
-                'vim',
-                'dockerfile',
-                'gitignore',
-                'query',
-                'go',
-                'rust',
-                'regex',
-                'vimdoc',
-                'terraform',
-                'toml',
-                'nix',
-                'php',
-                'c',
-                'diff',
-                'jsdoc',
-                'jsonc',
-                'luadoc',
-                'luap',
-                'python',
-                'tsx',
-                'vimdoc',
-                'xml',
-            },
-            incremental_selection = {
-                enable = false,
-            },
-        },
-        config = function(_, opts)
-            require('nvim-treesitter.configs').setup(opts)
+                        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+                        -- Disable for files larger than 250 KB.
+                        return ok and stats and stats.size > (250 * 1024)
+                    end,
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = '<M-w>',
+                        scope_incremental = '<CR>',
+                        node_incremental = '<Tab>', -- increment to the upper named parent
+                        node_decremental = '<S-Tab>', -- decrement to the previous node
+                    },
+                },
+            }
             require('ts_context_commentstring').setup()
         end,
-    },
-
-    {
-        'windwp/nvim-ts-autotag',
-        event = { 'BufReadPre', 'BufNewFile' },
-        opts = {},
     },
 
     {
@@ -92,10 +92,4 @@ return {
             { mode = { "n" }, "<leader>cj", function () require("treesj").join() end,  desc = "[C]ode chunk [j]oin"  },
         },
     },
-
-    -- {
-    --     "yorickpeterse/nvim-tree-pairs",
-    --     event = { "BufReadPre", "BufNewFile" },
-    --     opts = {},
-    -- },
 }

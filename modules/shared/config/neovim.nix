@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   enable = true;
   defaultEditor = true;
   viAlias = true;
@@ -8,4 +9,3 @@
   withPython3 = true;
   extraPackages = [ pkgs.php82Packages.composer ];
 }
-

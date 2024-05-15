@@ -1,4 +1,13 @@
 return {
+    -- {
+    --     'Biscuit-Colorscheme/nvim',
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         require('biscuit').setup()
+    --         vim.cmd [[colorscheme biscuit]]
+    --     end,
+    -- },
     {
         'folke/tokyonight.nvim',
         lazy = false,

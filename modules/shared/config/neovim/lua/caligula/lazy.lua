@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({ { import = 'caligula.plugins' } }, {
-    ui = { border = 'rounded' },
+    ui = { border = 'single' },
     install = {
         colorscheme = { 'tokyonight' },
     },
@@ -38,3 +38,5 @@ require('lazy').setup({ { import = 'caligula.plugins' } }, {
         },
     },
 })
+
+vim.cmd 'FzfLua register_ui_select'

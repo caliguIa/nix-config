@@ -33,4 +33,4 @@ opt.spelllang = { 'en_us' }
 wo.signcolumn = 'yes'
 wo.number = true
 wo.relativenumber = true
-vim.diagnostic.config { float = { border = 'rounded' } }
+vim.diagnostic.config { float = { border = 'single' } }

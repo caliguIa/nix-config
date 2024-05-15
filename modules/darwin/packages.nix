@@ -1,8 +1,12 @@
 { pkgs }:
 
 with pkgs;
-let shared-packages = import ../shared/packages.nix { inherit pkgs; };
-in shared-packages ++ [
+let
+  shared-packages = import ../shared/packages.nix { inherit pkgs; };
+in
+shared-packages
+++ [
+  aldente
   discord
   grandperspective
   keka

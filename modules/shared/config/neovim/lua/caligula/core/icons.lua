@@ -69,4 +69,12 @@ M.test = {
     skipped = 'ﰸ ',
 }
 
+M.git = {
+    LineAdded = '',
+    LineModified = '',
+    LineRemoved = '',
+    LineLeft = '▎',
+    LineMiddle = '│',
+}
+
 return M

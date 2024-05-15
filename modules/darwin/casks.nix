@@ -8,6 +8,7 @@ _:
   "karabiner-elements"
   "meetingbar"
   "mullvadvpn"
+  # "nikitabobko/tap/aerospace"
   "onyx"
   "obsidian"
   "tableplus"

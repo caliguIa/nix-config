@@ -12,7 +12,6 @@ return {
                 'folke/neodev.nvim',
                 opts = {
                     library = {
-
                         plugins = {
                             'neotest',
                             'nvim-treesitter',
@@ -47,21 +46,25 @@ return {
                         vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                     end
 
-                    map('gd', function()
-                        fzf_lua.lsp_definitions { jump_to_single_result = true }
-                    end, '[G]oto [D]efinition')
+                    map(
+                        'gd',
+                        function() fzf_lua.lsp_definitions { jump_to_single_result = true } end,
+                        '[G]oto [D]efinition'
+                    )
 
-                    map('gr', function()
-                        fzf_lua.lsp_references { jump_to_single_result = true }
-                    end, '[G]oto [R]eferences')
+                    map(
+                        'gr',
+                        function() fzf_lua.lsp_references { jump_to_single_result = true } end,
+                        '[G]oto [R]eferences'
+                    )
 
-                    map('gi', function()
-                        fzf_lua.lsp_implementations { jump_to_single_result = true }
-                    end, '[G]oto [I]mplementation')
+                    map(
+                        'gi',
+                        function() fzf_lua.lsp_implementations { jump_to_single_result = true } end,
+                        '[G]oto [I]mplementation'
+                    )
 
-                    map('gt', function()
-                        fzf_lua.lsp_typedefs { jump_to_single_result = true }
-                    end, 'Type [D]efinition')
+                    map('gt', function() fzf_lua.lsp_typedefs { jump_to_single_result = true } end, 'Type [D]efinition')
 
                     map('<leader>ds', fzf_lua.lsp_document_symbols, '[D]ocument [S]ymbols')
                     map('<leader>ws', fzf_lua.lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -175,7 +178,7 @@ return {
                 'pint',
             })
 
-            require('mason').setup { ui = { border = 'rounded' } }
+            require('mason').setup { ui = { border = 'single' } }
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
             require('mason-lspconfig').setup {
                 handlers = {
@@ -200,14 +203,23 @@ return {
 
             vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics,
-                { underline = true, virtual_text = false, signs = true, update_in_insert = false }
+                { underline = true, virtual_text = false, signs = false, update_in_insert = false }
             )
 
-            require('lspconfig.ui.windows').default_options.border = 'rounded'
-            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+            require('lspconfig.ui.windows').default_options.border = 'single'
+            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
             vim.lsp.handlers['textDocument/signatureHelp'] =
-                vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+                vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
         end,
+    },
+
+    {
+        'kosayoda/nvim-lightbulb',
+        opts = {
+            autocmd = {
+                enabled = true,
+            },
+        },
     },
 
     {
@@ -227,6 +239,21 @@ return {
                     includeInlayFunctionLikeReturnTypeHints = true,
                 },
             },
+        },
+    },
+
+    {
+        'dmmulroy/ts-error-translator.nvim',
+        event = { 'BufReadPre *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
+        opts = {},
+    },
+
+    {
+        'dmmulroy/tsc.nvim',
+        cmd = { 'TSC', 'TSCStop' },
+        opts = {
+            use_trouble_qflist = false,
+            run_as_monorepo = false,
         },
     },
 
@@ -263,28 +290,61 @@ return {
             vim.keymap.set('v', '<leader>lr', ':PhpRefactor<cr>')
         end,
     },
+
     -- {
-    --     'adalessa/laravel.nvim',
-    --     dependencies = {
-    --         'nvim-telescope/telescope.nvim',
-    --         'tpope/vim-dotenv',
-    --         'MunifTanjim/nui.nvim',
-    --     },
-    --     cmd = { 'Artisan', 'Laravel' },
+    --     'phpactor/phpactor',
+    --     build = 'composer install --no-dev --optimize-autoloader',
+    --     ft = 'php',
     --     keys = {
-    --         { '<leader>la', ':Laravel artisan<cr>' },
-    --         { '<leader>lr', ':Laravel routes<cr>' },
-    --         { '<leader>lR', ':Laravel related<cr>' },
+    --         { '<Leader>pm', ':PhpactorContextMenu<CR>' },
+    --         { '<Leader>pn', ':PhpactorClassNew<CR>' },
     --     },
-    --     event = { 'VeryLazy' },
-    --     opts = {
-    --         lsp_server = 'phpactor',
-    --         features = {
-    --             null_ls = {
-    --                 enable = false,
-    --             },
-    --         },
-    --     },
-    --     config = true,
     -- },
+    {
+        'adalessa/laravel.nvim',
+        ft = 'php',
+        dependencies = {
+            'nvim-telescope/telescope.nvim',
+            'tpope/vim-dotenv',
+            'MunifTanjim/nui.nvim',
+            'rcarriga/nvim-notify',
+        },
+        cmd = { 'Sail', 'Artisan', 'Composer', 'Npm', 'Laravel', 'LaravelInfo' },
+        keys = {
+            { '<leader>la', ':Laravel artisan<cr>' },
+            { '<leader>lr', ':Laravel routes<cr>' },
+            { '<leader>lR', ':Laravel related<cr>' },
+        },
+        event = { 'VeryLazy' },
+        config = function()
+            require('laravel').setup {
+                lsp_server = 'intelephense',
+                features = {
+                    null_ls = {
+                        enable = false,
+                    },
+                },
+                route_info = {
+                    position = 'top',
+                },
+                ui = require 'laravel.config.ui',
+                commands_options = require 'laravel.config.command_options',
+                environments = require 'laravel.config.environments',
+                user_commands = require 'laravel.config.user_commands',
+                resources = require 'laravel.config.resources',
+                -- environment = {
+                --     environments = {
+                --         ['ao'] = require('laravel.environment.docker_compose').setup {
+                --             container_name = 'panel-webserver',
+                --             cmd = { 'docker', 'compose', 'exec', '-u', user_arg, '-it', 'panel-webserver' },
+                --         },
+                --     },
+                -- },
+            }
+            local tele_status_ok, telescope = pcall(require, 'telescope')
+            if not tele_status_ok then return end
+
+            telescope.load_extension 'laravel'
+        end,
+    },
 }

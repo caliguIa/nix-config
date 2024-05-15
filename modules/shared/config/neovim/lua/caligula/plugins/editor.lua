@@ -2,14 +2,32 @@ local icons = require 'caligula.core.icons'
 
 return {
     {
-        'folke/flash.nvim',
-        event = 'VeryLazy',
-        opts = {},
-        -- stylua: ignore
+        'ggandor/flit.nvim',
+        keys = function()
+            local ret = {}
+            for _, key in ipairs { 'f', 'F', 't', 'T' } do
+                ret[#ret + 1] = { key, mode = { 'n', 'x', 'o' }, desc = key }
+            end
+            return ret
+        end,
+        opts = { labeled_modes = 'nx' },
+    },
+    {
+        'ggandor/leap.nvim',
         keys = {
-          { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-          { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+            { 's', mode = { 'n', 'x', 'o' }, desc = 'Leap Forward to' },
+            { 'S', mode = { 'n', 'x', 'o' }, desc = 'Leap Backward to' },
+            { 'gs', mode = { 'n', 'x', 'o' }, desc = 'Leap from Windows' },
         },
+        config = function(_, opts)
+            local leap = require 'leap'
+            for k, v in pairs(opts) do
+                leap.opts[k] = v
+            end
+            leap.add_default_mappings(true)
+            vim.keymap.del({ 'x', 'o' }, 'x')
+            vim.keymap.del({ 'x', 'o' }, 'X')
+        end,
     },
 
     {
@@ -18,16 +36,15 @@ return {
         -- stylua: ignore
         keys = {
             { "<leader>s.", "<cmd>FzfLua resume<cr>", desc = "Resume last command" },
-            { "<leader>s/", function() require("fzf-lua").lgrep_curbuf({ winopts = { height = 0.8, width = 0.7, preview = { vertical = "up:70%" }, }, }) end, desc = "Grep current buffer", },
-            { "<leader>sc", function() require('fzf-lua').highlights({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Highlights" },
-            { "<leader>sd", function() require('fzf-lua').lsp_document_diagnostics({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Document diagnostics" },
-            { "<leader>sD", function() require('fzf-lua').lsp_workspace_diagnostics({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Workspace diagnostics" },
-            { "<leader>sf", function() require('fzf-lua').files({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Files" },
-            { "<leader>sg", function() require('fzf-lua').live_grep_glob({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Live Grep" },
-            { "<leader>sv", function() require('fzf-lua').grep_visual({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Visual Grep", mode = "x" },
-            { "<leader>sh", function() require('fzf-lua').help_tags({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Help" },
-            { "<leader>sb", function() require('fzf-lua').buffers({ fzf_opts = { ['--keep-right'] = '' }}) end, desc = "Buffers" },
-            -- { "<leader>sr", function() vim.cmd("rshada!") require("fzf-lua").oldfiles() end, desc = "Recently opened files", },
+            { "<leader>s/", function() require("fzf-lua").lgrep_curbuf() end, desc = "Grep current buffer" },
+            { "<leader>sc", function() require('fzf-lua').highlights() end, desc = "Highlights" },
+            { "<leader>sd", function() require('fzf-lua').lsp_document_diagnostics() end, desc = "Document diagnostics" },
+            { "<leader>sD", function() require('fzf-lua').lsp_workspace_diagnostics() end, desc = "Workspace diagnostics" },
+            { "<leader>sf", function() require('fzf-lua').files() end, desc = "Files" },
+            { "<leader>sg", function() require('fzf-lua').live_grep_glob() end, desc = "Live Grep" },
+            { "<leader>sv", function() require('fzf-lua').grep_visual() end, desc = "Visual Grep", mode = "x" },
+            { "<leader>sh", function() require('fzf-lua').help_tags() end, desc = "Help" },
+            { "<leader>sb", function() require('fzf-lua').buffers() end, desc = "Buffers" },
         },
 
         opts = function()
@@ -44,7 +61,6 @@ return {
                     ['separator'] = { 'fg', 'Comment' },
                 },
                 fzf_opts = {
-                    ['--info'] = 'hidden',
                     ['--layout'] = 'reverse-list',
                     ['--keep-right'] = '',
                 },
@@ -55,10 +71,6 @@ return {
                         ['<C-i>'] = 'toggle-preview',
                         ['<C-f>'] = 'preview-page-down',
                         ['<C-b>'] = 'preview-page-up',
-                    },
-                    fzf = {
-                        ['alt-s'] = 'toggle',
-                        ['alt-a'] = 'toggle-all',
                     },
                 },
                 winopts = {
@@ -89,12 +101,6 @@ return {
                 lsp = {
                     symbols = {
                         symbol_icons = icons.symbol_kinds,
-                    },
-                },
-                oldfiles = {
-                    include_current_session = true,
-                    winopts = {
-                        preview = { hidden = 'hidden' },
                     },
                 },
             }
@@ -181,11 +187,15 @@ return {
             { "<leader>sr", function() require("spectre").open() end, desc = "[S]earch & [r]eplace" },
         },
     },
-
+    -- TEST:
     {
         'folke/todo-comments.nvim',
         event = { 'BufReadPost', 'BufNewFile' },
-        opts = {},
+        opts = {
+            keywords = {
+                TODO = { icon = icons.diagnostics.info, color = 'warning', alt = { 'todo' } },
+            },
+        },
     },
 
     {
@@ -249,9 +259,12 @@ return {
             require('illuminate').configure(opts)
 
             local function map(key, dir, buffer)
-                vim.keymap.set('n', key, function()
-                    require('illuminate')['goto_' .. dir .. '_reference'](false)
-                end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. ' Reference', buffer = buffer })
+                vim.keymap.set(
+                    'n',
+                    key,
+                    function() require('illuminate')['goto_' .. dir .. '_reference'](false) end,
+                    { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. ' Reference', buffer = buffer }
+                )
             end
 
             map(']]', 'next')
@@ -269,6 +282,57 @@ return {
         keys = {
             { ']]', desc = 'Next Reference' },
             { '[[', desc = 'Prev Reference' },
+        },
+    },
+
+    {
+        'kevinhwang91/nvim-bqf',
+        ft = 'qf',
+        cmd = 'BqfAutoToggle',
+        event = 'QuickFixCmdPost',
+        opts = {},
+    },
+    -- {
+    --     'ahmedkhalf/project.nvim', -- Automatically set the cwd to the project root
+    --     config = function()
+    --         require('project_nvim').setup {}
+    --     end,
+    -- },
+    --
+    {
+        'kndndrj/nvim-dbee',
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+        },
+        build = function()
+            -- Install tries to automatically detect the install method.
+            -- if it fails, try calling it with one of these parameters:
+            --    "curl", "wget", "bitsadmin", "go"
+            require('dbee').install()
+        end,
+        opts = {},
+        -- stylua: ignore
+        keys = {
+            { '<leader>db', function() require('dbee').toggle() end, mode = 'n', desc = 'Open DBee' },
+        },
+    },
+
+    {
+        'RaafatTurki/corn.nvim',
+        event = 'LspAttach',
+        opts = {
+            icons = {
+                error = icons.diagnostics.error,
+                warn = icons.diagnostics.warn,
+                hint = icons.diagnostics.hint,
+                info = icons.diagnostics.info,
+            },
+            item_preprocess_func = function(item) return item end,
+        },
+        -- stylua: ignore
+        keys = {
+            { '<leader>Et', function() require 'corn'.toggle() end, desc = '[E]rrors [t]oggle' },
+            { '<leader>Es', function() require 'corn'.scope_cycle() end, desc = '[E]rrors [s]cope' },
         },
     },
 }

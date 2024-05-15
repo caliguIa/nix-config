@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   enable = true;
   keyMode = "vi";
   mouse = true;
@@ -7,7 +8,10 @@
   prefix = "C-space";
   escapeTime = 10;
   historyLimit = 50000;
-  plugins = with pkgs.tmuxPlugins; [ sensible yank ];
+  plugins = with pkgs.tmuxPlugins; [
+    sensible
+    yank
+  ];
   extraConfig = ''
     #set -ag terminal-overrides ",xterm-256color:RGB"
     #set-option -sa terminal-features ',alacritty:RGB'
@@ -50,6 +54,7 @@
     bind-key l select-pane -R
     bind-key g display-popup -w 90% -h 90% "gitui"
     bind-key t display-popup -E "tmux new-session -A -s scratch"
+    bind-key e display-popup -E "taskell ~/tmp/taskell.md"
     bind-key o display-popup -E "tms"
     bind-key s display-popup -E "tms switch"
     bind-key w display-popup -E "tms windows"
