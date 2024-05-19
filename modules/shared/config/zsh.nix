@@ -65,6 +65,8 @@
       . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
     fi
 
+    [[ ! -r /Users/caligula/.opam/opam-init/init.zsh ]] || source /Users/caligula/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
     export PATH="/opt/homebrew/bin:$PATH"
 
     nixmv() {

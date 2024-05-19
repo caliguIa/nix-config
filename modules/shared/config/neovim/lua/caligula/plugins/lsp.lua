@@ -1,5 +1,15 @@
 local diagnostics_icons = require('caligula.core.icons').diagnostics
 
+local jsLinters = {
+    'eslint',
+    'eslint_d',
+}
+
+local root_dir = function()
+    return require('lspconfig.util').root_pattern '.eslintrc.json'(vim.api.nvim_buf_get_name(0))
+    -- return require('lspconfig.util').find_git_ancestor(vim.fn.getcwd())
+end
+
 return {
     {
         'neovim/nvim-lspconfig',
@@ -131,6 +141,8 @@ return {
                 gopls = {},
                 marksman = {},
                 nil_ls = {},
+                ocamllsp = {},
+                reason_ls = {},
                 eslint = {
                     settings = {
                         workingDirectories = { mode = 'auto' },
@@ -176,6 +188,7 @@ return {
                 'prettierd',
                 'prettier',
                 'pint',
+                'ocamlformat',
             })
 
             require('mason').setup { ui = { border = 'single' } }
@@ -205,6 +218,7 @@ return {
                 vim.lsp.diagnostic.on_publish_diagnostics,
                 { underline = true, virtual_text = false, signs = false, update_in_insert = false }
             )
+            vim.diagnostic.config { virtual_text = false, signs = false, underline = true }
 
             require('lspconfig.ui.windows').default_options.border = 'single'
             vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
@@ -257,19 +271,6 @@ return {
         },
     },
 
-    -- {
-    --     ft = { 'php' },
-    --     'ccaglak/namespace.nvim',
-    --     keys = {
-    --         { '<leader>lc', '<cmd>lua require("namespace.getClass").get()<cr>', { desc = 'GetClass' } },
-    --         { '<leader>la', '<cmd>lua require("namespace.getClasses").get()<cr>', { desc = 'GetClasses' } },
-    --         { '<leader>ls', '<cmd>lua require("namespace.classAs").open()<cr>', { desc = 'ClassAs' } },
-    --         { '<leader>ln', '<cmd>lua require("namespace.namespace").gen()<cr>', { desc = 'Generate Namespace' } },
-    --     },
-    --     dependencies = {
-    --         'nvim-lua/plenary.nvim',
-    --     },
-    -- },
     {
         'ccaglak/phptools.nvim',
         keys = {
@@ -291,15 +292,6 @@ return {
         end,
     },
 
-    -- {
-    --     'phpactor/phpactor',
-    --     build = 'composer install --no-dev --optimize-autoloader',
-    --     ft = 'php',
-    --     keys = {
-    --         { '<Leader>pm', ':PhpactorContextMenu<CR>' },
-    --         { '<Leader>pn', ':PhpactorClassNew<CR>' },
-    --     },
-    -- },
     {
         'adalessa/laravel.nvim',
         ft = 'php',
@@ -317,8 +309,10 @@ return {
         },
         event = { 'VeryLazy' },
         config = function()
+            ---@diagnostic disable-next-line: missing-fields
             require('laravel').setup {
                 lsp_server = 'intelephense',
+                ---@diagnostic disable-next-line: missing-fields
                 features = {
                     null_ls = {
                         enable = false,
@@ -345,6 +339,56 @@ return {
             if not tele_status_ok then return end
 
             telescope.load_extension 'laravel'
+        end,
+    },
+
+    {
+        'mfussenegger/nvim-lint',
+        event = { 'BufReadPre *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
+        config = function()
+            local lint = require 'lint'
+
+            lint.linters_by_ft = {
+                -- lua = { 'selene' },
+                php = { 'php' },
+
+                javascript = jsLinters,
+                typescript = jsLinters,
+                javascriptreact = jsLinters,
+                typescriptreact = jsLinters,
+            }
+            local eslint = lint.linters.eslint_d
+            eslint.stdin = true
+            -- eslint.args = {
+            --     '--no-warn-ignored', -- <-- this is the key argument
+            --     '--format',
+            --     'json',
+            --     '--config=' .. root_dir() .. '/.eslintrc.json',
+            --     '--stdin',
+            --     '--stdin-filename',
+            --     function() return vim.api.nvim_buf_get_name(0) end,
+            -- }
+
+            local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+
+            vim.api.nvim_create_autocmd({
+                'BufEnter',
+                'BufWritePre',
+                'BufWritePost',
+                'InsertEnter',
+                'InsertLeave',
+                'TextChanged',
+            }, {
+                group = lint_augroup,
+                callback = function()
+                    -- lint.try_lint()
+                    lint.try_lint('eslint_d', { cwd = root_dir() })
+                    -- lint.try_lint('eslint_d', { cwd = vim.fn.getcwd() .. '/resources/client' })
+                    -- lint.try_lint('eslint', { cwd = vim.fn.getcwd() .. '/resources/client' })
+                end,
+            })
+
+            -- vim.keymap.set('n', '<leader>ll', function() lint.try_lint() end, { desc = 'Trigger linting for current file' })
         end,
     },
 }

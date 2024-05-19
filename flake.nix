@@ -10,7 +10,6 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # flake-parts.url = "github:hercules-ci/flake-parts";
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };
@@ -26,10 +25,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    # homeebrew-aerospace = {
-    #   url = "github:nikitabobko/homebrew-tap";
-    #   flake = false;
-    # };
   };
 
   outputs =
@@ -41,9 +36,7 @@
       homebrew-core,
       homebrew-cask,
       home-manager,
-      # homeebrew-aerospace,
       nixpkgs,
-      flake-parts,
     }@inputs:
     let
       darwinSystems = [ "aarch64-darwin" ];

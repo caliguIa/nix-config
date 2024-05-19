@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-let user = "caligula"; in
+let
+  user = "caligula";
+in
 
 {
 
@@ -15,13 +17,20 @@ let user = "caligula"; in
 
   # Setup user, packages, programs
   nix = {
-    package = pkgs.nixUnstable;
-    settings.trusted-users = [ "@admin" "${user}" ];
+    package = pkgs.nixVersions.git;
+    settings.trusted-users = [
+      "@admin"
+      "${user}"
+    ];
 
     gc = {
       user = "root";
       automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
       options = "--delete-older-than 30d";
     };
 
@@ -97,7 +106,7 @@ let user = "caligula"; in
 
       dock = {
         orientation = "bottom";
-        autohide-delay = 5.00;
+        autohide-delay = 5.0;
         autohide = true;
         launchanim = false;
         mru-spaces = false;

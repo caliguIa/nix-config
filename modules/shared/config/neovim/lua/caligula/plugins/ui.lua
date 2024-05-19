@@ -104,28 +104,16 @@ return {
             extensions = { 'trouble' },
             sections = {
                 lualine_a = { 'branch' },
-                lualine_b = {},
-                lualine_c = { 'copilot', lsp },
+                lualine_b = { 'filename' },
+                lualine_c = {},
                 lualine_x = {
+                    lsp,
+                    'copilot',
                     'progress',
                     { require('lazy.status').updates, cond = require('lazy.status').has_updates },
                     diff,
                     diagnostics,
                 },
-                lualine_y = {},
-                lualine_z = {},
-            },
-            inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = {
-                    {
-                        'filename',
-                        file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-                    },
-                },
-                lualine_x = { 'location' },
                 lualine_y = {},
                 lualine_z = {},
             },
@@ -290,6 +278,16 @@ return {
                 },
             },
         },
+        -- config = function(_, opts)
+        --     require('indent_blankline').setup(opts)
+        --     vim.api.nvim_create_autocmd('BufEnter', {
+        --         group = vim.api.nvim_create_augroup('IndentBlanklineBigFile', {}),
+        --         pattern = '*',
+        --         callback = function()
+        --             if vim.api.nvim_buf_line_count(0) > 1000 then require('indent_blankline.commands').disable() end
+        --         end,
+        --     })
+        -- end,
     },
 
     {
