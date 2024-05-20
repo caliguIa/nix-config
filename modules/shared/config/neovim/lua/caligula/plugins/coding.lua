@@ -1,7 +1,8 @@
 return {
     {
         'hrsh7th/nvim-cmp',
-        event = 'InsertEnter',
+        lazy = false,
+        priority = 100,
         dependencies = {
             'hrsh7th/cmp-buffer', -- source for text in buffer
             'hrsh7th/cmp-path', -- source for file system paths
@@ -9,13 +10,7 @@ return {
             'saadparwaiz1/cmp_luasnip', -- for autocompletion
             'rafamadriz/friendly-snippets', -- useful snippets
             'onsails/lspkind.nvim', -- vs-code like pictograms
-            {
-                'L3MON4D3/LuaSnip',
-                -- follow latest release.
-                version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-                -- install jsregexp (optional!).
-                build = 'make install_jsregexp',
-            },
+            { 'L3MON4D3/LuaSnip', version = 'v2.*', build = 'make install_jsregexp' },
         },
         config = function()
             local cmp = require 'cmp'
@@ -25,16 +20,12 @@ return {
             require('luasnip.loaders.from_vscode').lazy_load()
             luasnip.config.setup {}
 
-            -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-
             cmp.setup {
                 completion = {
                     completeopt = 'menu,menuone,noinsert',
                 },
                 snippet = { -- configure how nvim-cmp interacts with snippet engine
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end,
+                    expand = function(args) luasnip.lsp_expand(args.body) end,
                 },
                 mapping = cmp.mapping.preset.insert {
                     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -64,7 +55,7 @@ return {
 
     {
         'echasnovski/mini.pairs',
-        event = 'VeryLazy',
+        lazy = false,
         opts = {
             mappings = {
                 ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\`].', register = { cr = false } },
@@ -74,33 +65,26 @@ return {
 
     {
         'echasnovski/mini.surround',
+        lazy = false,
         keys = function(_, keys)
             -- Populate the keys based on the user's options
             local plugin = require('lazy.core.config').spec.plugins['mini.surround']
             local opts = require('lazy.core.plugin').values(plugin, 'opts', false)
             local mappings = {
-                { opts.mappings.add, desc = 'Add Surrounding', mode = { 'n', 'v' } },
-                { opts.mappings.delete, desc = 'Delete Surrounding' },
-                { opts.mappings.find, desc = 'Find Right Surrounding' },
-                { opts.mappings.find_left, desc = 'Find Left Surrounding' },
+                { opts.mappings.add, desc = 'Add Surrounding', mode = { 'v' } },
+                { opts.mappings.delete, desc = 'Delete Surrounding', mode = { 'n' } },
                 { opts.mappings.highlight, desc = 'Highlight Surrounding' },
                 { opts.mappings.replace, desc = 'Replace Surrounding' },
-                { opts.mappings.update_n_lines, desc = 'Update `MiniSurround.config.n_lines`' },
             }
-            mappings = vim.tbl_filter(function(m)
-                return m[1] and #m[1] > 0
-            end, mappings)
+            mappings = vim.tbl_filter(function(m) return m[1] and #m[1] > 0 end, mappings)
             return vim.list_extend(mappings, keys)
         end,
         opts = {
             mappings = {
                 add = 'gsa', -- Add surrounding in Normal and Visual modes
                 delete = 'gsd', -- Delete surrounding
-                find = 'gsf', -- Find surrounding (to the right)
-                find_left = 'gsF', -- Find surrounding (to the left)
                 highlight = 'gsh', -- Highlight surrounding
                 replace = 'gsr', -- Replace surrounding
-                update_n_lines = 'gsn', -- Update `n_lines`
             },
         },
     },
@@ -113,7 +97,7 @@ return {
     },
     {
         'echasnovski/mini.comment',
-        event = 'VeryLazy',
+        lazy = false,
         opts = {
             options = {
                 custom_commentstring = function()
@@ -126,8 +110,7 @@ return {
 
     {
         'zbirenbaum/copilot.lua',
-        cmd = 'Copilot',
-        event = 'InsertEnter',
+        lazy = false,
         opts = {
             suggestion = {
                 enabled = true,
@@ -147,7 +130,7 @@ return {
     },
     {
         'CopilotC-Nvim/CopilotChat.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
+        cmd = 'CopilotChat',
         branch = 'canary',
         dependencies = {
             { 'zbirenbaum/copilot.lua' },

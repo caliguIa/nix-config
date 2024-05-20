@@ -17,6 +17,5 @@ shared-packages
   rectangle
   slack
   spotify
-  stats
   utm
 ]

@@ -3,9 +3,7 @@ local jsFormatter = { { 'prettierd', 'prettier' }, 'eslint' }
 return {
     {
         'stevearc/conform.nvim',
-        lazy = true,
-        event = { 'BufWritePre', 'BufNewFile' },
-        cmd = { 'ConformInfo' },
+        lazy = false,
         opts = {
             formatters_by_ft = {
                 lua = { 'stylua' },
@@ -78,12 +76,4 @@ return {
             )
         end,
     },
-
-    -- {
-    --     'oliverhkraft/nvim-pint',
-    --     opts = {
-    --         silent = true,
-    --         exclude_folders = { 'resources/views' },
-    --     },
-    -- },
 }

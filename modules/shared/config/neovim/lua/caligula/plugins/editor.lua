@@ -3,6 +3,7 @@ local icons = require 'caligula.core.icons'
 return {
     {
         'ggandor/flit.nvim',
+        lazy = false,
         keys = function()
             local ret = {}
             for _, key in ipairs { 'f', 'F', 't', 'T' } do
@@ -14,6 +15,7 @@ return {
     },
     {
         'ggandor/leap.nvim',
+        lazy = false,
         keys = {
             { 's', mode = { 'n', 'x', 'o' }, desc = 'Leap Forward to' },
             { 'S', mode = { 'n', 'x', 'o' }, desc = 'Leap Backward to' },
@@ -32,6 +34,7 @@ return {
 
     {
         'ibhagwan/fzf-lua',
+        lazy = false,
         cmd = 'FzfLua',
         -- stylua: ignore
         keys = {
@@ -107,16 +110,9 @@ return {
         end,
     },
 
-    -- {
-    --     "m4xshen/hardtime.nvim",
-    --     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    --     opts = {
-    --         disabled_filetypes = { "qf", "NeogitStatus", "octo", "lazy", "mason", "oil", "copilot-chat" },
-    --     },
-    -- },
-
     {
         'ThePrimeagen/harpoon',
+        lazy = false,
         dependencies = {
             'nvim-lua/plenary.nvim',
         },
@@ -134,17 +130,33 @@ return {
 
     {
         'kevinhwang91/nvim-hlslens',
+        lazy = false,
         opts = {},
         keys = {
-            { '*', "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>" },
-            { '#', "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>" },
-            { 'g*', "<Cmd>execute('normal! ' . v:count1 . 'g*')<CR><Cmd>lua require('hlslens').start()<CR>" },
-            { 'g#', "<Cmd>execute('normal! ' . v:count1 . 'g#')<CR><Cmd>lua require('hlslens').start()<CR>" },
+            {
+                'n',
+                [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+                silent = true,
+                noremap = true,
+                mode = 'n',
+            },
+            {
+                'N',
+                [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+                silent = true,
+                noremap = true,
+                mode = 'n',
+            },
+            { '*', [[*<Cmd>lua require('hlslens').start()<CR>]], silent = true, noremap = true, mode = 'n' },
+            { '#', [[#<Cmd>lua require('hlslens').start()<CR>]], silent = true, noremap = true, mode = 'n' },
+            { 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], silent = true, noremap = true, mode = 'n' },
+            { 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], silent = true, noremap = true, mode = 'n' },
         },
     },
 
     {
         'stevearc/oil.nvim',
+        lazy = false,
         opts = {
             default_file_explorer = true,
             columns = { 'icon' },
@@ -168,29 +180,30 @@ return {
     },
 
     {
-        'cshuaimin/ssr.nvim',
-        -- stylua: ignore
-        keys = {
-            { "<leader>sR", function() require("ssr").open() end, mode = { "n", "x" }, desc = "Structural Replace", },
-        },
+        'MagicDuck/grug-far.nvim',
+        lazy = false,
         opts = {},
-    },
-    {
-        'nvim-pack/nvim-spectre',
-        cmd = 'Spectre',
-        opts = {
-            open_cmd = 'noswapfile vnew',
-            default = { replace = { cmd = 'sd' } },
-        },
-        -- stylua: ignore
         keys = {
-            { "<leader>sr", function() require("spectre").open() end, desc = "[S]earch & [r]eplace" },
+            {
+                '<leader>sR',
+                '<CMD>lua require("grug-far").grug_far({ prefills = { search = vim.fn.expand("<cword>") } })<CR>',
+                desc = '[S]earch & [R]eplace project',
+                silent = true,
+                mode = { 'n', 'v' },
+            },
+            {
+                '<leader>sr',
+                '<CMD>lua require("grug-far").grug_far({ prefills = { flags = vim.fn.expand("%"), search = vim.fn.expand("<cword>") } })<CR>',
+                desc = '[S]earch & [R]eplace buffer',
+                silent = true,
+                mode = { 'n', 'v' },
+            },
         },
     },
-    -- TEST:
+
     {
         'folke/todo-comments.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
+        lazy = false,
         opts = {
             keywords = {
                 TODO = { icon = icons.diagnostics.info, color = 'warning', alt = { 'todo' } },
@@ -200,7 +213,7 @@ return {
 
     {
         'folke/trouble.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
+        lazy = false,
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = { use_diagnostic_signs = true },
         -- stylua: ignore
@@ -215,6 +228,7 @@ return {
 
     {
         'jiaoshijie/undotree',
+        lazy = false,
         dependencies = 'nvim-lua/plenary.nvim',
         config = true,
         -- stylua: ignore
@@ -225,12 +239,13 @@ return {
 
     {
         'folke/which-key.nvim',
-        event = 'VeryLazy',
+        lazy = false,
         opts = {},
     },
 
     {
         'anuvyklack/windows.nvim',
+        lazy = false,
         dependencies = { 'anuvyklack/middleclass' },
         opts = {
             autowidth = {
@@ -245,81 +260,11 @@ return {
         },
     },
 
-    {
-        'RRethy/vim-illuminate',
-        event = { 'BufReadPost', 'BufNewFile' },
-        opts = {
-            delay = 200,
-            large_file_cutoff = 2000,
-            large_file_overrides = {
-                providers = { 'lsp' },
-            },
-        },
-        config = function(_, opts)
-            require('illuminate').configure(opts)
-
-            local function map(key, dir, buffer)
-                vim.keymap.set(
-                    'n',
-                    key,
-                    function() require('illuminate')['goto_' .. dir .. '_reference'](false) end,
-                    { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. ' Reference', buffer = buffer }
-                )
-            end
-
-            map(']]', 'next')
-            map('[[', 'prev')
-
-            -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-            vim.api.nvim_create_autocmd('FileType', {
-                callback = function()
-                    local buffer = vim.api.nvim_get_current_buf()
-                    map(']]', 'next', buffer)
-                    map('[[', 'prev', buffer)
-                end,
-            })
-        end,
-        keys = {
-            { ']]', desc = 'Next Reference' },
-            { '[[', desc = 'Prev Reference' },
-        },
-    },
-
-    {
-        'kevinhwang91/nvim-bqf',
-        ft = 'qf',
-        cmd = 'BqfAutoToggle',
-        event = 'QuickFixCmdPost',
-        opts = {},
-    },
-    -- {
-    --     'ahmedkhalf/project.nvim', -- Automatically set the cwd to the project root
-    --     config = function()
-    --         require('project_nvim').setup {}
-    --     end,
-    -- },
-    --
-    {
-        'kndndrj/nvim-dbee',
-        dependencies = {
-            'MunifTanjim/nui.nvim',
-        },
-        build = function()
-            -- Install tries to automatically detect the install method.
-            -- if it fails, try calling it with one of these parameters:
-            --    "curl", "wget", "bitsadmin", "go"
-            require('dbee').install()
-        end,
-        opts = {},
-        -- stylua: ignore
-        keys = {
-            { '<leader>db', function() require('dbee').toggle() end, mode = 'n', desc = 'Open DBee' },
-        },
-    },
+    { 'echasnovski/mini.cursorword', version = false, opts = {}, lazy = false },
 
     {
         'RaafatTurki/corn.nvim',
-        event = 'LspAttach',
+        lazy = false,
         opts = {
             icons = {
                 error = icons.diagnostics.error,
@@ -335,4 +280,33 @@ return {
             { '<leader>Es', function() require 'corn'.scope_cycle() end, desc = '[E]rrors [s]cope' },
         },
     },
+
+    {
+        'folke/persistence.nvim',
+        lazy = false,
+        opts = { options = vim.opt.sessionoptions:get() },
+        -- stylua: ignore
+        keys = {
+          { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
+          { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+          { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+        },
+    },
+
+    {
+        'sontungexpt/url-open',
+        event = 'VeryLazy',
+        lazy = false,
+        cmd = 'URLOpenUnderCursor',
+        opts = {},
+        keys = {
+            { 'gx', '<ESC>:URLOpenUnderCursor<CR>', mode = { 'n' }, desc = 'Open URL under cursor' },
+        },
+    },
+
+    'tpope/vim-sleuth',
+
+    'nvim-lua/plenary.nvim',
+
+    { 'echasnovski/mini.basics', version = '*' },
 }

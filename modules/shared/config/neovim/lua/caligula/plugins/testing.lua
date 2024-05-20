@@ -2,7 +2,7 @@ local test_icons = require('caligula.core.icons').test
 
 return {
     'nvim-neotest/neotest',
-    lazy = true,
+    lazy = false,
     dependencies = {
         'nvim-neotest/nvim-nio',
         'nvim-lua/plenary.nvim',

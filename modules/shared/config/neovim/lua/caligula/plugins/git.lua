@@ -3,15 +3,14 @@ local icon = require('caligula.core.icons').misc.vertical_bar
 return {
     {
         'sindrets/diffview.nvim',
-        event = 'VeryLazy',
-        cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
+        lazy = false,
         opts = {},
         keys = { { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'DiffView' } },
     },
 
     {
         'lewis6991/gitsigns.nvim',
-        event = { 'BufReadPre', 'BufNewFile' },
+        lazy = false,
         opts = {
             signs = {
                 add = { text = icon },
@@ -45,13 +44,13 @@ return {
 
     {
         'NeogitOrg/neogit',
+        lazy = false,
         dependencies = {
             'nvim-lua/plenary.nvim', -- required
             'sindrets/diffview.nvim', -- optional - Diff integration
             'ibhagwan/fzf-lua',
             -- "nvim-telescope/telescope.nvim", -- optional
         },
-        event = { 'BufReadPost', 'BufNewFile' },
         opts = {},
         -- stylua: ignore
         keys = {
@@ -61,37 +60,10 @@ return {
         },
     },
 
-    -- {
-    --     'pwntester/octo.nvim',
-    --     cmd = 'Octo',
-    --     event = 'VeryLazy',
-    --     dependencies = {
-    --         'nvim-lua/plenary.nvim',
-    --         'ibhagwan/fzf-lua',
-    --         'nvim-tree/nvim-web-devicons',
-    --     },
-    --     opts = { picker = 'fzf-lua', picker_config = { use_emojis = true } },
-    -- },
-
     {
         'FabijanZulj/blame.nvim',
-        event = { 'BufReadPre', 'BufNewFile' },
+        lazy = false,
         opts = {},
         keys = { { '<leader>gb', '<CMD>BlameToggle<CR>', desc = '[G]it [B]lame' } },
-    },
-
-    {
-        'ldelossa/gh.nvim',
-        dependencies = {
-            {
-                'ldelossa/litee.nvim',
-                config = function()
-                    require('litee.lib').setup()
-                end,
-            },
-        },
-        config = function()
-            require('litee.gh').setup()
-        end,
     },
 }

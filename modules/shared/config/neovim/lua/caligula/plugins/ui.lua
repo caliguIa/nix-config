@@ -89,7 +89,7 @@ local lsp = {
 return {
     {
         'nvim-lualine/lualine.nvim',
-        event = { 'BufReadPre', 'BufNewFile' },
+        lazy = false,
         dependencies = {
             'AndreM222/copilot-lualine',
         },
@@ -122,7 +122,7 @@ return {
 
     {
         'nvimdev/dashboard-nvim',
-        event = 'VimEnter',
+        lazy = false,
         opts = function()
             local logo = [[ neobim ]]
             logo = string.rep('\n', 8) .. logo .. '\n\n'
@@ -181,7 +181,7 @@ return {
 
     {
         'stevearc/dressing.nvim',
-        lazy = true,
+        lazy = false,
         opts = {
             border = 'single',
             input = {
@@ -243,21 +243,21 @@ return {
         end,
     },
 
-    {
-        'brenoprata10/nvim-highlight-colors',
-        event = { 'BufReadPost', 'BufWritePost' },
-        config = function()
-            require('nvim-highlight-colors').setup {
-                render = 'virtual',
-                virtual_symbol = icons.misc.circle,
-                enable_tailwind = true,
-            }
-        end,
-    },
+    -- {
+    --     'brenoprata10/nvim-highlight-colors',
+    --     lazy = false,
+    --     config = function()
+    --         require('nvim-highlight-colors').setup {
+    --             render = 'virtual',
+    --             virtual_symbol = icons.misc.circle,
+    --             enable_tailwind = true,
+    --         }
+    --     end,
+    -- },
 
     {
         'lukas-reineke/indent-blankline.nvim',
-        event = { 'BufReadPre', 'BufNewFile' },
+        lazy = false,
         main = 'ibl',
         opts = {
             indent = {
@@ -275,34 +275,23 @@ return {
                     'mason',
                     'oil',
                     'Oil',
+                    'DashboardLoaded',
+                    'dashboard',
                 },
             },
         },
-        -- config = function(_, opts)
-        --     require('indent_blankline').setup(opts)
-        --     vim.api.nvim_create_autocmd('BufEnter', {
-        --         group = vim.api.nvim_create_augroup('IndentBlanklineBigFile', {}),
-        --         pattern = '*',
-        --         callback = function()
-        --             if vim.api.nvim_buf_line_count(0) > 1000 then require('indent_blankline.commands').disable() end
-        --         end,
-        --     })
-        -- end,
     },
 
     {
         'utilyre/barbecue.nvim',
         name = 'barbecue',
-        event = { 'BufReadPre', 'BufNewFile' },
+        lazy = false,
         version = '*',
         dependencies = {
             'SmiteshP/nvim-navic',
             'nvim-tree/nvim-web-devicons', -- optional dependency
         },
         config = function()
-            -- triggers CursorHold event faster
-            -- vim.opt.updatetime = 200
-
             require('barbecue').setup {
                 create_autocmd = false, -- prevent barbecue from updating itself automatically
                 theme = 'tokyonight',
@@ -310,12 +299,10 @@ return {
             }
 
             vim.api.nvim_create_autocmd({
-                'WinScrolled', -- or WinResized on NVIM-v0.9 and higher
+                'WinScrolled',
                 'BufWinEnter',
                 'CursorHold',
                 'InsertLeave',
-
-                -- include this if you have set `show_modified` to `true`
                 'BufModifiedSet',
             }, {
                 group = vim.api.nvim_create_augroup('barbecue.updater', {}),

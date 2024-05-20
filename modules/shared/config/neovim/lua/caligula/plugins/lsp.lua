@@ -13,45 +13,40 @@ end
 return {
     {
         'neovim/nvim-lspconfig',
-        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             'hrsh7th/cmp-nvim-lsp',
-            { 'j-hui/fidget.nvim', tag = 'legacy', event = 'LspAttach', opts = {} },
-            { 'antosha417/nvim-lsp-file-operations', config = true },
-            {
-                'folke/neodev.nvim',
-                opts = {
-                    library = {
-                        plugins = {
-                            'neotest',
-                            'nvim-treesitter',
-                            'plenary.nvim',
-                        },
-                        types = true,
-                    },
-                },
-                config = function()
-                    require('neodev').setup {
-                        override = function(root_dir, library)
-                            if root_dir:find('/Users/caligula/nix-config', 1, true) == 1 then
-                                library.enabled = true
-                                library.plugins = true
-                            end
-                        end,
-                    }
-                end,
-            },
+            { 'j-hui/fidget.nvim', opts = {} },
+            { 'folke/neodev.nvim' },
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
         },
         config = function()
+            require('neodev').setup {
+                override = function(root_dir, library)
+                    if root_dir:find('/Users/caligula/nix-config', 1, true) == 1 then
+                        library.enabled = true
+                        library.plugins = true
+                    end
+                end,
+                library = {
+                    plugins = {
+                        'neotest',
+                        'nvim-treesitter',
+                        'plenary.nvim',
+                    },
+                    types = true,
+                },
+            }
+
             local lspconfig = require 'lspconfig'
             local fzf_lua = require 'fzf-lua'
 
             vim.api.nvim_create_autocmd('LspAttach', {
-                group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
                 callback = function(event)
+                    local bufnr = event.buf
+                    local client = assert(vim.lsp.get_client_by_id(event.data.client_id), 'Must have valid client')
+
                     local map = function(keys, func, desc)
                         vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                     end
@@ -68,12 +63,6 @@ return {
                         '[G]oto [R]eferences'
                     )
 
-                    map(
-                        'gi',
-                        function() fzf_lua.lsp_implementations { jump_to_single_result = true } end,
-                        '[G]oto [I]mplementation'
-                    )
-
                     map('gt', function() fzf_lua.lsp_typedefs { jump_to_single_result = true } end, 'Type [D]efinition')
 
                     map('<leader>ds', fzf_lua.lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -81,27 +70,14 @@ return {
                     map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
                     map('<leader>ca', fzf_lua.lsp_code_actions, '[C]ode [A]ction')
                     map('K', vim.lsp.buf.hover, 'Hover Documentation')
-                    map('gK', vim.lsp.buf.signature_help, 'Hover signature help')
                     map('gD', fzf_lua.lsp_declarations, '[G]oto [D]eclaration')
                     map('<leader>e', vim.diagnostic.open_float, 'Show line diagnostics')
                     map(']d', vim.diagnostic.goto_next, 'Go to next diagnostic')
                     map('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic')
 
-                    local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    -- if client and client.server_capabilities.documentHighlightProvider then
-                    --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                    --         buffer = event.buf,
-                    --         callback = vim.lsp.buf.document_highlight,
-                    --     })
-                    --
-                    --     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-                    --         buffer = event.buf,
-                    --         callback = vim.lsp.buf.clear_references,
-                    --     })
-                    -- end
-                    if client and client.server_capabilities.document_formatting then
+                    if client and client.name == 'eslint' and client.server_capabilities.document_formatting then
                         vim.api.nvim_create_autocmd('BufWritePre', {
-                            buffer = event.buf,
+                            buffer = bufnr,
                             command = 'EslintFixAll',
                         })
                     end
@@ -123,10 +99,10 @@ return {
                                 telemetry = {
                                     enable = false,
                                 },
-                                library = {
-                                    [vim.fn.expand '$VIMRUNTIME/lua'] = true,
-                                    [vim.fn.stdpath 'config' .. '/lua'] = true,
-                                },
+                                -- library = {
+                                --     [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+                                --     [vim.fn.stdpath 'config' .. '/lua'] = true,
+                                -- },
                             },
                         },
                     },
@@ -214,31 +190,22 @@ return {
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
             end
 
-            vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-                vim.lsp.diagnostic.on_publish_diagnostics,
-                { underline = true, virtual_text = false, signs = false, update_in_insert = false }
-            )
+            -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+            --     vim.lsp.diagnostic.on_publish_diagnostics,
+            --     { underline = true, virtual_text = false, signs = false, update_in_insert = false }
+            -- )
             vim.diagnostic.config { virtual_text = false, signs = false, underline = true }
 
             require('lspconfig.ui.windows').default_options.border = 'single'
-            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-            vim.lsp.handlers['textDocument/signatureHelp'] =
-                vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
+            -- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
+            -- vim.lsp.handlers['textDocument/signatureHelp'] =
+            --     vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
         end,
     },
 
     {
-        'kosayoda/nvim-lightbulb',
-        opts = {
-            autocmd = {
-                enabled = true,
-            },
-        },
-    },
-
-    {
         'pmizio/typescript-tools.nvim',
-        event = { 'BufReadPre *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
+        ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
         dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
         opts = {
             expose_as_code_action = 'all',
@@ -258,7 +225,7 @@ return {
 
     {
         'dmmulroy/ts-error-translator.nvim',
-        event = { 'BufReadPre *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
+        ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
         opts = {},
     },
 
@@ -272,86 +239,12 @@ return {
     },
 
     {
-        'ccaglak/phptools.nvim',
-        keys = {
-            { '<leader>lm', '<cmd>PhpMethod<cr>' },
-            { '<leader>lc', '<cmd>PhpClass<cr>' },
-            { '<leader>ls', '<cmd>PhpScripts<cr>' },
-            { '<leader>ln', '<cmd>PhpNamespace<cr>' },
-            { '<leader>lg', '<cmd>PhpGetSet<cr>' },
-            { '<leader>lf', '<cmd>PhpCreate<cr>' },
-        },
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-        },
-        config = function()
-            require('phptools').setup {
-                ui = false, -- if you have stevearc/dressing.nvim or something similar keep it false or else true
-            }
-            vim.keymap.set('v', '<leader>lr', ':PhpRefactor<cr>')
-        end,
-    },
-
-    {
-        'adalessa/laravel.nvim',
-        ft = 'php',
-        dependencies = {
-            'nvim-telescope/telescope.nvim',
-            'tpope/vim-dotenv',
-            'MunifTanjim/nui.nvim',
-            'rcarriga/nvim-notify',
-        },
-        cmd = { 'Sail', 'Artisan', 'Composer', 'Npm', 'Laravel', 'LaravelInfo' },
-        keys = {
-            { '<leader>la', ':Laravel artisan<cr>' },
-            { '<leader>lr', ':Laravel routes<cr>' },
-            { '<leader>lR', ':Laravel related<cr>' },
-        },
-        event = { 'VeryLazy' },
-        config = function()
-            ---@diagnostic disable-next-line: missing-fields
-            require('laravel').setup {
-                lsp_server = 'intelephense',
-                ---@diagnostic disable-next-line: missing-fields
-                features = {
-                    null_ls = {
-                        enable = false,
-                    },
-                },
-                route_info = {
-                    position = 'top',
-                },
-                ui = require 'laravel.config.ui',
-                commands_options = require 'laravel.config.command_options',
-                environments = require 'laravel.config.environments',
-                user_commands = require 'laravel.config.user_commands',
-                resources = require 'laravel.config.resources',
-                -- environment = {
-                --     environments = {
-                --         ['ao'] = require('laravel.environment.docker_compose').setup {
-                --             container_name = 'panel-webserver',
-                --             cmd = { 'docker', 'compose', 'exec', '-u', user_arg, '-it', 'panel-webserver' },
-                --         },
-                --     },
-                -- },
-            }
-            local tele_status_ok, telescope = pcall(require, 'telescope')
-            if not tele_status_ok then return end
-
-            telescope.load_extension 'laravel'
-        end,
-    },
-
-    {
         'mfussenegger/nvim-lint',
-        event = { 'BufReadPre *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
+        ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
         config = function()
             local lint = require 'lint'
 
             lint.linters_by_ft = {
-                -- lua = { 'selene' },
-                php = { 'php' },
-
                 javascript = jsLinters,
                 typescript = jsLinters,
                 javascriptreact = jsLinters,
@@ -359,36 +252,26 @@ return {
             }
             local eslint = lint.linters.eslint_d
             eslint.stdin = true
-            -- eslint.args = {
-            --     '--no-warn-ignored', -- <-- this is the key argument
-            --     '--format',
-            --     'json',
-            --     '--config=' .. root_dir() .. '/.eslintrc.json',
-            --     '--stdin',
-            --     '--stdin-filename',
-            --     function() return vim.api.nvim_buf_get_name(0) end,
-            -- }
 
-            local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+            local filetype = vim.bo.filetype
 
-            vim.api.nvim_create_autocmd({
-                'BufEnter',
-                'BufWritePre',
-                'BufWritePost',
-                'InsertEnter',
-                'InsertLeave',
-                'TextChanged',
-            }, {
-                group = lint_augroup,
-                callback = function()
-                    -- lint.try_lint()
-                    lint.try_lint('eslint_d', { cwd = root_dir() })
-                    -- lint.try_lint('eslint_d', { cwd = vim.fn.getcwd() .. '/resources/client' })
-                    -- lint.try_lint('eslint', { cwd = vim.fn.getcwd() .. '/resources/client' })
-                end,
-            })
+            if
+                filetype == 'javascript'
+                or filetype == 'javascriptreact'
+                or filetype == 'typescript'
+                or filetype == 'typescript'
+            then
+                local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
 
-            -- vim.keymap.set('n', '<leader>ll', function() lint.try_lint() end, { desc = 'Trigger linting for current file' })
+                vim.api.nvim_create_autocmd({
+                    'BufEnter',
+                    'BufWritePre',
+                    'InsertLeave',
+                }, {
+                    group = lint_augroup,
+                    callback = function() lint.try_lint('eslint_d', { cwd = root_dir() }) end,
+                })
+            end
         end,
     },
 }

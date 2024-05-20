@@ -7,7 +7,9 @@ global.maplocalleader = ' '
 global.loaded_netrw = 1
 global.loaded_netrwPlugin = 1
 
+opt.inccommand = 'split'
 opt.hlsearch = true
+opt.incsearch = true
 opt.mouse = 'a'
 opt.clipboard = 'unnamedplus'
 opt.breakindent = true
@@ -17,18 +19,20 @@ opt.expandtab = true
 opt.autoindent = true
 opt.autoread = true
 opt.undofile = true
+opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 opt.ignorecase = true
 opt.smartcase = true
 opt.scrolloff = 10
-opt.updatetime = 250
+opt.updatetime = 50
 opt.timeout = true
 opt.timeoutlen = 300
 opt.completeopt = 'menuone,noselect'
 opt.termguicolors = true
 opt.swapfile = false
 opt.wrap = false
-opt.spell = false
-opt.spelllang = { 'en_us' }
+opt.showmode = false
+opt.winblend = 10
+opt.formatoptions:remove 'o'
 
 wo.signcolumn = 'yes'
 wo.number = true
