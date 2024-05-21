@@ -80,6 +80,7 @@ return {
                     height = 0.8,
                     width = 0.7,
                     preview = {
+                        default = 'bat',
                         scrollbar = false,
                         layout = 'vertical',
                         vertical = 'up:40%',
@@ -104,6 +105,13 @@ return {
                 lsp = {
                     symbols = {
                         symbol_icons = icons.symbol_kinds,
+                    },
+                },
+                previewers = {
+                    builtin = {
+                        syntax_limit_l = 5000,
+                        syntax_limit_b = 250 * 1024, -- 250 KB
+                        limit = 1024 * 1024, -- 1 MB
                     },
                 },
             }
@@ -212,6 +220,13 @@ return {
     },
 
     {
+        'folke/ts-comments.nvim',
+        lazy = false,
+        opts = {},
+        enabled = true,
+    },
+
+    {
         'folke/trouble.nvim',
         lazy = false,
         dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -309,4 +324,20 @@ return {
     'nvim-lua/plenary.nvim',
 
     { 'echasnovski/mini.basics', version = '*' },
+
+    {
+        'LunarVim/bigfile.nvim',
+        lazy = false,
+        opts = {},
+    },
+
+    {
+        'stevearc/overseer.nvim',
+        opts = {},
+        lazy = false,
+        keys = {
+            { '<leader>or', '<CMD>OverseerRun<CR>', desc = 'Toggle [O]verseer' },
+            { '<leader>ot', '<CMD>OverseerToggle<CR>', desc = 'Toggle [O]verseer' },
+        },
+    },
 }

@@ -5,7 +5,6 @@ return {
         lazy = false,
         dependencies = {
             'nvim-treesitter/nvim-treesitter-context',
-            'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
             {
                 'abecodes/tabout.nvim', -- Tab out from parenthesis, quotes, brackets...
                 opts = {
@@ -21,6 +20,9 @@ return {
                 indent = { enable = false },
                 ensure_installed = 'all',
                 ignore_install = { 'phpdoc' },
+                rainbow = {
+                    enable = true,
+                },
                 highlight = {
                     enable = true,
                     max_file_lines = 5000,
@@ -31,7 +33,9 @@ return {
                     end,
                 },
             }
-            require('ts_context_commentstring').setup()
+            require('treesitter-context').setup {
+                max_lines = 3,
+            }
         end,
     },
 

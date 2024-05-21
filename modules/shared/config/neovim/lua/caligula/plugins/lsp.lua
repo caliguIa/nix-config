@@ -21,6 +21,10 @@ return {
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
         },
+        lazy = false,
+        keys = {
+            { [[<leader>lr]], [[:LspRestart<CR>]], mode = 'n', silent = true, desc = '[L]sp [r]estart' },
+        },
         config = function()
             require('neodev').setup {
                 override = function(root_dir, library)
@@ -155,6 +159,18 @@ return {
                         undefinedTypes = false,
                     },
                     format = { enable = false },
+                    commands = {
+                        IntelephenseIndex = {
+                            function() vim.lsp.buf.execute_command { command = 'intelephense.index.workspace' } end,
+                        },
+                    },
+                    on_attach = function(client, bufnr)
+                        client.server_capabilities.documentFormattingProvider = false
+                        client.server_capabilities.documentRangeFormattingProvider = false
+                        -- if client.server_capabilities.inlayHintProvider then
+                        --   vim.lsp.buf.inlay_hint(bufnr, true)
+                        -- end
+                    end,
                 },
             }
 
@@ -235,6 +251,10 @@ return {
         opts = {
             use_trouble_qflist = false,
             run_as_monorepo = false,
+        },
+        keys = {
+            { '<leader>Ts', ':TSC<CR>', mode = 'n', silent = true, noremap = true, desc = '[T]SC [s]tart' },
+            { '<leader>Tx', ':TSCStop<CR>', mode = 'n', silent = true, noremap = true, desc = 'TSC stop' },
         },
     },
 

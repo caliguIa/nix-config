@@ -21,6 +21,9 @@ return {
                     jestCommand = 'npm test --',
                 },
             },
+            consumers = {
+                overseer = require 'neotest.consumers.overseer',
+            },
             icons = {
                 failed = test_icons.failed,
                 passed = test_icons.passed,

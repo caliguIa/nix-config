@@ -105,7 +105,7 @@ return {
             sections = {
                 lualine_a = { 'branch' },
                 lualine_b = { 'filename' },
-                lualine_c = {},
+                lualine_c = { 'overseer' },
                 lualine_x = {
                     lsp,
                     'copilot',
@@ -310,4 +310,6 @@ return {
             })
         end,
     },
+
+    { 'karb94/neoscroll.nvim', lazy = false, config = true },
 }

@@ -31,10 +31,9 @@ opt.termguicolors = true
 opt.swapfile = false
 opt.wrap = false
 opt.showmode = false
-opt.winblend = 10
 opt.formatoptions:remove 'o'
 
 wo.signcolumn = 'yes'
 wo.number = true
 wo.relativenumber = true
-vim.diagnostic.config { float = { border = 'single' } }
+-- vim.diagnostic.config { float = { border = 'single' } }
