@@ -5,6 +5,6 @@ let
 in
 {
   ".hushlogin".text = "";
-  "${neovimConfigHome}/init.lua".source = ./config/neovim/init.lua;
-  "${neovimConfigHome}/lua".source = ./config/neovim/lua;
+  # "${neovimConfigHome}/init.lua".source = ./config/neovim/init.lua;
+  # "${neovimConfigHome}/lua".source = ./config/neovim/lua;
 }

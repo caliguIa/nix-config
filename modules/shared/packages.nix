@@ -9,10 +9,14 @@ with pkgs;
   cmake
   diskonaut
   du-dust
+  erlang
+  exercism
   eza
   fd
+  fnm
   ffmpeg
   gh
+  gleam
   go
   htop
   iina
@@ -22,6 +26,7 @@ with pkgs;
   jq
   killport
   less
+  libgit2
   lua
   neofetch
   neovide
@@ -30,6 +35,7 @@ with pkgs;
   nushell
   python3
   php
+  rebar3
   ripgrep
   rustup
   sd
