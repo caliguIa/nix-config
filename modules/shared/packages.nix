@@ -21,10 +21,12 @@ with pkgs;
   htop
   iina
   image_optim
-  jetbrains.phpstorm
+  # jetbrains.phpstorm
   just
   jq
   killport
+  lazygit
+  lazydocker
   less
   libgit2
   lua
@@ -37,7 +39,6 @@ with pkgs;
   php
   rebar3
   ripgrep
-  rustup
   sd
   sshfs
   terraform

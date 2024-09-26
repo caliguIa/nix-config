@@ -6,7 +6,6 @@ let
 in
 shared-packages
 ++ [
-  aldente
   discord
   grandperspective
   keka
@@ -18,4 +17,5 @@ shared-packages
   slack
   spotify
   utm
+  wimlib
 ]

@@ -18,5 +18,5 @@
   starship = { } // import ./config/starship.nix { inherit pkgs; };
   tmux = { } // import ./config/tmux.nix { inherit pkgs; };
   zellij = { } // import ./config/zellij.nix { inherit pkgs; };
-  zsh = { } // import ./config/zsh.nix { inherit config; };
+  zsh = { } // import ./config/zsh.nix { inherit config pkgs; };
 }

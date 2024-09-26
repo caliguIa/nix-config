@@ -46,9 +46,6 @@ in
   # Load configuration that is shared across systems
   environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
 
-  # Enable fonts dir
-  fonts.fontDir.enable = true;
-
   security = {
     pam.enableSudoTouchIdAuth = true;
     sudo.extraConfig = ''
@@ -60,10 +57,10 @@ in
     enable = true;
     package = pkgs.skhd;
     skhdConfig = ''
-      hyper - a : open -a Alacritty
+      hyper - a : open -a PhpStorm
       hyper - s : open -a Arc
       hyper - d : open -a Slack
-      hyper - d : /nix/store/lf41qhpskdf8b6r2mf8yf2vhqdx38yh8-neovide-0.12.2/bin/.neovide-wrapped
+      hyper - f : open -a Alacritty
       hyper - q : open -a Calendar
       hyper - w : open -a Mail
       hyper - e : open -a Spotify
