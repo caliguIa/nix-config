@@ -4,27 +4,6 @@
   autocd = false;
   autosuggestion.enable = true;
   enableCompletion = true;
-  oh-my-zsh = {
-    enable = true;
-    plugins = [
-      "gh"
-      "git"
-      "ripgrep"
-      "fzf"
-    ];
-  };
-  plugins = [
-    {
-      name = "zsh-nix-shell";
-      file = "nix-shell.plugin.zsh";
-      src = pkgs.fetchFromGitHub {
-        owner = "chisui";
-        repo = "zsh-nix-shell";
-        rev = "v0.8.0";
-        sha256 = "1lzrn0n4fxfcgg65v0qhnj7wnybybqzs4adz7xsrkgmcsr0ii8b7";
-      };
-    }
-  ];
   syntaxHighlighting.enable = true;
   defaultKeymap = "emacs";
   history = {
@@ -61,7 +40,7 @@
     ip = "curl ifconfig.io";
     localip = "ipconfig getifaddr en0";
     ous = "cd ~/oneupsales/platform";
-    ousr = "cd ~/oneupsales";
+    ousr = "cd ~/oneupsales; make down; make platform-up; cd -";
     update = "softwareupdate -ia";
     updatel = "softwareupdate -l";
     t = "tmux attach || tmux new";

@@ -57,10 +57,10 @@ in
     enable = true;
     package = pkgs.skhd;
     skhdConfig = ''
-      hyper - a : open -a PhpStorm
+      hyper - a : open -a Alacritty
       hyper - s : open -a Arc
       hyper - d : open -a Slack
-      hyper - f : open -a Alacritty
+      hyper - f : open -a PHPStorm
       hyper - q : open -a Calendar
       hyper - w : open -a Mail
       hyper - e : open -a Spotify

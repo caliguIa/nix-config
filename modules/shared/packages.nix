@@ -30,10 +30,11 @@ with pkgs;
   less
   libgit2
   lua
+  mysql84
   neofetch
   neovide
   nixfmt-rfc-style
-  nodejs_18
+  nodejs_20
   nushell
   python3
   php
