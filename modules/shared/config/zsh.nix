@@ -10,9 +10,6 @@
     path = "${config.xdg.dataHome}/zsh/zsh_history";
   };
   dotDir = ".config/zsh";
-  localVariables = {
-    ZSH_TMUX_AUTOSTART = true;
-  };
   shellAliases = {
     "~" = "cd ~";
     dl = "cd ~/Downloads";
@@ -59,6 +56,7 @@
     [[ ! -r /Users/caligula/.opam/opam-init/init.zsh ]] || source /Users/caligula/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
     export PATH="/opt/homebrew/bin:$PATH"
+    export PATH="~/.local/share/bin:$PATH"
 
     nixmv() {
       sudo mv /etc/zshenv /etc/zshenv.before-nix-darwin
@@ -66,5 +64,6 @@
       sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
     }
 
+    source ~/.env
   '';
 }

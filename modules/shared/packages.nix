@@ -46,6 +46,7 @@ with pkgs;
   tmux
   tmux-sessionizer
   tokei
+  uutils-coreutils-noprefix
   vscode
   wezterm
   wget
