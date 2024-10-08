@@ -1,7 +1,7 @@
 { ... }:
 let
   name = "Cal";
-  email = "accounts@cal.rip";
+  email = "acc@calrichards.io";
 in {
   enable = true;
   userName = name;
