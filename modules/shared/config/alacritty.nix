@@ -10,7 +10,7 @@
     };
 
     window = {
-      opacity = 0.95;
+      opacity = 1.0;
       blur = true;
       decorations = "none";
       startup_mode = "Maximized";

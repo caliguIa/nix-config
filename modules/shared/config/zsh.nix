@@ -56,7 +56,7 @@
     [[ ! -r /Users/caligula/.opam/opam-init/init.zsh ]] || source /Users/caligula/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
     export PATH="/opt/homebrew/bin:$PATH"
-    export PATH="~/.local/share/bin:$PATH"
+    export PATH="/Users/caligula/.cargo/bin:$PATH"
 
     nixmv() {
       sudo mv /etc/zshenv /etc/zshenv.before-nix-darwin
