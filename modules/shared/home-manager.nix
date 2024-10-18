@@ -17,6 +17,7 @@
   opam = { } // import ./config/opam.nix { inherit pkgs; };
   starship = { } // import ./config/starship.nix { inherit pkgs; };
   tmux = { } // import ./config/tmux.nix { inherit pkgs; };
+  wezterm = { } // import ./config/wezterm.nix { inherit pkgs; };
   zellij = { } // import ./config/zellij.nix { inherit pkgs; };
   zsh = { } // import ./config/zsh.nix { inherit config pkgs; };
 }

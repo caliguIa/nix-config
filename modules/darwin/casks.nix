@@ -13,5 +13,6 @@ _:
   "obsidian"
   "tableplus"
   "zed"
+  "wezterm"
   "google-chrome"
 ]

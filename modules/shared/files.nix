@@ -1,4 +1,4 @@
-{ user, config, ... }:
+{ ... }:
 
 {
   ".hushlogin".text = "";

@@ -21,7 +21,6 @@ with pkgs;
   htop
   iina
   image_optim
-  # jetbrains.phpstorm
   just
   jq
   killport
@@ -48,7 +47,6 @@ with pkgs;
   tokei
   uutils-coreutils-noprefix
   vscode
-  wezterm
   wget
   xplr
   yazi

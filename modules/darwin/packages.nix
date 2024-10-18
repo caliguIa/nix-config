@@ -6,6 +6,7 @@ let
 in
 shared-packages
 ++ [
+  colima
   discord
   grandperspective
   keka
