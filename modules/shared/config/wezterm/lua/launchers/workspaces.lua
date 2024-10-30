@@ -18,7 +18,7 @@ local choicesConfig = {
     ["oneupsales platform"] = { args = { "nvim" }, cwd = ousDir .. "/platform" },
     ["neovim config"] = { args = { "nvim" }, cwd = utils.homeDir },
     ["nix config"] = { args = { "nvim" }, cwd = nixDir },
-    ["wezterm config"] = { args = { "nvim", "modules/shared/files/wezterm.lua" }, cwd = nixDir },
+    ["wezterm config"] = { args = { "nvim", "modules/shared/config/wezterm/wezterm.lua" }, cwd = nixDir },
     spotify = { args = { "ncspot" }, cwd = utils.homeDir },
 }
 
