@@ -1,8 +1,6 @@
 {
   config,
   pkgs,
-  lib,
-  home-manager,
   ...
 }:
 
@@ -12,21 +10,30 @@ let
   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
-
-  # It me
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
     isHidden = false;
+    shell = pkgs.zsh;
   };
 
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
-    brews = pkgs.callPackage ./brews.nix { };
+    # masApps = {
+    #   "1passwordSafari" = 1569813296;
+    #   "velja" = 1607635845;
+    #   "vimari" = 1480933944;
+    #   "vinegar" = 1591303229;
+    #   "adguard" = 1440147259;
+    # };
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+      upgrade = true;
+    };
   };
 
-  # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
     users.${user} =

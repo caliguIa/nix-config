@@ -5,23 +5,26 @@ let
 in
 
 {
-
   imports = [
     ../../modules/darwin/home-manager.nix
     ../../modules/shared
-    ../../modules/shared/cachix
   ];
 
-  # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
-  # Setup user, packages, programs
   nix = {
-    package = pkgs.nixVersions.git;
-    settings.trusted-users = [
-      "@admin"
-      "${user}"
-    ];
+    package = pkgs.nix;
+    settings = {
+      trusted-users = [
+        "@admin"
+        "${user}"
+      ];
+      substituters = [
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
+      ];
+      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+    };
 
     gc = {
       user = "root";
@@ -34,16 +37,13 @@ in
       options = "--delete-older-than 30d";
     };
 
-    # Turn this on to make command line easier
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
 
-  # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
-  # Load configuration that is shared across systems
   environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   security = {
@@ -68,7 +68,11 @@ in
     '';
   };
 
-  environment.systemPath = [ "${pkgs.skhd}/bin" ];
+  environment.systemPath = [
+    "${pkgs.skhd}/bin"
+    "${config.users.users.${user}.home}/.cargo/bin"
+  ];
+
   environment.variables = {
     EDITOR = "nvim";
     SKHD_1_1 = "Wezterm";

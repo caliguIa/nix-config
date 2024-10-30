@@ -3,16 +3,12 @@ _:
 [
   "1password"
   "arc"
-  "brave-browser"
   "firefox"
+  "homebrew/cask/docker"
   "karabiner-elements"
   "meetingbar"
   "mullvadvpn"
-  # "nikitabobko/tap/aerospace"
   "onyx"
   "obsidian"
   "tableplus"
-  "zed"
-  "wezterm"
-  "google-chrome"
 ]

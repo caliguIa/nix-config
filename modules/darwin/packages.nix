@@ -6,17 +6,16 @@ let
 in
 shared-packages
 ++ [
+  aerospace
   colima
   discord
   grandperspective
   keka
-  gnused
-  (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
   pam-reattach
   raycast
   rectangle
   slack
   spotify
   utm
-  wimlib
+  wezterm
 ]

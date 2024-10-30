@@ -8,6 +8,7 @@ with pkgs;
   bottom
   cmake
   diskonaut
+  deno
   du-dust
   erlang
   exercism
@@ -27,14 +28,11 @@ with pkgs;
   lazygit
   lazydocker
   less
-  libgit2
   lua
   mysql84
   neofetch
-  neovide
   nixfmt-rfc-style
   nodejs_20
-  nushell
   python3
   php
   rebar3
@@ -43,12 +41,9 @@ with pkgs;
   sshfs
   terraform
   tmux
-  tmux-sessionizer
   tokei
   uutils-coreutils-noprefix
   vscode
   wget
-  xplr
   yazi
-  zoxide
 ]

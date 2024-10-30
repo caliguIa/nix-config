@@ -1,11 +1,8 @@
 {
-  description = "cal's macos nix configuration";
+  description = "system nix configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,35 +57,61 @@
     in
     {
       apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
-
-      darwinConfigurations =
+      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
+        system:
         let
           user = "caligula";
         in
-        {
-          macos = darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            specialArgs = inputs;
-            modules = [
-              home-manager.darwinModules.home-manager
-              nix-homebrew.darwinModules.nix-homebrew
-              {
-                nix-homebrew = {
-                  enable = true;
-                  user = "${user}";
-                  taps = {
-                    "homebrew/homebrew-core" = homebrew-core;
-                    "homebrew/homebrew-cask" = homebrew-cask;
-                    "homebrew/homebrew-bundle" = homebrew-bundle;
-                    # "nikitabobko/homebrew-tap" = homeebrew-aerospace;
-                  };
-                  mutableTaps = false;
-                  autoMigrate = true;
+        darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = inputs;
+          modules = [
+            home-manager.darwinModules.home-manager
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                inherit user;
+                enable = true;
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  "homebrew/homebrew-cask" = homebrew-cask;
+                  "homebrew/homebrew-bundle" = homebrew-bundle;
                 };
-              }
-              ./hosts/darwin
-            ];
-          };
-        };
+                mutableTaps = false;
+                autoMigrate = true;
+              };
+            }
+            ./hosts/darwin
+          ];
+        }
+      );
+      #   darwinConfigurations =
+      #     let
+      #       user = "caligula";
+      #     in
+      #     {
+      #       macos = darwin.lib.darwinSystem {
+      #         system = "aarch64-darwin";
+      #         specialArgs = inputs;
+      #         modules = [
+      #           home-manager.darwinModules.home-manager
+      #           nix-homebrew.darwinModules.nix-homebrew
+      #           {
+      #             nix-homebrew = {
+      #               enable = true;
+      #               user = "${user}";
+      #               taps = {
+      #                 "homebrew/homebrew-core" = homebrew-core;
+      #                 "homebrew/homebrew-cask" = homebrew-cask;
+      #                 "homebrew/homebrew-bundle" = homebrew-bundle;
+      #               };
+      #               mutableTaps = false;
+      #               autoMigrate = true;
+      #             };
+      #           }
+      #           ./hosts/darwin
+      #         ];
+      #       };
+      #     };
     };
 }

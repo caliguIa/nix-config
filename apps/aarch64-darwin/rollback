@@ -14,8 +14,8 @@ echo "${YELLOW}Enter the generation number for rollback:${NC}"
 read GEN_NUM
 
 if [ -z "$GEN_NUM" ]; then
-  echo "${RED}No generation number entered. Aborting rollback.${NC}"
-  exit 1
+    echo "${RED}No generation number entered. Aborting rollback.${NC}"
+    exit 1
 fi
 
 echo "${YELLOW}Rolling back to generation $GEN_NUM...${NC}"
