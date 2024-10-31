@@ -1,14 +1,16 @@
-local utils = require "lua/utils"
+local consts = require "lua/consts"
+
+local path = consts.path
 
 local M = {}
 
 M.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
 
-M.default_prog = { utils.homeDir .. "/.nix-profile/bin/zsh", "-l" }
+M.default_prog = { path.HOME .. "/.nix-profile/bin/zsh", "-l" }
 
 M.set_environment_variables = {
     EDITOR = "nvim",
-    PATH = "/opt/homebrew/bin:" .. utils.homeDir .. "/.nix-profile/bin:" .. os.getenv "PATH",
+    PATH = "/opt/homebrew/bin:" .. path.HOME .. "/.nix-profile/bin:" .. os.getenv "PATH",
 }
 
 M.term = "wezterm"

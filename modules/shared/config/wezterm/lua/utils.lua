@@ -14,6 +14,14 @@ function M.merge_tables(...)
     return result
 end
 
+function M.create_choices_from_config(configs)
+    local choices = {}
+    for label, _ in pairs(configs) do
+        table.insert(choices, { label = label })
+    end
+    return choices
+end
+
 function M.make_leader_action(key, action)
     return {
         mods = "LEADER",
@@ -35,7 +43,5 @@ function M.make_pane_resize(direction)
 end
 
 function M.make_pane_nav(direction, key) return M.make_hyper_key_action(key, act.ActivatePaneDirection(direction)) end
-
-M.homeDir = wezterm.home_dir
 
 return M
