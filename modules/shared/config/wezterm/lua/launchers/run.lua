@@ -12,6 +12,9 @@ local selectorConfigs = {
     ["git merge origin/main"] = { args = { "zsh", "-i", "-c", "git fetch && git pull && git merge origin/main" .. cmd.CONFIRM } },
     ["oneupsales bounce"] = { args = { "zsh", "-i", "-c", "make down && make platform-up" .. cmd.CONFIRM }, cwd = path.OUS },
     ["nix build switch"] = { args = { "zsh", "-i", "-c", "just build" .. cmd.CONFIRM }, cwd = path.NIX },
+    btm = { args = { "btm" }, },
+    gitui = { args = { "gitui" } },
+    lazydocker = { args = { "lazydocker" } },
 }
 
 M.keys = {

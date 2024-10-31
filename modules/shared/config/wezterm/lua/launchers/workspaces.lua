@@ -7,10 +7,13 @@ local path = consts.path
 local M = {}
 
 local selectorConfigs = {
-    ["oneupsales platform"] = { args = { "nvim" }, cwd = path.OUS .. "/platform" },
+    ["oneupsales platform"] = { cwd = path.OUS .. "/platform" },
     ["neovim config"] = { args = { "nvim" }, cwd = path.HOME .. "/.config/nvim" },
     ["nix config"] = { args = { "nvim" }, cwd = path.NIX },
-    ["wezterm config"] = { args = { "nvim", "modules/shared/config/wezterm/wezterm.lua" }, cwd = path.NIX },
+    ["wezterm config"] = {
+        args = { "nvim" },
+        cwd = path.NIX .. "/modules/shared/config/wezterm",
+    },
     spotify = { args = { "ncspot" }, cwd = path.HOME },
 }
 

@@ -7,6 +7,7 @@ with pkgs;
   ast-grep
   bottom
   cmake
+  devenv
   diskonaut
   deno
   du-dust
@@ -44,6 +45,7 @@ with pkgs;
   tokei
   uutils-coreutils-noprefix
   vscode
+  wezterm
   wget
   yazi
 ]

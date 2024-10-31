@@ -1,7 +1,4 @@
 local wezterm = require "wezterm"
-local consts = require "lua/consts"
-
-local path = consts.path
 
 local M = {}
 
@@ -16,12 +13,6 @@ M.window_padding = {
     bottom = 0,
 }
 M.window_decorations = "RESIZE"
--- M.window_background_image = path.HOME .. "/Pictures/bg.jpg"
--- M.window_background_image_hsb = {
---     brightness = 0.003,
---     hue = 1.0,
---     saturation = 0.8,
--- }
 
 M.default_cursor_style = "BlinkingBar"
 M.enable_tab_bar = true
