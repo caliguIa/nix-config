@@ -1,7 +1,11 @@
 local utils = require "lua/utils"
-local config = require "lua/config"
+local opts = require "lua/config"
 local appearance = require "lua/appearance"
 local keys = require "lua/keys"
-local colours = require "lua/colours"
 
-return utils.merge_tables(config, appearance, keys, colours)
+local config = utils.merge_tables(opts, appearance, keys)
+
+local colourScheme = require "lua/no-clown-fiesta"
+colourScheme.apply_to_config(config)
+
+return config
