@@ -2,18 +2,16 @@ local wezterm = require "wezterm"
 local utils = require "lua/utils"
 local workspaces = require "lua/launchers/workspaces"
 local run = require "lua/launchers/run"
+local nvimPanes = require "lua/neovim-splits"
 
 local act = wezterm.action
 
 local make_leader_action = utils.make_leader_action
-local make_pane_nav = utils.make_pane_nav
 local make_pane_resize = utils.make_pane_resize
 
 local M = {}
 
-M.keys = {
-    workspaces.keymap,
-    run.keymap,
+local baseKeys = {
 
     -- Fuzzy search workspaces
     make_leader_action(
@@ -47,17 +45,13 @@ M.keys = {
     make_leader_action("m", act.TogglePaneZoomState),
     make_leader_action("Enter", wezterm.action.ActivateCopyMode),
 
-    -- Pane navigation (with quad modifier)
-    make_pane_nav("Left", "h"),
-    make_pane_nav("Right", "l"),
-    make_pane_nav("Up", "k"),
-    make_pane_nav("Down", "j"),
-
     -- Pane resizing
     make_pane_resize "Left",
     make_pane_resize "Down",
     make_pane_resize "Up",
     make_pane_resize "Right",
 }
+
+M.keys = utils.extend_list(baseKeys, nvimPanes.keys, workspaces.keys, run.keys)
 
 return M

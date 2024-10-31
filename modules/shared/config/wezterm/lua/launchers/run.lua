@@ -14,28 +14,30 @@ local selectorConfigs = {
     ["nix build switch"] = { args = { "zsh", "-i", "-c", "just build" .. cmd.CONFIRM }, cwd = path.NIX },
 }
 
-M.keymap = {
-    mods = "LEADER",
-    key = "r",
-    action = wezterm.action.InputSelector {
-        title = "Commands",
-        choices = utils.create_choices_from_config(selectorConfigs),
-        fuzzy = true,
-        action = wezterm.action_callback(function(window, pane, _, label)
-            if not label then return end
+M.keys = {
+    {
+        mods = "LEADER",
+        key = "r",
+        action = wezterm.action.InputSelector {
+            title = "Commands",
+            choices = utils.create_choices_from_config(selectorConfigs),
+            fuzzy = true,
+            action = wezterm.action_callback(function(window, pane, _, label)
+                if not label then return end
 
-            local config = selectorConfigs[label]
-            local split = {
-                direction = "Right",
-                size = { Percent = 30 },
-                command = {},
-            }
+                local config = selectorConfigs[label]
+                local split = {
+                    direction = "Right",
+                    size = { Percent = 30 },
+                    command = {},
+                }
 
-            if config.args then split.command.args = config.args end
-            if config.cwd then split.command.cwd = config.cwd end
+                if config.args then split.command.args = config.args end
+                if config.cwd then split.command.cwd = config.cwd end
 
-            window:perform_action(wezterm.action.SplitPane(split), pane)
-        end),
+                window:perform_action(wezterm.action.SplitPane(split), pane)
+            end),
+        },
     },
 }
 

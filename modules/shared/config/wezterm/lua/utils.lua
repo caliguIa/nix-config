@@ -14,6 +14,25 @@ function M.merge_tables(...)
     return result
 end
 
+function M.extend_list(base_list, ...)
+    local result = base_list
+    local lists = { ... }
+
+    for _, list in ipairs(lists) do
+        if list then -- Check if the list exists
+            if type(list) == "table" then
+                for _, item in ipairs(list) do
+                    table.insert(result, item)
+                end
+            else
+                table.insert(result, list)
+            end
+        end
+    end
+
+    return result
+end
+
 function M.create_choices_from_config(configs)
     local choices = {}
     for label, _ in pairs(configs) do
@@ -41,7 +60,5 @@ end
 function M.make_pane_resize(direction)
     return M.make_leader_action(direction:sub(1, 1):upper(), act.AdjustPaneSize { direction, 15 })
 end
-
-function M.make_pane_nav(direction, key) return M.make_hyper_key_action(key, act.ActivatePaneDirection(direction)) end
 
 return M
