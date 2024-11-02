@@ -53,36 +53,12 @@ in
     '';
   };
 
-  services.skhd = {
-    enable = true;
-    package = pkgs.skhd;
-    skhdConfig = ''
-      hyper - a : open -a ${config.environment.variables.SKHD_1_1}
-      hyper - s : open -a ${config.environment.variables.SKHD_1_2}
-      hyper - d : open -a ${config.environment.variables.SKHD_1_3}
-      hyper - f : open -a ${config.environment.variables.SKHD_1_4}
-      hyper - q : open -a ${config.environment.variables.SKHD_2_1}
-      hyper - w : open -a ${config.environment.variables.SKHD_2_2}
-      hyper - e : open -a ${config.environment.variables.SKHD_2_3}
-      hyper - r : open -a ${config.environment.variables.SKHD_2_4}
-    '';
-  };
-
   environment.systemPath = [
-    "${pkgs.skhd}/bin"
     "${config.users.users.${user}.home}/.cargo/bin"
   ];
 
   environment.variables = {
     EDITOR = "nvim";
-    SKHD_1_1 = "Wezterm";
-    SKHD_1_2 = "Safari";
-    SKHD_1_3 = "Slack";
-    SKHD_1_4 = "Github";
-    SKHD_2_1 = "Calendar";
-    SKHD_2_2 = "Mail";
-    SKHD_2_3 = "Spotify";
-    SKHD_2_4 = "Jira";
   };
 
   system = {
