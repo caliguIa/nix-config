@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   enable = true;
   autocd = false;
@@ -6,9 +6,7 @@
   enableCompletion = true;
   syntaxHighlighting.enable = true;
   defaultKeymap = "emacs";
-  history = {
-    path = "${config.xdg.dataHome}/zsh/zsh_history";
-  };
+  history.path = "${config.xdg.dataHome}/zsh/zsh_history";
   dotDir = ".config/zsh";
   shellAliases = {
     "~" = "cd ~";

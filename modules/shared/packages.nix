@@ -3,24 +3,13 @@
 with pkgs;
 [
   _1password
-  aria
-  ast-grep
   bottom
   cmake
-  devenv
-  diskonaut
   deno
-  du-dust
-  erlang
   exercism
   eza
   fd
-  fnm
-  ffmpeg
   gh
-  gleam
-  go
-  htop
   iina
   image_optim
   just
@@ -30,21 +19,11 @@ with pkgs;
   lazydocker
   less
   lua
-  mysql84
-  neofetch
-  nixfmt-rfc-style
-  nodejs_20
   python3
-  php
-  rebar3
   ripgrep
   sd
-  sshfs
-  terraform
-  tmux
   tokei
   uutils-coreutils-noprefix
-  vscode
   wezterm
   wget
   yazi

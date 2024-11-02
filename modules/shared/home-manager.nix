@@ -9,6 +9,7 @@
   alacritty = { } // import ./packages/alacritty.nix { inherit pkgs; };
   atuin = { } // import ./packages/atuin.nix { inherit pkgs; };
   bat = { } // import ./packages/bat.nix { inherit pkgs; };
+  direnv = { } // import ./packages/direnv.nix { inherit pkgs; };
   fzf = { } // import ./packages/fzf.nix { inherit pkgs; };
   git = { } // import ./packages/git.nix { inherit pkgs; };
   gitui = { } // import ./packages/gitui.nix { inherit pkgs; };

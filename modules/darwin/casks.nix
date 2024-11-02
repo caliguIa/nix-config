@@ -6,9 +6,10 @@ _:
   "firefox"
   "homebrew/cask/docker"
   "karabiner-elements"
+  "maccy"
   "meetingbar"
   "mullvadvpn"
   "onyx"
-  "obsidian"
+  "pika"
   "tableplus"
 ]

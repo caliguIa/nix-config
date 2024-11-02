@@ -8,12 +8,9 @@ shared-packages
 ++ [
   aerospace
   colima
-  discord
-  grandperspective
   keka
   pam-reattach
   raycast
-  rectangle
   slack
   spotify
   utm
