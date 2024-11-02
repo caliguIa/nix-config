@@ -7,5 +7,8 @@
   vimdiffAlias = true;
   withNodeJs = true;
   withPython3 = true;
-  extraPackages = [ pkgs.php82Packages.composer ];
+  extraPackages = [
+    pkgs.php82Packages.composer
+    pkgs.nixfmt-rfc-style
+  ];
 }
