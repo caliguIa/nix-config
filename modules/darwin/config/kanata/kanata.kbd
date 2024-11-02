@@ -1,0 +1,61 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+       f1    f2   f3   f4   f5  f6    f7   f8   f9   f10   f11   f12
+  fn
+)
+
+(defalias
+  ;; Hyper key - all modifiers at once
+  hyp (multi lsft lctl lmet lalt)
+  
+  ;; Function key layer toggle
+  fnl (tap-hold 200 200 fn (layer-toggle fn))
+)
+
+(deflayermap (base)
+  ;; Right command becomes right control 
+  rmet rctl
+  ;; Fork order matters: first action is default, second is when rctl is held
+  h (fork h left  (rctl))
+  j (fork j down  (rctl))
+  k (fork k up    (rctl))
+  l (fork l right (rctl))
+  ;; Right alt becomes hyper
+  ralt @hyp
+  
+  ;; Function key
+  fn @fnl
+  
+  ;; Default media/system controls
+  f1   brdn  ;; Brightness down
+  f2   brup  ;; Brightness up
+  f3   _     ;; Mission Control
+  f4   _     ;; Launchpad
+  f5   _     ;; Dictation
+  f6   _     ;; Do Not Disturb
+  f7   prev  ;; Previous track
+  f8   pp    ;; Play/Pause
+  f9   next  ;; Next track
+  f10  mute  ;; Mute
+  f11  vold  ;; Volume down
+  f12  volu  ;; Volume up
+)
+
+;; Function number keys when fn is held
+(deflayermap (fn)
+  f1   f1
+  f2   f2
+  f3   f3
+  f4   f4
+  f5   f5
+  f6   f6
+  f7   f7
+  f8   f8
+  f9   f9
+  f10  f10
+  f11  f11
+  f12  f12
+)

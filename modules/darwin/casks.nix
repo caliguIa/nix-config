@@ -5,7 +5,6 @@ _:
   "arc"
   "firefox"
   "homebrew/cask/docker"
-  "karabiner-elements"
   "maccy"
   "meetingbar"
   "mullvadvpn"
