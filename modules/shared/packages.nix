@@ -4,6 +4,7 @@ with pkgs;
 [
   _1password
   bottom
+  cargo
   cmake
   deno
   exercism
@@ -21,6 +22,7 @@ with pkgs;
   lua
   python3
   ripgrep
+  rustc
   sd
   tokei
   uutils-coreutils-noprefix

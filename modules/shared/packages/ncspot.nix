@@ -70,6 +70,7 @@
       "2" = "focus library";
       "Ctrl+q" = "focus queue";
       "Ctrl+w" = "focus library";
+      "Ctrl+e" = "focus search";
       # Navigation;
       "Down" = "move down 1";
       "Shift+g" = "move bottom";
