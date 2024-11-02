@@ -1,0 +1,152 @@
+after-login-command = []
+after-startup-command = ['workspace term']
+start-at-login = true
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 0
+default-root-container-layout = 'accordion'
+default-root-container-orientation = 'auto'
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 0
+inner.vertical = 0
+outer.left = 0
+outer.bottom = 0
+outer.top = 0
+outer.right = 0
+
+[mode.main.binding]
+cmd-h = []     # Disable "hide application"
+cmd-alt-h = [] # Disable "hide others"
+
+cmd-alt-ctrl-shift-m = 'layout tiles v_accordion'
+
+cmd-alt-ctrl-shift-minus = 'resize smart -50'
+cmd-alt-ctrl-shift-equal = 'resize smart +50'
+
+cmd-alt-ctrl-shift-a = 'workspace term'
+cmd-alt-ctrl-shift-s = 'workspace web'
+cmd-alt-ctrl-shift-d = 'workspace msg'
+cmd-alt-ctrl-shift-f = 'workspace tool'
+cmd-alt-ctrl-shift-q = 'workspace org'
+cmd-alt-ctrl-shift-w = 'workspace vid'
+cmd-alt-ctrl-shift-tab = 'workspace-back-and-forth'
+
+cmd-alt-ctrl-shift-h = 'focus left'
+cmd-alt-ctrl-shift-j = 'focus down'
+cmd-alt-ctrl-shift-k = 'focus up'
+cmd-alt-ctrl-shift-l = 'focus right'
+
+alt-shift-h = 'join-with left'
+alt-shift-j = 'join-with down'
+alt-shift-k = 'join-with up'
+alt-shift-l = 'join-with right'
+
+cmd-alt-ctrl-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = [
+    'layout floating tiling',
+    'mode main',
+] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
+
+[workspace-to-monitor-force-assignment]
+term = 'main'
+web = 'main'
+msg = 'main'
+tool = 'main'
+misc = 'main'
+vid = 'main'
+
+# terminals
+[[on-window-detected]]
+if.app-id = 'org.alacritty'
+run = ['move-node-to-workspace term']
+[[on-window-detected]]
+if.app-id = 'com.github.wez.wezterm'
+run = ['move-node-to-workspace term']
+
+# browsers
+[[on-window-detected]]
+if.app-id = 'org.mozilla.com.zen.browser'
+run = ['move-node-to-workspace web']
+[[on-window-detected]]
+if.app-id = 'org.mozilla.firefox'
+run = ['move-node-to-workspace web']
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = ['move-node-to-workspace web']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = ['move-node-to-workspace web']
+
+# messaging
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['move-node-to-workspace msg']
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = ['move-node-to-workspace msg']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.64781866-2DB4-47DD-A47C-AA3BA5FDE30B' # whatsapp
+run = ['move-node-to-workspace msg']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.28A8D393-6C28-4D8F-B918-BBB49945B7F8' # discord
+run = ['move-node-to-workspace msg']
+
+# org
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = ['move-node-to-workspace org']
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = ['move-node-to-workspace org']
+[[on-window-detected]]
+if.app-id = 'com.goldenhillsoftware.Unread2'
+run = ['move-node-to-workspace org']
+
+# tools
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.90858CA5-69B3-44AD-A9A5-F4FD6F6E1B3D' # claude
+run = ['move-node-to-workspace tool']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.92A6B9B1-96BA-460E-AEF2-EB70822EB752' # jira
+run = ['move-node-to-workspace tool']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.31D23FD0-7CC0-4A9D-A6EA-BC4A335C784F' # github
+run = ['move-node-to-workspace tool']
+[[on-window-detected]]
+if.app-id = 'com.electron.dockerdesktop'
+run = ['move-node-to-workspace tool']
+[[on-window-detected]]
+if.app-id = 'com.tinyapp.TablePlus'
+run = ['move-node-to-workspace tool']
+
+# video 
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.52DB5EEA-B29B-4292-A0ED-DB4103C4D9DC' # youtube
+run = ['move-node-to-workspace vid']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.B2322118-87EC-46AF-9A73-4ABDC0A5D639' # netflix
+run = ['move-node-to-workspace vid']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.F36EDDE6-5D26-4783-AA50-51FA0F923EC2' # paramount
+run = ['move-node-to-workspace vid']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.CCEB1EAB-0863-4ED8-8E5B-663E7AC5EE1B' # prime
+run = ['move-node-to-workspace vid']
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.04FE9361-1395-4E0A-9B8E-557E4FD85432' # dropout
+run = ['move-node-to-workspace vid']
+[[on-window-detected]]
+if.app-id = 'com.apple.TV'
+run = ['move-node-to-workspace vid']
