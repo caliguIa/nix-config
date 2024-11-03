@@ -8,6 +8,7 @@ _:
   "maccy"
   "meetingbar"
   "mullvadvpn"
+  "gauntlet"
   "onyx"
   "pika"
   "tableplus"
