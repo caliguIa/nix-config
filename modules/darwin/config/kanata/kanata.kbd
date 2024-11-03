@@ -13,21 +13,29 @@
   
   ;; Function key layer toggle
   fnl (tap-hold 200 200 fn (layer-toggle fn))
+
+  ;; Symbol layer toggle
+  syms (layer-toggle symbols)
 )
 
 (deflayermap (base)
   ;; Right command becomes right control 
   rmet rctl
+  
   ;; Fork order matters: first action is default, second is when rctl is held
   h (fork h left  (rctl))
   j (fork j down  (rctl))
   k (fork k up    (rctl))
   l (fork l right (rctl))
+
   ;; Right alt becomes hyper
   ralt @hyp
   
   ;; Function key
   fn @fnl
+
+  ;; Left alt triggers symbol layer
+  lalt @syms
   
   ;; Default media/system controls
   f1   brdn  ;; Brightness down
@@ -58,4 +66,16 @@
   f10  f10
   f11  f11
   f12  f12
+)
+
+;; home row symbols mod
+(deflayermap (symbols)
+  d S-9      ;; (
+  f S-0      ;; )
+  a S-[      ;; {
+  s S-]      ;; }
+  q [        ;; [
+  w ]        ;; ]
+  r S-\      ;; |
+  e S-4      ;; $
 )
