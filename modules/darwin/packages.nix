@@ -10,7 +10,6 @@ shared-packages
   colima
   keka
   pam-reattach
-  raycast
   slack
   spotify
   utm
