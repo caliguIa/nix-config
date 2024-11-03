@@ -14,7 +14,7 @@ local direction_keys = {
 local function split_nav(key)
     return {
         key = key,
-        mods = "META",
+        mods = "SHIFT",
         action = w.action_callback(function(win, pane)
             if is_vim(pane) then
                 win:perform_action({
