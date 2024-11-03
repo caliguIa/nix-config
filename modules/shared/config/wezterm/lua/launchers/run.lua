@@ -15,6 +15,7 @@ local selectorConfigs = {
     btm = { args = { "btm" }, },
     gitui = { args = { "gitui" } },
     lazydocker = { args = { "lazydocker" } },
+    ['reload kanata config'] = { args = { "zsh", "-i", "-c", "sudo launchctl bootout system /Library/LaunchDaemons/com.caligula.kanata.plist && sudo launchctl bootstrap system /Library/LaunchDaemons/com.caligula.kanata.plist" .. cmd.CONFIRM } },
 }
 
 M.keys = {
