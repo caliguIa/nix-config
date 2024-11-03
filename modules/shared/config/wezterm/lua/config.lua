@@ -13,6 +13,9 @@ M.set_environment_variables = {
     PATH = "/opt/homebrew/bin:" .. path.HOME .. "/.nix-profile/bin:" .. os.getenv "PATH",
 }
 
+M.send_composed_key_when_left_alt_is_pressed = true
+M.send_composed_key_when_right_alt_is_pressed = true
+
 M.term = "wezterm"
 M.animation_fps = 120
 M.max_fps = 120
