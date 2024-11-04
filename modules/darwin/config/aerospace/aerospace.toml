@@ -130,6 +130,9 @@ run = ['move-node-to-workspace tool']
 [[on-window-detected]]
 if.app-id = 'com.tinyapp.TablePlus'
 run = ['move-node-to-workspace tool']
+[[on-window-detected]]
+if.app-id = 'com.apple.Notes'
+run = ['move-node-to-workspace tool']
 
 # video 
 [[on-window-detected]]
