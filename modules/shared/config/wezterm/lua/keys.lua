@@ -31,7 +31,7 @@ local baseKeys = {
                     "zsh",
                     "-i",
                     "-c",
-                    "nvim todo/$(git branch --show-current)",
+                    "nvim todo/$(git branch --show-current).md",
                 },
             },
         }

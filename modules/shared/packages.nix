@@ -20,6 +20,7 @@ with pkgs;
   lazydocker
   less
   lua
+  nushell
   python3
   ripgrep
   rustc

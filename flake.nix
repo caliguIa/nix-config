@@ -85,33 +85,5 @@
           ];
         }
       );
-      #   darwinConfigurations =
-      #     let
-      #       user = "caligula";
-      #     in
-      #     {
-      #       macos = darwin.lib.darwinSystem {
-      #         system = "aarch64-darwin";
-      #         specialArgs = inputs;
-      #         modules = [
-      #           home-manager.darwinModules.home-manager
-      #           nix-homebrew.darwinModules.nix-homebrew
-      #           {
-      #             nix-homebrew = {
-      #               enable = true;
-      #               user = "${user}";
-      #               taps = {
-      #                 "homebrew/homebrew-core" = homebrew-core;
-      #                 "homebrew/homebrew-cask" = homebrew-cask;
-      #                 "homebrew/homebrew-bundle" = homebrew-bundle;
-      #               };
-      #               mutableTaps = false;
-      #               autoMigrate = true;
-      #             };
-      #           }
-      #           ./hosts/darwin
-      #         ];
-      #       };
-      #     };
     };
 }
