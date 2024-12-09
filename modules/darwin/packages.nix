@@ -7,10 +7,8 @@ in
 shared-packages
 ++ [
   aerospace
-  colima
   keka
   pam-reattach
-  slack
   spotify
   utm
   wezterm

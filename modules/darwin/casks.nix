@@ -11,5 +11,6 @@ _:
   "gauntlet"
   "onyx"
   "pika"
+  "slack"
   "tableplus"
 ]

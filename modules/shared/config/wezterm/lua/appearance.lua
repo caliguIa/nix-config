@@ -2,6 +2,8 @@ local wezterm = require "wezterm"
 
 local M = {}
 
+M.color_scheme = "Catppuccin Mocha"
+
 M.font = wezterm.font "BerkeleyMono Nerd Font"
 M.font_size = 13
 M.line_height = 1.6
