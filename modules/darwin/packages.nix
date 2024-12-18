@@ -9,6 +9,7 @@ shared-packages
   aerospace
   keka
   pam-reattach
+  raycast
   spotify
   utm
   wezterm
