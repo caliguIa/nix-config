@@ -1,0 +1,3 @@
+[submodule "modules/shared/config/nvim"]
+	path = modules/shared/config/nvim
+	url = git@github.com:caliguIa/nvim.git
