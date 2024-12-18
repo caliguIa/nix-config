@@ -1,13 +1,12 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 
 let
   user = "caligula";
-  sharedFiles = import ../shared/files.nix { inherit user config pkgs; };
-  additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
   users.users.${user} = {
@@ -20,13 +19,6 @@ in
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
-    # masApps = {
-    #   "1passwordSafari" = 1569813296;
-    #   "velja" = 1607635845;
-    #   "vimari" = 1480933944;
-    #   "vinegar" = 1591303229;
-    #   "adguard" = 1440147259;
-    # };
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";
@@ -48,8 +40,14 @@ in
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };
           file = lib.mkMerge [
-            sharedFiles
-            additionalFiles
+            (import ../shared/files.nix {
+              inherit user pkgs lib;
+              config = config;
+            })
+            (import ./files.nix {
+              inherit user pkgs lib;
+              config = config;
+            })
           ];
           stateVersion = "23.11";
         };

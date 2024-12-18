@@ -1,8 +1,12 @@
-{ user, config, ... }:
-
+{
+  user,
+  pkgs,
+  lib,
+  config,
+}:
 let
-  xdgConfigHome = "${config.users.users.${user}.home}/.config";
+  configDir = toString /Users/caligula/nix-config/modules/darwin/config;
 in
 {
-  "${xdgConfigHome}/aerospace".source = ./config/aerospace;
+  ".config/aerospace".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/aerospace";
 }
