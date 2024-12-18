@@ -36,6 +36,8 @@
     update = "softwareupdate -ia";
     updatel = "softwareupdate -l";
     ":q" = "exit";
+    vpn-up = "aws ec2 start-instances --instance-ids i-0233140dd34c2958c --region eu-west-2";
+    vpn-down = "aws ec2 stop-instances --instance-ids i-0233140dd34c2958c --region eu-west-2";
   };
 
   initExtraFirst = ''

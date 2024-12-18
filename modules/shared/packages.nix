@@ -2,7 +2,8 @@
 
 with pkgs;
 [
-  _1password
+  _1password-cli
+  awscli2
   bottom
   cargo
   cmake
@@ -21,6 +22,8 @@ with pkgs;
   less
   lua
   nushell
+  podman
+  podman-compose
   python3
   ripgrep
   rustc
