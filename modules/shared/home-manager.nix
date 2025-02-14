@@ -2,6 +2,8 @@
   config,
   pkgs,
   lib,
+  zls,
+  neovim-nightly-overlay,
   ...
 }:
 
@@ -12,10 +14,17 @@
   direnv = { } // import ./packages/direnv.nix { inherit pkgs; };
   fzf = { } // import ./packages/fzf.nix { inherit pkgs; };
   git = { } // import ./packages/git.nix { inherit pkgs; };
-  gitui = { } // import ./packages/gitui.nix { inherit pkgs; };
   helix = { } // import ./packages/helix.nix { inherit pkgs lib; };
   ncspot = { } // import ./packages/ncspot.nix { inherit pkgs; };
-  neovim = { } // import ./packages/neovim.nix { inherit pkgs; };
+  neovim =
+    { }
+    // import ./packages/neovim.nix {
+      inherit
+        neovim-nightly-overlay
+        pkgs
+        zls
+        ;
+    };
   opam = { } // import ./packages/opam.nix { inherit pkgs; };
   starship = { } // import ./packages/starship.nix { inherit pkgs; };
   tmux = { } // import ./packages/tmux.nix { inherit pkgs; };

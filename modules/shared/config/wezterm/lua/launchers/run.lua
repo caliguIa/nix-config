@@ -10,14 +10,32 @@ local M = {}
 --stylua: ignore
 local selectorConfigs = {
     ["git merge origin/main"] = { args = { "zsh", "-i", "-c", "git fetch && git pull && git merge origin/main" .. cmd.CONFIRM } },
-    ["oneupsales bounce"] = { 
-        args = { 
-            "zsh", 
-            "-i", 
-            "-c", 
-            "export PATH=/usr/local/bin:$PATH && cd " .. path.OUS .. " && direnv allow && eval \"$(direnv export zsh)\" && make down && make platform-up" .. cmd.CONFIRM 
-        }, 
-        cwd = path.OUS 
+    ["ous bounce"] = {
+        args = {
+            "zsh",
+            "-i",
+            "-c",
+            "export PATH=/usr/local/bin:$PATH && cd " .. path.OUS .. " && direnv allow && eval \"$(direnv export zsh)\" && make down && make platform-up" .. cmd.CONFIRM
+        },
+        cwd = path.OUS
+    },
+    ["ous down"] = {
+        args = {
+            "zsh",
+            "-i",
+            "-c",
+            "export PATH=/usr/local/bin:$PATH && cd " .. path.OUS .. " && direnv allow && eval \"$(direnv export zsh)\" && make down" .. cmd.CONFIRM
+        },
+        cwd = path.OUS
+    },
+    ["ous up"] = {
+        args = {
+            "zsh",
+            "-i",
+            "-c",
+            "export PATH=/usr/local/bin:$PATH && cd " .. path.OUS .. " && direnv allow && eval \"$(direnv export zsh)\" && make platform-up" .. cmd.CONFIRM
+        },
+        cwd = path.OUS
     },
     ["nix build switch"] = { args = { "zsh", "-i", "-c", "just build" .. cmd.CONFIRM }, cwd = path.NIX },
     btm = { args = { "btm" }, },

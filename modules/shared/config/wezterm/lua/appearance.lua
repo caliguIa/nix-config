@@ -6,7 +6,7 @@ M.color_scheme = "Catppuccin Mocha"
 
 M.font = wezterm.font "BerkeleyMono Nerd Font"
 M.font_size = 14
-M.line_height = 1.7
+M.line_height = 1.5
 
 M.window_padding = {
     left = 0,

@@ -11,6 +11,4 @@ shared-packages
   pam-reattach
   raycast
   spotify
-  utm
-  wezterm
 ]

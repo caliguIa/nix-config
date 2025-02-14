@@ -1,0 +1,73 @@
+// ~/.config/zellij/config.kdl
+
+pane_frames false
+simplified_ui true
+default_layout "compact"
+tabs_location "top"
+
+layout {
+    pane
+}
+
+themes {
+    catppuccin-mocha {
+        bg "#585b70" // Surface2
+        fg "#cdd6f4"
+        red "#f38ba8"
+        green "#a6e3a1"
+        blue "#89b4fa"
+        yellow "#f9e2af"
+        magenta "#f5c2e7" // Pink
+        orange "#fab387" // Peach
+        cyan "#89dceb" // Sky
+        black "#181825" // Mantle
+        white "#cdd6f4"
+    }
+}
+
+// Clear all default keybindings
+keybinds clear-defaults=true {
+    normal {
+        bind "Ctrl Space" { SwitchToMode "pane"; }
+
+        // Pane/Tab navigation with Alt+hjkl
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt j" { MoveFocus "Down"; }
+    }
+
+    pane {
+        bind "s" { SwitchToMode "Normal"; LaunchOrFocusPlugin "session-manager"; }
+        bind "t" { 
+            NewPane "Right"; 
+            Run "nvim" "todo/$(git branch --show-current).md"; 
+            SwitchToMode "Normal";
+        }
+        bind "d" { CloseFocus; SwitchToMode "Normal"; }
+        bind "h" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "v" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "c" { NewTab; SwitchToMode "Normal"; }
+        bind "m" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "m" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "n" { GoToNextTab; SwitchToMode "Normal"; }
+        bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "+" { SwitchToMode "resize"; }
+    }
+
+    resize {
+        bind "h" { Resize "Left"; }
+        bind "j" { Resize "Down"; }
+        bind "k" { Resize "Up"; }
+        bind "l" { Resize "Right"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+    }
+}
+
+plugins {
+    session-manager { path "session-manager"; }
+    compact-picker { path "compact-picker"; }
+}
+
+theme "catppuccin-mocha"

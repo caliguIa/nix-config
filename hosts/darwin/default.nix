@@ -10,9 +10,8 @@ in
     ../../modules/shared
   ];
 
-  services.nix-daemon.enable = true;
-
   nix = {
+    enable = true;
     package = pkgs.nix;
     settings = {
       trusted-users = [
@@ -27,7 +26,6 @@ in
     };
 
     gc = {
-      user = "root";
       automatic = true;
       interval = {
         Weekday = 0;
@@ -55,6 +53,7 @@ in
 
   environment.systemPath = [
     "${config.users.users.${user}.home}/.cargo/bin"
+    "${config.users.users.${user}.home}/.local/bin"
   ];
 
   environment.variables = {

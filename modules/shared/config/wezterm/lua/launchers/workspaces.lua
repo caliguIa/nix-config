@@ -3,16 +3,16 @@ local utils = require "lua/utils"
 local consts = require "lua/consts"
 
 local path = consts.path
+local nix_shared_config = "/modules/shared/config"
 
 local M = {}
 
 local selectorConfigs = {
     ["oneupsales platform"] = { cwd = path.OUS .. "/platform" },
-    ["neovim config"] = { args = { "nvim" }, cwd = path.HOME .. "/.config/nvim" },
-    ["nix config"] = { args = { "nvim" }, cwd = path.NIX },
+    ["neovim config"] = { cwd = path.NIX .. nix_shared_config .. "/nvim" },
+    ["nix config"] = { cwd = path.NIX },
     ["wezterm config"] = {
-        args = { "nvim" },
-        cwd = path.NIX .. "/modules/shared/config/wezterm",
+        cwd = path.NIX .. nix_shared_config .. "/wezterm",
     },
     spotify = { args = { "ncspot" }, cwd = path.HOME },
 }

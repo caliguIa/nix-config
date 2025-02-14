@@ -3,7 +3,6 @@
 with pkgs;
 [
   _1password-cli
-  awscli2
   bottom
   cargo
   cmake
@@ -19,11 +18,10 @@ with pkgs;
   killport
   lazygit
   lazydocker
+  lazysql
   less
   lua
   nushell
-  podman
-  podman-compose
   python3
   ripgrep
   rustc

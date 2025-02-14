@@ -1,7 +1,7 @@
 {
-  config,
   pkgs,
-  lib,
+  zls,
+  neovim-nightly-overlay,
   ...
 }:
 
@@ -51,7 +51,17 @@ in
           ];
           stateVersion = "23.11";
         };
-        programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+        programs =
+          { }
+          // import ../shared/home-manager.nix {
+            inherit
+              config
+              pkgs
+              lib
+              zls
+              neovim-nightly-overlay
+              ;
+          };
       };
   };
 }
