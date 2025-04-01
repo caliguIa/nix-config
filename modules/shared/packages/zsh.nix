@@ -4,7 +4,7 @@
   autocd = false;
   autosuggestion.enable = true;
   enableCompletion = true;
-  syntaxHighlighting.enable = true;
+  syntaxHighlighting.enable = false;
   defaultKeymap = "emacs";
   history.path = "${config.xdg.dataHome}/zsh/zsh_history";
   dotDir = ".config/zsh";

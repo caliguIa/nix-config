@@ -1,23 +1,26 @@
-{ ... }: {
+{ ... }:
+{
   enable = true;
   enableZshIntegration = true;
   settings = {
-    format =
-      "$username$hostname$directory$git_branch$git_state$git_status$cmd_duration$line_break$character";
-    directory = { style = "yellow"; };
+    format = "$directory $git_branch$git_status $git_state $fill $cmd_duration$line_break$character";
+    directory = {
+      style = "bold fg:#d5d5d5";
+    };
+    fill = {
+      symbol = " ";
+    };
     character = {
-      success_symbol = "[❯](yellow)";
-      error_symbol = "[❯](red)";
-      vimcmd_symbol = "[❮](green)";
+      success_symbol = "[](#ff0088)";
+      error_symbol = "[](#ff0088)";
+      vimcmd_symbol = "[](#ff0088)";
     };
     git_branch = {
       format = "[$branch]($style)";
-      style = "green";
+      style = "fg:#949494";
     };
     git_status = {
-      format =
-        "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
-      style = "cyan";
+      format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](#ff0088) ($ahead_behind$stashed)](#51657B)";
       conflicted = "​";
       untracked = "​";
       modified = "​";
@@ -28,11 +31,11 @@
     };
     git_state = {
       format = "([$state( $progress_current/$progress_total)]($style)) ";
-      style = "bright-black";
+      style = "#737373";
     };
     cmd_duration = {
       format = "[$duration]($style) ";
-      style = "yellow";
+      style = "fg:#737373";
     };
   };
 }

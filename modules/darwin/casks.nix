@@ -8,7 +8,6 @@ _:
   "homebrew/cask/docker"
   "obsidian"
   "onyx"
-  "orbstack"
   "pika"
   "tableplus"
   "wezterm"

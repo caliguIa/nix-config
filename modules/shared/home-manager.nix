@@ -27,7 +27,6 @@
     };
   opam = { } // import ./packages/opam.nix { inherit pkgs; };
   starship = { } // import ./packages/starship.nix { inherit pkgs; };
-  tmux = { } // import ./packages/tmux.nix { inherit pkgs; };
   zellij = { } // import ./packages/zellij.nix { inherit pkgs; };
   zsh = { } // import ./packages/zsh.nix { inherit config pkgs; };
 }

@@ -30,8 +30,8 @@ with pkgs;
   ripgrep
   rustc
   sd
-  # spotifyd
   tokei
+  tmux
   wezterm
   wget
   yazi
