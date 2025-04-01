@@ -1,101 +1,75 @@
 (defcfg
-  process-unmapped-keys yes
   concurrent-tap-hold yes
 )
 
 (defsrc
-       f1    f2   f3   f4   f5  f6    f7   f8   f9   f10   f11   f12
-  fn
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  Backquote    1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    
+  caps a    s    d    f    g    h    j    k    l    ;    '    \    ret
+  lsft IntlBackslash    z    x    c    v    b    n    m    ,    .    /    rsft
+  fn   lctl lalt lmet           spc            rmet ralt 
+)
+
+(defvar
+  tap-time 200
+  hold-time 200
 )
 
 (defalias
-  ;; Hyper key - all modifiers at once, but using ralt specifically
-  hyp (multi lsft lctl lmet ralt)
+  ;; Modifiers
+  hyp (multi lsft lctl lmet lalt)  ;; Hyper key
   
-  ;; Function key layer toggle
-  fnl (tap-hold 200 200 fn (layer-toggle fn))
-
-  ;; Arrow key aliases that temporarily release ctrl
+  ;; Function key
+  fnk (tap-hold $tap-time $hold-time fn (layer-toggle function))
+  
+  ;; Navigation with ctrl preserved
+  nav (layer-toggle navigation)
+  ctl-nav (multi rctl @nav)  ;; Right Ctrl activates nav layer while preserving Ctrl
+  
+  ;; Arrow keys that release ctrl when needed
   arr-l (multi (release-key rctl) left)
   arr-d (multi (release-key rctl) down)
   arr-u (multi (release-key rctl) up)
   arr-r (multi (release-key rctl) right)
-
-  ;; Symbol output aliases using unmod with explicit shift
-  sym-a (unmod lsft [)     ;; {
-  sym-s (unmod lsft ])     ;; }
-  sym-d (unmod lsft 9)     ;; (
-  sym-f (unmod lsft 0)     ;; )
-  sym-q (unmod lsft \)     ;; |
-  sym-w (unmod lsft 4)     ;; $
-  sym-e (unmod [)          ;; [
-  sym-r (unmod ])          ;; ]
-
-  ;; Ctrl navigation layer that preserves ctrl functionality
-  nav (multi rctl (layer-while-held nav))
+  
+  ;; Media keys
+  bdn brdn
+  bup brup
+  prv prev
+  pla pp
+  nxt next
+  mut mute
+  vdn vold
+  vup volu
 )
 
-(deflayermap (base)
-  ;; Right command becomes nav layer activator
-  rmet @nav
-  
-  ;; Right alt becomes hyper
-  ralt @hyp
-  
-  ;; Function key
-  fn @fnl
-  
-  ;; Left alt remains as regular alt
-  lalt lalt
-  
-  ;; Symbol keys use switch to check alt state
-  a (switch ((input real lalt)) @sym-a break () a break)
-  s (switch ((input real lalt)) @sym-s break () s break)
-  d (switch ((input real lalt)) @sym-d break () d break)
-  f (switch ((input real lalt)) @sym-f break () f break)
-  q (switch ((input real lalt)) @sym-q break () q break)
-  w (switch ((input real lalt)) @sym-w break () w break)
-  e (switch ((input real lalt)) @sym-e break () e break)
-  r (switch ((input real lalt)) @sym-r break () r break)
-  
-  ;; Default media/system controls
-  f1   brdn  ;; Brightness down
-  f2   brup  ;; Brightness up
-  f3   _     ;; Mission Control
-  f4   _     ;; Launchpad
-  f5   _     ;; Dictation
-  f6   _     ;; Do Not Disturb
-  f7   prev  ;; Previous track
-  f8   pp    ;; Play/Pause
-  f9   next  ;; Next track
-  f10  mute  ;; Mute
-  f11  vold  ;; Volume down
-  f12  volu  ;; Volume up
+;; Base layer
+(deflayer base
+  caps @bdn @bup _    _    _    _    @prv @pla @nxt @mut @vdn @vup
+  Backquote    1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    
+  esc  a    s    d    f    g    h    j    k    l    ;    '    \    ret
+  lsft `    z    x    c    v    b    n    m    ,    .    /    rsft
+  @fnk lctl lalt lmet spc    @ctl-nav @hyp  
 )
 
-(deflayermap (nav)
-  ;; Arrow keys that temporarily release ctrl
-  h @arr-l
-  j @arr-d
-  k @arr-u
-  l @arr-r
-  
-  ;; Make all other keys transparent to allow ctrl combinations
-  _ _
+;; Navigation layer - activated by right Ctrl
+(deflayer navigation
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    
+  _    _    _    _    _    _    @arr-l @arr-d @arr-u @arr-r _ _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _              _              _    _    _    _
 )
 
-;; Function number keys when fn is held
-(deflayermap (fn)
-  f1   f1
-  f2   f2
-  f3   f3
-  f4   f4
-  f5   f5
-  f6   f6
-  f7   f7
-  f8   f8
-  f9   f9
-  f10  f10
-  f11  f11
-  f12  f12
+;; Function key layer
+(deflayer function
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _              _              _    _    _    _
 )

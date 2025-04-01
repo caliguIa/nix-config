@@ -9,6 +9,9 @@ shared-packages
   aerospace
   keka
   pam-reattach
+  pkg-config
+  portaudio
   raycast
+  slack
   spotify
 ]

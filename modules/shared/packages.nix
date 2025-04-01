@@ -3,9 +3,12 @@
 with pkgs;
 [
   _1password-cli
+  awscli2
   bottom
   cargo
+  colima
   cmake
+  docker
   deno
   exercism
   eza
@@ -20,14 +23,15 @@ with pkgs;
   lazydocker
   lazysql
   less
+  lima
   lua
   nushell
   python3
   ripgrep
   rustc
   sd
+  # spotifyd
   tokei
-  uutils-coreutils-noprefix
   wezterm
   wget
   yazi

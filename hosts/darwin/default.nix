@@ -45,15 +45,21 @@ in
   environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   security = {
-    pam.enableSudoTouchIdAuth = true;
+    pam.services.sudo_local.touchIdAuth = true;
     sudo.extraConfig = ''
       Defaults    timestamp_timeout=30
     '';
   };
+  # services = {
+  #   spotifyd = {
+  #     enable = true;
+  #   };
+  # };
 
   environment.systemPath = [
     "${config.users.users.${user}.home}/.cargo/bin"
     "${config.users.users.${user}.home}/.local/bin"
+    "${config.users.users.${user}.home}/go/bin"
   ];
 
   environment.variables = {

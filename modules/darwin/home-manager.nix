@@ -19,6 +19,14 @@ in
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
+    # brews = [
+    #   {
+    #     name = "spotifyd";
+    #     # args = [ "HEAD" ];
+    #     restart_service = "changed";
+    #     start_service = true;
+    #   }
+    # ];
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";
