@@ -2,11 +2,9 @@
 # Ghostty Config! 👻
 # ------------------------------------------------------------------------------
 
-# theme = catppuccin-mocha
 background = 121212
 foreground = d5d5d5
 selection-background = 323232
-# selection-foreground = 
  
 # Font 
 font-family = BerkeleyMono Nerd Font
@@ -27,7 +25,7 @@ macos-window-shadow = false
 window-save-state = always
 quick-terminal-animation-duration = 0
 macos-non-native-fullscreen = false
-macos-option-as-alt = false
+macos-option-as-alt = true
 
 # custom-shader = shaders/crt.glsl
 
@@ -72,6 +70,6 @@ copy-on-select = clipboard
 # keybind = shift+h=adjust_selection:left
 # keybind = shift+l=adjust_selection:right
 # keybind = ctrl+shift+a=select_all
-
+keybind = alt+3=text:#
 # Other
 shell-integration-features = no-cursor,sudo,no-title
