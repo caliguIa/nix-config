@@ -15,6 +15,7 @@
   fzf = { } // import ./packages/fzf.nix { inherit pkgs; };
   git = { } // import ./packages/git.nix { inherit pkgs; };
   helix = { } // import ./packages/helix.nix { inherit pkgs lib; };
+  lazygit = { } // import ./packages/lazygit.nix { inherit pkgs; };
   ncspot = { } // import ./packages/ncspot.nix { inherit pkgs; };
   neovim =
     { }

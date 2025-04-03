@@ -8,6 +8,7 @@ with pkgs;
   cargo
   colima
   cmake
+  delta
   docker
   deno
   exercism
@@ -19,7 +20,6 @@ with pkgs;
   just
   jq
   killport
-  lazygit
   lazydocker
   lazysql
   less
