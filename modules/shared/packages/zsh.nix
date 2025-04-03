@@ -14,9 +14,9 @@
     dt = "cd ~/Desktop";
     df = "cd ~/nix-config";
     cf = "cd ~/.config";
-    nvcfg = "cd ~/nix-config/modules/shared/config/nvim/";
-    tmcfg = "cd ~/nix-config/modules/shared/config/tmux/";
-    nxcfg = "cd ~/nix-config/";
+    cfg = "cd ~/nix-config/modules/shared/config";
+    nixcfg = "cd ~/nix-config/";
+    ous = "cd ~/ous";
     dev = "cd ~/dev";
     ".." = "cd ..";
     "..." = "cd ../..";
@@ -39,6 +39,7 @@
     kanata-reload = "sudo launchctl unload /Library/LaunchDaemons/com.jtroo.kanata.plist; sudo launchctl load  /Library/LaunchDaemons/com.jtroo.kanata.plist";
     nix-rebuild = "cd $HOME/nix-config; just build; cd -";
     nix-gc = "nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc";
+    t = "tmux attach-session";
     update = "softwareupdate -ia";
     updatel = "softwareupdate -l";
     ":q" = "exit";
@@ -54,6 +55,6 @@
 
     [[ ! -r /Users/caligula/.opam/opam-init/init.zsh ]] || source /Users/caligula/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
-    source ~/.env
+    source ~/.local/auth/.env
   '';
 }
