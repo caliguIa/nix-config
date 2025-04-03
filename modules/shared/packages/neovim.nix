@@ -24,8 +24,8 @@
     phpactor
     php82Packages.composer
     rust-analyzer
+    sleek
     stylua
-    sqlfluff
     typescript
     vscode-langservers-extracted
     vtsls
