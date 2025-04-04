@@ -7,18 +7,21 @@ in
   enable = true;
   userName = name;
   userEmail = email;
-  # lfs = {
-  #   enable = true;
-  # };
-  # extraConfig = {
-  #   init.defaultBranch = "main";
-  #   core = {
-  #     editor = "nvim";
-  #     symlinks = true;
-  #     autocrlf = "input";
-  #   };
-  #   push.autoSetupRemote = true;
-  # };
+  maintenance = {
+    enable = true;
+    repositories = [
+      "/Users/caligula/ous"
+    ];
+  };
+  extraConfig = {
+    init.defaultBranch = "main";
+    core = {
+      editor = "nvim";
+      symlinks = true;
+      autocrlf = "input";
+    };
+    push.autoSetupRemote = true;
+  };
   ignores = [
     "env-vars.private.zsh"
     "*.pyc"

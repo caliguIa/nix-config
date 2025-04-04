@@ -15,7 +15,7 @@
     "fg+" = "#f5f5f5";
     preview-fg = "#b4b4b4";
     hl = "#ff0088";
-    "hl+" = "#f5f5f5";
+    "hl+" = "#ff0088";
     info = "#d5d5d5";
     border = "#121212";
     prompt = "#ff0088";
