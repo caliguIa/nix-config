@@ -11,14 +11,13 @@ commands=(
 
 selected=$(printf '%s\n' "${commands[@]}" | cut -d':' -f1 | fzf)
 
-if [ -n "$selected" ]; then
-    for cmd in "${commands[@]}"; do
-        if [[ $cmd == ${selected}::* ]]; then
+if [ -n "$selected" ]; then  
+    for cmd in "${commands[@]}"; do  
+        if [[ $cmd == ${selected}::* ]]; then  
             command="${cmd#*::}"
-            eval "$command"
-            echo "Press any key to exit..."
-            read -n 1
+            # Create a new pane and run the command
+            tmux split-window -h "eval '$command'; echo 'Press any key to exit...'; read -n 1"
             exit 0
-        fi
-    done
+        fi  
+    done  
 fi

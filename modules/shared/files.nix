@@ -12,6 +12,7 @@ in
 {
   ".local/bin/tmux-cmd-launcher.sh".source =
     config.lib.file.mkOutOfStoreSymlink "${binDir}/tmux-cmd-launcher.sh";
+  ".local/bin/csv-sql-fmt.sh".source = config.lib.file.mkOutOfStoreSymlink "${binDir}/csv-sql-fmt.sh";
   ".hushlogin".text = "";
   ".config/kanata".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/kanata";
   ".config/zellij".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/zellij";

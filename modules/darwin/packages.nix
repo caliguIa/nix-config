@@ -12,6 +12,5 @@ shared-packages
   pkg-config
   portaudio
   raycast
-  slack
   spotify
 ]

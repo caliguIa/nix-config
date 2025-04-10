@@ -27,6 +27,7 @@ with pkgs;
   lua
   nushell
   python3
+  rainfrog
   ripgrep
   rustc
   sd

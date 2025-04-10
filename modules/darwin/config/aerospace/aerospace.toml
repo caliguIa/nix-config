@@ -1,5 +1,4 @@
 after-login-command = []
-after-startup-command = ['workspace term']
 start-at-login = true
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']

@@ -9,6 +9,7 @@ _:
   "obsidian"
   "onyx"
   "pika"
+  "slack"
   "tableplus"
   "wezterm"
 ]
