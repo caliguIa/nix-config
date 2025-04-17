@@ -6,7 +6,7 @@ with pkgs;
   awscli2
   bottom
   cargo
-  colima
+  claude-code
   cmake
   delta
   docker
@@ -14,6 +14,7 @@ with pkgs;
   exercism
   eza
   fd
+  gitu
   gh
   iina
   image_optim

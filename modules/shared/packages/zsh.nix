@@ -16,7 +16,7 @@
     cf = "cd ~/.config";
     cfg = "cd ~/nix-config/modules/shared/config";
     nx = "cd ~/nix-config/";
-    ous = "cd ~/ous";
+    ous = "cd ~/ous/platform";
     dev = "cd ~/dev";
     ".." = "cd ..";
     "..." = "cd ../..";
