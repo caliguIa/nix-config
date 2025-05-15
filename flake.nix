@@ -2,7 +2,10 @@
   description = "system nix configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +49,9 @@
     }@inputs:
     let
       darwinSystems = [ "aarch64-darwin" ];
+      nixosSystems = [ "x86_64-linux" ];
+      user = "caligula";
+      
       mkApp = scriptName: system: {
         type = "app";
         program = "${
@@ -57,20 +63,35 @@
           '')
         }/bin/${scriptName}";
       };
+      
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;
         "build-switch" = mkApp "build-switch" system;
         "rollback" = mkApp "rollback" system;
       };
+
+      # NixOS system configuration
+      nixosSystem = system: hostname:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = inputs // { inherit user; };
+          modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${user} = import ./hosts/nixos/home.nix;
+            }
+            ./hosts/nixos
+          ];
+        };
     in
     {
       apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      
       darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
         system:
-        let
-          user = "caligula";
-        in
         darwin.lib.darwinSystem {
           inherit system;
           specialArgs = inputs;
@@ -94,5 +115,10 @@
           ];
         }
       );
+      
+      # NixOS configurations
+      nixosConfigurations = {
+        george = nixosSystem "x86_64-linux" "george";
+      };
     };
 }

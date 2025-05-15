@@ -1,12 +1,17 @@
-# Nix Config for macOS (and soon NixOS)
+# Nix Config for macOS and NixOS
 
 ## Layout
 
 ```
 .
 ├── apps         # Nix commands used to bootstrap and build configuration
-├── hosts        # Host-specific configuration (macOS only currently)
-├── modules      # macOS and nix-darwin, and shared configuration
+├── hosts        # Host-specific configuration for both macOS and NixOS
+│   ├── darwin   # macOS configuration
+│   └── nixos    # NixOS server configuration
+├── modules      # Configuration modules
+│   ├── darwin   # macOS-specific modules
+│   ├── nixos    # NixOS-specific modules
+│   └── shared   # Shared configuration modules
 ```
 
 # Installing
@@ -65,6 +70,29 @@ Finally, alter your system with this command:
 
 ```sh
 nix run .#build-switch
+```
+
+## For NixOS
+
+### 1. Install NixOS
+
+Install NixOS according to the [official documentation](https://nixos.org/manual/nixos/stable/index.html#sec-installation).
+
+### 2. Clone this repository
+
+```sh
+git clone https://github.com/caliguIa/nix-config.git
+cd nix-config
+```
+
+### 3. No need to copy hardware configuration
+
+The system is configured to use the hardware-configuration.nix directly from its location at `/etc/nixos/hardware-configuration.nix`.
+
+### 4. Build and apply the configuration
+
+```sh
+nixos-rebuild switch --flake .#george
 ```
 
 ## Update dependencies
