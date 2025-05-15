@@ -85,9 +85,16 @@ git clone https://github.com/caliguIa/nix-config.git
 cd nix-config
 ```
 
-### 3. No need to copy hardware configuration
+### 3. Link the hardware configuration
 
-The system is configured to use the hardware-configuration.nix directly from its location at `/etc/nixos/hardware-configuration.nix`.
+Create a symbolic link to your hardware configuration:
+
+```sh
+# From the repository root
+ln -sf /etc/nixos/hardware-configuration.nix hosts/nixos/hardware-configuration.nix
+```
+
+This way, your hardware configuration stays up-to-date with your system without manual copying.
 
 ### 4. Build and apply the configuration
 

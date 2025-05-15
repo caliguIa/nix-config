@@ -7,8 +7,8 @@
 
 {
   imports = [
-    # Import hardware configuration directly from its system location
-    /etc/nixos/hardware-configuration.nix
+    # Import hardware configuration
+    ./hardware-configuration.nix
     # Import specific NixOS modules
     ../../modules/nixos
   ];

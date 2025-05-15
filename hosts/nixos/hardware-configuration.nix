@@ -1,14 +1,6 @@
-# NOTE: This file is not used. The actual hardware configuration is imported directly
-# from /etc/nixos/hardware-configuration.nix in the default.nix file.
+# NOTE: This file should be a symbolic link to /etc/nixos/hardware-configuration.nix
+# Create the link with: ln -sf /etc/nixos/hardware-configuration.nix hosts/nixos/hardware-configuration.nix
 #
-# This file is kept as a reference for documentation purposes.
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+# This placeholder file will be overwritten by the symlink
 
-{
-  # Not used - see /etc/nixos/hardware-configuration.nix on your NixOS system
-}
+throw "This is a placeholder. Please create a symbolic link to your hardware-configuration.nix"

@@ -18,13 +18,16 @@ This directory contains the NixOS-specific configuration for the system.
 
 ## Hardware Configuration
 
-The system is configured to use the hardware-configuration.nix directly from its installed location at `/etc/nixos/hardware-configuration.nix`, so there's no need to copy this file.
+Instead of manually copying the hardware configuration, we use a symlink to keep it up to date.
 
 To use this configuration on your server:
 
-1. Boot into the NixOS installation media
-2. Install NixOS with `nixos-install`
-3. Clone this repository to a location like `/home/caligula/nix-config`
+1. Boot into the NixOS installation media and install NixOS
+2. Clone this repository to a location like `/home/caligula/nix-config`
+3. Create a symbolic link to your hardware configuration:
+   ```
+   ln -sf /etc/nixos/hardware-configuration.nix hosts/nixos/hardware-configuration.nix
+   ```
 4. Build and apply the configuration with `nixos-rebuild switch --flake .#george`
 
 ## Notes
