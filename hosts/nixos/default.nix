@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     # Import specific NixOS modules
     ../../modules/nixos
+    ../../modules/shared
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -32,9 +33,9 @@
 
   time.timeZone = "Europe/London";
 
+  programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  system.copySystemConfiguration = true;
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
   system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";

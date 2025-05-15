@@ -1,4 +1,8 @@
 {
+  pkgs,
+  ...
+}:
+{
   users = {
     users = {
       caligula = {
@@ -7,6 +11,7 @@
           "wheel"
           "share"
         ];
+        shell = pkgs.zsh;
       };
       share = {
         isSystemUser = true;

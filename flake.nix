@@ -28,10 +28,6 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
-    zls = {
-      url = "github:zigtools/zls";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -44,7 +40,6 @@
       homebrew-cask,
       home-manager,
       nixpkgs,
-      zls,
       neovim-nightly-overlay,
     }@inputs:
     let

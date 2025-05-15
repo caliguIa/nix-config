@@ -1,6 +1,5 @@
 {
   pkgs,
-  zls,
   neovim-nightly-overlay,
   ...
 }:
@@ -60,7 +59,6 @@ in
                 config
                 pkgs
                 lib
-                zls
                 neovim-nightly-overlay
                 ;
             })

@@ -1,6 +1,5 @@
 {
   pkgs,
-  zls,
   ...
 }:
 {
@@ -30,6 +29,6 @@
     typescript
     vscode-langservers-extracted
     vtsls
-    zls.packages.${pkgs.system}.default
+    zig
   ];
 }
