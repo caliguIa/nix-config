@@ -42,7 +42,65 @@ in
 
   system.checks.verifyNixPath = false;
 
-  environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment = {
+    systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
+    userLaunchAgents = {
+      "bobko.aerospace.plist" = {
+        enable = true;
+        text = ''
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>Label</key>
+              <string>bobko.aerospace</string>
+              <key>ProgramArguments</key>
+              <array>
+                  <string>${pkgs.aerospace}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace</string>
+                  <string>--started-at-login</string>
+              </array>
+              <key>RunAtLoad</key>
+              <true/>
+          </dict>
+          </plist>
+        '';
+      };
+    };
+    launchDaemons = {
+      "com.jtroo.kanata.plist" = {
+        enable = true;
+        text = ''
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>Label</key>
+              <string>com.jtroo.kanata</string>
+
+              <key>ProgramArguments</key>
+              <array>
+                  <string>/Users/caligula/.local/bin/kanata</string>
+                  <string>-c</string>
+                  <string>/Users/caligula/.config/kanata/kanata.kbd</string>
+              </array>
+
+              <key>RunAtLoad</key>
+              <true/>
+
+              <key>KeepAlive</key>
+              <true/>
+
+              <key>StandardOutPath</key>
+              <string>/Library/Logs/Kanata/kanata.out.log</string>
+
+              <key>StandardErrorPath</key>
+              <string>/Library/Logs/Kanata/kanata.err.log</string>
+          </dict>
+          </plist>
+        '';
+      };
+    };
+  };
 
   security = {
     pam.services.sudo_local = {

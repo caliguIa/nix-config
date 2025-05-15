@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   enable = true;
   autocd = false;
@@ -23,12 +23,19 @@
     "...." = "cd ../../..";
     ls = "eza --color=always --long -a --git --no-filesize --icons=always --no-time --no-user --no-permissions";
     cat = "bat";
-    gaa = "git add --all";
+    ga = "git add";
+    gap = "git add --patch";
+    gb = "git branch";
+    gc = "git commit";
+    gd = "git diff";
+    gi = "git init";
     gst = "git status";
-    gac = "git add .; git commit";
     gco = "git checkout";
     gs = "git switch";
+    gp = "git push";
+    gu = "git pull";
     gfp = "git fetch && git pull";
+    gcl = "git clone";
     undocommit = "git reset --soft HEAD^";
     dc = "docker-compose";
     dcu = "docker-compose up";
@@ -46,8 +53,7 @@
     vpn-up = "aws ec2 start-instances --instance-ids i-0233140dd34c2958c --region eu-west-2";
     vpn-down = "aws ec2 stop-instances --instance-ids i-0233140dd34c2958c --region eu-west-2";
   };
-
-  initExtraFirst = ''
+  initContent = lib.mkBefore ''
     if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
       . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
       . /nix/var/nix/profiles/default/etc/profile.d/nix.sh

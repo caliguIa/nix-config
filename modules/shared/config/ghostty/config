@@ -3,8 +3,8 @@
 # ------------------------------------------------------------------------------
 
 background = 121212
-foreground = d5d5d5
-selection-background = 323232
+#foreground = d5d5d5
+#selection-background = 323232
  
 # Font 
 font-family = BerkeleyMono Nerd Font

@@ -8,7 +8,6 @@ with pkgs;
   cargo
   claude-code
   cmake
-  delta
   docker
   deno
   exercism
@@ -26,6 +25,7 @@ with pkgs;
   less
   lima
   lua
+  nerd-fonts.iosevka
   nushell
   python3
   rainfrog

@@ -20,6 +20,7 @@
     marksman
     nil
     nixfmt-rfc-style
+    nodePackages.prettier
     phpactor
     php82Packages.composer
     prettierd
