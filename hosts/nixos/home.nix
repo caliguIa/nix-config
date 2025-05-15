@@ -16,9 +16,15 @@
   home.homeDirectory = "/home/caligula";
   
   # Import the core shared programs
-  programs = import ../../modules/shared/home-manager.nix {
-    inherit config pkgs lib zls neovim-nightly-overlay;
-  };
+  programs = lib.mkMerge [
+    { home-manager.enable = true; }
+    (import ../../modules/shared/home-manager.nix {
+      inherit config pkgs lib zls neovim-nightly-overlay;
+    })
+    (import ../../modules/nixos/home-manager.nix {
+      inherit config pkgs lib;
+    })
+  ];
   
   # Packages from shared module
   home.packages = pkgs.callPackage ../../modules/shared/packages.nix { };
