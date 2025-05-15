@@ -1,67 +1,20 @@
 {
+  config,
   pkgs,
-  zls,
-  neovim-nightly-overlay,
+  lib,
   ...
 }:
 
-let
-  user = "caligula";
-in
 {
-  users.users.${user} = {
-    name = "${user}";
-    home = "/Users/${user}";
-    isHidden = false;
-    shell = pkgs.zsh;
-  };
-
-  homebrew = {
-    enable = true;
-    casks = pkgs.callPackage ./casks.nix { };
-    onActivation = {
-      autoUpdate = true;
-      cleanup = "zap";
-      upgrade = true;
-    };
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    users.${user} =
-      {
-        pkgs,
-        config,
-        lib,
-        ...
-      }:
-      {
-        home = {
-          enableNixpkgsReleaseCheck = false;
-          packages = pkgs.callPackage ./packages.nix { };
-          file = lib.mkMerge [
-            (import ../shared/files.nix {
-              inherit user pkgs lib;
-              config = config;
-            })
-            (import ./files.nix {
-              inherit user pkgs lib;
-              config = config;
-            })
-          ];
-          stateVersion = "23.11";
-        };
-        programs =
-          { }
-          // import ../shared/home-manager.nix {
-            inherit
-              config
-              pkgs
-              lib
-              zls
-              neovim-nightly-overlay
-              ;
-          };
-      };
-  };
+  # Program configurations specific to Darwin
+  # alacritty = { } // import ../shared/packages/alacritty.nix { inherit pkgs; };
+  direnv = { } // import ../shared/packages/direnv.nix { inherit pkgs; };
+  fzf = { } // import ../shared/packages/fzf.nix { inherit pkgs; };
+  git = { } // import ../shared/packages/git.nix { inherit pkgs; };
+  helix = { } // import ../shared/packages/helix.nix { inherit pkgs lib; };
+  lazygit = { } // import ../shared/packages/lazygit.nix { inherit pkgs; };
+  ncspot = { } // import ../shared/packages/ncspot.nix { inherit pkgs; };
+  opam = { } // import ../shared/packages/opam.nix { inherit pkgs; };
+  zellij = { } // import ../shared/packages/zellij.nix { inherit pkgs; };
 }
+
