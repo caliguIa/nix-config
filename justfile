@@ -1,7 +1,14 @@
-build:
+# macOS (darwin) commands
+build-darwin:
     git add .
-    nix run .#build-switch
+    darwin-rebuild switch --flake .#polyakov
 
+# NixOS commands
+build-nixos:
+    git add .
+    sudo nixos-rebuild switch --flake .#george
+
+# General commands
 update:
     nix flake update
 

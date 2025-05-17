@@ -1,109 +1,78 @@
-# Nix Config for macOS and NixOS
+# Nix Configuration
 
-## Layout
+My personal Nix configuration for both NixOS and macOS (via nix-darwin) systems.
+
+## Structure
 
 ```
 .
-├── apps         # Nix commands used to bootstrap and build configuration
-├── hosts        # Host-specific configuration for both macOS and NixOS
-│   ├── darwin   # macOS configuration
-│   └── nixos    # NixOS server configuration
-├── modules      # Configuration modules
-│   ├── darwin   # macOS-specific modules
-│   ├── nixos    # NixOS-specific modules
-│   └── shared   # Shared configuration modules
+├── dots/              # Configuration files for programs
+│   ├── git/           # Git configuration
+│   │   └── default.nix
+│   ├── zsh/           # ZSH configuration  
+│   │   └── default.nix
+│   ├── nvim/          # Neovim configuration
+│   │   ├── default.nix
+│   │   └── ... (lua config files)
+│   ├── tmux/          # Tmux configuration
+│   │   ├── default.nix
+│   │   └── tmux.conf
+│   ├── bin/           # Shell scripts
+│   │   ├── default.nix
+│   │   └── *.sh
+│   └── ...
+├── machines/          # Host-specific configurations
+│   ├── darwin/        # macOS configurations
+│   │   └── polyakov/  # Configuration for macOS host "polyakov"
+│   └── nixos/         # NixOS configurations
+│       └── george/    # Configuration for NixOS host "george"
+├── modules/           # Common modules
+│   └── common/        # Shared modules for all systems
+└── users/             # User-specific configurations
+    └── caligula/      # Configuration for user "caligula"
 ```
 
-# Installing
+## Usage
 
-## For MacOS
+### NixOS
 
-### 1. Install dependencies
-
-```sh
-xcode-select --install
+```bash
+# Apply the configuration
+sudo nixos-rebuild switch --flake .#george
+# or
+just build-nixos
 ```
 
-### 2. Install Nix
+### macOS (nix-darwin)
 
-Via [Determinate Systems'](https://determinate.systems/) installer
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```bash
+# Apply the configuration 
+darwin-rebuild switch --flake .#polyakov
+# or
+just build-darwin
 ```
 
-### 3. Initialize repo
+## Design Principles
 
-```sh
-git clone git@github.com:caliguIa/nix-config.git
-```
+1. **User-centric**: User configurations are machine-agnostic and defined once
+2. **Machine-specific**: Machine configurations import machine-specific dot files
+3. **Modular**: Each program has its own dot directory containing config and nix files
+4. **Self-contained**: Config files are stored alongside their nix configuration
 
-### 4. Make apps executable
+## Adding a New Machine
 
-```sh
-find apps/$(uname -m)-darwin -type f \( -name apply -o -name build -o -name build-switch -o -name create-keys -o -name copy-keys -o -name check-keys \) -exec chmod +x {} \;
-```
+1. Create a new directory under `machines/{darwin,nixos}/hostname/`
+2. Add the machine to `flake.nix`
+3. Import any machine-specific dot configurations
 
-### 5. Apply your current user info
+## Adding a New User
 
-```sh
-nix run .#apply
-```
+1. Create a new directory under `users/username/`
+2. Configure user with machine-agnostic configurations
 
-### 6. Install configuration
+## Adding a New Program Configuration
 
-First-time installations require you to move the current `/etc/nix/nix.conf` out of the way.
-
-```sh
-[ -f /etc/nix/nix.conf ] && sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
-```
-
-### 7. Making changes
-
-Edit away, if you want to ensure the build works before deploying the configuration, run:
-
-```sh
-nix run .#build
-```
-
-Finally, alter your system with this command:
-
-```sh
-nix run .#build-switch
-```
-
-## For NixOS
-
-### 1. Install NixOS
-
-Install NixOS according to the [official documentation](https://nixos.org/manual/nixos/stable/index.html#sec-installation).
-
-### 2. Clone this repository
-
-```sh
-git clone https://github.com/caliguIa/nix-config.git
-cd nix-config
-```
-
-### 3. Link the hardware configuration
-
-Create a symbolic link to your hardware configuration:
-
-```sh
-# From the repository root
-ln -sf /etc/nixos/hardware-configuration.nix hosts/nixos/hardware-configuration.nix
-```
-
-This way, your hardware configuration stays up-to-date with your system without manual copying.
-
-### 4. Build and apply the configuration
-
-```sh
-nixos-rebuild switch --flake .#george
-```
-
-## Update dependencies
-
-```sh
-nix flake update
-```
+1. Create a new directory under `dots/program-name/`
+2. Create a `default.nix` file within that directory
+3. Add any program-specific config files in the same directory
+4. Import in either user configuration (if common) or in machine configuration (if specific)
