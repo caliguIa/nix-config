@@ -18,7 +18,7 @@
 
 (defalias
   ;; Modifiers
-  hyp (multi lsft lctl lmet lalt)  ;; Hyper key
+  ;; hyp (multi lsft lctl lmet lalt)  ;; Hyper key
   
   ;; Function key
   fnk (tap-hold $tap-time $hold-time fn (layer-toggle function))
@@ -51,7 +51,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    
   esc  a    s    d    f    g    h    j    k    l    ;    '    \    ret
   lsft `    z    x    c    v    b    n    m    ,    .    /    rsft
-  @fnk lctl lalt lmet spc    @ctl-nav @hyp  
+  @fnk lctl lalt lmet spc    @ctl-nav ralt  
 )
 
 ;; Navigation layer - activated by right Ctrl

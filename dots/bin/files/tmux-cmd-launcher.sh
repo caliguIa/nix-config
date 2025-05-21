@@ -4,7 +4,7 @@ commands=(
     "ous bounce::cd ~/ous; make down; make platform-up"  
     "ous down::cd ~/ous; make down"  
     "ous up::cd ~/ous; make platform-up"  
-    "nix-rebuild::cd ~/nix-config; just build"  
+    "nixos-rebuild darwin::cd ~/nix-config; just build-darwin"  
     "nix-gc::nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc"  
     "kanata-reload::sudo launchctl unload /Library/LaunchDaemons/com.jtroo.kanata.plist; sudo launchctl load  /Library/LaunchDaemons/com.jtroo.kanata.plist"  
 )

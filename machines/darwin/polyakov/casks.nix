@@ -1,15 +1,14 @@
-_:
-
-[
-  "1password"
-  "arc"
-  "firefox"
-  "ghostty"
-  "homebrew/cask/docker"
-  "obsidian"
-  "onyx"
-  "pika"
-  "slack"
-  "tableplus"
-  "wezterm"
+_: [
+    "1password"
+    "arc"
+    "firefox"
+    "ghostty"
+    "homebrew/cask/docker"
+    "obsidian"
+    "onyx"
+    "pika"
+    "slack"
+    "tableplus"
+    "wezterm"
 ]
+

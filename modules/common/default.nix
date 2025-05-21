@@ -1,11 +1,10 @@
 {
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowBroken = true;
-      allowInsecure = true;
-      allowUnsupportedSystem = true;
+    nixpkgs = {
+        config = {
+            allowUnfree = true;
+            allowBroken = true;
+            allowInsecure = true;
+            allowUnsupportedSystem = true;
+        };
     };
-  };
 }
-

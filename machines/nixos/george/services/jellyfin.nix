@@ -1,7 +1,8 @@
 {
-  services.jellyfin = {
-    enable = true;
-    user = "share";
-    group = "share";
-  };
+    services.jellyfin = {
+        enable = true;
+        user = "share";
+        group = "share";
+    };
 }
+
