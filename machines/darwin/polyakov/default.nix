@@ -94,6 +94,7 @@
 
     system = {
         stateVersion = 4;
+        primaryUser = username;
         checks.verifyNixPath = false;
         startup.chime = false;
         defaults = {

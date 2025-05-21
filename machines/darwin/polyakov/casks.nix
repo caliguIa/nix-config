@@ -3,7 +3,7 @@ _: [
     "arc"
     "firefox"
     "ghostty"
-    "homebrew/cask/docker"
+    "docker"
     "obsidian"
     "onyx"
     "pika"
@@ -11,4 +11,3 @@ _: [
     "tableplus"
     "wezterm"
 ]
-

@@ -6,7 +6,6 @@ commands=(
     "ous up::cd ~/ous; make platform-up"  
     "nixos-rebuild darwin::cd ~/nix-config; just build-darwin"  
     "nix-gc::nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc"  
-    "kanata-reload::sudo launchctl unload /Library/LaunchDaemons/com.jtroo.kanata.plist; sudo launchctl load  /Library/LaunchDaemons/com.jtroo.kanata.plist"  
 )
 
 selected=$(printf '%s\n' "${commands[@]}" | cut -d':' -f1 | fzf)

@@ -1,7 +1,7 @@
 # macOS (darwin) commands
 build-darwin:
     git add .
-    darwin-rebuild switch --flake .#polyakov
+    sudo darwin-rebuild switch --flake .#polyakov
 
 # NixOS commands
 build-nixos:
