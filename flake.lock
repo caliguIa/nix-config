@@ -325,6 +325,21 @@
         "type": "github"
       }
     },
+    "nixCats": {
+      "locked": {
+        "lastModified": 1747402538,
+        "narHash": "sha256-hqOngVDs86+L2tYseKLqhhJsgXWluwwmPFJByvMc1d4=",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "rev": "14e95095b612f2c438e00a0f60287d867e8abd69",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1747728033,
@@ -386,6 +401,54 @@
         "type": "github"
       }
     },
+    "plugins-eink": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747571813,
+        "narHash": "sha256-3kw9CiJoIigVh/kjTeyR9uqpDoJa1HqRxG41ir8wgR0=",
+        "owner": "alexxGmZ",
+        "repo": "e-ink.nvim",
+        "rev": "0f9131236ef0f443144d5545db02fa726f80bbd3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexxGmZ",
+        "repo": "e-ink.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-indentmini": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747212283,
+        "narHash": "sha256-3YZbTHGbumxJlljzoDbEQCu3ZoRapB4WgE1WcXJEw08=",
+        "owner": "nvimdev",
+        "repo": "indentmini.nvim",
+        "rev": "bc6b808106315f349cdbb460a6260a97b7feaab9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvimdev",
+        "repo": "indentmini.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-timber": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1746701005,
+        "narHash": "sha256-Zx/y4ZhJhsrtm80RmbsGvtt64zVVdryXleFNn+CDpfY=",
+        "owner": "Goose97",
+        "repo": "timber.nvim",
+        "rev": "aac3a12753652a60955d3178b75fdb6c247b9f7d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Goose97",
+        "repo": "timber.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -395,7 +458,11 @@
         "homebrew-core": "homebrew-core",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-homebrew": "nix-homebrew",
-        "nixpkgs": "nixpkgs_4"
+        "nixCats": "nixCats",
+        "nixpkgs": "nixpkgs_4",
+        "plugins-eink": "plugins-eink",
+        "plugins-indentmini": "plugins-indentmini",
+        "plugins-timber": "plugins-timber"
       }
     },
     "treefmt-nix": {

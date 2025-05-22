@@ -1,43 +1,47 @@
 {
     description = "NixOS and Darwin system configurations";
-
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
         darwin = {
             url = "github:LnL7/nix-darwin/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
         nix-homebrew = {
             url = "github:zhaofengli-wip/nix-homebrew";
         };
-
         homebrew-bundle = {
             url = "github:homebrew/homebrew-bundle";
             flake = false;
         };
-
         homebrew-core = {
             url = "github:homebrew/homebrew-core";
             flake = false;
         };
-
         homebrew-cask = {
             url = "github:homebrew/homebrew-cask";
             flake = false;
         };
-
+        nixCats.url = "github:BirdeeHub/nixCats-nvim";
         neovim-nightly-overlay = {
             url = "github:nix-community/neovim-nightly-overlay";
         };
+        plugins-indentmini = {
+            url = "github:nvimdev/indentmini.nvim";
+            flake = false;
+        };
+        plugins-timber = {
+            url = "github:Goose97/timber.nvim";
+            flake = false;
+        };
+        plugins-eink = {
+            url = "github:alexxGmZ/e-ink.nvim";
+            flake = false;
+        };
     };
-
     outputs = {...} @ inputs: let
         mkNixosSystem = {
             system,
@@ -55,6 +59,7 @@
                         ;
                 };
                 modules = [
+                    {nixpkgs.config.allowUnfree = true;}
                     ./machines/nixos/${hostname}
                     inputs.home-manager.nixosModules.home-manager
                     {
@@ -62,6 +67,7 @@
                         home-manager = {
                             useGlobalPkgs = true;
                             useUserPackages = true;
+                            nixpkgs.config.allowUnfree = true;
                             extraSpecialArgs = {
                                 inherit
                                     inputs
@@ -75,7 +81,6 @@
                     }
                 ];
             };
-
         mkDarwinSystem = {
             system,
             hostname,
@@ -92,6 +97,7 @@
                         ;
                 };
                 modules = [
+                    {nixpkgs.config.allowUnfree = true;}
                     ./machines/darwin/${hostname}
                     inputs.home-manager.darwinModules.home-manager
                     inputs.nix-homebrew.darwinModules.nix-homebrew
@@ -108,10 +114,11 @@
                             autoMigrate = true;
                         };
 
+                        nixpkgs.config.allowUnfree = true;
                         users.users.${username}.home = "/Users/${username}";
 
                         home-manager = {
-                            useGlobalPkgs = true;
+                            # useGlobalPkgs = true;
                             useUserPackages = true;
                             extraSpecialArgs = {
                                 inherit
@@ -127,6 +134,7 @@
                 ];
             };
     in {
+        nixCats = import ./dots/nvim {inherit inputs;};
         nixosConfigurations = {
             george = mkNixosSystem {
                 system = "x86_64-linux";
@@ -134,7 +142,6 @@
                 username = "caligula";
             };
         };
-
         darwinConfigurations = {
             polyakov = mkDarwinSystem {
                 system = "aarch64-darwin";

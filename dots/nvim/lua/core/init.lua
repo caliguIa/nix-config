@@ -1,0 +1,5 @@
+require("core.utils")
+Util.req("core.options")
+Util.req("core.lsp")
+Util.req("core.keymaps")
+Util.req("core.autocmds")

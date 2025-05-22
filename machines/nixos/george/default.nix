@@ -1,12 +1,15 @@
 {
     hostname,
     username,
+    pkgs,
+    bim,
     ...
 }: {
     imports = [
         ./hardware-configuration.nix
         ./services
         ./users.nix
+        ./packages.nix
     ];
 
     boot.loader.systemd-boot.enable = true;
@@ -27,12 +30,11 @@
 
     time.timeZone = "Europe/London";
 
-    # programs.zsh.enable = true;
-
     services.openssh.enable = true;
 
     nixpkgs.config.allowUnfree = true;
 
+    environment.systemPackages = import ../../../modules/common/packages.nix {inherit pkgs bim;};
     nix = {
         enable = true;
         settings = {
@@ -61,6 +63,5 @@
     system.autoUpgrade.enable = true;
     system.autoUpgrade.allowReboot = true;
     system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
-
     system.stateVersion = "24.11";
 }

@@ -1,6 +1,8 @@
 {
     pkgs,
     username,
+    hostname,
+    inputs,
     ...
 }: {
     nixpkgs.config.allowUnfree = true;
@@ -9,6 +11,7 @@
         enable = true;
         package = pkgs.nix;
         optimise.automatic = true;
+        nixPath = ["nixpkgs=${inputs.nixpkgs}"];
         settings = {
             trusted-users = [
                 "@admin"
@@ -56,28 +59,34 @@
     };
 
     imports = [
+        ./packages.nix
         ./services/aerospace.nix
         ./services/karabiner.nix
     ];
 
     environment = {
         systemPackages = import ../../../modules/common/packages.nix {inherit pkgs;};
-
         systemPath = [
             "/Users/${username}/.cargo/bin"
             "/Users/${username}/.local/bin"
             "/Users/${username}/go/bin"
+            "/Applications/Docker.app/Contents/Resources/bin"
         ];
-
         variables = {
             EDITOR = "nvim";
         };
     };
 
     networking = {
-        computerName = "polyakov";
-        hostName = "polyakov";
+        computerName = hostname;
+        hostName = hostname;
         dns = ["8.8.8.8"];
+        knownNetworkServices = [
+            "USB 10/100/1000 LAN"
+            "Thunderbolt Bridge"
+            "Wi-Fi"
+            "iPhone USB"
+        ];
     };
 
     security = {
@@ -190,10 +199,14 @@
     home-manager.sharedModules = [
         {
             imports = [
-                ./packages.nix
                 ../../../dots/ghostty
                 ../../../dots/kanata
             ];
+            programs.direnv = {
+                enable = true;
+                enableZshIntegration = true;
+                silent = true;
+            };
         }
     ];
 }
