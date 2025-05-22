@@ -1,3 +1,0 @@
-[submodule "dots/nvim/files/nvim"]
-	path = dots/nvim/files/nvim
-	url = git@github.com:caliguIa/nvim.git
