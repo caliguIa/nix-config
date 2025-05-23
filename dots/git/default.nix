@@ -9,6 +9,18 @@
                 "/Users/caligula/ous"
             ];
         };
+        aliases = {
+            a = "add";
+            aa = "add .";
+            b = "branch";
+            c = "commit";
+            co = "checkout";
+            p = "push";
+            u = "pull";
+            f = "fetch --all";
+            fp = "fetch --all && git pull";
+            undocommit = "git reset --soft HEAD^";
+        };
         extraConfig = {
             advice = {
                 addEmptyPathspec = false;

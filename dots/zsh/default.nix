@@ -18,24 +18,24 @@
             dt = "cd ~/Desktop";
             df = "cd ~/nix-config";
             cf = "cd ~/.config";
-            cfg = "cd ~/nix-config/dots";
-            nx = "cd ~/nix-config/";
             ous = "cd ~/ous/platform";
             dev = "cd ~/dev";
+            nvp = "cd ~/dev/nvim-plugins";
             ".." = "cd ..";
             "..." = "cd ../..";
             "...." = "cd ../../..";
-            ls = "eza --color=always --long -a --git --no-filesize --icons=always --no-time --no-user --no-permissions";
+            "....." = "cd ../../../..";
+            ls = "eza --color=always --long -a --git --icons=always";
             cat = "bat";
             ga = "git add";
+            gaa = "git add .";
             gap = "git add --patch";
             gb = "git branch";
             gc = "git commit";
             gd = "git diff";
             gi = "git init";
-            gst = "git status";
+            gs = "git status";
             gco = "git checkout";
-            gs = "git switch";
             gp = "git push";
             gu = "git pull";
             gfp = "git fetch && git pull";
@@ -47,7 +47,6 @@
             dps = "docker ps";
             ip = "curl ifconfig.io";
             localip = "ipconfig getifaddr en0";
-            kanata-reload = "sudo launchctl unload /Library/LaunchDaemons/com.jtroo.kanata.plist; sudo launchctl load  /Library/LaunchDaemons/com.jtroo.kanata.plist";
             nix-rebuild = "cd $HOME/nix-config; just build; cd -";
             nix-gc = "nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc";
             t = "tmux attach-session";
@@ -155,4 +154,3 @@
         '';
     };
 }
-
