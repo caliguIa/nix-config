@@ -62,7 +62,7 @@
               . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
             fi
 
-            [[ ! -r /Users/caligula/.opam/opam-init/init.zsh ]] || source /Users/caligula/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+            echo "source <(COMPLETE=zsh tms)" >> ~/.zshrc
 
             source ~/.local/auth/.env
 

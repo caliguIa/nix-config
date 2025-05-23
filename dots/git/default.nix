@@ -18,7 +18,6 @@
             p = "push";
             u = "pull";
             f = "fetch --all";
-            fp = "fetch --all && git pull";
             undocommit = "git reset --soft HEAD^";
         };
         extraConfig = {

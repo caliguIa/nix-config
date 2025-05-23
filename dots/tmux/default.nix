@@ -64,19 +64,16 @@
             bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
 
             # Split panes, vertical or horizontal
-            bind x split-window -v
+            bind h split-window -v
             bind v split-window -h
 
-            # Move around panes with vim-like bindings (h,j,k,l)
-            bind k select-pane -U
-            bind h select-pane -L
-            bind j select-pane -D
-            bind l select-pane -R
-
-            # bind t popup -E "tmux new-session -A -s scratch \\\; set -t scratch status off"
-            bind r source-file $HOME/.config/tmux/tmux.conf
-            bind S command-prompt -p "New Session:" "new-session -A -s '%%'"
-            bind K confirm kill-session
+            bind t popup -E "tmux new-session -A -s scratch \\\; set -t scratch status off"
+            bind f display-popup -E "tms"
+            bind s display-popup -E "tms switch"
+            bind w display-popup -E "tms windows"
+            bind r command-prompt -p "Rename active session to: " "run-shell 'tms rename %1'".
+            bind K confirm-before -p "Kill current session? (y/n): " "run-shell 'tms kill'"
+            bind x kill-pane
 
             bind e popup -E "tmux-cmd-launcher.sh"
 
@@ -94,4 +91,34 @@
             bind -T copy-mode-vi 'M-l' select-pane -R
         '';
     };
+    xdg.configFile."tms/config.toml".text = ''
+        display_full_path = false
+        search_submodules = false
+        recursive_submodules = false
+        excluded_dirs = [
+            "Applications",
+            "build",
+            "tmp",
+            "Desktop",
+            "Downloads",
+            "Documents",
+            "Music",
+            "Library",
+            "go",
+            "Pictures",
+            "Public",
+            "Spitfire",
+            "ous",
+            "games",
+            ".git",
+            ".nix-profile",
+            ".local",
+            ".swiftpm",
+            ".cache",
+        ]
+        bookmarks = ["/Users/caligula/ous/platform"]
+        [[search_dirs]]
+        path = "/Users/caligula"
+        depth = 3
+    '';
 }

@@ -12,7 +12,6 @@ with pkgs; [
     ripgrep
     tree
     yazi
-    youtube-tui
     zsh
     wget
 ]
