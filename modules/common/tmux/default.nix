@@ -1,4 +1,4 @@
-{...}: {
+{
     programs.tmux = {
         enable = true;
         sensibleOnTop = false;
@@ -121,4 +121,8 @@
         path = "/Users/caligula"
         depth = 3
     '';
+    home.file.".local/bin/tmux-cmd-launcher.sh" = {
+        source = ./tmux-cmd-launcher.sh;
+        executable = true;
+    };
 }

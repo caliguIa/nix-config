@@ -1,5 +1,6 @@
 {
     pkgs,
+    config,
     username,
     hostname,
     inputs,
@@ -51,6 +52,7 @@
     homebrew = {
         enable = true;
         casks = import ./casks.nix {inherit pkgs;};
+        taps = builtins.attrNames config.nix-homebrew.taps;
         onActivation = {
             autoUpdate = true;
             cleanup = "zap";
@@ -199,8 +201,8 @@
     home-manager.sharedModules = [
         {
             imports = [
-                ../../../dots/ghostty
-                ../../../dots/kanata
+                ../../../modules/common/ghostty
+                ../../../modules/common/kanata
             ];
             programs.direnv = {
                 enable = true;

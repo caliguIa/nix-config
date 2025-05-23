@@ -108,10 +108,8 @@
                             taps = {
                                 "homebrew/homebrew-core" = inputs.homebrew-core;
                                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
                             };
                             mutableTaps = false;
-                            autoMigrate = true;
                         };
 
                         nixpkgs.config.allowUnfree = true;
@@ -134,7 +132,7 @@
                 ];
             };
     in {
-        nixCats = import ./dots/nvim {inherit inputs;};
+        neovim = import ./modules/common/nvim {inherit inputs;};
         nixosConfigurations = {
             george = mkNixosSystem {
                 system = "x86_64-linux";

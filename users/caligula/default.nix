@@ -13,20 +13,17 @@ in {
     programs.home-manager.enable = true;
     nixpkgs.config.allowUnfree = true;
     imports = [
-        ../../dots/git
-        ../../dots/zsh
-        ../../dots/starship
-        ../../dots/fzf
-        ../../dots/atuin
-        ../../dots/tmux
-        ../../dots/bin
+        ../../modules/common/git
+        ../../modules/common/zsh
+        ../../modules/common/starship
+        ../../modules/common/fzf
+        ../../modules/common/atuin
+        ../../modules/common/tmux
     ];
     home = {
         username = username;
         homeDirectory = homeDirectory;
-        file = {
-            ".hushlogin".text = "";
-        };
+        file = {".hushlogin".text = "";};
         stateVersion = "24.11";
     };
 }

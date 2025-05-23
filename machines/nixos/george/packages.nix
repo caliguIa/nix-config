@@ -4,6 +4,6 @@
     ...
 }: {
     environment.systemPackages = with pkgs; [
-        inputs.self.outputs.nixCats.packages.${pkgs.system}.nvim
+        inputs.self.outputs.neovim.packages.${pkgs.system}.nvim
     ];
 }
