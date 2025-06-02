@@ -5,7 +5,6 @@
     ...
 }: {
     imports = [
-        ./users.nix
         ./packages.nix
         (import ../../../users/caligula {
             inherit pkgs username;
