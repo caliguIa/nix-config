@@ -2,6 +2,7 @@
     programs.atuin = {
         enable = true;
         enableZshIntegration = true;
+        enableFishIntegration = true;
         settings = {
             dialect = "uk";
             auto_sync = true;

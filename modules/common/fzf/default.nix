@@ -1,28 +1,29 @@
-{
+{...}: {
     programs.fzf = {
         enable = true;
         enableZshIntegration = true;
+        enableFishIntegration = true;
         defaultCommand = "fd --type f --hidden --follow --exclude .git --exclude .vim --exclude .cache --exclude vendor --exclude node_modules";
         defaultOptions = ["--inline-info"];
         tmux = {
             enableShellIntegration = true;
         };
         colors = {
-            bg = "#121212";
-            "bg+" = "#121212";
-            preview-bg = "#121212";
-            fg = "#b4b4b4";
-            "fg+" = "#f5f5f5";
-            preview-fg = "#b4b4b4";
-            hl = "#ff0088";
-            "hl+" = "#ff0088";
-            info = "#d5d5d5";
-            border = "#121212";
-            prompt = "#ff0088";
-            pointer = "#ff0088";
-            marker = "#ff0088";
-            spinner = "#ff0088";
-            header = "#ff0088";
+            bg = "#333333";
+            "bg+" = "#333333";
+            preview-bg = "#333333";
+            fg = "#C2C2C2";
+            "fg+" = "#CCCCCC";
+            preview-fg = "#C2C2C2";
+            hl = "#474747";
+            "hl+" = "#474747";
+            info = "#686868";
+            border = "#333333";
+            prompt = "#474747";
+            pointer = "#474747";
+            marker = "#474747";
+            spinner = "#474747";
+            header = "#474747";
         };
     };
 }

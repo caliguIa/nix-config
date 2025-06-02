@@ -1,20 +1,17 @@
 require("e-ink").setup()
 
 vim.cmd.colorscheme("e-ink")
-vim.opt.background = "light"
+vim.opt.background = "dark"
 
 local C = require("e-ink.palette").everforest()
-local function highlight(group, opts)
-	vim.api.nvim_set_hl(0, group, opts)
-end
+local P = require("e-ink.palette").mono()
+local function highlight(group, opts) vim.api.nvim_set_hl(0, group, opts) end
+highlight("WinBar", { bg = P[0] })
+highlight("WinBarNC", { bg = P[0] })
 highlight("DiagnosticUnderlineError", { sp = C.red, undercurl = true })
 highlight("DiagnosticUnderlineWarn", { sp = C.yellow, undercurl = true })
 highlight("DiagnosticUnderlineInfo", { sp = C.blue, undercurl = true })
 highlight("DiagnosticUnderlineHint", { sp = C.blue, undercurl = true })
--- highlight("DiffAdd", { bg = everforest.bg_green })
--- highlight("DiffChange", { bg = everforest.bg_blue })
--- highlight("DiffDelete", { bg = everforest.bg_red })
--- highlight("DiffText", { fg = mono[1], bg = everforest.blue })
 highlight("diffAdded", { link = "DiffAdd" })
 highlight("diffChanged", { link = "DiffChange" })
 highlight("diffRemoved", { link = "DiffDelete" })

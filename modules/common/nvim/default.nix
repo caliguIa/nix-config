@@ -49,6 +49,7 @@
                 nixd
                 rust-analyzer
                 typescript
+                taplo
                 vscode-langservers-extracted
                 nodePackages.bash-language-server
                 vtsls

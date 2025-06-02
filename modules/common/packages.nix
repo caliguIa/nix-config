@@ -5,6 +5,7 @@ with pkgs; [
     curl
     eza
     fd
+    fish
     gnupg
     htop
     jq

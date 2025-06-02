@@ -75,8 +75,9 @@
                                     hostname
                                     username
                                     ;
+                                homeDirectory = "/home/${username}";
                             };
-                            users.${username} = ./users/${username};
+                            users.${username} = ./users/${username}/home.nix;
                         };
                     }
                 ];
@@ -113,7 +114,7 @@
                         };
 
                         nixpkgs.config.allowUnfree = true;
-                        users.users.${username}.home = "/Users/${username}";
+                        # users.users.${username}.home = "/Users/${username}";
 
                         home-manager = {
                             # useGlobalPkgs = true;
@@ -125,8 +126,9 @@
                                     hostname
                                     username
                                     ;
+                                homeDirectory = "/Users/${username}";
                             };
-                            users.${username} = ./users/${username};
+                            users.${username} = ./users/${username}/home.nix;
                         };
                     }
                 ];
@@ -137,6 +139,11 @@
             george = mkNixosSystem {
                 system = "x86_64-linux";
                 hostname = "george";
+                username = "caligula";
+            };
+            westerby = mkNixosSystem {
+                system = "aarch64-linux";
+                hostname = "westerby";
                 username = "caligula";
             };
         };

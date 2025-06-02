@@ -1,14 +1,12 @@
-{
+{...}: {
     programs.tmux = {
         enable = true;
         sensibleOnTop = false;
         extraConfig = ''
-            # Unbind default keys
             unbind C-b
             unbind '"'
             unbind %
 
-            # remap prefix from 'C-b' to 'C-space'
             set -g prefix C-space
             bind C-space send-prefix
 
@@ -16,54 +14,40 @@
             set -g mode-keys vi
 
             # Undercurl
-            # set -g default-terminal "tmux-256color"
             set -g default-terminal 'xterm-ghostty'
             set -gas terminal-overrides "*:Tc" # true color support
             set -gas terminal-overrides "*:RGB" # true color support
-            # set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
-            # set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
 
-            # Status bar
-            set -g status-style bg=#121212,fg=#f5f5f5
+            set -g status-style bg=#333333,fg=#C2C2C2
 
             set -g status-left ' #S - '
-            set -g status-right '#[fg=#f5f5f5]#(whoami)#[fg=#ff0088]@#[fg=#949494]#(hostname -s) '
+            set -g status-right '#[fg=#C2C2C2]#(whoami)#[fg=#CCCCCC]@#[fg=#C2C2C2]#(hostname -s) '
 
-            # Windows
             setw -g window-status-format '#I:#W '
-            setw -g window-status-style fg=#949494
-            setw -g window-status-current-style fg=#f5f5f5,bold
-            setw -g window-status-current-format '#[fg=#f5f5f5]#I:#W '
+            setw -g window-status-style fg=#C2C2C2
+            setw -g window-status-current-style fg=#C2C2C2,bold
+            setw -g window-status-current-format '#[fg=#C2C2C2]#I:#W '
 
-            # Panes
-            set -g pane-border-style 'fg=#323232'
-            set -g pane-active-border-style 'fg=#323232'
+            set -g pane-border-style 'fg=#868686'
+            set -g pane-active-border-style 'fg=#868686'
 
-            # set -g default-shell $HOME/.nix-profile/bin/zsh
-            # set -g default-shell $HOME/.nix-profile/bin/zsh
-            # set -g default-command $HOME/.nix-profile/bin/zsh
             set -g status-position top
             set -g base-index 1
             set -g pane-base-index 1
 
             set -g history-limit 50000
 
-            # Remove Vim mode delays
             set -g escape-time 10
             set -g focus-events on
             set -g status-left-length 90
             set -g status-right-length 90
             set -g status-justify left
 
-            # -----------------------------------------------------------------------------
-            # Key bindings
-            # -----------------------------------------------------------------------------
             bind Enter copy-mode
             bind -T copy-mode-vi v send -X begin-selection
             bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
             bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
 
-            # Split panes, vertical or horizontal
             bind h split-window -v
             bind v split-window -h
 
@@ -77,7 +61,6 @@
 
             bind e popup -E "tmux-cmd-launcher.sh"
 
-            # Smart pane switching with awareness of Vim splits.
             is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
                 | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?|fzf)(diff)?$'"
             bind -n 'M-h' if-shell "$is_vim" 'send-keys M-h'  'select-pane -L'
@@ -91,6 +74,7 @@
             bind -T copy-mode-vi 'M-l' select-pane -R
         '';
     };
+
     xdg.configFile."tms/config.toml".text = ''
         display_full_path = false
         search_submodules = false
@@ -121,6 +105,7 @@
         path = "/Users/caligula"
         depth = 3
     '';
+
     home.file.".local/bin/tmux-cmd-launcher.sh" = {
         source = ./tmux-cmd-launcher.sh;
         executable = true;

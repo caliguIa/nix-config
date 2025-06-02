@@ -4,10 +4,9 @@ _: [
     "firefox"
     "ghostty"
     "docker"
-    "obsidian"
     "onyx"
     "pika"
+    "sabnzbd"
     "slack"
     "tableplus"
-    "wezterm"
 ]

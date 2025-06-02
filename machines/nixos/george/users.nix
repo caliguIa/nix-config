@@ -3,14 +3,17 @@
     username,
     ...
 }: {
+    imports = [
+        (import ../../../users/caligula/system.nix {
+            inherit pkgs username;
+            homeDirectory = "/home/${username}";
+            extraGroups = ["share"];  # George-specific groups
+        })
+    ];
+
+    # Machine-specific additional users and groups
     users = {
         users = {
-            ${username} = {
-                isNormalUser = true;
-                home = "/home/${username}";
-                shell = pkgs.zsh;
-                extraGroups = ["wheel" "networkmanager" "docker" "share"];
-            };
             share = {
                 isSystemUser = true;
                 group = "share";
@@ -24,4 +27,3 @@
         };
     };
 }
-

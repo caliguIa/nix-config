@@ -1,8 +1,23 @@
 {
     xdg.configFile."ghostty/config".text = ''
-        background = 121212
-        #foreground = d5d5d5
-        #selection-background = 323232
+        background = #333333
+        foreground = #C2C2C2
+        palette = 0=#333333
+        palette = 1=#CCCCCC
+        palette = 2=#686868
+        palette = 3=#7C7C7C
+        palette = 4=#868686
+        palette = 5=#5E5E5E
+        palette = 6=#B8B8B8
+        palette = 7=#A4A4A4
+        palette = 8=#A4A4A4
+        palette = 9=#CCCCCC
+        palette = 10=#686868
+        palette = 11=#7C7C7C
+        palette = 12=#868686
+        palette = 13=#5E5E5E
+        palette = 14=#B8B8B8
+        palette = 15=#868686
         font-family = BerkeleyMono Nerd Font
         font-feature = +liga
         font-size = 15
@@ -33,6 +48,6 @@
         clipboard-trim-trailing-spaces = true
         copy-on-select = clipboard
         keybind = alt+3=text:#
-        shell-integration-features = no-cursor,sudo,no-title
+        shell-integration-features = sudo,no-title
     '';
 }

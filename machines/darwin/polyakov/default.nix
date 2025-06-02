@@ -6,6 +6,16 @@
     inputs,
     ...
 }: {
+    imports = [
+        ./packages.nix
+        ./services/aerospace.nix
+        ./services/karabiner.nix
+        (import ../../../users/caligula {
+            inherit pkgs username;
+            homeDirectory = "/Users/${username}";
+        })
+    ];
+
     nixpkgs.config.allowUnfree = true;
 
     nix = {
@@ -13,6 +23,20 @@
         package = pkgs.nix;
         optimise.automatic = true;
         nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+        linux-builder = {
+            enable = true;
+            ephemeral = true;
+            maxJobs = 4;
+            config = {
+                virtualisation = {
+                    darwin-builder = {
+                        diskSize = 40 * 1024;
+                        memorySize = 8 * 1024;
+                    };
+                    cores = 6;
+                };
+            };
+        };
         settings = {
             trusted-users = [
                 "@admin"
@@ -60,23 +84,8 @@
         };
     };
 
-    imports = [
-        ./packages.nix
-        ./services/aerospace.nix
-        ./services/karabiner.nix
-    ];
-
     environment = {
-        systemPackages = import ../../../modules/common/packages.nix {inherit pkgs;};
-        systemPath = [
-            "/Users/${username}/.cargo/bin"
-            "/Users/${username}/.local/bin"
-            "/Users/${username}/go/bin"
-            "/Applications/Docker.app/Contents/Resources/bin"
-        ];
-        variables = {
-            EDITOR = "nvim";
-        };
+        systemPath = ["/Applications/Docker.app/Contents/Resources/bin"];
     };
 
     networking = {
@@ -203,6 +212,7 @@
             imports = [
                 ../../../modules/common/ghostty
                 ../../../modules/common/kanata
+                ../../../modules/common/newsboat
             ];
             programs.direnv = {
                 enable = true;
