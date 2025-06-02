@@ -65,9 +65,7 @@
                     {
                         networking.hostName = hostname;
                         home-manager = {
-                            useGlobalPkgs = true;
                             useUserPackages = true;
-                            nixpkgs.config.allowUnfree = true;
                             extraSpecialArgs = {
                                 inherit
                                     inputs
@@ -112,12 +110,8 @@
                             };
                             mutableTaps = false;
                         };
-
                         nixpkgs.config.allowUnfree = true;
-                        # users.users.${username}.home = "/Users/${username}";
-
                         home-manager = {
-                            # useGlobalPkgs = true;
                             useUserPackages = true;
                             extraSpecialArgs = {
                                 inherit
