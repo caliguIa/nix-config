@@ -3,12 +3,6 @@
         enable = true;
         userName = "Cal";
         userEmail = "acc@calrichards.io";
-        maintenance = {
-            enable = true;
-            repositories = [
-                "/Users/caligula/ous"
-            ];
-        };
         aliases = {
             a = "add";
             aa = "add .";
