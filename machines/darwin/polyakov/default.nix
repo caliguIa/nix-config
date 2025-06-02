@@ -5,14 +5,15 @@
     hostname,
     inputs,
     ...
-}: {
+}: let
+    homeDirectory = "/Users/${username}";
+in {
     imports = [
         ./packages.nix
         ./services/aerospace.nix
         ./services/karabiner.nix
         (import ../../../users/caligula {
             inherit pkgs username;
-            homeDirectory = "/Users/${username}";
         })
     ];
 
@@ -85,7 +86,12 @@
     };
 
     environment = {
-        systemPath = ["/Applications/Docker.app/Contents/Resources/bin"];
+        systemPath = [
+            "/Applications/Docker.app/Contents/Resources/bin"
+            "${homeDirectory}/.cargo/bin"
+            "${homeDirectory}/.local/bin"
+            "${homeDirectory}/go/bin"
+        ];
     };
 
     networking = {
