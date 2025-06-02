@@ -25,6 +25,11 @@
 
     nixpkgs.config.allowUnfree = true;
 
+    users.users.${username} = {
+        isNormalUser = true;
+        extraGroups = ["wheel"];
+    };
+
     environment.systemPackages = import ../../../modules/common/packages.nix {inherit pkgs;};
     nix = {
         enable = true;

@@ -7,11 +7,10 @@
         (import ../../../users/caligula/system.nix {
             inherit pkgs username;
             homeDirectory = "/home/${username}";
-            extraGroups = ["share"];  # George-specific groups
+            extraGroups = ["share"];
         })
     ];
 
-    # Machine-specific additional users and groups
     users = {
         users = {
             share = {
@@ -27,3 +26,4 @@
         };
     };
 }
+
