@@ -8,7 +8,6 @@
         username = username;
         homeDirectory = homeDirectory;
         stateVersion = "24.11";
-
         file = {".hushlogin".text = "";};
     };
     nixpkgs.config.allowUnfree = true;
@@ -22,4 +21,3 @@
         ../../modules/common/tmux
     ];
 }
-

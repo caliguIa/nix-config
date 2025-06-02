@@ -8,6 +8,7 @@
         ./packages.nix
         (import ../../../users/caligula {
             inherit pkgs username;
+            homeDirectory = "/home/${username}";
         })
     ];
 
