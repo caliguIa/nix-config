@@ -1,11 +1,8 @@
 _: [
-    "1password"
-    "arc"
-    "firefox"
+    "eloston-chromium"
     "ghostty"
     "docker"
     "onyx"
-    "pika"
     "sabnzbd"
     "slack"
     "tableplus"

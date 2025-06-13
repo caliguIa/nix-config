@@ -1,24 +1,28 @@
-{
+let
+    themeConfig = import ../themes;
+    colors = themeConfig.colors;
+in {
     xdg.configFile."ghostty/config".text = ''
-        background = #333333
-        foreground = #C2C2C2
-        palette = 0=#333333
-        palette = 1=#CCCCCC
-        palette = 2=#686868
-        palette = 3=#7C7C7C
-        palette = 4=#868686
-        palette = 5=#5E5E5E
-        palette = 6=#B8B8B8
-        palette = 7=#A4A4A4
-        palette = 8=#A4A4A4
-        palette = 9=#CCCCCC
-        palette = 10=#686868
-        palette = 11=#7C7C7C
-        palette = 12=#868686
-        palette = 13=#5E5E5E
-        palette = 14=#B8B8B8
-        palette = 15=#868686
-        font-family = BerkeleyMono Nerd Font
+        background = ${colors.base}
+        foreground = ${colors.text}
+        palette = 0=${colors.terminal.black}
+        palette = 1=${colors.terminal.red}
+        palette = 2=${colors.terminal.green}
+        palette = 3=${colors.terminal.yellow}
+        palette = 4=${colors.terminal.blue}
+        palette = 5=${colors.terminal.magenta}
+        palette = 6=${colors.terminal.cyan}
+        palette = 7=${colors.terminal.white}
+        palette = 8=${colors.terminal.bright_black}
+        palette = 9=${colors.terminal.bright_red}
+        palette = 10=${colors.terminal.bright_green}
+        palette = 11=${colors.terminal.bright_yellow}
+        palette = 12=${colors.terminal.bright_blue}
+        palette = 13=${colors.terminal.bright_magenta}
+        palette = 14=${colors.terminal.bright_cyan}
+        palette = 15=${colors.terminal.bright_white}
+        font-family = Berkeley Mono
+        font-family = Symbols Nerd Font Mono
         font-feature = +liga
         font-size = 15
         macos-titlebar-style = hidden

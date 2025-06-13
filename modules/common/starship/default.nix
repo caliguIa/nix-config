@@ -1,22 +1,26 @@
-{...}: {
+let
+    themeConfig = import ../themes;
+    starship = themeConfig.starship;
+in
+{
     programs.starship = {
         enable = true;
         enableZshIntegration = true;
         settings = {
             format = "$directory $git_branch$git_status $git_state $fill $cmd_duration$line_break$character";
-            directory.style = "bold fg:#CCCCCC";
+            directory.style = starship.directory_style;
             fill.symbol = " ";
             character = {
-                success_symbol = "[](#7C7C7C)";
-                error_symbol = "[](#7C7C7C)";
-                vimcmd_symbol = "[](#7C7C7C)";
+                success_symbol = starship.character_success;
+                error_symbol = starship.character_error;
+                vimcmd_symbol = starship.character_vim;
             };
             git_branch = {
                 format = "[$branch]($style)";
-                style = "fg:#B8B8B8";
+                style = starship.git_branch_style;
             };
             git_status = {
-                format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](#7C7C7C) ($ahead_behind$stashed)](#7C7C7C)";
+                format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](${starship.git_status_style}) ($ahead_behind$stashed)](${starship.git_status_style})";
                 conflicted = "​";
                 untracked = "​";
                 modified = "​";
@@ -27,11 +31,11 @@
             };
             git_state = {
                 format = "([$state( $progress_current/$progress_total)]($style)) ";
-                style = "#7C7C7C";
+                style = starship.git_state_style;
             };
             cmd_duration = {
                 format = "[$duration]($style) ";
-                style = "fg:#7C7C7C";
+                style = starship.cmd_duration_style;
             };
         };
         enableFishIntegration = true;

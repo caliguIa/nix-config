@@ -1,0 +1,6 @@
+require('mini.surround').setup()
+require('mini.extra').setup()
+require('mini.misc').setup()
+MiniMisc.setup_auto_root()
+MiniMisc.setup_restore_cursor()
+Util.map.nl('wm', MiniMisc.zoom, 'Maximise window')

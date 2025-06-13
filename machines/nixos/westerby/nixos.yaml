@@ -1,0 +1,30 @@
+arch: "aarch64"
+
+images:
+  - location: "./result/nixos.qcow2"
+    arch: "aarch64"
+  - location: "./imgs/nixos-x86.qcow2"
+    arch: "x86_64"
+
+cpus: 6
+
+mounts:
+  - location: "~"
+    writable: true
+    9p:
+      # Try choosing "mmap" or "none" if you see a stability issue with the default "fscache".
+      cache: "mmap"
+  - location: "/tmp/lima"
+    writable: true
+    9p:
+      cache: "mmap"
+
+mountType: "9p"
+
+ssh:
+  # This allows access to GitHub, etc.
+  forwardAgent: true
+
+containerd:
+  system: false
+  user: false

@@ -1,14 +1,13 @@
-build-polyakov:
+build:
     git add .
-    sudo darwin-rebuild switch --flake .#polyakov
-
-build-george:
-    git add .
-    sudo nixos-rebuild switch --flake .#george
-
-build-westerby:
-    git add .
-    sudo nixos-rebuild switch --flake .#westerby
+    @if [ -x "$(command -v darwin-rebuild)" ]; then \
+        sudo darwin-rebuild switch --flake .#`hostname -s`; \
+    elif [ -x "$(command -v nixos-rebuild)" ]; then \
+        sudo nixos-rebuild switch --flake .#`hostname -s`; \
+    else \
+        echo "Error: Neither darwin-rebuild nor nixos-rebuild found"; \
+        exit 1; \
+    fi
 
 update:
     nix flake update

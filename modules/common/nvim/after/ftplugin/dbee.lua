@@ -1,6 +1,6 @@
 local function is_valid_json(str)
     -- Remove any leading/trailing whitespace
-    str = str:match("^%s*(.-)%s*$")
+    str = str:match('^%s*(.-)%s*$')
 
     -- Try to decode the JSON
     local success, decoded = pcall(vim.json.decode, str)
@@ -23,18 +23,18 @@ local function create_insert_query()
     local header_line = lines[1]
     local data_lines = {}
     for i = 3, #lines do -- Start from line 3 to skip the separator line
-        if lines[i] ~= "" then table.insert(data_lines, lines[i]) end
+        if lines[i] ~= '' then table.insert(data_lines, lines[i]) end
     end
 
     -- Parse column names from header
     local columns = {}
-    for col in header_line:gmatch("│%s*([^│]+)%s*") do
-        table.insert(columns, col:match("^%s*(.-)%s*$")) -- Trim whitespace
+    for col in header_line:gmatch('│%s*([^│]+)%s*') do
+        table.insert(columns, col:match('^%s*(.-)%s*$')) -- Trim whitespace
     end
 
     -- Build INSERT statement
-    local table_name = vim.fn.input("Enter table name: ")
-    local insert_query = string.format("INSERT INTO %s (%s)\nVALUES\n", table_name, table.concat(columns, ", "))
+    local table_name = vim.fn.input('Enter table name: ')
+    local insert_query = string.format('INSERT INTO %s (%s)\nVALUES\n', table_name, table.concat(columns, ', '))
 
     -- Track any JSON validation errors
     local json_errors = {}
@@ -44,14 +44,14 @@ local function create_insert_query()
     for line_num, line in ipairs(data_lines) do
         local row_values = {}
         local col_index = 1
-        for value in line:gmatch("│%s*([^│]+)%s*") do
-            value = value:match("^%s*(.-)%s*$") -- Trim whitespace
+        for value in line:gmatch('│%s*([^│]+)%s*') do
+            value = value:match('^%s*(.-)%s*$') -- Trim whitespace
 
-            if value == "<nil>" then
-                table.insert(row_values, "NULL")
+            if value == '<nil>' then
+                table.insert(row_values, 'NULL')
             else
                 -- Check if the value looks like JSON
-                local is_json = value:match("^%s*{.*}%s*$") or value:match("^%s*%[.*%]%s*$")
+                local is_json = value:match('^%s*{.*}%s*$') or value:match('^%s*%[.*%]%s*$')
 
                 if is_json then
                     -- Validate and format JSON
@@ -65,15 +65,15 @@ local function create_insert_query()
                         table.insert(
                             json_errors,
                             string.format(
-                                "Invalid JSON at line %d, column %s:\nError: %s\nValue: %s",
+                                'Invalid JSON at line %d, column %s:\nError: %s\nValue: %s',
                                 line_num,
                                 columns[col_index],
                                 tostring(result),
-                                value:sub(1, 50) .. (value:len() > 50 and "..." or "")
+                                value:sub(1, 50) .. (value:len() > 50 and '...' or '')
                             )
                         )
                         -- Insert NULL for invalid JSON
-                        table.insert(row_values, "NULL")
+                        table.insert(row_values, 'NULL')
                     end
                 else
                     -- Regular string handling
@@ -83,30 +83,30 @@ local function create_insert_query()
             end
             col_index = col_index + 1
         end
-        table.insert(values, "(" .. table.concat(row_values, ", ") .. ")")
+        table.insert(values, '(' .. table.concat(row_values, ', ') .. ')')
     end
 
     -- If there were any JSON validation errors, display them
     if #json_errors > 0 then
         vim.api.nvim_echo({
-            { "JSON Validation Errors:\n", "ErrorMsg" },
-            { table.concat(json_errors, "\n\n"), "ErrorMsg" },
+            { 'JSON Validation Errors:\n', 'ErrorMsg' },
+            { table.concat(json_errors, '\n\n'), 'ErrorMsg' },
         }, true, {})
 
         -- Ask user if they want to continue
-        local continue = vim.fn.confirm("Would you like to continue with NULL values for invalid JSON?", "&Yes\n&No", 2)
+        local continue = vim.fn.confirm('Would you like to continue with NULL values for invalid JSON?', '&Yes\n&No', 2)
         if continue ~= 1 then
-            print("Operation cancelled")
+            print('Operation cancelled')
             return
         end
     end
 
     -- Complete the INSERT statement
-    insert_query = insert_query .. table.concat(values, ",\n") .. ";"
+    insert_query = insert_query .. table.concat(values, ',\n') .. ';'
 
     -- Copy to clipboard
-    vim.fn.setreg("+", insert_query)
-    print("INSERT query copied to clipboard!")
+    vim.fn.setreg('+', insert_query)
+    print('INSERT query copied to clipboard!')
 end
 
-Util.map.nl("dc", create_insert_query, "Copy result as insert query", { buffer = true })
+Util.map.nl('dc', create_insert_query, 'Copy result as insert query', { buffer = true })

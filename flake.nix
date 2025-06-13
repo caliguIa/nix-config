@@ -26,9 +26,6 @@
             flake = false;
         };
         nixCats.url = "github:BirdeeHub/nixCats-nvim";
-        neovim-nightly-overlay = {
-            url = "github:nix-community/neovim-nightly-overlay";
-        };
         plugins-indentmini = {
             url = "github:nvimdev/indentmini.nvim";
             flake = false;
@@ -37,10 +34,23 @@
             url = "github:Goose97/timber.nvim";
             flake = false;
         };
+        plugins-zendiagram = {
+            url = "github:caliguIa/zendiagram.nvim";
+            flake = false;
+        };
         plugins-eink = {
             url = "github:alexxGmZ/e-ink.nvim";
             flake = false;
         };
+        plugins-kanso = {
+            url = "github:webhooked/kanso.nvim";
+            flake = false;
+        };
+        plugins-yugen = {
+            url = "github:bettervim/yugen.nvim";
+            flake = false;
+        };
+        fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
     };
     outputs = {...} @ inputs: let
         mkNixosSystem = {

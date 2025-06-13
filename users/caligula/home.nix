@@ -10,7 +10,6 @@
         stateVersion = "24.11";
         file = {".hushlogin".text = "";};
     };
-    nixpkgs.config.allowUnfree = true;
     imports = [
         ../../modules/common/fish
         ../../modules/common/zsh
@@ -19,5 +18,6 @@
         ../../modules/common/git
         ../../modules/common/starship
         ../../modules/common/tmux
+        ../../modules/common/fonts
     ];
 }

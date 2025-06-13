@@ -31,7 +31,6 @@
         sudo.wheelNeedsPassword = false;
     };
 
-    # system mounts
     boot.loader.grub = {
         device = "nodev";
         efiSupport = true;
@@ -48,7 +47,6 @@
         options = ["noatime" "nodiratime" "discard"];
     };
 
-    # misc
     boot.kernelPackages = pkgs.linuxPackages_latest;
     nixpkgs.config.allowUnfree = true;
 

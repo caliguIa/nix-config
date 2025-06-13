@@ -3,6 +3,7 @@
     inherit (inputs.nixCats) utils;
     luaPath = "${./.}";
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
+    themeConfig = import ../themes;
     # the following extra_pkg_config contains any values
     # which you want to pass to the config set of nixpkgs
     # import nixpkgs { config = extra_pkg_config; inherit system; }
@@ -50,6 +51,7 @@
                 rust-analyzer
                 typescript
                 taplo
+                just-lsp
                 vscode-langservers-extracted
                 nodePackages.bash-language-server
                 vtsls
@@ -64,11 +66,23 @@
         };
 
         startupPlugins = with pkgs.vimPlugins; {
-            theme = builtins.getAttr (extra.colorscheme or "e-ink") {
-                "e-ink" = pkgs.neovimPlugins.eink;
-            };
+            theme = let
+                themeMap = {
+                    catppuccin = [catppuccin-nvim];
+                    kanso = [pkgs.neovimPlugins.kanso];
+                };
+            in
+                themeMap.${
+                    themeConfig.theme
+                } or
+                    (builtins.getAttr (extra.colorscheme or "kanso") {
+                    "e-ink" = pkgs.neovimPlugins.eink;
+                    "yugen" = pkgs.neovimPlugins.yugen;
+                    "kanso" = pkgs.neovimPlugins.kanso;
+                });
             general = [
                 plenary-nvim
+                oil-nvim
                 mini-nvim
                 nvim-lspconfig
                 conform-nvim
@@ -79,7 +93,7 @@
                 vim-tmux-navigator
                 pkgs.neovimPlugins.indentmini
                 pkgs.neovimPlugins.timber
-                pkgs.neovimPlugins.eink
+                pkgs.neovimPlugins.zendiagram
                 codecompanion-nvim
                 nvim-dbee
                 nui-nvim
@@ -120,7 +134,7 @@
                 hosts.python3.enable = true;
                 hosts.perl.enable = false;
                 hosts.ruby.enable = true;
-                neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+                neovim-unwrapped = pkgs.neovim-unwrapped;
             };
             categories = {
                 general = true;
@@ -128,7 +142,7 @@
                 test = true;
             };
             extra = {
-                colorscheme = "e-ink";
+                colorscheme = themeConfig.nvimColorscheme;
             };
         };
     };

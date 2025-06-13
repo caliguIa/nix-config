@@ -1,4 +1,8 @@
-{...}: {
+let
+    themeConfig = import ../themes;
+    fzf = themeConfig.fzf;
+in
+{
     programs.fzf = {
         enable = true;
         enableZshIntegration = true;
@@ -9,21 +13,21 @@
             enableShellIntegration = true;
         };
         colors = {
-            bg = "#333333";
-            "bg+" = "#333333";
-            preview-bg = "#333333";
-            fg = "#C2C2C2";
-            "fg+" = "#CCCCCC";
-            preview-fg = "#C2C2C2";
-            hl = "#474747";
-            "hl+" = "#474747";
-            info = "#686868";
-            border = "#333333";
-            prompt = "#474747";
-            pointer = "#474747";
-            marker = "#474747";
-            spinner = "#474747";
-            header = "#474747";
+            bg = fzf.bg;
+            "bg+" = fzf.bg_plus;
+            preview-bg = fzf.preview_bg;
+            fg = fzf.fg;
+            "fg+" = fzf.fg_plus;
+            preview-fg = fzf.preview_fg;
+            hl = fzf.hl;
+            "hl+" = fzf.hl_plus;
+            info = fzf.info;
+            border = fzf.border;
+            prompt = fzf.prompt;
+            pointer = fzf.pointer;
+            marker = fzf.marker;
+            spinner = fzf.spinner;
+            header = fzf.header;
         };
     };
 }
