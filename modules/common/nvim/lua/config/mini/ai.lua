@@ -1,4 +1,5 @@
 local ai = require('mini.ai')
+require('mini.extra').setup()
 ai.setup({
     n_lines = 500,
     custom_textobjects = {

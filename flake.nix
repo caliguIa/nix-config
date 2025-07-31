@@ -13,10 +13,6 @@
         nix-homebrew = {
             url = "github:zhaofengli-wip/nix-homebrew";
         };
-        homebrew-bundle = {
-            url = "github:homebrew/homebrew-bundle";
-            flake = false;
-        };
         homebrew-core = {
             url = "github:homebrew/homebrew-core";
             flake = false;
@@ -38,16 +34,12 @@
             url = "github:caliguIa/zendiagram.nvim";
             flake = false;
         };
-        plugins-eink = {
-            url = "github:alexxGmZ/e-ink.nvim";
-            flake = false;
-        };
         plugins-kanso = {
             url = "github:webhooked/kanso.nvim";
             flake = false;
         };
-        plugins-yugen = {
-            url = "github:bettervim/yugen.nvim";
+        plugins-nvim-bqf = {
+            url = "github:kevinhwang91/nvim-bqf";
             flake = false;
         };
         fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
@@ -106,7 +98,6 @@
                         ;
                 };
                 modules = [
-                    {nixpkgs.config.allowUnfree = true;}
                     ./machines/darwin/${hostname}
                     inputs.home-manager.darwinModules.home-manager
                     inputs.nix-homebrew.darwinModules.nix-homebrew
@@ -115,12 +106,12 @@
                             enable = true;
                             user = username;
                             taps = {
-                                "homebrew/homebrew-core" = inputs.homebrew-core;
                                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                                "homebrew/homebrew-core" = inputs.homebrew-core;
                             };
                             mutableTaps = false;
+                            autoMigrate = true;
                         };
-                        nixpkgs.config.allowUnfree = true;
                         home-manager = {
                             useUserPackages = true;
                             extraSpecialArgs = {

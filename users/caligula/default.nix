@@ -16,6 +16,7 @@
         systemPackages = import ../../modules/common/packages.nix {inherit pkgs;};
         variables = {
             EDITOR = "nvim";
+            XDEBUG_MODE = "off";
         };
     };
 }

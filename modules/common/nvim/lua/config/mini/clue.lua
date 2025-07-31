@@ -34,5 +34,4 @@ miniclue.setup({
         { mode = 'n', keys = '<C-w>' }, -- Window commands
         { mode = 'n', keys = 'z' }, -- `z` key
     },
-    window = { config = { border = 'none' } },
 })

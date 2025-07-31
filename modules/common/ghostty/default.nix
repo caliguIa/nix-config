@@ -24,7 +24,7 @@ in {
         font-family = Berkeley Mono
         font-family = Symbols Nerd Font Mono
         font-feature = +liga
-        font-size = 15
+        font-size = 14
         macos-titlebar-style = hidden
         window-decoration = true
         window-theme = auto

@@ -1,6 +1,6 @@
 require('git-conflict').setup()
 
-Util.map.nl('gg', vim.cmd.Git, 'Git')
+-- Util.map.nl('gg', vim.cmd.Git, 'Git')
 Util.map.nl('gfa', function() vim.cmd.Git('fetch --all') end, 'Fetch all')
 Util.map.nl('gfm', function()
     vim.cmd.Git('fetch --all')
@@ -20,14 +20,7 @@ Util.au.cmd('FileType', {
     callback = function()
         vim.cmd.resize()
         vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', '=', { noremap = false, silent = true })
-    end,
-})
-
-Util.au.cmd('FileType', {
-    desc = 'Add empty winbar to fugitiveblame buffers to align with main buffer',
-    pattern = 'fugitiveblame',
-    callback = function()
-        vim.schedule(function() vim.opt_local.winbar = ' ' end)
+        vim.b.minisurround_disable = true
     end,
 })
 

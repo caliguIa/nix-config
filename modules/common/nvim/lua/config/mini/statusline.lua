@@ -6,9 +6,7 @@ statusline.setup({
     content = {
 
         active = function()
-            local diff = MiniStatusline.section_diff({ trunc_width = 75 })
             local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-            local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
             local filename = MiniStatusline.section_filename({ trunc_width = 75 })
             local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
             local location = MiniStatusline.section_location({ trunc_width = 75 })
@@ -16,7 +14,7 @@ statusline.setup({
             return MiniStatusline.combine_groups({
                 { hl = 'MiniStatuslineDevinfo', strings = { filename } },
                 '%=', -- End left alignment
-                { hl = 'MiniStatuslineDevinfo', strings = { diff, diagnostics, lsp } },
+                { hl = 'MiniStatuslineDevinfo', strings = {  diagnostics,  } },
                 { hl = 'MiniStatuslineDevinfo', strings = { search, location } },
                 { hl = 'MiniStatuslineDevinfo', strings = { fileinfo } },
             })
@@ -24,7 +22,7 @@ statusline.setup({
         inactive = function()
             local filename = MiniStatusline.section_filename({ trunc_width = 80 })
             return MiniStatusline.combine_groups({
-                { hl = 'MiniStatuslineFilename', strings = { filename } },
+                { hl = 'MiniStatuslineDevinfo', strings = { filename } },
             })
         end,
     },

@@ -1,11 +1,4 @@
 require('conform').setup({
-    stop_after_first = false,
-    notify_on_error = false,
-    default_format_opts = {
-        timeout_ms = 3000,
-        async = false,
-        quiet = false,
-    },
     formatters_by_ft = {
         lua = { 'stylua' },
         php = { 'pint' },
@@ -27,19 +20,13 @@ require('conform').setup({
         vue = { 'prettier' },
         yaml = { 'prettier' },
     },
-    formatters = {
-        injected = { options = { ignore_errors = true } },
-        pint = {
-            command = require('conform.util').find_executable({ 'vendor/bin/pint' }, 'pint'),
-            args = { '$FILENAME' },
-            stdin = false,
-        },
-    },
-    format_on_save = { timeout_ms = 3000, lsp_format = 'fallback' },
 })
-
-Util.au.cmd({ 'BufWritePre' }, {
-    group = Util.au.group('eslint_fix'),
-    pattern = { '*.js', '*.jsx', '*.ts', '*.tsx' },
-    command = 'silent! LspEslintFixAll',
+local format_buffer = function()
+    if vim.fn.exists(':LspEslintFixAll') > 0 then vim.cmd.LspEslintFixAll() end
+    require('conform').format({ bufnr = vim.api.nvim_get_current_buf() })
+end
+Util.map.nl('bf', function() format_buffer() end, 'Format buffer')
+Util.au.cmd('BufWritePre', {
+    group = Util.au.group('format-on-write'),
+    callback = function() format_buffer() end,
 })

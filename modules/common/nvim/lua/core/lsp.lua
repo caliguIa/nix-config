@@ -1,6 +1,4 @@
 local lsp = vim.lsp
-local methods = lsp.protocol.Methods
-local cmd = vim.cmd
 
 lsp.enable({
     'cssls',
@@ -21,60 +19,57 @@ lsp.enable({
     'zls',
 })
 
-local setup_keymaps = function(event)
-    Util.map.n('K', lsp.buf.hover, 'Hover', { buffer = event.buf })
-    Util.map.nl('e', vim.diagnostic.open_float, 'Diagnostics')
-    Util.map.nl('rn', lsp.buf.rename, 'Rename')
-    Util.map.nl('ca', lsp.buf.code_action, 'Code action')
-    Util.map.nl('ss', function() cmd.Pick('lsp', 'scope="document_symbol"') end, 'Document LSP symbols')
-    Util.map.nl('sS', function() cmd.Pick('lsp ', 'scope="workspace_symbol"') end, 'Workspace LSP symbols')
-    Util.map.n('gd', function() cmd.Pick('lsp', 'scope="definition"') end, 'Definition')
-    Util.map.n('gD', function() cmd.Pick('lsp', 'scope="declaration"') end, 'Declaration')
-    Util.map.n('gr', function() cmd.Pick('lsp', 'scope="references"') end, 'References')
-    Util.map.n('gt', function() cmd.Pick('lsp', 'scope="type_definition"') end, 'Type definition')
-    Util.map.n('gi', function() cmd.Pick('lsp', 'scope="implementation"') end, 'Implementation')
-end
-
-local init_doc_hl = function(event)
-    local highlight_augroup = Util.au.group('lsp-highlight', { clear = false })
-    Util.au.cmd({ 'CursorHold', 'CursorHoldI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = lsp.buf.document_highlight,
-    })
-
-    Util.au.cmd({ 'CursorMoved', 'CursorMovedI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = lsp.buf.clear_references,
-    })
-
-    Util.au.cmd('LspDetach', {
-        group = Util.au.group('lsp-detach', { clear = true }),
-        callback = function(event2)
-            lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = event2.buf })
-        end,
-    })
-end
-
-local init_lsp_folds = function()
-    local win = vim.api.nvim_get_current_win()
-
-    vim.wo[win][0].foldmethod = 'expr'
-    vim.wo[win][0].foldexpr = 'v:lua.lsp.foldexpr()'
-    Util.au.cmd('LspDetach', { group = Util.au.group('lsp-folds-unset'), command = 'setl foldexpr<' })
-end
-
+local highlight_augroup = Util.au.group('lsp-highlight', { clear = false })
 Util.au.cmd('LspAttach', {
     group = Util.au.group('lsp-attach'),
     callback = function(event)
-        setup_keymaps(event)
+        local safe_del = function(mode, lhs) pcall(vim.keymap.del, mode, lhs) end
+        safe_del('n', 'grr')
+        safe_del('n', 'gra')
+        safe_del('n', 'gri')
+        safe_del('n', 'grn')
+        safe_del('n', 'grt')
+
+        Util.map.n('gd', vim.lsp.buf.definition, 'Definition')
+        Util.map.n('gr', vim.lsp.buf.references, 'References')
+        Util.map.n('gt', vim.lsp.buf.type_definition, 'Type definition')
+        Util.map.n('gD', vim.lsp.buf.declaration, 'Declarations')
+        Util.map.nl('e', vim.diagnostic.open_float, 'Diagnostics')
+        Util.map.nl('rn', vim.lsp.buf.rename, 'Rename')
+        Util.map.nl('ca', vim.lsp.buf.code_action, 'Code actions')
 
         local client = lsp.get_client_by_id(event.data.client_id)
         if client then
-            if client:supports_method(methods.textDocument_documentHighlight, event.buf) then init_doc_hl(event) end
-            if client:supports_method(methods.textDocument_foldingRange, event.buf) then init_lsp_folds() end
+            vim.lsp.completion.enable(true, client.id, event.buf, {
+                autotrigger = true,
+                convert = function(item) return { abbr = item.label:gsub('%b()', '') } end,
+            })
+
+            if client:supports_method(lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+                Util.au.cmd({ 'CursorHold', 'CursorHoldI' }, {
+                    buffer = event.buf,
+                    group = highlight_augroup,
+                    callback = lsp.buf.document_highlight,
+                })
+                Util.au.cmd({ 'CursorMoved', 'CursorMovedI' }, {
+                    buffer = event.buf,
+                    group = highlight_augroup,
+                    callback = lsp.buf.clear_references,
+                })
+                Util.au.cmd('LspDetach', {
+                    group = Util.au.group('lsp-detach', { clear = true }),
+                    callback = function(e)
+                        lsp.buf.clear_references()
+                        vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = e.buf })
+                    end,
+                })
+            end
+
+            if client:supports_method(lsp.protocol.Methods.textDocument_foldingRange, event.buf) then
+                local win = vim.api.nvim_get_current_win()
+                vim.wo[win][0].foldmethod = 'expr'
+                vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+            end
         end
 
         vim.diagnostic.config({

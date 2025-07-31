@@ -1,9 +1,9 @@
 build:
     git add .
     @if [ -x "$(command -v darwin-rebuild)" ]; then \
-        sudo darwin-rebuild switch --flake .#`hostname -s`; \
+        nh darwin switch .; \
     elif [ -x "$(command -v nixos-rebuild)" ]; then \
-        sudo nixos-rebuild switch --flake .#`hostname -s`; \
+        nh os switch .; \
     else \
         echo "Error: Neither darwin-rebuild nor nixos-rebuild found"; \
         exit 1; \

@@ -6,10 +6,15 @@ with pkgs; [
     eza
     fd
     fish
+    gitu
     gnupg
+    gh
+    gh-dash
     htop
     jq
     just
+    nix-output-monitor
+    prr
     ripgrep
     tree
     yazi

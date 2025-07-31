@@ -1,7 +1,7 @@
--- require('e-ink').setup()
-
-vim.cmd.colorscheme(require('nixCats').extra.colorscheme or 'kanso')
+vim.cmd.colorscheme(require('nixCats').extra.colorscheme)
 vim.opt.background = 'dark'
+
+-- require('e-ink').setup()
 
 -- local C = require("e-ink.palette").everforest()
 -- local P = require("e-ink.palette").mono()

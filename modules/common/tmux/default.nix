@@ -54,11 +54,13 @@ in {
             bind h split-window -v
             bind v split-window -h
 
+            bind g display-popup -w 90% -h 90% -E "gitu"
             bind t popup -E "tmux new-session -A -s scratch \\\; set -t scratch status off"
             bind f display-popup -E "tms"
             bind s display-popup -E "tms switch"
             bind w display-popup -E "tms windows"
             bind r command-prompt -p "Rename active session to: " "run-shell 'tms rename %1'".
+            bind R source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
             bind k confirm-before -p "Kill current session? (y/n): " "run-shell 'tms kill'"
             bind x kill-pane
 
@@ -80,11 +82,15 @@ in {
     home.file.".local/bin/tmux-cmd-launcher.sh" = {
         text = toString (pkgs.writeShellScript "newsboat-url" ''
             commands=(
+                "nix rebuild::cd ~/nix-config; just build"
+                "nix update::cd ~/nix-config; just update"
+                "nix gc::nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc"
+                "jira view sprint::jira sprint list $JIRA_SPRINT -a$(jira me) --order-by status --reverse"
+                "jira set sprint::jira-set-sprint.sh"
                 "ous bounce::cd ~/ous; make down; make platform-up"
                 "ous down::cd ~/ous; make down"
                 "ous up::cd ~/ous; make platform-up"
-                "nix rebuild::cd ~/nix-config; just build"
-                "nix gc::nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc"
+                "pr review::prr-review.sh"
             )
             selected=$(printf '%s\n' "''${commands[@]}" | cut -d':' -f1 | fzf)
             if [ -n "$selected" ]; then
@@ -96,6 +102,70 @@ in {
                         exit 0
                     fi
                 done
+            fi
+        '');
+        executable = true;
+    };
+    home.file.".local/bin/jira-set-sprint.sh" = {
+        text = toString (pkgs.writeShellScript "jira-set-sprint" ''
+            sprints=$(jira sprint list --table --plain --columns id,name --state active)
+            if [ -z "$sprints" ]; then
+                echo "No active sprints found"
+                exit 1
+            fi
+            selected=$(echo "$sprints" | fzf --header="Select a sprint to set as current")
+            if [ -z "$selected" ]; then
+                echo "No sprint selected"
+                exit 0
+            fi
+            sprint_id=$(echo "$selected" | awk '{print $1}')
+            echo "Setting sprint $sprint_id as current"
+            if [ -f ~/.local/auth/fish_env.fish ]; then
+                # Remove existing JIRA_SPRINT line if it exists
+                grep -v "^set -gx JIRA_SPRINT" ~/.local/auth/fish_env.fish > ~/.local/auth/fish_env.fish.tmp
+                mv ~/.local/auth/fish_env.fish.tmp ~/.local/auth/fish_env.fish
+            fi
+            echo "set -gx JIRA_SPRINT $sprint_id" >> ~/.local/auth/fish_env.fish
+            echo "Successfully set JIRA_SPRINT to $sprint_id in ~/.local/auth/fish_env.fish"
+        '');
+        executable = true;
+    };
+    home.file.".local/bin/prr-review.sh" = {
+        text = toString (pkgs.writeShellScript "prr-review" ''
+            # Get list of open PRs using GitHub CLI
+            prs=$(gh pr list --state open --json number,title,author --template '{{range .}}{{.number}}	{{.title}}	{{.author.login}}{{"\n"}}{{end}}')
+
+            if [ -z "$prs" ]; then
+                echo "No open PRs found in this repository"
+                exit 1
+            fi
+
+            # Use fzf to select a PR
+            selected=$(echo "$prs" | fzf --with-nth=2.. --delimiter=$'\t' --preview 'gh pr view {1}' --header="Select a PR to review")
+
+            if [ -z "$selected" ]; then
+                echo "No PR selected"
+                exit 0
+            fi
+
+            # Extract PR number from selection
+            pr_number=$(echo "$selected" | cut -f1)
+
+            echo "Selected PR #$pr_number"
+
+            # Check if PR is already available locally with prr
+            if prr status | grep -q "^$pr_number\s"; then
+                echo "PR #$pr_number already exists locally, opening editor..."
+                prr edit "$pr_number"
+            else
+                echo "PR #$pr_number not found locally, fetching..."
+                if prr get "$pr_number"; then
+                    echo "Successfully fetched PR #$pr_number, opening editor..."
+                    prr edit "$pr_number"
+                else
+                    echo "Failed to fetch PR #$pr_number"
+                    exit 1
+                fi
             fi
         '');
         executable = true;

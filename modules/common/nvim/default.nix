@@ -76,14 +76,21 @@
                     themeConfig.theme
                 } or
                     (builtins.getAttr (extra.colorscheme or "kanso") {
-                    "e-ink" = pkgs.neovimPlugins.eink;
-                    "yugen" = pkgs.neovimPlugins.yugen;
                     "kanso" = pkgs.neovimPlugins.kanso;
                 });
             general = [
                 plenary-nvim
                 oil-nvim
-                mini-nvim
+                mini-pick
+                mini-ai
+                mini-extra
+                mini-clue
+                mini-diff
+                mini-bufremove
+                mini-icons
+                mini-surround
+                mini-statusline
+                mini-misc
                 nvim-lspconfig
                 conform-nvim
                 fugitive
@@ -93,6 +100,7 @@
                 vim-tmux-navigator
                 pkgs.neovimPlugins.indentmini
                 pkgs.neovimPlugins.timber
+                pkgs.neovimPlugins.nvim-bqf
                 pkgs.neovimPlugins.zendiagram
                 codecompanion-nvim
                 nvim-dbee

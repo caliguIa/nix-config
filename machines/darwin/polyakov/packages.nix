@@ -14,9 +14,11 @@
         firefox
         iina
         inputs.self.outputs.neovim.packages.${pkgs.system}.nvim
+        jira-cli-go
         lazydocker
         libsixel
         lima
+        ollama
         pika
         presenterm
         tmux-sessionizer

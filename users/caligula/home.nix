@@ -16,6 +16,7 @@
         ../../modules/common/atuin
         ../../modules/common/fzf
         ../../modules/common/git
+        ../../modules/common/nh
         ../../modules/common/starship
         ../../modules/common/tmux
         ../../modules/common/fonts

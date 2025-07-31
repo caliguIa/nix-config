@@ -20,51 +20,7 @@ in {
 
     nixpkgs.config.allowUnfree = true;
 
-    nix = {
-        enable = true;
-        package = pkgs.nix;
-        optimise.automatic = true;
-        nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-        linux-builder = {
-            enable = true;
-            ephemeral = true;
-            maxJobs = 4;
-            config = {
-                virtualisation = {
-                    darwin-builder = {
-                        diskSize = 40 * 1024;
-                        memorySize = 8 * 1024;
-                    };
-                    cores = 6;
-                };
-            };
-        };
-        settings = {
-            trusted-users = [
-                "@admin"
-                "${username}"
-            ];
-            substituters = [
-                "https://nix-community.cachix.org"
-                "https://cache.nixos.org"
-            ];
-            trusted-public-keys = ["cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
-        };
-
-        gc = {
-            automatic = true;
-            interval = {
-                Weekday = 0;
-                Hour = 2;
-                Minute = 0;
-            };
-            options = "--delete-older-than 30d";
-        };
-
-        extraOptions = ''
-            experimental-features = nix-command flakes
-        '';
-    };
+    nix.enable = false;
 
     power = {
         sleep = {
@@ -77,13 +33,21 @@ in {
 
     homebrew = {
         enable = true;
-        casks = import ./casks.nix {inherit pkgs;};
-        taps = builtins.attrNames config.nix-homebrew.taps;
+        caskArgs.no_quarantine = true;
         onActivation = {
             autoUpdate = true;
-            cleanup = "zap";
+            cleanup = "uninstall";
             upgrade = true;
         };
+        casks = [
+            "docker-desktop"
+            # "docker"
+            "ghostty"
+            "onyx"
+            "sabnzbd"
+            "slack"
+            "tableplus"
+        ];
     };
 
     environment = {
@@ -105,6 +69,11 @@ in {
             "Wi-Fi"
             "iPhone USB"
         ];
+        applicationFirewall = {
+            enable = true;
+            blockAllIncoming = false;
+            enableStealthMode = true;
+        };
     };
 
     security = {
@@ -148,11 +117,6 @@ in {
                 NSAutomaticWindowAnimationsEnabled = false;
                 NSNavPanelExpandedStateForSaveMode = true;
                 NSTableViewDefaultSizeMode = 1;
-            };
-
-            alf = {
-                globalstate = 1;
-                stealthenabled = 1;
             };
 
             controlcenter.BatteryShowPercentage = true;
@@ -220,6 +184,7 @@ in {
                 ../../../modules/common/ghostty
                 ../../../modules/common/kanata
                 ../../../modules/common/newsboat
+                ../../../modules/common/kitty
             ];
             programs.direnv = {
                 enable = true;
