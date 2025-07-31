@@ -36,7 +36,7 @@ in {
         caskArgs.no_quarantine = true;
         onActivation = {
             autoUpdate = true;
-            cleanup = "uninstall";
+            # cleanup = "uninstall";
             upgrade = true;
         };
         casks = [

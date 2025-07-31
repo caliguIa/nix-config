@@ -21,6 +21,7 @@
         ollama
         pika
         presenterm
+        raycast
         tmux-sessionizer
         youtube-tui
         yt-dlp

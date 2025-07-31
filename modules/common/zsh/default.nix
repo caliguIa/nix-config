@@ -11,7 +11,7 @@
         syntaxHighlighting.enable = false;
         defaultKeymap = "emacs";
         history.path = "${config.xdg.dataHome}/zsh/zsh_history";
-        dotDir = ".config/zsh";
+        dotDir = "${config.xdg.configHome}/zsh";
         shellAliases = {
             "~" = "cd ~";
             dl = "cd ~/Downloads";
