@@ -52,6 +52,10 @@
             url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
         };
+        plugins-techbase = {
+            url = "github:mcauley-penney/techbase.nvim";
+            flake = false;
+        };
     };
     outputs = {...} @ inputs: let
         mkNixosSystem = {

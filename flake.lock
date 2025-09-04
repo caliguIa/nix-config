@@ -279,6 +279,22 @@
         "type": "github"
       }
     },
+    "plugins-techbase": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755880830,
+        "narHash": "sha256-7oeWrptP+KGa48YkBPStQKODMJsKwiPyg+eBDS/z7rk=",
+        "owner": "mcauley-penney",
+        "repo": "techbase.nvim",
+        "rev": "e509f0a9b84e2ee2c32133827219f022150226fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mcauley-penney",
+        "repo": "techbase.nvim",
+        "type": "github"
+      }
+    },
     "plugins-ts-error": {
       "flake": false,
       "locked": {
@@ -326,6 +342,7 @@
         "plugins-indentmini": "plugins-indentmini",
         "plugins-kanso": "plugins-kanso",
         "plugins-nvim-bqf": "plugins-nvim-bqf",
+        "plugins-techbase": "plugins-techbase",
         "plugins-ts-error": "plugins-ts-error",
         "plugins-zendiagram": "plugins-zendiagram"
       }

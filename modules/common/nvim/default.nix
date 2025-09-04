@@ -70,6 +70,7 @@
             theme = let
                 themeMap = {
                     kanso = [pkgs.neovimPlugins.kanso];
+                    techbase = [pkgs.neovimPlugins.techbase];
                     llanura = ["llanura"];
                 };
             in

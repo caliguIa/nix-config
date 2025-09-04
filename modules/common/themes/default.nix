@@ -1,5 +1,5 @@
 let
-    theme = "llanura";
+    theme = "techbase";
     themeConfig = import ./${theme}.nix { };
 in {
     inherit theme;
