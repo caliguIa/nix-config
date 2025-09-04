@@ -10,15 +10,6 @@ end
 
 -- use_local_plugin('hanzel.nvim')
 -- use_local_plugin('zendiagram.nvim')
--- use_local_plugin("timber.nvim")
 
 require('zendiagram').setup()
 vim.diagnostic.open_float = Zendiagram.open
-
--- require("timber").setup({
---     -- log_templates = {
---     --     default = {
---     --         php = [[dump("%log_target", %log_target);]],
---     --     },
---     -- },
--- })

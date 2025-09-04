@@ -5,7 +5,6 @@ vim.ui.select = MiniPick.ui_select
 
 Util.map.nl('cs', function() cmd.Pick('spellsuggest') end, 'Spelling')
 Util.map.nl('sm', function() cmd.Pick('visit_paths', 'filter="core"') end, 'Marked files')
-Util.map.nl('sf', function() cmd.Pick('files') end, 'Find Files')
 Util.map.nl('sg', function() cmd.Pick('grep_live') end, 'Grep')
 Util.map.nl('sG', function() cmd.Pick('grep', "pattern='<cword>'") end, 'Grep current word')
 Util.map.nl('sh', function() cmd.Pick('help') end, 'Help Pages')

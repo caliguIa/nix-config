@@ -1,8 +1,7 @@
 let
-    themeConfig = import ../themes;
+    themeConfig = import ./themes;
     starship = themeConfig.starship;
-in
-{
+in {
     programs.starship = {
         enable = true;
         enableZshIntegration = true;

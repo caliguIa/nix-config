@@ -11,14 +11,15 @@
         file = {".hushlogin".text = "";};
     };
     imports = [
-        ../../modules/common/fish
-        ../../modules/common/zsh
-        ../../modules/common/atuin
-        ../../modules/common/fzf
-        ../../modules/common/git
-        ../../modules/common/nh
-        ../../modules/common/starship
-        ../../modules/common/tmux
-        ../../modules/common/fonts
+        ../../modules/common/fish.nix
+        ../../modules/common/zsh.nix
+        ../../modules/common/atuin.nix
+        ../../modules/common/fzf.nix
+        ../../modules/common/git.nix
+        ../../modules/common/nh.nix
+        ../../modules/common/starship.nix
+        ../../modules/common/tmux.nix
+        ../../modules/common/helix.nix
+        ../../modules/common/fonts.nix
     ];
 }

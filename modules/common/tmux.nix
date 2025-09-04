@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-    themeConfig = import ../themes;
+    themeConfig = import ./themes;
     tmux = themeConfig.tmux;
 in {
     programs.tmux = {

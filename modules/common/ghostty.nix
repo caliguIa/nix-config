@@ -1,5 +1,5 @@
 let
-    themeConfig = import ../themes;
+    themeConfig = import ./themes;
     colors = themeConfig.colors;
 in {
     xdg.configFile."ghostty/config".text = ''
@@ -25,13 +25,15 @@ in {
         font-family = Symbols Nerd Font Mono
         font-feature = +liga
         font-size = 14
-        macos-titlebar-style = hidden
-        window-decoration = true
+        macos-titlebar-style = transparent
+        title = " "
+        window-decoration = auto
         window-theme = auto
         window-padding-color = background
         window-padding-balance = false
         window-padding-y = 0
         window-padding-x = 0
+        maximize = true
         confirm-close-surface = false
         quit-after-last-window-closed = true
         macos-window-shadow = false
@@ -52,6 +54,8 @@ in {
         clipboard-trim-trailing-spaces = true
         copy-on-select = clipboard
         keybind = alt+3=text:#
-        shell-integration-features = sudo,no-title
+        shell-integration-features = sudo,cursor,no-title
+
+        # keybind = ctrl+o=action
     '';
 }

@@ -40,6 +40,9 @@
                 autoSetupRemote = true;
                 default = "current";
             };
+            remote = {
+                pushDefault = "origin";
+            };
             pull = {
                 default = "current";
             };

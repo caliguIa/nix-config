@@ -9,7 +9,7 @@ lsp.enable({
     'intelephense',
     'jsonls',
     'just',
-    -- 'lua_ls',
+    'stylelint_lsp',
     'emmylua_ls',
     'laravel_ls',
     'marksman',
@@ -66,11 +66,11 @@ Util.au.cmd('LspAttach', {
                 })
             end
 
-            if client:supports_method(lsp.protocol.Methods.textDocument_foldingRange, event.buf) then
-                local win = vim.api.nvim_get_current_win()
-                vim.wo[win][0].foldmethod = 'expr'
-                vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-            end
+            -- if client:supports_method(lsp.protocol.Methods.textDocument_foldingRange, event.buf) then
+            --     local win = vim.api.nvim_get_current_win()
+            --     vim.wo[win][0].foldmethod = 'expr'
+            --     vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+            -- end
         end
 
         vim.diagnostic.config({

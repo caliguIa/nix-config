@@ -67,9 +67,12 @@ opt.complete:remove('t') -- Don't use tags for completion
 o.completeopt = 'menuone,noinsert,popup,preview'
 o.spelloptions = 'camel' -- Treat parts of camelCase words as seprate words
 -- o.spelllang = "en,uk" -- Define spelling dictionaries
+o.wildmenu = true
+o.wildmode = 'noselect:longest:lastused,full'
 
 --disable_distribution_plugins
 g.loaded_gzip = 1
+g.did_install_default_menus = 1
 g.loaded_tar = 1
 g.loaded_tarPlugin = 1
 g.loaded_zip = 1

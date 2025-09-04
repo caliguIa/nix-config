@@ -1,8 +1,7 @@
 let
-    themeConfig = import ../themes;
+    themeConfig = import ./themes;
     fzf = themeConfig.fzf;
-in
-{
+in {
     programs.fzf = {
         enable = true;
         enableZshIntegration = true;

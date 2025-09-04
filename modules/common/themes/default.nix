@@ -1,5 +1,5 @@
 let
-    theme = "kanso";
+    theme = "llanura";
     themeConfig = import ./${theme}.nix { };
 in {
     inherit theme;

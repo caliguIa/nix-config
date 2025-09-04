@@ -11,8 +11,8 @@ vim.g['test#transformation'] = 'phpunit'
 vim.g['test#php#phpunit#options'] = '--colors=always'
 vim.g['test#javascript#jest#options'] = '--color'
 vim.g['test#strategy'] = 'neovim'
-vim.g['test#neovim#start_normal'] = 1
-vim.g['test#basic#start_normal'] = 1
+vim.g['test#neovim#start_normal'] = 0
+vim.g['test#basic#start_normal'] = 0
 vim.g['test#neovim#term_position'] = 'vert'
 vim.g['test#javascript#runner'] = 'vitest'
 

@@ -1,6 +1,7 @@
 require('indentmini').setup()
 require('bqf').setup({})
 require('codecompanion').setup({ strategies = { chat = { adapter = 'anthropic' } } })
+require('ts-error-translator').setup()
 
 local cmd = vim.cmd
 Util.map.nl('cc', cmd.CodeCompanionChat, 'AI chat')

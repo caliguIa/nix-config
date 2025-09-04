@@ -1,12 +1,9 @@
 {inputs, ...} @ attrs: let
-    inherit (inputs) nixpkgs; # <-- nixpkgs = inputs.nixpkgsSomething;
+    inherit (inputs) nixpkgs;
     inherit (inputs.nixCats) utils;
     luaPath = "${./.}";
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
     themeConfig = import ../themes;
-    # the following extra_pkg_config contains any values
-    # which you want to pass to the config set of nixpkgs
-    # import nixpkgs { config = extra_pkg_config; inherit system; }
     extra_pkg_config = {
         allowUnfree = true;
     };
@@ -42,46 +39,46 @@
     } @ packageDef: {
         lspsAndRuntimeDeps = with pkgs; {
             general = [
-                docker-compose-language-service
-                dockerfile-language-server-nodejs
-                intelephense
-                lua-language-server
+                # emmylua-ls
                 marksman
                 nixd
-                rust-analyzer
-                typescript
                 taplo
                 just-lsp
                 vscode-langservers-extracted
                 nodePackages.bash-language-server
-                vtsls
                 alejandra
-                nodePackages.prettier
-                prettierd
                 sleek
                 stylua
-                php82Packages.composer
-                zig
+                sqruff
             ];
         };
 
-        startupPlugins = with pkgs.vimPlugins; {
+        startupPlugins = with pkgs.vimPlugins; let
+            fff-with-lib = pkgs.vimUtils.buildVimPlugin {
+                pname = "fff-nvim";
+                version = "0.1.0";
+                src = inputs.plugins-fff;
+
+                postInstall = let
+                    fff-package = inputs.plugins-fff.packages.${pkgs.system}.default;
+                in ''
+                    mkdir -p $out/target/release
+                    cp ${fff-package}/lib/libfff_nvim.dylib $out/target/release/libfff_nvim.dylib
+                '';
+            };
+        in {
             theme = let
                 themeMap = {
-                    catppuccin = [catppuccin-nvim];
                     kanso = [pkgs.neovimPlugins.kanso];
+                    llanura = ["llanura"];
                 };
             in
-                themeMap.${
-                    themeConfig.theme
-                } or
-                    (builtins.getAttr (extra.colorscheme or "kanso") {
-                    "kanso" = pkgs.neovimPlugins.kanso;
-                });
+                themeMap.${themeConfig.theme};
             general = [
                 plenary-nvim
                 oil-nvim
                 mini-pick
+                mini-completion
                 mini-ai
                 mini-extra
                 mini-clue
@@ -93,15 +90,19 @@
                 mini-misc
                 nvim-lspconfig
                 conform-nvim
-                fugitive
                 git-conflict-nvim
                 undotree
                 vim-test
                 vim-tmux-navigator
                 pkgs.neovimPlugins.indentmini
-                pkgs.neovimPlugins.timber
                 pkgs.neovimPlugins.nvim-bqf
                 pkgs.neovimPlugins.zendiagram
+                pkgs.neovimPlugins.ts-error
+                pkgs.neovimPlugins.fold-imports
+                neogit
+                treesj
+                fff-with-lib
+                debugprint-nvim
                 codecompanion-nvim
                 nvim-dbee
                 nui-nvim
@@ -139,7 +140,7 @@
                 useBinaryWrapper = true;
                 aliases = ["vi" "vim" "bim"];
                 hosts.node.enable = true;
-                hosts.python3.enable = true;
+                hosts.python3.enable = false;
                 hosts.perl.enable = false;
                 hosts.ruby.enable = true;
                 neovim-unwrapped = pkgs.neovim-unwrapped;

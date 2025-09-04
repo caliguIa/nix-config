@@ -1,9 +1,7 @@
 {
     pkgs,
-    config,
     username,
     hostname,
-    inputs,
     ...
 }: let
     homeDirectory = "/Users/${username}";
@@ -36,12 +34,11 @@ in {
         caskArgs.no_quarantine = true;
         onActivation = {
             autoUpdate = true;
-            # cleanup = "uninstall";
             upgrade = true;
         };
         casks = [
             "docker-desktop"
-            # "docker"
+            "losslessswitcher"
             "ghostty"
             "onyx"
             "sabnzbd"
@@ -181,10 +178,10 @@ in {
     home-manager.sharedModules = [
         {
             imports = [
-                ../../../modules/common/ghostty
+                ../../../modules/common/ghostty.nix
                 ../../../modules/common/kanata
-                ../../../modules/common/newsboat
-                ../../../modules/common/kitty
+                ../../../modules/common/newsboat.nix
+                ../../../modules/common/kitty.nix
             ];
             programs.direnv = {
                 enable = true;

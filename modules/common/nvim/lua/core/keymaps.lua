@@ -17,9 +17,9 @@ Util.map.nl('w', '<c-w>', 'Windows', { remap = true })
 Util.map.nl('q', function()
     local cur_tabnr = vim.fn.tabpagenr()
     for _, wininfo in ipairs(vim.fn.getwininfo()) do
-        if wininfo.quickfix == 1 and wininfo.tabnr == cur_tabnr then return vim.cmd('cclose') end
+        if wininfo.quickfix == 1 and wininfo.tabnr == cur_tabnr then return cmd('cclose') end
     end
-    vim.cmd('copen')
+    cmd('copen')
 end, 'Quickfix List')
 Util.map.nl('<tab>]', cmd.tabnext, 'Next')
 Util.map.nl('<tab>[', cmd.tabprevious, 'Previous')
@@ -28,3 +28,9 @@ Util.map.nl('<tab>o', cmd.tabonly, 'Close other')
 Util.map.nl('ba', function() cmd.b('#') end, 'Alternate')
 Util.map.n('j', 'gj', 'Navigate through wrapped lines')
 Util.map.n('k', 'gk', 'Navigate through wrapped lines')
+
+function _G.FuzzyFindFunc(cmdarg, cmdcomplete)
+    return vim.fn.systemlist("fd --hidden . | fzf --filter='" .. cmdarg .. "'")
+end
+if vim.fn.executable('fd') == 1 and vim.fn.executable('fzf') == 1 then vim.o.findfunc = 'v:lua.FuzzyFindFunc' end
+Util.map.nl('ff', ':find ', 'Find files')

@@ -26,10 +26,6 @@
             url = "github:nvimdev/indentmini.nvim";
             flake = false;
         };
-        plugins-timber = {
-            url = "github:Goose97/timber.nvim";
-            flake = false;
-        };
         plugins-zendiagram = {
             url = "github:caliguIa/zendiagram.nvim";
             flake = false;
@@ -40,6 +36,18 @@
         };
         plugins-nvim-bqf = {
             url = "github:kevinhwang91/nvim-bqf";
+            flake = false;
+        };
+        plugins-fff = {
+            url = "github:dmtrKovalenko/fff.nvim";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        plugins-fold-imports = {
+            url = "github:dmtrKovalenko/fold-imports.nvim";
+            flake = false;
+        };
+        plugins-ts-error = {
+            url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
         };
         fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
