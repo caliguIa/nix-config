@@ -264,11 +264,11 @@
     "plugins-kanso": {
       "flake": false,
       "locked": {
-        "lastModified": 1753946963,
-        "narHash": "sha256-jBQfBiOZPRHM4fQGswZPA8gVQXZeY7m9RHYSM7bMxa0=",
+        "lastModified": 1755337172,
+        "narHash": "sha256-iPIhdWh9Ef6KY/mlobs0vfhHcEU4zhQFclNxLsRUGNk=",
         "owner": "webhooked",
         "repo": "kanso.nvim",
-        "rev": "55e1bdc50f1028969c6b9813cbb468cb1cb2dd3a",
+        "rev": "151dbc23fe890d09c26df11b1208dd8129dca012",
         "type": "github"
       },
       "original": {
@@ -280,11 +280,11 @@
     "plugins-nvim-bqf": {
       "flake": false,
       "locked": {
-        "lastModified": 1752978083,
-        "narHash": "sha256-WJrTOqqO4w9YRErTr6rGb8RxJA+HxKaZGlV2mGl64GM=",
+        "lastModified": 1754201034,
+        "narHash": "sha256-ls7hlXRSO+Dhd8l+qRAMUF/MkuMuiYXkV6hyCyAKxcc=",
         "owner": "kevinhwang91",
         "repo": "nvim-bqf",
-        "rev": "dd17c73912487dccb372deff85d4262d2b89bc2b",
+        "rev": "17680cda3538913e88dd4c6456c837db9ace40ae",
         "type": "github"
       },
       "original": {
