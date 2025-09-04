@@ -10,9 +10,7 @@
             url = "github:LnL7/nix-darwin/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        nix-homebrew = {
-            url = "github:zhaofengli-wip/nix-homebrew";
-        };
+        nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
         homebrew-core = {
             url = "github:homebrew/homebrew-core";
             flake = false;
@@ -20,6 +18,10 @@
         homebrew-cask = {
             url = "github:homebrew/homebrew-cask";
             flake = false;
+        };
+        fonts = {
+            url = "git+ssh://git@github.com/caliguIa/fonts";
+            inputs.nixpkgs.follows = "nixpkgs";
         };
         nixCats.url = "github:BirdeeHub/nixCats-nvim";
         plugins-indentmini = {
@@ -50,7 +52,6 @@
             url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
         };
-        fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
     };
     outputs = {...} @ inputs: let
         mkNixosSystem = {
