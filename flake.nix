@@ -1,7 +1,7 @@
 {
     description = "NixOS and Darwin system configurations";
     inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        nixpkgs.url = "github:nixos/nixpkgs/77ea3ccd47cef97f9947726003d1c99d99c67369";
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
