@@ -6,10 +6,10 @@ Util.au.cmd('LspAttach', {
     group = Util.au.group('lsp-attach-mini-comp'),
     callback = function(args) vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp' end,
 })
-Util.au.cmd('BufReadPost', {
+Util.au.cmd('WinEnter', {
     group = Util.au.group('mini-comp-fff'),
     pattern = { 'fff_input', 'fff_list', 'fff_file_info', 'fff_preview' },
-    callback = function(args) vim.b.minicompletion_disable = true end,
+    callback = function() vim.b.minicompletion_disable = true end,
 })
 vim.lsp.config('*', {
     capabilities = vim.tbl_deep_extend(
