@@ -5,7 +5,28 @@
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
     themeConfig = import ../themes;
     extra_pkg_config.allowUnfree = true;
-    dependencyOverlays = [(utils.standardPluginOverlay inputs)];
+    fffPluginOverlay = final: prev: {
+        vimPlugins =
+            prev.vimPlugins
+            // {
+                fff-nvim = prev.vimUtils.buildVimPlugin {
+                    pname = "fff-nvim";
+                    version = "0.1.0";
+                    src = inputs.plugins-fff;
+
+                    postInstall = let
+                        fff-package = inputs.plugins-fff.packages.${final.system}.default;
+                    in ''
+                        mkdir -p $out/target/release
+                        cp ${fff-package}/lib/libfff_nvim.dylib $out/target/release/libfff_nvim.dylib
+                    '';
+                };
+            };
+    };
+    dependencyOverlays = [
+        (utils.standardPluginOverlay inputs)
+        fffPluginOverlay
+    ];
     categoryDefinitions = {pkgs, ...}: {
         lspsAndRuntimeDeps = with pkgs; {
             general = [
@@ -22,24 +43,10 @@
                 sqruff
             ];
         };
-        startupPlugins = with pkgs.vimPlugins; let
-            fff-with-lib = pkgs.vimUtils.buildVimPlugin {
-                pname = "fff-nvim";
-                version = "0.1.0";
-                src = inputs.plugins-fff;
-
-                postInstall = let
-                    fff-package = inputs.plugins-fff.packages.${pkgs.system}.default;
-                in ''
-                    mkdir -p $out/target/release
-                    cp ${fff-package}/lib/libfff_nvim.dylib $out/target/release/libfff_nvim.dylib
-                '';
-            };
-        in {
+        startupPlugins = with pkgs.vimPlugins; {
             theme = [
                 pkgs.neovimPlugins.kanso
                 pkgs.neovimPlugins.techbase
-                "llanura"
             ];
             general = [
                 plenary-nvim
@@ -68,7 +75,7 @@
                 pkgs.neovimPlugins.fold-imports
                 neogit
                 treesj
-                fff-with-lib
+                fff-nvim
                 debugprint-nvim
                 codecompanion-nvim
                 nvim-dbee
