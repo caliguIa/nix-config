@@ -9,18 +9,7 @@
         vimPlugins =
             prev.vimPlugins
             // {
-                fff-nvim = prev.vimUtils.buildVimPlugin {
-                    pname = "fff-nvim";
-                    version = "0.1.0";
-                    src = inputs.plugins-fff;
-
-                    postInstall = let
-                        fff-package = inputs.plugins-fff.packages.${final.system}.default;
-                    in ''
-                        mkdir -p $out/target/release
-                        cp ${fff-package}/lib/libfff_nvim.dylib $out/target/release/libfff_nvim.dylib
-                    '';
-                };
+                fff-nvim = inputs.plugins-fff.packages.${final.system}.fff-nvim;
             };
     };
     dependencyOverlays = [
