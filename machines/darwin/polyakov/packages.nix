@@ -15,6 +15,7 @@
         lazydocker
         pika
         raycast
+        rainfrog
         tmux-sessionizer
         wiki-tui
     ];

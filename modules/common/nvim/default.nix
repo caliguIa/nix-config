@@ -40,17 +40,7 @@
             general = [
                 plenary-nvim
                 oil-nvim
-                mini-pick
-                mini-completion
-                mini-ai
-                mini-extra
-                mini-clue
-                mini-diff
-                mini-bufremove
-                mini-icons
-                mini-surround
-                mini-statusline
-                mini-misc
+                mini-nvim
                 nvim-lspconfig
                 conform-nvim
                 git-conflict-nvim
@@ -63,19 +53,14 @@
                 pkgs.neovimPlugins.ts-error
                 pkgs.neovimPlugins.fold-imports
                 neogit
-                treesj
                 fff-nvim
                 debugprint-nvim
                 codecompanion-nvim
-                nvim-dbee
-                nui-nvim
                 nvim-treesitter
                 nvim-treesitter.withAllGrammars
                 nvim-treesitter-textobjects
                 ts-comments-nvim
                 nvim-ts-autotag
-                friendly-snippets
-                luvit-meta
             ];
         };
         optionalPlugins = {};

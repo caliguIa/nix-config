@@ -55,6 +55,7 @@ in {
             bind v split-window -h
 
             bind g display-popup -w 90% -h 90% -E "gitu"
+            bind d display-popup -w 95% -h 95% -E "rainfrog"
             bind t popup -E "tmux new-session -A -s scratch \\\; set -t scratch status off"
             bind f display-popup -E "tms"
             bind s display-popup -E "tms switch"

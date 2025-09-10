@@ -17,6 +17,7 @@
         variables = {
             EDITOR = "nvim";
             XDEBUG_MODE = "off";
+            RAINFROG_CONFIG = "${homeDirectory}/.config/rainfrog";
         };
     };
 }

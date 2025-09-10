@@ -181,6 +181,7 @@ in {
                 ../../../modules/common/ghostty.nix
                 ../../../modules/common/kanata
                 ../../../modules/common/newsboat.nix
+                ../../../modules/common/rainfrog.nix
             ];
             programs.direnv = {
                 enable = true;
