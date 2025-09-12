@@ -21,10 +21,10 @@ in {
         users.${username} = {
             group = "caligula";
             isNormalUser = true;
+            extraGroups = ["wheel" "networkmanager"];
         };
         groups.${username} = {};
     };
-
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
@@ -48,9 +48,9 @@ in {
 
     nixpkgs.config = {
         allowUnfree = true;
-	permittedInsecurePackages = [
-	    "broadcom-sta-6.30.223.271-57-6.12.46"
-	];
+        permittedInsecurePackages = [
+            "broadcom-sta-6.30.223.271-57-6.12.46"
+        ];
     };
 
     nix = {
