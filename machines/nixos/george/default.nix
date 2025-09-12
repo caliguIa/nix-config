@@ -1,15 +1,20 @@
 {
-    hostname,
-    username,
     pkgs,
-    bim,
+    username,
+    hostname,
     ...
-}: {
+}: let
+    homeDirectory = "/home/${username}";
+in {
     imports = [
         ./hardware-configuration.nix
+        ./packages.nix
         ./services
         ./users.nix
-        ./packages.nix
+        (import ../../../users/caligula {
+            inherit pkgs username;
+            homeDirectory = homeDirectory;
+        })
     ];
 
     boot.loader.systemd-boot.enable = true;
@@ -34,7 +39,6 @@
 
     nixpkgs.config.allowUnfree = true;
 
-    environment.systemPackages = import ../../../modules/common/packages.nix {inherit pkgs bim;};
     nix = {
         enable = true;
         settings = {
@@ -60,8 +64,18 @@
         '';
     };
 
-    system.autoUpgrade.enable = true;
-    system.autoUpgrade.allowReboot = true;
-    system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
-    system.stateVersion = "24.11";
+    system = {
+        autoUpgrade = {
+            enable = true;
+            allowReboot = true;
+            channel = "https://channels.nixos.org/nixos-unstable";
+        };
+        stateVersion = "24.11";
+    };
+
+    home-manager.sharedModules = [
+        {
+            imports = [];
+        }
+    ];
 }

@@ -12,7 +12,7 @@ in {
         ./services/karabiner.nix
         (import ../../../users/caligula {
             inherit pkgs username;
-            homeDirectory = "/Users/${username}";
+            homeDirectory = homeDirectory;
         })
     ];
 

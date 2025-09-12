@@ -1,16 +1,4 @@
 {
-    pkgs,
-    username,
-    ...
-}: {
-    imports = [
-        (import ../../../users/caligula/system.nix {
-            inherit pkgs username;
-            homeDirectory = "/home/${username}";
-            extraGroups = ["share"];
-        })
-    ];
-
     users = {
         users = {
             share = {
@@ -26,4 +14,3 @@
         };
     };
 }
-
