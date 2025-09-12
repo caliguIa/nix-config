@@ -17,6 +17,15 @@ in {
         })
     ];
 
+    users = {
+        users.${username} = {
+            group = "caligula";
+            isNormalUser = true;
+        };
+        groups.${username} = {};
+    };
+
+
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
@@ -37,7 +46,12 @@ in {
 
     services.openssh.enable = true;
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = {
+        allowUnfree = true;
+	permittedInsecurePackages = [
+	    "broadcom-sta-6.30.223.271-57-6.12.46"
+	];
+    };
 
     nix = {
         enable = true;
