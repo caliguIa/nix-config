@@ -1,4 +1,5 @@
 {
+    inputs,
     pkgs,
     username,
     hostname,
@@ -8,34 +9,52 @@
 in {
     imports = [
         ./hardware-configuration.nix
-        ./packages.nix
         ./services
-        ./users.nix
         (import ../../../users/caligula {
             inherit pkgs username;
             homeDirectory = homeDirectory;
         })
     ];
-
     users = {
-        users.${username} = {
-            group = "caligula";
-            isNormalUser = true;
-            extraGroups = ["wheel" "networkmanager"];
+        users = {
+            ${username} = {
+                group = "caligula";
+                isNormalUser = true;
+                extraGroups = ["wheel" "networkmanager" "media"];
+            };
+            media = {
+                isSystemUser = true;
+                group = "media";
+            };
         };
-        groups.${username} = {};
+        groups = {
+            ${username} = {};
+            media = {};
+        };
     };
+
+    systemd.tmpfiles.rules = [
+        "d /data 0755 root root -"
+        "d /data/downloads 0755 root root -"
+        "d /data/downloads/complete 0755 media media -"
+        "d /data/downloads/complete/movies 0755 media media -"
+        "d /data/downloads/complete/tv 0755 media media -"
+        "d /data/downloads/complete/audiobooks 0755 media media -"
+        "d /data/downloads/incomplete 0755 media media -"
+        "d /data/media 0755 root root -"
+        "d /data/media/movies 0755 media media -"
+        "d /data/media/tv 0755 media media -"
+        "d /data/media/audiobooks 0755 media media -"
+    ];
+
+    environment.systemPackages = with pkgs; [
+        inputs.self.outputs.neovim.packages.${pkgs.system}.nvim
+    ];
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
     networking = {
-        interfaces.eth0.ipv4.addresses = [
-            {
-                address = "192.168.1.1";
-                prefixLength = 24;
-            }
-        ];
         defaultGateway = "192.168.0.1";
         nameservers = ["8.8.8.8"];
         hostName = hostname;

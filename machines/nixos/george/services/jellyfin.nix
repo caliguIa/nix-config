@@ -1,8 +1,8 @@
 {
     services.jellyfin = {
         enable = true;
-        user = "share";
-        group = "share";
+        openFirewall = true;
+        user = "media";
+        group = "media";
     };
 }
-

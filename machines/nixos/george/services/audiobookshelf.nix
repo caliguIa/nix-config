@@ -3,7 +3,7 @@
         enable = true;
         port = 8113;
         host = "0.0.0.0";
-        user = "share";
-        group = "share";
+        user = "media";
+        group = "media";
     };
 }
