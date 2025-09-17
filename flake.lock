@@ -98,11 +98,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757997814,
-        "narHash": "sha256-F+1aoG+3NH4jDDEmhnDUReISyq6kQBBuktTUqCUWSiw=",
+        "lastModified": 1758085625,
+        "narHash": "sha256-D0KVKNgWSDVjYFgPLEtSQvSKchTBT0YqSbNlH7OQ+bo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5820376beb804de9acf07debaaff1ac84728b708",
+        "rev": "fb928abb67bd4df99040721ed48c3b42e24b1d08",
         "type": "github"
       },
       "original": {
@@ -114,11 +114,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1758020018,
-        "narHash": "sha256-hmCRdRY9ElZZfzFjZeVbwW9njkDqlY+4i6MW46WKe6g=",
+        "lastModified": 1758095486,
+        "narHash": "sha256-aZo/HYX0/2tmKBm6pkzJP7kdH0vg9HaprGKoqN3iR5g=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "baaef90ca84b08f265af363737f26847a14f1b2c",
+        "rev": "e1edc64aa539e3380b54ed77bc5865a937602b86",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1758023613,
-        "narHash": "sha256-zAsWOjCFsOH8MA7kA1HvNcoHqTiD9HADo/4DZ+g8e2Y=",
+        "lastModified": 1758096735,
+        "narHash": "sha256-SJ5xA3EAvs3i02APg6JgDwSjL3KZKoEbuSsnSh1LEGI=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "e7c869872b004c77d22a34c311ace7c450bd16c8",
+        "rev": "a26cfed06437d2fd104997c1b12123f0b95a742c",
         "type": "github"
       },
       "original": {
@@ -178,11 +178,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1757967192,
-        "narHash": "sha256-/aA9A/OBmnuOMgwfzdsXRusqzUpd8rQnQY8jtrHK+To=",
+        "lastModified": 1758029226,
+        "narHash": "sha256-TjqVmbpoCqWywY9xIZLTf6ANFvDCXdctCjoYuYPYdMI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0d7c15863b251a7a50265e57c1dca1a7add2e291",
+        "rev": "08b8f92ac6354983f5382124fef6006cade4a1c1",
         "type": "github"
       },
       "original": {
@@ -202,11 +202,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1757413503,
-        "narHash": "sha256-qKoFeSMzNTeUZdKZ7BiG8vhy7Tr0bw/ri4XLZGXJKVE=",
+        "lastModified": 1758042756,
+        "narHash": "sha256-mCeEse1rY1T04TE6OqeOGP4Mlvk1aHc1N2q1njc93fI=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "7cdc71d5a1123a6121ec83cc63949e9916b95cb7",
+        "rev": "3a803c40edf24dcb6b51ef40aeb4210d4c7a0dd3",
         "type": "github"
       },
       "original": {
