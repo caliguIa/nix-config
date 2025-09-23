@@ -3,12 +3,21 @@
     homeDirectory,
     ...
 }: {
-    programs.home-manager.enable = true;
     home = {
         username = username;
         homeDirectory = homeDirectory;
         stateVersion = "24.11";
         file = {".hushlogin".text = "";};
+    };
+    programs = {
+        home-manager.enable = true;
+        ssh = {
+            enable = true;
+            addKeysToAgent = "yes";
+            extraConfig = ''
+                UseKeychain yes
+            '';
+        };
     };
     services.ssh-agent.enable = true;
     imports = [
