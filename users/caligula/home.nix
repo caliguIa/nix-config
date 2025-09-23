@@ -14,9 +14,6 @@
         ssh = {
             enable = true;
             addKeysToAgent = "yes";
-            extraConfig = ''
-                UseKeychain yes
-            '';
         };
     };
     services.ssh-agent.enable = true;
