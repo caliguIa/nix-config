@@ -3,20 +3,13 @@
     homeDirectory,
     ...
 }: {
+    programs.home-manager.enable = true;
     home = {
         username = username;
         homeDirectory = homeDirectory;
         stateVersion = "24.11";
         file = {".hushlogin".text = "";};
     };
-    programs = {
-        home-manager.enable = true;
-        ssh = {
-            enable = true;
-            addKeysToAgent = "yes";
-        };
-    };
-    services.ssh-agent.enable = true;
     imports = [
         ../../modules/common/fish.nix
         ../../modules/common/zsh.nix

@@ -118,7 +118,11 @@ in {
 
     home-manager.sharedModules = [
         {
-            imports = [];
+            services.ssh-agent.enable = true;
+            programs.ssh = {
+                enable = true;
+                addKeysToAgent = "yes";
+            };
         }
     ];
 }
