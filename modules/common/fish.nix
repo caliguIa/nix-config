@@ -146,7 +146,9 @@
             end
             set -U fish_greeting
 
-            source ~/.local/auth/fish_env.fish
+            if [ -e "~/.local/auth/fish_env.fish" ]
+                source ~/.local/auth/fish_env.fish
+            end
         '';
     };
 }

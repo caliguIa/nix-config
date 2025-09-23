@@ -21,6 +21,9 @@ in {
                 group = "caligula";
                 isNormalUser = true;
                 extraGroups = ["wheel" "networkmanager" "media"];
+                openssh.authorizedKeys.keys = [
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwI2yD8dyhY0ga1r/bTgYBTRpkrlzT2FNKq/v+dx5// accounts@cal.rip"
+                ];
             };
             media = {
                 isSystemUser = true;
@@ -68,7 +71,7 @@ in {
     nixpkgs.config = {
         allowUnfree = true;
         permittedInsecurePackages = [
-            "broadcom-sta-6.30.223.271-57-6.12.47"
+            "broadcom-sta-6.30.223.271-57-6.12.48"
         ];
     };
 

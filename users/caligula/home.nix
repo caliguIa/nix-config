@@ -10,6 +10,7 @@
         stateVersion = "24.11";
         file = {".hushlogin".text = "";};
     };
+    services.ssh-agent.enable = true;
     imports = [
         ../../modules/common/fish.nix
         ../../modules/common/zsh.nix
