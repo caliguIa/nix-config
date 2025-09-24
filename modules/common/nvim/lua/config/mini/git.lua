@@ -58,8 +58,9 @@ local align_blame = function(au_data)
     local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
     local formatted_lines = {}
 
-    local blame_pattern = '^(%w+)%s+[^%(]*%(([^%s]+)%s+(%d%d%d%d%-%d%d%-%d%d)'
-    local uncommitted_pattern = '^00000000%s+%(Not Committed Yet'
+    -- Updated pattern to properly capture author names with spaces
+    local blame_pattern = '^(%w+)%s+[^%(]*%((.-)%s+(%d%d%d%d%-%d%d%-%d%d)'
+    local uncommitted_pattern = '^000+%s+Not Committed Yet'
 
     for _, line in ipairs(lines) do
         local formatted_line
@@ -69,6 +70,8 @@ local align_blame = function(au_data)
         else
             local hash, author, date = line:match(blame_pattern)
             if hash and author and date then
+                -- Trim trailing whitespace from author name
+                author = author:gsub('%s+$', '')
                 formatted_line = string.format('%s %s %s', hash, author, date)
             else
                 formatted_line = line
@@ -96,7 +99,8 @@ local align_blame = function(au_data)
                 hl_group = 'GitBlameDate',
             })
         else
-            local hash, author, date = line:match('^(%w+)%s+([^%s]+)%s+(.+)')
+            -- Updated pattern to match the formatted line structure and capture full author names
+            local hash, author, date = line:match('^(%w+)%s+(.-)%s+(%d%d%d%d%-%d%d%-%d%d.*)')
             if hash and author and date then
                 local hash_color_idx = (hash_string(hash) % 8) + 1
                 local hash_end = math.min(#hash, line_length)
@@ -132,4 +136,9 @@ end
 local au_opts = { pattern = 'MiniGitCommandSplit', callback = align_blame }
 vim.api.nvim_create_autocmd('User', au_opts)
 
-Util.map.nl('gb', ':vertical lefta Git blame -- %<CR>', 'Blame')
+local function git_blame()
+    local curPath = vim.fn.expand('%:p')
+    local platform_prefix = curPath:match('/ous/') and 'platform/' or ''
+    vim.cmd(':vertical lefta Git blame -- ' .. platform_prefix .. '%')
+end
+Util.map.nl('gb', git_blame, 'Blame')
