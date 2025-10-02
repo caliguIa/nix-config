@@ -1,10 +1,10 @@
--- Util.au.cmd({ "FocusGained", "TermClose", "TermLeave" }, {
---     desc = "Reload file if changed",
---     group = Util.au.group("checktime"),
---     callback = function()
---         if vim.o.buftype ~= "nofile" then vim.cmd("checktime") end
---     end,
--- })
+Util.au.cmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
+    desc = 'Reload file if changed',
+    group = Util.au.group('checktime'),
+    callback = function()
+        if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
+    end,
+})
 
 Util.au.cmd('TextYankPost', {
     desc = 'Highlight on yank',

@@ -70,7 +70,7 @@ o.spelloptions = 'camel' -- Treat parts of camelCase words as seprate words
 o.wildmenu = true
 o.wildmode = 'noselect:longest:lastused,full'
 
---disable_distribution_plugins
+-- disable_distribution_plugins
 g.loaded_gzip = 1
 g.did_install_default_menus = 1
 g.loaded_tar = 1

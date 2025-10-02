@@ -1,6 +1,6 @@
 {pkgs, ...}: {
     programs.newsboat = {
-        enable = true;
+        enable = false;
         autoReload = true;
         browser = toString (pkgs.writeShellScript "newsboat-url" ''
             url="$1"

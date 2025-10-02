@@ -34,8 +34,7 @@
         };
         startupPlugins = with pkgs.vimPlugins; {
             theme = [
-                pkgs.neovimPlugins.kanso
-                pkgs.neovimPlugins.techbase
+                kanso-nvim
             ];
             general = [
                 plenary-nvim
@@ -47,14 +46,14 @@
                 undotree
                 vim-test
                 vim-tmux-navigator
+                nvim-bqf
                 pkgs.neovimPlugins.indentmini
-                pkgs.neovimPlugins.nvim-bqf
                 pkgs.neovimPlugins.zendiagram
                 pkgs.neovimPlugins.ts-error
                 pkgs.neovimPlugins.fold-imports
+                pkgs.neovimPlugins.timber
                 neogit
                 fff-nvim
-                debugprint-nvim
                 codecompanion-nvim
                 nvim-treesitter
                 nvim-treesitter.withAllGrammars
@@ -83,7 +82,7 @@
                 hosts.python3.enable = false;
                 hosts.perl.enable = false;
                 hosts.ruby.enable = true;
-                neovim-unwrapped = pkgs.neovim-unwrapped;
+                neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
             };
             categories = {
                 general = true;

@@ -24,20 +24,15 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         nixCats.url = "github:BirdeeHub/nixCats-nvim";
+        neovim-nightly-overlay = {
+            url = "github:nix-community/neovim-nightly-overlay";
+        };
         plugins-indentmini = {
             url = "github:nvimdev/indentmini.nvim";
             flake = false;
         };
         plugins-zendiagram = {
             url = "github:caliguIa/zendiagram.nvim";
-            flake = false;
-        };
-        plugins-kanso = {
-            url = "github:webhooked/kanso.nvim";
-            flake = false;
-        };
-        plugins-nvim-bqf = {
-            url = "github:kevinhwang91/nvim-bqf";
             flake = false;
         };
         plugins-fff = {
@@ -52,8 +47,8 @@
             url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
         };
-        plugins-techbase = {
-            url = "github:mcauley-penney/techbase.nvim";
+        plugins-timber = {
+            url = "github:Goose97/timber.nvim";
             flake = false;
         };
     };
