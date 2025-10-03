@@ -11,8 +11,7 @@
         file = {".hushlogin".text = "";};
     };
     imports = [
-        ../../modules/common/fish.nix
-        ../../modules/common/zsh.nix
+        ../../modules/common/shell.nix
         ../../modules/common/atuin.nix
         ../../modules/common/fzf.nix
         ../../modules/common/git.nix

@@ -27,7 +27,7 @@ in {
         font-size = 14
         macos-titlebar-style = transparent
         title = " "
-        window-decoration = auto
+        window-decoration = none
         window-theme = auto
         window-padding-color = background
         window-padding-balance = false
