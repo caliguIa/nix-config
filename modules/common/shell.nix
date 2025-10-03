@@ -8,9 +8,7 @@
         generateCompletions = true;
         interactiveShellInit = ''
             set -U fish_greeting
-            if [ -e "~/.local/auth/fish_env.fish" ]
-                source ~/.local/auth/fish_env.fish
-            end
+            test -f ~/.local/auth/fish_env.fish; and source ~/.local/auth/fish_env.fish
         '';
     };
     programs.zsh = {
