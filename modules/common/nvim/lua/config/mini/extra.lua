@@ -10,11 +10,7 @@ Util.au.cmd('BufEnter', {
     nested = true,
     callback = vim.schedule_wrap(function(data)
         if data.buf ~= vim.api.nvim_get_current_buf() then return end
-        if vim.bo[data.buf].filetype == 'NeogitStatus' then
-            print('haha')
-            print('hehe')
-            return
-        end
+        if vim.bo[data.buf].filetype == 'NeogitStatus' then return end
 
         vim.o.autochdir = false
         local root = MiniMisc.find_root(data.buf, { '.git', 'Makefile' })
