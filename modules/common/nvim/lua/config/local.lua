@@ -8,8 +8,9 @@ local function use_local_plugin(name)
     if vim.fn.filereadable(plugin_file) == 1 then vim.cmd('source ' .. plugin_file) end
 end
 
--- use_local_plugin('hanzel.nvim')
+use_local_plugin('timber.nvim')
 -- use_local_plugin('zendiagram.nvim')
 
+require('timber').setup()
 require('zendiagram').setup()
 vim.diagnostic.open_float = Zendiagram.open

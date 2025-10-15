@@ -31,17 +31,17 @@ Util.au.cmd('LspAttach', {
         safe_del('n', 'grn')
         safe_del('n', 'grt')
 
-        Util.map.n('gd', vim.lsp.buf.definition, 'Definition')
-        Util.map.n('gr', vim.lsp.buf.references, 'References')
-        Util.map.n('gt', vim.lsp.buf.type_definition, 'Type definition')
-        Util.map.n('gD', vim.lsp.buf.declaration, 'Declarations')
+        Util.map.n('gd', lsp.buf.definition, 'Definition')
+        Util.map.n('gr', lsp.buf.references, 'References')
+        Util.map.n('gt', lsp.buf.type_definition, 'Type definition')
+        Util.map.n('gD', lsp.buf.declaration, 'Declarations')
         Util.map.nl('e', vim.diagnostic.open_float, 'Diagnostics')
-        Util.map.nl('rn', vim.lsp.buf.rename, 'Rename')
-        Util.map.nl('ca', vim.lsp.buf.code_action, 'Code actions')
+        Util.map.nl('rn', lsp.buf.rename, 'Rename')
+        Util.map.nl('ca', lsp.buf.code_action, 'Code actions')
 
         local client = lsp.get_client_by_id(event.data.client_id)
         if client then
-            vim.lsp.completion.enable(true, client.id, event.buf, {
+            lsp.completion.enable(true, client.id, event.buf, {
                 autotrigger = true,
                 convert = function(item) return { abbr = item.label:gsub('%b()', '') } end,
             })

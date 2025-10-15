@@ -44,97 +44,97 @@ local function hash_string(str)
     return hash
 end
 
-local align_blame = function(au_data)
-    if au_data.data.git_subcommand ~= 'blame' then return end
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniGitCommandSplit',
+    callback = function(au_data)
+        if au_data.data.git_subcommand ~= 'blame' then return end
+        print('youre a legend')
 
-    setup_blame_highlights()
+        setup_blame_highlights()
 
-    local win_src = au_data.data.win_source
-    vim.wo.wrap = false
-    vim.fn.winrestview({ topline = vim.fn.line('w0', win_src) })
-    vim.api.nvim_win_set_cursor(0, { vim.fn.line('.', win_src), 0 })
+        local win_src = au_data.data.win_source
+        vim.wo.wrap = false
+        vim.fn.winrestview({ topline = vim.fn.line('w0', win_src) })
+        vim.api.nvim_win_set_cursor(0, { vim.fn.line('.', win_src), 0 })
 
-    local buf = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-    local formatted_lines = {}
+        local buf = vim.api.nvim_get_current_buf()
+        local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+        local formatted_lines = {}
 
-    -- Updated pattern to properly capture author names with spaces
-    local blame_pattern = '^(%w+)%s+[^%(]*%((.-)%s+(%d%d%d%d%-%d%d%-%d%d)'
-    local uncommitted_pattern = '^000+%s+Not Committed Yet'
+        local blame_pattern = '^(%w+)%s+[^%(]*%((.-)%s+(%d%d%d%d%-%d%d%-%d%d)'
+        local uncommitted_pattern = '^000+%s+Not Committed Yet'
 
-    for _, line in ipairs(lines) do
-        local formatted_line
+        for _, line in ipairs(lines) do
+            local formatted_line
 
-        if line:match(uncommitted_pattern) then
-            formatted_line = 'Uncommitted'
-        else
-            local hash, author, date = line:match(blame_pattern)
-            if hash and author and date then
-                -- Trim trailing whitespace from author name
-                author = author:gsub('%s+$', '')
-                formatted_line = string.format('%s %s %s', hash, author, date)
+            if line:match(uncommitted_pattern) then
+                formatted_line = 'Uncommitted'
             else
-                formatted_line = line
+                local hash, author, date = line:match(blame_pattern)
+                if hash and author and date then
+                    -- Trim trailing whitespace from author name
+                    author = author:gsub('%s+$', '')
+                    formatted_line = string.format('%s %s %s', hash, author, date)
+                else
+                    formatted_line = line
+                end
             end
+
+            table.insert(formatted_lines, formatted_line)
         end
 
-        table.insert(formatted_lines, formatted_line)
-    end
+        local editor_width = vim.o.columns
+        local blame_width = math.floor(editor_width * 0.20)
+        vim.api.nvim_win_set_width(0, blame_width)
 
-    local editor_width = vim.o.columns
-    local blame_width = math.floor(editor_width * 0.20)
-    vim.api.nvim_win_set_width(0, blame_width)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, formatted_lines)
 
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, formatted_lines)
+        vim.api.nvim_buf_clear_namespace(buf, blame_ns, 0, -1)
 
-    vim.api.nvim_buf_clear_namespace(buf, blame_ns, 0, -1)
+        for line_num, line in ipairs(formatted_lines) do
+            local line_idx = line_num - 1
+            local line_length = #line
 
-    for line_num, line in ipairs(formatted_lines) do
-        local line_idx = line_num - 1
-        local line_length = #line
-
-        if line == 'Uncommitted' then
-            vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, 0, {
-                end_col = line_length,
-                hl_group = 'GitBlameDate',
-            })
-        else
-            -- Updated pattern to match the formatted line structure and capture full author names
-            local hash, author, date = line:match('^(%w+)%s+(.-)%s+(%d%d%d%d%-%d%d%-%d%d.*)')
-            if hash and author and date then
-                local hash_color_idx = (hash_string(hash) % 8) + 1
-                local hash_end = math.min(#hash, line_length)
+            if line == 'Uncommitted' then
                 vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, 0, {
-                    end_col = hash_end,
-                    hl_group = 'GitBlameHash' .. hash_color_idx,
+                    end_col = line_length,
+                    hl_group = 'GitBlameDate',
                 })
-
-                local user_color_idx = (hash_string(author) % 8) + 1
-                local author_start = #hash + 1
-                local author_end = math.min(author_start + #author, line_length)
-                if author_start < line_length then
-                    vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, author_start, {
-                        end_col = author_end,
-                        hl_group = 'GitBlameUser' .. user_color_idx,
+            else
+                -- Updated pattern to match the formatted line structure and capture full author names
+                local hash, author, date = line:match('^(%w+)%s+(.-)%s+(%d%d%d%d%-%d%d%-%d%d.*)')
+                if hash and author and date then
+                    local hash_color_idx = (hash_string(hash) % 8) + 1
+                    local hash_end = math.min(#hash, line_length)
+                    vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, 0, {
+                        end_col = hash_end,
+                        hl_group = 'GitBlameHash' .. hash_color_idx,
                     })
-                end
 
-                local date_start = #hash + 1 + #author + 1
-                if date_start < line_length then
-                    vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, date_start, {
-                        end_col = line_length,
-                        hl_group = 'GitBlameDate',
-                    })
+                    local user_color_idx = (hash_string(author) % 8) + 1
+                    local author_start = #hash + 1
+                    local author_end = math.min(author_start + #author, line_length)
+                    if author_start < line_length then
+                        vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, author_start, {
+                            end_col = author_end,
+                            hl_group = 'GitBlameUser' .. user_color_idx,
+                        })
+                    end
+
+                    local date_start = #hash + 1 + #author + 1
+                    if date_start < line_length then
+                        vim.api.nvim_buf_set_extmark(buf, blame_ns, line_idx, date_start, {
+                            end_col = line_length,
+                            hl_group = 'GitBlameDate',
+                        })
+                    end
                 end
             end
         end
-    end
 
-    vim.wo[win_src].scrollbind, vim.wo.scrollbind = true, true
-end
-
-local au_opts = { pattern = 'MiniGitCommandSplit', callback = align_blame }
-vim.api.nvim_create_autocmd('User', au_opts)
+        vim.wo[win_src].scrollbind, vim.wo.scrollbind = true, true
+    end,
+})
 
 local function git_blame()
     local curPath = vim.fn.expand('%:p')

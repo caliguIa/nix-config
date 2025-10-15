@@ -23,10 +23,12 @@ Util.au.cmd('FileType', {
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.schedule(function()
-            Util.map.n('q', function()
-                -- vim.cmd.close()
-                pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
-            end, 'Close buffer', { buffer = event.buf })
+            Util.map.n(
+                'q',
+                function() pcall(vim.api.nvim_buf_delete, event.buf, { force = true }) end,
+                'Close buffer',
+                { buffer = event.buf }
+            )
         end)
     end,
 })

@@ -7,4 +7,3 @@ require('nvim-treesitter.configs').setup({
 require('ts-comments').setup()
 require('nvim-ts-autotag').setup()
 require('fold_imports').setup()
-require('timber').setup()

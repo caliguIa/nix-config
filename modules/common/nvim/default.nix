@@ -35,6 +35,7 @@
         startupPlugins = with pkgs.vimPlugins; {
             theme = [
                 kanso-nvim
+                github-nvim-theme
             ];
             general = [
                 plenary-nvim
@@ -51,7 +52,7 @@
                 pkgs.neovimPlugins.zendiagram
                 pkgs.neovimPlugins.ts-error
                 pkgs.neovimPlugins.fold-imports
-                pkgs.neovimPlugins.timber
+                # pkgs.neovimPlugins.timber
                 neogit
                 fff-nvim
                 codecompanion-nvim
