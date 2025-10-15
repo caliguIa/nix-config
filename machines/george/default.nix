@@ -1,18 +1,13 @@
 {
-    inputs,
-    pkgs,
     username,
     hostname,
-    homeDirectory,
     ...
 }: {
     imports = [
         ./hardware-configuration.nix
         ./services
-        (import ../../user {
-            inherit pkgs username;
-            homeDirectory = homeDirectory;
-        })
+        ../../user
+        ../../modules/nix-settings.nix
     ];
     users = {
         users = {
@@ -49,10 +44,6 @@
         "d /data/media/audiobooks 0755 media media -"
     ];
 
-    environment.systemPackages = with pkgs; [
-        inputs.self.outputs.neovim.packages.${pkgs.system}.nvim
-    ];
-
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
@@ -60,7 +51,7 @@
         defaultGateway = "192.168.0.1";
         nameservers = ["8.8.8.8"];
         hostName = hostname;
-        firewall.enable = false;
+        firewall.enable = true;
     };
 
     time.timeZone = "Europe/London";
@@ -79,31 +70,6 @@
         permittedInsecurePackages = [
             "broadcom-sta-6.30.223.271-57-6.12.48"
         ];
-    };
-
-    nix = {
-        enable = true;
-        settings = {
-            trusted-users = [
-                "root"
-                "${username}"
-            ];
-            substituters = [
-                "https://nix-community.cachix.org"
-                "https://cache.nixos.org"
-            ];
-            trusted-public-keys = ["cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
-        };
-
-        gc = {
-            automatic = true;
-            dates = "weekly";
-            options = "--delete-older-than 30d";
-        };
-
-        extraOptions = ''
-            experimental-features = nix-command flakes
-        '';
     };
 
     system = {

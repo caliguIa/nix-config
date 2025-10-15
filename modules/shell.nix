@@ -1,8 +1,4 @@
 {
-    config,
-    lib,
-    ...
-}: {
     programs.fish = {
         enable = true;
         generateCompletions = true;
@@ -11,26 +7,6 @@
             test -f ~/.local/auth/fish_env.fish; and source ~/.local/auth/fish_env.fish
         '';
     };
-    programs.zsh = {
-        enable = true;
-        autocd = false;
-        autosuggestion.enable = true;
-        enableCompletion = true;
-        syntaxHighlighting.enable = false;
-        defaultKeymap = "emacs";
-        history.path = "${config.xdg.dataHome}/zsh/zsh_history";
-        dotDir = "${config.xdg.configHome}/zsh";
-        initContent = lib.mkBefore ''
-            if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
-              . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-              . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
-            fi
-            echo "source <(COMPLETE=zsh tms)" >> ~/.zshrc
-            source ~/.local/auth/.env
-        '';
-    };
-    home.shell.enableFishIntegration = true;
-    home.shell.enableZshIntegration = true;
     home.shellAliases = {
         dl = "cd ~/Downloads";
         dt = "cd ~/Desktop";
@@ -65,7 +41,6 @@
         dps = "docker ps";
         ip = "curl ifconfig.io";
         localip = "ipconfig getifaddr en0";
-        nix-gc = "nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc";
         t = "tmux attach-session";
         update = "softwareupdate -ia";
         updatel = "softwareupdate -l";

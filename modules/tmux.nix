@@ -1,6 +1,14 @@
-{pkgs, ...}: let
+{
+    pkgs,
+    homeDirectory,
+    ...
+}: let
     themeConfig = import ./themes;
     tmux = themeConfig.tmux;
+    copyCmd =
+        if pkgs.stdenv.isDarwin
+        then "pbcopy"
+        else "wl-copy";
 in {
     programs.tmux = {
         enable = true;
@@ -48,8 +56,8 @@ in {
 
             bind Enter copy-mode
             bind -T copy-mode-vi v send -X begin-selection
-            bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
-            bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+            bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "${copyCmd}"
+            bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "${copyCmd}"
 
             bind h split-window -v
             bind v split-window -h
@@ -85,7 +93,7 @@ in {
             commands=(
                 "nix rebuild::cd ~/nix-config; just build"
                 "nix update::cd ~/nix-config; just update"
-                "nix gc::nix-store --gc; nix-collect-garbage -d; sudo nix-collect-garbage --delete-old; nix-env --delete-generations old; sudo nix-store -gc; sudo nix-collect-garbage -d; nix store gc; sudo nix store gc"
+                "sudo nix nix-collect-garbage -d; nix-collect-garbage -d"
                 "jira view sprint::jira sprint list $JIRA_SPRINT -a$(jira me) --order-by status --reverse"
                 "jira set sprint::jira-set-sprint.sh"
                 "ous bounce::cd ~/ous; make down; make platform-up"
@@ -196,9 +204,9 @@ in {
             ".swiftpm",
             ".cache",
         ]
-        bookmarks = ["/Users/caligula/ous/platform"]
+        bookmarks = ["${homeDirectory}/ous/platform"]
         [[search_dirs]]
-        path = "/Users/caligula"
+        path = "${homeDirectory}"
         depth = 3
     '';
 }

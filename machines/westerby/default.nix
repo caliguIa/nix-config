@@ -7,11 +7,8 @@
     ...
 }: {
     imports = [
-        ./packages.nix
-        (import ../../../user {
-            inherit pkgs username;
-            homeDirectory = "/home/${username}";
-        })
+        ../../user
+        ../../modules/nix-settings.nix
         (modulesPath + "/profiles/qemu-guest.nix")
         ./lima-init.nix
     ];
@@ -53,33 +50,6 @@
     users.users.${username} = {
         isNormalUser = true;
         extraGroups = ["wheel"];
-    };
-
-    environment.systemPackages = import ../../modules/packages.nix {inherit pkgs;};
-    nix = {
-        enable = true;
-        settings = {
-            trusted-users = [
-                "root"
-                "${username}"
-            ];
-            experimental-features = ["nix-command" "flakes"];
-            substituters = [
-                "https://nix-community.cachix.org"
-                "https://cache.nixos.org"
-            ];
-            trusted-public-keys = ["cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
-        };
-
-        gc = {
-            automatic = true;
-            dates = "weekly";
-            options = "--delete-older-than 30d";
-        };
-
-        extraOptions = ''
-            experimental-features = nix-command flakes
-        '';
     };
 
     system.autoUpgrade.enable = true;

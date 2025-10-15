@@ -12,7 +12,7 @@
             p = "push";
             u = "pull";
             f = "fetch --all";
-            undocommit = "git reset --soft HEAD^";
+            undocommit = "reset --soft HEAD^";
         };
         extraConfig = {
             advice = {
@@ -145,10 +145,6 @@
             "*.i*86"
             "*.x86_64"
             "*.hex"
-            ".zsh_history"
-            "zsh/.config/zsh/plugins/"
-            "zsh/.config/zsh/env-vars.local.zsh"
-            "nu/Library/Application Support/nu/envars-local.nu"
         ];
     };
 }

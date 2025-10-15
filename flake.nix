@@ -26,6 +26,7 @@
         nixCats.url = "github:BirdeeHub/nixCats-nvim";
         neovim-nightly-overlay = {
             url = "github:nix-community/neovim-nightly-overlay";
+            inputs.nixpkgs.follows = "nixpkgs";
         };
         plugins-indentmini = {
             url = "github:nvimdev/indentmini.nvim";
@@ -49,6 +50,7 @@
         };
     };
     outputs = {
+        self,
         nixpkgs,
         home-manager,
         darwin,
@@ -116,7 +118,9 @@
                         config.homeManagerModule
                         {
                             home-manager = {
+                                useGlobalPkgs = true;
                                 useUserPackages = true;
+                                backupFileExtension = "backup";
                                 extraSpecialArgs = specialArgs;
                                 users.${username} = ./user/home.nix;
                             };
@@ -125,9 +129,15 @@
                     ++ config.extraModules;
             };
     in {
-        neovim = import ./modules/nvim {inherit inputs;};
-        darwinConfigurations.polyakov = mkSystem systems.polyakov;
-        nixosConfigurations.george = mkSystem systems.george;
-        nixosConfigurations.westerby = mkSystem systems.westerby;
+        neovim = import ./modules/nvim {
+            inherit inputs;
+            nvimPath = self + /modules/nvim;
+        };
+        darwinConfigurations =
+            lib.mapAttrs (name: cfg: mkSystem cfg)
+            (lib.filterAttrs (n: v: isDarwin v.system) systems);
+        nixosConfigurations =
+            lib.mapAttrs (name: cfg: mkSystem cfg)
+            (lib.filterAttrs (n: v: !isDarwin v.system) systems);
     };
 }

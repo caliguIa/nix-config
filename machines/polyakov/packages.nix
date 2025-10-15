@@ -1,22 +1,17 @@
-{
-    pkgs,
-    inputs,
-    ...
-}: {
+{pkgs, ...}: {
     programs = {
         _1password-gui.enable = true;
     };
-    environment.systemPackages = with pkgs; [
-        _1password-cli
-        claude-code
-        iina
-        inputs.self.outputs.neovim.packages.${pkgs.system}.nvim
-        jira-cli-go
-        lazydocker
-        pika
-        raycast
-        rainfrog
-        tmux-sessionizer
-        wiki-tui
+    environment.systemPackages = [
+        pkgs._1password-cli
+        pkgs.claude-code
+        pkgs.iina
+        pkgs.jira-cli-go
+        pkgs.lazydocker
+        pkgs.pika
+        pkgs.raycast
+        pkgs.rainfrog
+        pkgs.tmux-sessionizer
+        pkgs.wiki-tui
     ];
 }

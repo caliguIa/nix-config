@@ -1,24 +1,24 @@
 {
-    pkgs,
     username,
     hostname,
-    inputs,
     homeDirectory,
+    lib,
     ...
 }: {
     imports = [
         ./packages.nix
         ./services/aerospace.nix
         ./services/karabiner.nix
-        (import ../../user {
-            inherit pkgs username inputs;
-            homeDirectory = homeDirectory;
-        })
+        ../../modules/nix-settings.nix
+        ../../user
     ];
 
     nixpkgs.config.allowUnfree = true;
 
-    nix.enable = false;
+    nix = {
+        enable = lib.mkForce false;
+        gc.automatic = lib.mkForce false;
+    };
 
     power = {
         sleep = {
@@ -185,7 +185,6 @@
             ];
             programs.direnv = {
                 enable = true;
-                enableZshIntegration = true;
                 silent = true;
             };
         }

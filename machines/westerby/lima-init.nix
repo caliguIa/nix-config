@@ -163,11 +163,11 @@ in {
 
         networking.nat.enable = true;
 
-        environment.systemPackages = with pkgs; [
-            bash
-            sshfs
-            fuse3
-            git
+        environment.systemPackages = [
+            pkgs.bash
+            pkgs.sshfs
+            pkgs.fuse3
+            pkgs.git
         ];
 
         boot.kernel.sysctl = {

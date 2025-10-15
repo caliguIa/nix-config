@@ -1,7 +1,11 @@
-{inputs, ...}: let
+{
+    inputs,
+    nvimPath,
+    ...
+}: let
     inherit (inputs) nixpkgs;
     inherit (inputs.nixCats) utils;
-    luaPath = "${./.}";
+    luaPath = nvimPath;
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
     themeConfig = import ../themes;
     extra_pkg_config.allowUnfree = true;
@@ -17,48 +21,48 @@
         fffPluginOverlay
     ];
     categoryDefinitions = {pkgs, ...}: {
-        lspsAndRuntimeDeps = with pkgs; {
+        lspsAndRuntimeDeps = {
             general = [
-                emmylua-ls
-                marksman
-                nixd
-                taplo
-                just-lsp
-                vscode-langservers-extracted
-                nodePackages.bash-language-server
-                alejandra
-                sleek
-                stylua
-                sqruff
+                pkgs.emmylua-ls
+                pkgs.marksman
+                pkgs.nixd
+                pkgs.taplo
+                pkgs.just-lsp
+                pkgs.vscode-langservers-extracted
+                pkgs.nodePackages.bash-language-server
+                pkgs.alejandra
+                pkgs.sleek
+                pkgs.stylua
+                pkgs.sqruff
             ];
         };
-        startupPlugins = with pkgs.vimPlugins; {
+        startupPlugins = {
             theme = [
-                kanso-nvim
+                pkgs.vimPlugins.kanso-nvim
             ];
             general = [
-                plenary-nvim
-                oil-nvim
-                mini-nvim
-                nvim-lspconfig
-                conform-nvim
-                git-conflict-nvim
-                undotree
-                vim-test
-                vim-tmux-navigator
-                nvim-bqf
+                pkgs.vimPlugins.plenary-nvim
+                pkgs.vimPlugins.oil-nvim
+                pkgs.vimPlugins.mini-nvim
+                pkgs.vimPlugins.nvim-lspconfig
+                pkgs.vimPlugins.conform-nvim
+                pkgs.vimPlugins.git-conflict-nvim
+                pkgs.vimPlugins.undotree
+                pkgs.vimPlugins.vim-test
+                pkgs.vimPlugins.vim-tmux-navigator
+                pkgs.vimPlugins.nvim-bqf
+                pkgs.vimPlugins.neogit
+                pkgs.vimPlugins.fff-nvim
+                pkgs.vimPlugins.codecompanion-nvim
+                pkgs.vimPlugins.nvim-treesitter
+                pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+                pkgs.vimPlugins.nvim-treesitter-textobjects
+                pkgs.vimPlugins.ts-comments-nvim
+                pkgs.vimPlugins.nvim-ts-autotag
                 pkgs.neovimPlugins.indentmini
                 pkgs.neovimPlugins.zendiagram
                 pkgs.neovimPlugins.ts-error
                 # pkgs.neovimPlugins.timber
-                neogit
-                fff-nvim
-                codecompanion-nvim
-                nvim-treesitter
-                nvim-treesitter.withAllGrammars
-                nvim-treesitter-textobjects
-                ts-comments-nvim
-                nvim-ts-autotag
             ];
         };
         optionalPlugins = {};

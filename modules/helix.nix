@@ -27,17 +27,17 @@
                 }
             ];
         };
-        extraPackages = with pkgs; [
-            lua-language-server
-            marksman
-            nixd
-            taplo
-            just-lsp
-            vscode-langservers-extracted
-            nodePackages.bash-language-server
-            alejandra
-            sleek
-            stylua
+        extraPackages = [
+            pkgs.lua-language-server
+            pkgs.marksman
+            pkgs.nixd
+            pkgs.taplo
+            pkgs.just-lsp
+            pkgs.vscode-langservers-extracted
+            pkgs.nodePackages.bash-language-server
+            pkgs.alejandra
+            pkgs.sleek
+            pkgs.stylua
         ];
     };
 }
