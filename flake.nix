@@ -48,110 +48,86 @@
             flake = false;
         };
     };
-    outputs = {...} @ inputs: let
-        mkNixosSystem = {
-            system,
-            hostname,
-            username,
-        }:
-            inputs.nixpkgs.lib.nixosSystem {
-                inherit system;
-                specialArgs = {
-                    inherit
-                        inputs
-                        system
-                        hostname
-                        username
-                        ;
-                };
-                modules = [
-                    {nixpkgs.config.allowUnfree = true;}
-                    ./machines/nixos/${hostname}
-                    inputs.home-manager.nixosModules.home-manager
-                    {
-                        networking.hostName = hostname;
-                        home-manager = {
-                            useUserPackages = true;
-                            extraSpecialArgs = {
-                                inherit
-                                    inputs
-                                    system
-                                    hostname
-                                    username
-                                    ;
-                                homeDirectory = "/home/${username}";
-                            };
-                            users.${username} = ./users/${username}/home.nix;
-                        };
-                    }
+    outputs = {
+        nixpkgs,
+        home-manager,
+        darwin,
+        ...
+    } @ inputs: let
+        inherit (nixpkgs) lib;
+        username = "caligula";
+        systems = {
+            george = {
+                system = "x86_64-linux";
+                hostname = "george";
+            };
+            westerby = {
+                system = "aarch64-linux";
+                hostname = "westerby";
+            };
+            polyakov = {
+                system = "aarch64-darwin";
+                hostname = "polyakov";
+            };
+        };
+
+        isDarwin = system: lib.hasSuffix "-darwin" system;
+
+        platformConfigs = {
+            darwin = {
+                builder = darwin.lib.darwinSystem;
+                homeManagerModule = home-manager.darwinModules.home-manager;
+                extraModules = [
+                    inputs.nix-homebrew.darwinModules.nix-homebrew
+                    (import ./modules/homebrew.nix {inherit inputs username;})
                 ];
             };
-        mkDarwinSystem = {
+            nixos = {
+                builder = lib.nixosSystem;
+                homeManagerModule = home-manager.nixosModules.home-manager;
+                extraModules = [];
+            };
+        };
+
+        mkSystem = {
             system,
             hostname,
-            username,
-        }:
-            inputs.darwin.lib.darwinSystem {
-                inherit system;
-                specialArgs = {
-                    inherit
-                        inputs
-                        system
-                        hostname
-                        username
-                        ;
+        }: let
+            config =
+                platformConfigs.${
+                    if isDarwin system
+                    then "darwin"
+                    else "nixos"
                 };
-                modules = [
-                    ./machines/darwin/${hostname}
-                    inputs.home-manager.darwinModules.home-manager
-                    inputs.nix-homebrew.darwinModules.nix-homebrew
-                    {
-                        nix-homebrew = {
-                            enable = true;
-                            user = username;
-                            taps = {
-                                "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                                "homebrew/homebrew-core" = inputs.homebrew-core;
+            specialArgs = {
+                inherit inputs system hostname username;
+                homeDirectory =
+                    if isDarwin system
+                    then "/Users/${username}"
+                    else "/home/${username}";
+            };
+        in
+            config.builder {
+                inherit system;
+                specialArgs = specialArgs;
+                modules =
+                    [
+                        ./machines/${hostname}
+                        config.homeManagerModule
+                        {
+                            home-manager = {
+                                useUserPackages = true;
+                                extraSpecialArgs = specialArgs;
+                                users.${username} = ./user/home.nix;
                             };
-                            mutableTaps = false;
-                            autoMigrate = true;
-                        };
-                        home-manager = {
-                            useUserPackages = true;
-                            extraSpecialArgs = {
-                                inherit
-                                    inputs
-                                    system
-                                    hostname
-                                    username
-                                    ;
-                                homeDirectory = "/Users/${username}";
-                            };
-                            users.${username} = ./users/${username}/home.nix;
-                        };
-                    }
-                ];
+                        }
+                    ]
+                    ++ config.extraModules;
             };
     in {
         neovim = import ./modules/nvim {inherit inputs;};
-        nixosConfigurations = {
-            george = mkNixosSystem {
-                system = "x86_64-linux";
-                hostname = "george";
-                username = "caligula";
-            };
-            westerby = mkNixosSystem {
-                system = "aarch64-linux";
-                hostname = "westerby";
-                username = "caligula";
-            };
-        };
-        darwinConfigurations = {
-            polyakov = mkDarwinSystem {
-                system = "aarch64-darwin";
-                hostname = "polyakov";
-                username = "caligula";
-            };
-        };
+        darwinConfigurations.polyakov = mkSystem systems.polyakov;
+        nixosConfigurations.george = mkSystem systems.george;
+        nixosConfigurations.westerby = mkSystem systems.westerby;
     };
 }

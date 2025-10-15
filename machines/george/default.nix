@@ -3,14 +3,13 @@
     pkgs,
     username,
     hostname,
+    homeDirectory,
     ...
-}: let
-    homeDirectory = "/home/${username}";
-in {
+}: {
     imports = [
         ./hardware-configuration.nix
         ./services
-        (import ../../../users/caligula {
+        (import ../../user {
             inherit pkgs username;
             homeDirectory = homeDirectory;
         })

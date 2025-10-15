@@ -2,7 +2,6 @@
     pkgs,
     username,
     homeDirectory,
-    inputs,
     ...
 }: {
     users = {
@@ -14,14 +13,11 @@
     programs.fish.enable = true;
     environment = {
         shells = [pkgs.fish];
-        systemPackages = import ../../modules/packages.nix {inherit pkgs;};
-        variables = let
-            myNeovim = inputs.self.neovim.packages.${pkgs.system}.nvim;
-        in {
+        systemPackages = import ../modules/packages.nix {inherit pkgs;};
+        variables = {
             EDITOR = "nvim";
             XDEBUG_MODE = "off";
             RAINFROG_CONFIG = "${homeDirectory}/.config/rainfrog";
-            NIXCATS_VIM_PACK_DIR = "${inputs.self.neovim.packages.${pkgs.system}.nvim}";
         };
     };
 }

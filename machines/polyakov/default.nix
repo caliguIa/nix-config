@@ -3,15 +3,14 @@
     username,
     hostname,
     inputs,
+    homeDirectory,
     ...
-}: let
-    homeDirectory = "/Users/${username}";
-in {
+}: {
     imports = [
         ./packages.nix
         ./services/aerospace.nix
         ./services/karabiner.nix
-        (import ../../../users/caligula {
+        (import ../../user {
             inherit pkgs username inputs;
             homeDirectory = homeDirectory;
         })
@@ -148,7 +147,7 @@ in {
                 _FXShowPosixPathInTitle = true;
             };
 
-            screencapture.location = "/Users/${username}/Pictures/screenshots/";
+            screencapture.location = "${homeDirectory}/Pictures/screenshots/";
             screensaver.askForPassword = true;
             loginwindow = {
                 SHOWFULLNAME = true;
@@ -179,10 +178,10 @@ in {
     home-manager.sharedModules = [
         {
             imports = [
-                ../../../modules/ghostty.nix
-                ../../../modules/kanata
-                ../../../modules/newsboat.nix
-                ../../../modules/rainfrog.nix
+                ../../modules/ghostty.nix
+                ../../modules/kanata
+                ../../modules/newsboat.nix
+                ../../modules/rainfrog.nix
             ];
             programs.direnv = {
                 enable = true;

@@ -8,7 +8,7 @@
 }: {
     imports = [
         ./packages.nix
-        (import ../../../users/caligula {
+        (import ../../../user {
             inherit pkgs username;
             homeDirectory = "/home/${username}";
         })
@@ -55,7 +55,7 @@
         extraGroups = ["wheel"];
     };
 
-    environment.systemPackages = import ../../../modules/packages.nix {inherit pkgs;};
+    environment.systemPackages = import ../../modules/packages.nix {inherit pkgs;};
     nix = {
         enable = true;
         settings = {
