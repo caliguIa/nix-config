@@ -2,6 +2,7 @@
     pkgs,
     username,
     hostname,
+    inputs,
     ...
 }: let
     homeDirectory = "/Users/${username}";
@@ -11,7 +12,7 @@ in {
         ./services/aerospace.nix
         ./services/karabiner.nix
         (import ../../../users/caligula {
-            inherit pkgs username;
+            inherit pkgs username inputs;
             homeDirectory = homeDirectory;
         })
     ];
@@ -178,10 +179,10 @@ in {
     home-manager.sharedModules = [
         {
             imports = [
-                ../../../modules/common/ghostty.nix
-                ../../../modules/common/kanata
-                ../../../modules/common/newsboat.nix
-                ../../../modules/common/rainfrog.nix
+                ../../../modules/ghostty.nix
+                ../../../modules/kanata
+                ../../../modules/newsboat.nix
+                ../../../modules/rainfrog.nix
             ];
             programs.direnv = {
                 enable = true;

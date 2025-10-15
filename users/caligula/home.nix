@@ -11,14 +11,14 @@
         file = {".hushlogin".text = "";};
     };
     imports = [
-        ../../modules/common/shell.nix
-        ../../modules/common/atuin.nix
-        ../../modules/common/fzf.nix
-        ../../modules/common/git.nix
-        ../../modules/common/nh.nix
-        ../../modules/common/starship.nix
-        ../../modules/common/tmux.nix
-        ../../modules/common/helix.nix
-        ../../modules/common/fonts.nix
+        ../../modules/shell.nix
+        ../../modules/atuin.nix
+        ../../modules/fzf.nix
+        ../../modules/git.nix
+        ../../modules/nh.nix
+        ../../modules/starship.nix
+        ../../modules/tmux.nix
+        ../../modules/helix.nix
+        ../../modules/fonts.nix
     ];
 }

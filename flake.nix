@@ -39,10 +39,6 @@
             url = "github:dmtrKovalenko/fff.nvim";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        plugins-fold-imports = {
-            url = "github:dmtrKovalenko/fold-imports.nvim";
-            flake = false;
-        };
         plugins-ts-error = {
             url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
@@ -137,7 +133,7 @@
                 ];
             };
     in {
-        neovim = import ./modules/common/nvim {inherit inputs;};
+        neovim = import ./modules/nvim {inherit inputs;};
         nixosConfigurations = {
             george = mkNixosSystem {
                 system = "x86_64-linux";

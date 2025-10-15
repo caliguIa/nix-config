@@ -394,22 +394,6 @@
         "type": "github"
       }
     },
-    "plugins-fold-imports": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753304923,
-        "narHash": "sha256-4cCmNvJ7lfo2f2KDLwe2NCv1/UhkKA32uyScmE2GUcY=",
-        "owner": "dmtrKovalenko",
-        "repo": "fold-imports.nvim",
-        "rev": "7211b1f6ee61c972be5291e3a9cca1516b790439",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dmtrKovalenko",
-        "repo": "fold-imports.nvim",
-        "type": "github"
-      }
-    },
     "plugins-indentmini": {
       "flake": false,
       "locked": {
@@ -486,7 +470,6 @@
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_2",
         "plugins-fff": "plugins-fff",
-        "plugins-fold-imports": "plugins-fold-imports",
         "plugins-indentmini": "plugins-indentmini",
         "plugins-timber": "plugins-timber",
         "plugins-ts-error": "plugins-ts-error",
