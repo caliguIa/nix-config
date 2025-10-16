@@ -93,7 +93,7 @@ in {
             commands=(
                 "nix rebuild::cd ~/nix-config; just build"
                 "nix update::cd ~/nix-config; just update"
-                "sudo nix nix-collect-garbage -d; nix-collect-garbage -d"
+                "nix gc::sudo nh clean all; nh clean all"
                 "jira view sprint::jira sprint list $JIRA_SPRINT -a$(jira me) --order-by status --reverse"
                 "jira set sprint::jira-set-sprint.sh"
                 "ous bounce::cd ~/ous; make down; make platform-up"
