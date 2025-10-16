@@ -1,12 +1,15 @@
 {
     inputs,
     nvimPath,
+    username,
+    helpers,
     ...
 }: let
     inherit (inputs) nixpkgs;
     inherit (inputs.nixCats) utils;
     luaPath = nvimPath;
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
+    mkHomeDirectory = system: helpers.mkHomeDirectory username system;
     themeConfig = import ../themes;
     extra_pkg_config.allowUnfree = true;
     fffPluginOverlay = final: prev: {
@@ -70,22 +73,15 @@
         extraWrapperArgs = {};
         python3.libraries = {};
         extraLuaPackages = {};
-        environmentVariables = {
-            NIXCATS_PACK_PATH = utils.n2l.types.inline-safe.mk "vim.fn.stdpath('data') .. '/site/pack'";
-        };
     };
 
     packageDefinitions = {
         nvim = {pkgs, ...}: {
             settings = {
-                suffix-path = true;
-                suffix-LD = true;
                 wrapRc = true;
-                useBinaryWrapper = true;
+                unwrappedCfgPath = "${mkHomeDirectory pkgs.system}/nix-config/modules/nvim";
                 aliases = ["vi" "vim" "bim"];
                 hosts.node.enable = true;
-                hosts.python3.enable = false;
-                hosts.perl.enable = false;
                 hosts.ruby.enable = true;
                 neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
             };

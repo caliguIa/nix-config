@@ -1,6 +1,4 @@
 local o = vim.o
-local opt = vim.opt
-local g = vim.g
 
 vim.schedule(function() o.clipboard = 'unnamedplus' end) -- Sync with system clipboard (scheduled as it can delay startup)
 o.autoread = true -- Automatically read file contents if file is changed outside of vim
@@ -51,7 +49,7 @@ o.foldmethod = 'expr'
 o.foldcolumn = '1'
 o.foldtext = ''
 o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-opt.fillchars:append({
+vim.opt.fillchars:append({
     fold = ' ',
     foldopen = '',
     foldclose = '',
@@ -60,27 +58,10 @@ opt.fillchars:append({
     diff = ' ',
     eob = ' ',
 })
--- opt.complete:append('kspell') -- Add spellcheck options for autocomplete
-opt.complete:remove('t') -- Don't use tags for completion
+-- vim.opt.complete:append('kspell') -- Add spellcheck options for autocomplete
+vim.opt.complete:remove('t') -- Don't use tags for completion
 o.completeopt = 'menuone,noinsert,popup,preview'
 o.spelloptions = 'camel' -- Treat parts of camelCase words as seprate words
 -- o.spelllang = "en,uk" -- Define spelling dictionaries
 o.wildmenu = true
 o.wildmode = 'noselect:longest:lastused,full'
-
--- disable_distribution_plugins
-g.loaded_gzip = 1
-g.did_install_default_menus = 1
-g.loaded_tar = 1
-g.loaded_tarPlugin = 1
-g.loaded_zip = 1
-g.loaded_zipPlugin = 1
-g.loaded_getscript = 1
-g.loaded_getscriptPlugin = 1
-g.loaded_vimball = 1
-g.loaded_vimballPlugin = 1
-g.loaded_matchit = 1
-g.loaded_2html_plugin = 1
-g.loaded_rrhelper = 1
-g.loaded_netrwPlugin = 1
-g.loaded_matchparen = 1

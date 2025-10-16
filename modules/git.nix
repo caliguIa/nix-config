@@ -13,6 +13,8 @@
             u = "pull";
             f = "fetch --all";
             undocommit = "reset --soft HEAD^";
+            commits = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+            cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop\\|main' | xargs -n 1 -r git branch -d";
         };
         extraConfig = {
             advice = {
