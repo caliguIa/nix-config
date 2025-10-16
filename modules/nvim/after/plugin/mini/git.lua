@@ -142,3 +142,16 @@ local function git_blame()
     vim.cmd(':vertical lefta Git blame -- ' .. platform_prefix .. '%')
 end
 vim.keymap.set('n', '<leader>gb', git_blame, { desc = 'Blame', silent = true })
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniGitUpdated',
+    callback = function(data)
+        vim.api.nvim_set_hl(0, 'MiniStatuslineGitBranch', {
+            fg = '#a4a7a4',
+            bg = '#1f1f26',
+            bold = true,
+        })
+        local summary = vim.b[data.buf].minigit_summary
+        vim.b[data.buf].minigit_summary_string = '%#MiniStatuslineGitBranch#' .. (summary.head_name or '')
+    end,
+})
