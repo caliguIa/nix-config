@@ -10,6 +10,7 @@
     luaPath = nvimPath;
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
     mkHomeDirectory = system: helpers.mkHomeDirectory username system;
+    isDarwin = system: helpers.isDarwin system;
     themeConfig = import ../themes;
     extra_pkg_config.allowUnfree = true;
     fffPluginOverlay = final: prev: {
@@ -78,7 +79,7 @@
     packageDefinitions = {
         nvim = {pkgs, ...}: {
             settings = {
-                wrapRc = true;
+                wrapRc = false;
                 unwrappedCfgPath = "${mkHomeDirectory pkgs.system}/nix-config/modules/nvim";
                 aliases = ["vi" "vim" "bim"];
                 hosts.node.enable = true;
@@ -91,11 +92,20 @@
             };
             extra = {
                 colorscheme = themeConfig.nvimColorscheme;
-                nixdExtras = {
-                    nixpkgs = ''import ${pkgs.path} {}'';
-                    nixos_options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.configname.options'';
-                    home_manager_options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").homeConfigurations.configname.options'';
-                    nix_darwin_options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").darwinConfigurations.configname.options'';
+                nixdExtras = let
+                    flakePath = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}")'';
+                    nixosOptions = "${flakePath}.nixosConfigurations.george.options";
+                    nixDarwinOptions = "${flakePath}.darwinConfigurations.polyakov.options";
+                in {
+                    nixpkgs = "import ${flakePath}.inputs.nixpkgs {}";
+                    flake = "${flakePath}.outputs";
+                    nixos_options = nixosOptions;
+                    nix_darwin_options = nixDarwinOptions;
+                    home_manager_options = ''${
+                            if isDarwin pkgs.system
+                            then nixDarwinOptions
+                            else nixosOptions
+                        }.home-manager.users.type.getSubOptions []'';
                 };
             };
         };

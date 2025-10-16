@@ -1,10 +1,12 @@
 {
+    inputs,
     username,
     lib,
     ...
 }: {
     nix = {
         enable = lib.mkDefault true;
+        nixPath = ["nixpkgs=${inputs.nixpkgs}"];
         gc = {
             automatic = lib.mkDefault true;
             options = lib.mkDefault "--delete-older-than 30d";
