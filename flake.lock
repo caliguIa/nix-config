@@ -131,11 +131,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749812525,
-        "narHash": "sha256-ru1LrP06Mh+B4vhjuIBzrxYCgnovJCNppPsEp1i1aPw=",
+        "lastModified": 1760686654,
+        "narHash": "sha256-PbLc3/LzBJ7Fathf3pmaMlQR8axe4MaEFTnWbEYbedA=",
         "ref": "refs/heads/main",
-        "rev": "7610d162b6f726f469f51851acfa5b0d28d29d68",
-        "revCount": 4,
+        "rev": "e33c1c4fa4827f2a4e39abf68cb6742d8f99fa42",
+        "revCount": 6,
         "type": "git",
         "url": "ssh://git@github.com/caliguIa/fonts"
       },
@@ -253,11 +253,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1760684076,
-        "narHash": "sha256-e4FMW4lG7yEHIjmWmCSwoIdFwDcq3hPKMHsVpj1rERU=",
+        "lastModified": 1760685408,
+        "narHash": "sha256-sUoiWfISvD/8YCveahxbDh9znJEIzURlwD0dGI2JPCQ=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "60ec979963ee5d2513a1f5aef53e5dde1bbe39a6",
+        "rev": "695061c8e7b60ac8e68a94c5d761c0645f0939d1",
         "type": "github"
       },
       "original": {

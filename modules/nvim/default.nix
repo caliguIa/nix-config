@@ -11,7 +11,7 @@
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
     mkHomeDirectory = system: helpers.mkHomeDirectory username system;
     isDarwin = system: helpers.isDarwin system;
-    themeConfig = import ../themes;
+    themeConfig = import (builtins.dirOf nvimPath + "/themes");
     extra_pkg_config.allowUnfree = true;
     fffPluginOverlay = final: prev: {
         vimPlugins =
@@ -66,6 +66,7 @@
                 pkgs.neovimPlugins.indentmini
                 pkgs.neovimPlugins.zendiagram
                 pkgs.neovimPlugins.ts-error
+                pkgs.vimPlugins.aerial-nvim
                 # pkgs.neovimPlugins.timber
             ];
         };
