@@ -76,6 +76,10 @@
                     "if".app-name-regex-substring = "mail";
                     run = ["layout floating"];
                 }
+                {
+                    "if".app-name-regex-substring = "TablePlus";
+                    run = ["layout floating"];
+                }
             ];
         };
     };
