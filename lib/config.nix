@@ -1,6 +1,7 @@
 {
   inputs,
   username,
+  self,
 }: {
   systems = {
     george = {
@@ -23,7 +24,7 @@
       homeManagerModule = inputs.home-manager.darwinModules.home-manager;
       extraModules = [
         inputs.nix-homebrew.darwinModules.nix-homebrew
-        (import ../modules/homebrew.nix {inherit inputs username;})
+        (import ./homebrew.nix {inherit inputs username;})
       ];
     };
     nixos = {

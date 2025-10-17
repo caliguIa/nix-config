@@ -7,7 +7,7 @@
     } @ inputs: let
         inherit (nixpkgs) lib;
         username = "caligula";
-        sysLib = import (self + /lib) {inherit inputs lib username;};
+        sysLib = import (self + /lib) {inherit inputs lib username self;};
         inherit (sysLib) isDarwin systems mkSystem;
     in {
         neovim = import (self + /modules/nvim) {

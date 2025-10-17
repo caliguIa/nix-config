@@ -7,7 +7,7 @@
         ./hardware-configuration.nix
         ./services
         ../../user
-        ../../modules/nix-settings.nix
+        ../../lib/nix-settings.nix
     ];
     users = {
         users = {

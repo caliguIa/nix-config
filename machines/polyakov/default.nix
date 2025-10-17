@@ -9,7 +9,7 @@
         ./packages.nix
         ./services/aerospace.nix
         ./services/karabiner.nix
-        ../../modules/nix-settings.nix
+        ../../lib/nix-settings.nix
         ../../user
     ];
 

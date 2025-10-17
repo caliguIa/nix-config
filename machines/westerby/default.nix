@@ -8,7 +8,7 @@
 }: {
     imports = [
         ../../user
-        ../../modules/nix-settings.nix
+        ../../lib/nix-settings.nix
         (modulesPath + "/profiles/qemu-guest.nix")
         ./lima-init.nix
     ];

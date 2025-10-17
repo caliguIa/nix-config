@@ -3,6 +3,7 @@
   helpers,
   platformConfigs,
   username,
+  self,
 }: {
   mkSystem = {
     system,
@@ -24,7 +25,7 @@
       specialArgs = specialArgs;
       modules =
         [
-          ../machines/${hostname}
+          (self + /machines/${hostname})
           config.homeManagerModule
           {
             home-manager = {
@@ -32,7 +33,7 @@
               useUserPackages = true;
               backupFileExtension = "backup";
               extraSpecialArgs = specialArgs;
-              users.${username} = ../user/home.nix;
+              users.${username} = self + /user/home.nix;
             };
           }
         ]
