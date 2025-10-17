@@ -7,10 +7,10 @@
     } @ inputs: let
         inherit (nixpkgs) lib;
         username = "caligula";
-        sysLib = import ./lib {inherit inputs lib username;};
+        sysLib = import (self + /lib) {inherit inputs lib username;};
         inherit (sysLib) isDarwin systems mkSystem;
     in {
-        neovim = import ./modules/nvim {
+        neovim = import (self + /modules/nvim) {
             inherit inputs username;
             nvimPath = self + /modules/nvim;
             helpers = {inherit (sysLib) isDarwin mkHomeDirectory;};
