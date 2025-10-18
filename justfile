@@ -3,7 +3,7 @@ build:
     @if [ -x "$(command -v darwin-rebuild)" ]; then \
         nh darwin switch .; \
     elif [ -x "$(command -v nixos-rebuild)" ]; then \
-        sudo nixos-rebuild switch --flake .; \
+        nh os switch .; \
     else \
         echo "Error: Neither darwin-rebuild nor nixos-rebuild found"; \
         exit 1; \
