@@ -1,9 +1,11 @@
 {
     username,
     hostname,
+    inputs,
     ...
 }: {
     imports = [
+        inputs.nix-minecraft.nixosModules.minecraft-servers
         ./hardware-configuration.nix
         ./services
         ../../user
@@ -84,11 +86,14 @@
         '';
     };
 
-    nixpkgs.config = {
-        allowUnfree = true;
-        permittedInsecurePackages = [
-            "broadcom-sta-6.30.223.271-57-6.12.53"
-        ];
+    nixpkgs = {
+        overlays = [inputs.nix-minecraft.overlay];
+        config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+                "broadcom-sta-6.30.223.271-57-6.12.53"
+            ];
+        };
     };
 
     system = {

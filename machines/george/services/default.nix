@@ -8,5 +8,6 @@
         ./radarr.nix
         ./audiobookshelf.nix
         ./cloudflared.nix
+        ./minecraft.nix
     ];
 }

@@ -70,5 +70,6 @@
             url = "github:Goose97/timber.nvim";
             flake = false;
         };
+        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     };
 }
