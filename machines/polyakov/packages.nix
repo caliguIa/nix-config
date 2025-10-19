@@ -5,6 +5,7 @@
     environment.systemPackages = [
         pkgs._1password-cli
         pkgs.claude-code
+        pkgs.hurl
         pkgs.iina
         pkgs.jira-cli-go
         pkgs.lazydocker
