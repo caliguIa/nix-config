@@ -1,22 +1,24 @@
 {
     programs.git = {
         enable = true;
-        userName = "Cal";
-        userEmail = "acc@calrichards.io";
-        aliases = {
-            a = "add";
-            aa = "add .";
-            b = "branch";
-            c = "commit";
-            co = "checkout";
-            p = "push";
-            u = "pull";
-            f = "fetch --all";
-            undocommit = "reset --soft HEAD^";
-            commits = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
-            cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop\\|main' | xargs -n 1 -r git branch -d";
-        };
-        extraConfig = {
+        settings = {
+            user = {
+                name = "Cal";
+                email = "acc@calrichards.io";
+            };
+            alias = {
+                a = "add";
+                aa = "add .";
+                b = "branch";
+                c = "commit";
+                co = "checkout";
+                p = "push";
+                u = "pull";
+                f = "fetch --all";
+                undocommit = "reset --soft HEAD^";
+                commits = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+                cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop\\|main' | xargs -n 1 -r git branch -d";
+            };
             advice = {
                 addEmptyPathspec = false;
                 pushNonFastForward = false;
@@ -69,47 +71,6 @@
                 };
             };
         };
-        delta = {
-            enable = true;
-            options = {
-                navigate = true;
-                navigate-regex = "^(commit|added:|removed:|renamed:|modified:|•)";
-                true-color = "always";
-                markEmptyLines = false;
-                hyperlinks = true;
-                file-added-label = "added:";
-                file-modified-label = "modified:";
-                file-removed-label = "removed:";
-                file-renamed-label = "renamed:";
-                right-arrow = "⟶  ";
-                hyperlinks-file-link-format = "file://{path}";
-                inspect-raw-lines = true;
-                keep-plus-minus-markers = false;
-                blame-palette = "#000000 #222222 #444444";
-                line-numbers = false;
-                max-line-distance = "0.6";
-                max-line-length = 3000;
-                diff-stat-align-width = 48;
-                line-fill-method = "ansi";
-                paging = "auto";
-                side-by-side = false;
-                syntax-theme = "catppuccin";
-                word-diff-regex = "\w+";
-                commit-decoration-style = "none";
-                file-style = "magenta";
-                file-decoration-style = "ul ol normal";
-                hunk-header-decoration-style = "none";
-                zero-style = "normal";
-                plus-style = "black #D9FDD4";
-                plus-non-emph-style = "black #D9FDD4";
-                plus-emph-style = "black #B1EBA8";
-                plus-empty-line-marker-style = "black #B1EBA8";
-                minus-style = "black #F9E1DF";
-                minus-non-emph-style = "black #F9E1DF";
-                minus-emph-style = "black #F5C3C1";
-                minus-empty-line-marker-style = "black #F5C3C1";
-            };
-        };
         ignores = [
             "env-vars.private.zsh"
             "*.pyc"
@@ -148,5 +109,47 @@
             "*.x86_64"
             "*.hex"
         ];
+    };
+    programs.delta = {
+        enable = true;
+        enableGitIntegration = true;
+        options = {
+            navigate = true;
+            navigate-regex = "^(commit|added:|removed:|renamed:|modified:|•)";
+            true-color = "always";
+            markEmptyLines = false;
+            hyperlinks = true;
+            file-added-label = "added:";
+            file-modified-label = "modified:";
+            file-removed-label = "removed:";
+            file-renamed-label = "renamed:";
+            right-arrow = "⟶  ";
+            hyperlinks-file-link-format = "file://{path}";
+            inspect-raw-lines = true;
+            keep-plus-minus-markers = false;
+            blame-palette = "#000000 #222222 #444444";
+            line-numbers = false;
+            max-line-distance = "0.6";
+            max-line-length = 3000;
+            diff-stat-align-width = 48;
+            line-fill-method = "ansi";
+            paging = "auto";
+            side-by-side = false;
+            syntax-theme = "catppuccin";
+            word-diff-regex = "\w+";
+            commit-decoration-style = "none";
+            file-style = "magenta";
+            file-decoration-style = "ul ol normal";
+            hunk-header-decoration-style = "none";
+            zero-style = "normal";
+            plus-style = "black #D9FDD4";
+            plus-non-emph-style = "black #D9FDD4";
+            plus-emph-style = "black #B1EBA8";
+            plus-empty-line-marker-style = "black #B1EBA8";
+            minus-style = "black #F9E1DF";
+            minus-non-emph-style = "black #F9E1DF";
+            minus-emph-style = "black #F5C3C1";
+            minus-empty-line-marker-style = "black #F5C3C1";
+        };
     };
 }
