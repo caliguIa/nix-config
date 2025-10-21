@@ -51,7 +51,6 @@
                 pkgs.vimPlugins.nvim-lspconfig
                 pkgs.vimPlugins.conform-nvim
                 pkgs.vimPlugins.git-conflict-nvim
-                pkgs.vimPlugins.undotree
                 pkgs.vimPlugins.vim-test
                 pkgs.vimPlugins.vim-tmux-navigator
                 pkgs.vimPlugins.nvim-bqf
