@@ -466,22 +466,6 @@
         "type": "github"
       }
     },
-    "plugins-timber": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1760605212,
-        "narHash": "sha256-IOUVQyIwPRaHHuNrVTg2zGDSiFGg/3QlmTpclNAoxsE=",
-        "owner": "Goose97",
-        "repo": "timber.nvim",
-        "rev": "405a9afeabf56181fb04e8a0f23eb9ecdb2c736f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Goose97",
-        "repo": "timber.nvim",
-        "type": "github"
-      }
-    },
     "plugins-ts-error": {
       "flake": false,
       "locked": {
@@ -528,7 +512,6 @@
         "nixpkgs": "nixpkgs_2",
         "plugins-fff": "plugins-fff",
         "plugins-indentmini": "plugins-indentmini",
-        "plugins-timber": "plugins-timber",
         "plugins-ts-error": "plugins-ts-error",
         "plugins-zendiagram": "plugins-zendiagram"
       }

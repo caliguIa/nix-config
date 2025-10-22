@@ -66,10 +66,10 @@
             url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
         };
-        plugins-timber = {
-            url = "github:Goose97/timber.nvim";
-            flake = false;
-        };
+        # plugins-timber = {
+        #     url = "github:Goose97/timber.nvim";
+        #     flake = false;
+        # };
         nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     };
 }
