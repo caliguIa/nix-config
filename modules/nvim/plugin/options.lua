@@ -20,7 +20,7 @@ o.relativenumber = true -- Relative line numbers
 o.ruler = false -- Don't show cursor position
 o.scrolloff = 4 -- Lines of visible context
 o.sidescrolloff = 8 -- Columns of context
-o.shortmess = 'aoOWFcS' -- Disable certain messages from |ins-completion-menu|
+o.shortmess = 'aoOWFcSCs' -- Disable certain messages from |ins-completion-menu|
 o.showmatch = true -- Highlight matching parentheses, etc
 o.showmode = false -- Don't show mode in command line
 o.signcolumn = 'yes' -- Always show signcolumn or it would frequently shift
@@ -60,6 +60,7 @@ vim.opt.fillchars:append({
 })
 -- vim.opt.complete:append('kspell') -- Add spellcheck options for autocomplete
 vim.opt.complete:remove('t') -- Don't use tags for completion
+o.verbose = 0
 o.completeopt = 'menuone,noinsert,popup,preview'
 o.spelloptions = 'camel' -- Treat parts of camelCase words as seprate words
 -- o.spelllang = "en,uk" -- Define spelling dictionaries

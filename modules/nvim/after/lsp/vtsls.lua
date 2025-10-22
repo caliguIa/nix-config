@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
     settings = {
         complete_function_calls = true,

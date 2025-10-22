@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
     on_attach = function(client, bufnr)
         client.server_capabilities.completionProvider = false
@@ -15,10 +16,10 @@ return {
         client.server_capabilities.documentRangeFormattingProvider = false
     end,
     init_options = {
-        ["language_server_phpstan.enabled"] = false,
-        ["language_server_psalm.enabled"] = false,
+        ['language_server_phpstan.enabled'] = false,
+        ['language_server_psalm.enabled'] = false,
     },
     handlers = {
-        ["textDocument/publishDiagnostics"] = function() end,
+        ['textDocument/publishDiagnostics'] = function() end,
     },
 }

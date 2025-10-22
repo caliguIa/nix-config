@@ -1,6 +1,7 @@
+---@type vim.lsp.Config
 return {
     settings = {
-        packageManager = "npm",
-        workingDirectory = { mode = "auto" },
+        packageManager = 'npm',
+        workingDirectory = { mode = 'auto' },
     },
 }

@@ -35,6 +35,7 @@
                 pkgs.vscode-langservers-extracted
                 pkgs.nodePackages.bash-language-server
                 pkgs.alejandra
+                pkgs.lua-language-server
                 pkgs.sleek
                 pkgs.stylua
                 pkgs.sqruff

@@ -11,6 +11,7 @@ lsp.enable({
     'just',
     'stylelint_lsp',
     'emmylua_ls',
+    -- 'lua_ls',
     'laravel_ls',
     'marksman',
     'nixd',

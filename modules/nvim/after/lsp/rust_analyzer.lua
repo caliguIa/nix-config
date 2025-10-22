@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
     settings = {
         diagnostics = {
@@ -8,13 +9,13 @@ return {
         },
         assist = {
             importEnforceGranularity = true,
-            importPrefix = "crate",
+            importPrefix = 'crate',
         },
         cargo = {
             allFeatures = true,
         },
         checkOnSave = {
-            command = "clippy",
+            command = 'clippy',
         },
     },
 }

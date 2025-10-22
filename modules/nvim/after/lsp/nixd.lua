@@ -11,6 +11,7 @@ else
     options.nixos = { expr = nixCats.extra('nixdExtras.nixos_options') }
 end
 
+---@type vim.lsp.Config
 return {
     settings = {
         nixd = {
