@@ -1,10 +1,3 @@
-local pluginSources = function()
-    return vim.iter(vim.tbl_values(require('nixCats').pawsible.allPlugins.start))
-        :map(function(path) return path .. '/lua' end)
-        :totable()
-end
-print(pluginSources()[1])
-
 ---@type vim.lsp.Config
 return {
     on_attach = function(client)
@@ -80,10 +73,15 @@ return {
                 docBaseConstMatchBaseType = true,
             },
             workspace = {
-                library = vim.list_extend({
-                    '$VIMRUNTIME',
-                    require('nixCats').nixCatsPath .. '/lua',
-                }, pluginSources()),
+                library = vim.list_extend(
+                    {
+                        '$VIMRUNTIME',
+                        require('nixCats').nixCatsPath .. '/lua',
+                    },
+                    vim.iter(vim.tbl_values(require('nixCats').pawsible.allPlugins.start))
+                        :map(function(path) return path .. '/lua' end)
+                        :totable()
+                ),
                 ignoreGlobs = { '**/*_spec.lua' },
             },
         },
