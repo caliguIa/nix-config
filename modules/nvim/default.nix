@@ -65,7 +65,6 @@
                 pkgs.vimPlugins.nvim-ts-autotag
                 pkgs.neovimPlugins.indentmini
                 pkgs.neovimPlugins.zendiagram
-                pkgs.neovimPlugins.ts-error
                 pkgs.vimPlugins.aerial-nvim
                 # pkgs.neovimPlugins.timber
             ];
