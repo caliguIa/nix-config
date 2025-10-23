@@ -7,6 +7,7 @@
         pkgs.claude-code
         pkgs.hurl
         pkgs.iina
+        pkgs.broot
         pkgs.jira-cli-go
         pkgs.lazydocker
         pkgs.pika
