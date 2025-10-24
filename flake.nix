@@ -1,29 +1,15 @@
 {
     description = "NixOS and Darwin system configuration";
-    outputs = {
-        self,
-        nixpkgs,
-        ...
-    } @ inputs: let
-        inherit (nixpkgs) lib;
-        username = "caligula";
-        sysLib = import (self + /lib) {inherit inputs lib username self;};
-        inherit (sysLib) isDarwin systems mkSystem;
-    in {
-        neovim = import (self + /modules/nvim) {
-            inherit inputs username;
-            nvimPath = self + /modules/nvim;
-            helpers = {inherit (sysLib) isDarwin mkHomeDirectory;};
-        };
-        darwinConfigurations =
-            lib.mapAttrs (name: cfg: mkSystem cfg)
-            (lib.filterAttrs (n: v: isDarwin v.system) systems);
-        nixosConfigurations =
-            lib.mapAttrs (name: cfg: mkSystem cfg)
-            (lib.filterAttrs (n: v: !isDarwin v.system) systems);
-    };
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+        flake-parts = {
+            url = "github:hercules-ci/flake-parts";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        import-tree = {
+            url = "github:vic/import-tree";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -66,10 +52,30 @@
             url = "github:dmmulroy/ts-error-translator.nvim";
             flake = false;
         };
-        # plugins-timber = {
-        #     url = "github:Goose97/timber.nvim";
-        #     flake = false;
-        # };
         nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     };
+    outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (
+        {config, ...}: {
+	    systems = ["aarch64-darwin", "x86_64-linux"];
+            imports = [
+                ./modules/dendrite.nix
+                (inputs.import-tree ./modules)
+            ];
+            
+            flake.darwinConfigurations.polyakov = inputs.darwin.lib.darwinSystem {
+                system = "aarch64-darwin";
+                modules = 
+                    (with config.flake.modules.darwin; [home-manager homebrew network nix packages security shell ssh system user ghostty keymap nvim rainfrog tmux wm])
+                    ++ [inputs.nix-homebrew.darwinModules.nix-homebrew]
+                    ++ (with config.flake.modules.homeManager; [user atuin fonts fzf git helix newsboat nh packages shell ssh starship nvim]);
+            };
+            
+            flake.nixosConfigurations.george = inputs.nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = 
+                    (with config.flake.modules.nixos; [home-manager network nix packages security shell ssh system user nvim media minecraft proxy usenet])
+                    ++ (with config.flake.modules.homeManager; [user atuin fonts fzf git nh packages shell ssh starship nvim]);
+            };
+        }
+    );
 }
