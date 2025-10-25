@@ -1,5 +1,6 @@
 {
     flake.modules.homeManager.desktop = {
+        stylix.targets.fzf.enable = true;
         programs.fzf = {
             enable = true;
             enableZshIntegration = true;

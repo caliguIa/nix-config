@@ -9,6 +9,7 @@
             then "pbcopy"
             else "wl-copy";
     in {
+        stylix.targets.tmux.enable = true;
         programs.tmux = {
             enable = true;
             sensibleOnTop = false;

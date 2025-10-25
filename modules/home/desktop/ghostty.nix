@@ -1,5 +1,6 @@
 {
     flake.modules.homeManager.desktop = {
+        stylix.targets.ghostty.enable = true;
         programs.ghostty = {
             enable = true;
             enableFishIntegration = true;

@@ -25,7 +25,6 @@
 
     flake.modules.generic.system-core-packages = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            bat
             bottom
             curl
             eza
@@ -40,7 +39,6 @@
             nix-output-monitor
             ripgrep
             tree
-            yazi
             wget
         ];
     };
