@@ -5,58 +5,58 @@
         };
         environment.systemPackages = with pkgs; [
             # inputs.self.packages.${pkgs.system}.nvim
-            pkgs.bat
-            pkgs.bottom
-            pkgs.curl
-            pkgs.eza
-            pkgs.fd
-            pkgs.fish
-            pkgs.gitu
-            pkgs.gnupg
-            pkgs.gh
-            pkgs.gh-dash
-            pkgs.htop
-            pkgs.jq
-            pkgs.just
-            pkgs.nix-output-monitor
-            pkgs.prr
-            pkgs.ripgrep
-            pkgs.tree
-            pkgs.yazi
-            pkgs.wget
+            bat
+            bottom
+            curl
+            eza
+            fd
+            fish
+            gitu
+            gnupg
+            gh
+            gh-dash
+            htop
+            jq
+            just
+            nix-output-monitor
+            prr
+            ripgrep
+            tree
+            yazi
+            wget
 
-            pkgs._1password-cli
-            pkgs.hurl
-            pkgs.iina
-            pkgs.broot
-            pkgs.jira-cli-go
-            pkgs.lazydocker
-            pkgs.pika
-            pkgs.raycast
-            pkgs.wiki-tui
+            _1password-cli
+            hurl
+            iina
+            broot
+            jira-cli-go
+            lazydocker
+            pika
+            raycast
+            wiki-tui
         ];
     };
 
     flake.modules.nixos.core = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
             # inputs.self.packages.${pkgs.system}.nvim
-            pkgs.bat
-            pkgs.bottom
-            pkgs.curl
-            pkgs.eza
-            pkgs.fd
-            pkgs.fish
-            pkgs.gitu
-            pkgs.gnupg
-            pkgs.gh
-            pkgs.htop
-            pkgs.jq
-            pkgs.just
-            pkgs.nix-output-monitor
-            pkgs.ripgrep
-            pkgs.tree
-            pkgs.yazi
-            pkgs.wget
+            bat
+            bottom
+            curl
+            eza
+            fd
+            fish
+            gitu
+            gnupg
+            gh
+            htop
+            jq
+            just
+            nix-output-monitor
+            ripgrep
+            tree
+            yazi
+            wget
         ];
     };
 }

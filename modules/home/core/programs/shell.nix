@@ -1,10 +1,11 @@
 {
-    flake.modules.homeManager.core = {
+    flake.modules.homeManager.core = _: {
         programs.fish = {
             enable = true;
             generateCompletions = true;
             interactiveShellInit = ''
                 set -U fish_greeting
+                function fish_greeting; end
                 test -f ~/.local/auth/fish_env.fish; and source ~/.local/auth/fish_env.fish
             '';
         };

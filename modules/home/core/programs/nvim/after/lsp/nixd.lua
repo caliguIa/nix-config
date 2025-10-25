@@ -2,6 +2,8 @@ local uname = vim.loop.os_uname()
 local is_darwin = uname.sysname == 'Darwin'
 local options = {
     flake = { expr = nixCats.extra('nixdExtras.flake') },
+    flake_parts = { expr = nixCats.extra('nixdExtras.flake_part_options') },
+    flake_parts2 = { expr = nixCats.extra('nixdExtras.flake_part_options2') },
     ['home-manager'] = { expr = nixCats.extra('nixdExtras.home_manager_options') },
 }
 

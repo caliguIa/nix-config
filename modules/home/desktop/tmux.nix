@@ -96,7 +96,8 @@
             tmux-sessionizer
             (writeScriptBin "tmux-cmd-launcher.sh" ''
                 commands=(
-                    "nix rebuild::cd ~/nix-config; just build"
+                    "nix switch::cd ~/nix-config; just switch"
+                    "nix build::cd ~/nix-config; just build"
                     "nix update::cd ~/nix-config; just update"
                     "nix gc::sudo nh clean all; nh clean all"
                     "jira view sprint::jira sprint list $JIRA_SPRINT -a$(jira me) --order-by status --reverse"

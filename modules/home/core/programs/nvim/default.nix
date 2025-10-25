@@ -62,7 +62,7 @@ in {
                     nvim = {pkgs, ...}: {
                         settings = {
                             wrapRc = false;
-                            unwrappedCfgPath = "${config.home.homeDirectory}/nix-config/modules/nvim";
+                            unwrappedCfgPath = "${config.home.homeDirectory}/nix-config/modules/home/core/programs/nvim";
                             aliases = ["vi" "vim" "bim"];
                             hosts.node.enable = true;
                             hosts.ruby.enable = true;
@@ -70,7 +70,7 @@ in {
                         };
                         categories = {general = true;};
                         extra = {
-                            colorscheme = themeConfig.nvimColourscheme;
+                            colourscheme = themeConfig.nvimColourscheme;
                             nixdExtras = let
                                 flakePath = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}")'';
                                 nixosOptions = "${flakePath}.nixosConfigurations.george.options";
@@ -85,6 +85,8 @@ in {
                                         then nixDarwinOptions
                                         else nixosOptions
                                     }.home-manager.users.type.getSubOptions []'';
+                                flake_part_options = "${flakePath}.debug.options";
+                                flake_part_options2 = "${flakePath}.currentSystem.options";
                             };
                         };
                     };

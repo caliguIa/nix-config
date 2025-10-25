@@ -1,7 +1,7 @@
 let
     username = "caligula";
 in {
-    flake.modules.darwin.shell = {pkgs, ...}: let
+    flake.modules.darwin.core = {pkgs, ...}: let
         homeDirectory = "/Users/${username}";
     in {
         programs.fish.enable = true;
@@ -22,7 +22,7 @@ in {
         };
     };
 
-    flake.modules.nixos.shell = {pkgs, ...}: {
+    flake.modules.nixos.core = {pkgs, ...}: {
         programs.fish.enable = true;
         users.users.${username}.shell = pkgs.fish;
         environment = {
