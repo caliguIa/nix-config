@@ -1,4 +1,4 @@
 # Nix Configuration
 
-My personal Nix configuration for both NixOS and macOS (via nix-darwin) systems.
+Personal flake-parts configuration for NixOS and macOS systems.
 
