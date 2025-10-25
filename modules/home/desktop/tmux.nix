@@ -1,11 +1,9 @@
-{self, ...}: {
+{
     flake.modules.homeManager.desktop = {
         pkgs,
         config,
         ...
     }: let
-        themeConfig = import (self + /utils/colours);
-        colours = themeConfig.tmux;
         copyCmd =
             if pkgs.stdenvNoCC.isDarwin
             then "pbcopy"
@@ -30,18 +28,10 @@
                 set -gas terminal-overrides "*:Tc" # true color support
                 set -gas terminal-overrides "*:RGB" # true color support
 
-                set -g status-style bg=${colours.status_bg},fg=${colours.status_fg}
-
                 set -g status-left ' #S - '
-                set -g status-right '#[fg=${colours.status_fg}]#(whoami)#[fg=${colours.window_status_current_fg}]@#[fg=${colours.status_fg}]#(hostname -s) '
-
+                set -g status-right '(whoami)@(hostname -s) '
                 setw -g window-status-format '#I:#W '
-                setw -g window-status-style fg=${colours.window_status_fg}
-                setw -g window-status-current-style fg=${colours.window_status_current_fg},bold
-                setw -g window-status-current-format '#[fg=${colours.window_status_current_fg}]#I:#W '
-
-                set -g pane-border-style 'fg=${colours.pane_border_fg}'
-                set -g pane-active-border-style 'fg=${colours.pane_active_border_fg}'
+                setw -g window-status-current-format '#I:#W '
 
                 set -g status-position top
                 set -g base-index 1

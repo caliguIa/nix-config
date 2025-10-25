@@ -1,6 +1,4 @@
-{inputs, ...}: let
-    themeConfig = import (inputs.self + /utils/colours);
-in {
+{inputs, ...}: {
     flake.modules.homeManager.core = {config, ...}: {
         config = {
             nixCats = {
@@ -70,7 +68,7 @@ in {
                         };
                         categories = {general = true;};
                         extra = {
-                            colourscheme = themeConfig.nvimColourscheme;
+                            colourscheme = "kanso";
                             nixdExtras = let
                                 flakePath = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}")'';
                                 nixosOptions = "${flakePath}.nixosConfigurations.george.options";

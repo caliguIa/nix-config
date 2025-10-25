@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.core = _: {
+    flake.modules.homeManager.core = {
         programs.fish = {
             enable = true;
             generateCompletions = true;

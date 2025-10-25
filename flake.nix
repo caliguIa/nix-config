@@ -27,6 +27,10 @@
             url = "git+ssh://git@github.com/caliguIa/fonts";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        stylix = {
+            url = "github:nix-community/stylix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         nixCats.url = "github:BirdeeHub/nixCats-nvim";
         neovim-nightly-overlay = {
             url = "github:nix-community/neovim-nightly-overlay";
