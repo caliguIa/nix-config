@@ -1,11 +1,15 @@
 {self, ...}: let
     inherit (import (self + /lib)) username;
 in {
-    flake.modules.darwin.desktop = {config, ...}: {
+    flake.modules.darwin.desktop = {
+        config,
+        pkgs,
+        ...
+    }: {
         services.aerospace = {
             enable = true;
             settings = {
-                after-startup-command = ["exec-and-forget sudo /etc/profiles/per-user/${username}/bin/kanata -c ${config.users.users.${username}.home}/.config/kanata/kanata.kbd"];
+                after-startup-command = ["exec-and-forget sudo ${pkgs.kanata}/bin/kanata -c ${config.users.users.${username}.home}/.config/kanata/kanata.kbd"];
                 enable-normalization-flatten-containers = true;
                 enable-normalization-opposite-orientation-for-nested-containers = true;
                 accordion-padding = 0;
