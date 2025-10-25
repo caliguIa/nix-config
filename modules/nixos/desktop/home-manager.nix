@@ -1,12 +1,15 @@
 topLevel @ {self, ...}: let
     inherit (import (self + /lib)) username;
-    desktopModules = topLevel.config.flake.modules.homeManager.desktop;
 in {
     flake.modules.darwin.desktop = {
-        home-manager.users.${username}.imports = [desktopModules];
+        imports = [self.modules.generic.system-desktop-home];
     };
 
     flake.modules.nixos.desktop = {
-        home-manager.users.${username}.imports = [desktopModules];
+        imports = [self.modules.generic.system-desktop-home];
+    };
+
+    flake.modules.generic.system-desktop-home = {
+        home-manager.users.${username}.imports = [topLevel.config.flake.modules.homeManager.desktop];
     };
 }

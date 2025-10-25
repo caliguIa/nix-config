@@ -1,31 +1,33 @@
 {self, ...}: let
     inherit (import (self + /lib)) username;
 in {
-    flake.modules.darwin.nix = {inputs, ...}: {
-        nix = {
-            enable = false;
-            nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-            gc.automatic = false;
-            settings = {
-                trusted-users = [
-                    "@wheel"
-                    "root"
-                    "${username}"
-                ];
-                auto-optimise-store = true;
-                experimental-features = ["nix-command" "flakes"];
-                warn-dirty = false;
-            };
-        };
-        nixpkgs.config.allowUnfree = true;
+    flake.modules.darwin.nix = {
+        imports = [self.modules.generic.system-core-nix];
+        nix.enable = false;
+        nix.gc.automatic = false;
     };
 
-    flake.modules.nixos.nix = {inputs, ...}: {
+    flake.modules.nixos.nix = {
+        imports = [self.modules.generic.system-core-nix];
+        system = {
+            autoUpgrade = {
+                enable = true;
+                allowReboot = true;
+                channel = "https://channels.nixos.org/nixos-unstable";
+            };
+        };
+    };
+
+    flake.modules.generic.system-core-nix = {
+        inputs,
+        lib,
+        ...
+    }: {
         nix = {
-            enable = true;
+            enable = lib.mkDefault true;
             nixPath = ["nixpkgs=${inputs.nixpkgs}"];
             gc = {
-                automatic = true;
+                automatic = lib.mkDefault true;
                 options = "--delete-older-than 30d";
             };
             settings = {
@@ -40,12 +42,5 @@ in {
             };
         };
         nixpkgs.config.allowUnfree = true;
-        system = {
-            autoUpgrade = {
-                enable = true;
-                allowReboot = true;
-                channel = "https://channels.nixos.org/nixos-unstable";
-            };
-        };
     };
 }

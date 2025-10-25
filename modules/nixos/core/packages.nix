@@ -5,9 +5,9 @@
             _1password-gui.enable = true;
         };
         environment.systemPackages = with pkgs; [
+            _1password-cli
             gh-dash
             prr
-            _1password-cli
             hurl
             iina
             broot

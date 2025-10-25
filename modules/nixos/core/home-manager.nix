@@ -5,12 +5,23 @@ topLevel @ {
 }: let
     inherit (import (self + /lib)) username;
 in {
-    flake.modules.darwin.home-manager = {config, ...}: let
-        inherit (config.networking) hostName;
-    in {
+    flake.modules.darwin.home-manager = {
         imports = [
             inputs.home-manager.darwinModules.home-manager
+            self.modules.generic.system-core-home
         ];
+    };
+
+    flake.modules.nixos.home-manager = {
+        imports = [
+            inputs.home-manager.nixosModules.home-manager
+            self.modules.generic.system-core-home
+        ];
+    };
+
+    flake.modules.generic.system-core-home = {config, ...}: let
+        inherit (config.networking) hostName;
+    in {
         home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
@@ -19,32 +30,7 @@ in {
                 (topLevel.config.flake.modules.homeManager."host_${hostName}" or {})
                 inputs.nixCats.homeModule
             ];
-            extraSpecialArgs = {
-                inputs = inputs;
-                configName = "darwin_${hostName}";
-                nhSwitchCommand = "nh darwin switch";
-            };
-        };
-    };
-
-    flake.modules.nixos.home-manager = {config, ...}: let
-        inherit (config.networking) hostName;
-    in {
-        imports = [
-            inputs.home-manager.nixosModules.home-manager
-            # inputs.nixCats.homeModule
-        ];
-        home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${username}.imports = [
-                topLevel.config.flake.modules.homeManager.core
-                (topLevel.config.flake.modules.homeManager."host_${hostName}" or {})
-            ];
-            extraSpecialArgs = {
-                inputs = inputs;
-                configName = "nixos_${hostName}";
-            };
+            extraSpecialArgs.inputs = inputs;
         };
     };
 }

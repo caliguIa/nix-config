@@ -1,6 +1,6 @@
-{
+{self, ...}: {
     flake.modules.darwin.core = {
-        time.timeZone = "Europe/London";
+        imports = [self.modules.generic.system-core-misc];
         system = {
             defaults = {
                 NSGlobalDomain = {
@@ -27,8 +27,12 @@
     };
 
     flake.modules.nixos.core = {
+        imports = [self.modules.generic.system-core-misc];
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
+    };
+
+    flake.modules.generic.system-core-misc = {
         time.timeZone = "Europe/London";
     };
 }
