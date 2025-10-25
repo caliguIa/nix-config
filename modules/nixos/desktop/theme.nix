@@ -38,8 +38,8 @@
                 base0D = "8ba4b0"; # blue3 - Functions, Methods, Attribute IDs, Headings
                 base0E = "8992a7"; # violet2 - Keywords, Storage, Selector, Markup Italic, Diff Changed
                 base0F = "a292a3"; # pink - Deprecated, Opening/Closing Embedded Language Tags
-                scheme = "Kanso";
-                author = "webhooked (adapted for stylix)";
+                scheme = "kanso";
+                author = "webhooked";
             };
             fonts = rec {
                 sansSerif = {
