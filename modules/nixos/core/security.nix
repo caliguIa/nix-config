@@ -1,25 +1,21 @@
-let
-    sudoTimeout = "Defaults    timestamp_timeout=30";
-in {
+{self, ...}: {
     flake.modules.darwin.core = {
-        security = {
-            pam.services.sudo_local = {
-                enable = true;
-                touchIdAuth = true;
-                reattach = true;
-            };
-            sudo.extraConfig = ''
-                ${sudoTimeout}
-            '';
+        imports = [self.modules.generic.system-core-security];
+        security.pam.services.sudo_local = {
+            enable = true;
+            touchIdAuth = true;
+            reattach = true;
         };
     };
 
     flake.modules.nixos.core = {
-        security.sudo = {
-            enable = true;
-            extraConfig = ''
-                ${sudoTimeout}
-            '';
-        };
+        imports = [self.modules.generic.system-core-security];
+        security.sudo.enable = true;
+    };
+
+    flake.modules.generic.system-core-security = {
+        security.sudo.extraConfig = ''
+            Defaults    timestamp_timeout=30
+        '';
     };
 }

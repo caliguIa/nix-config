@@ -1,17 +1,6 @@
 {self, ...}: let
     inherit (import (self + /lib)) username;
 in {
-    flake.modules.generic.system-core-shell = {pkgs, ...}: {
-        programs.fish.enable = true;
-        users.users.${username}.shell = pkgs.fish;
-        environment = {
-            shells = [pkgs.fish];
-            variables = {
-                EDITOR = "nvim";
-            };
-        };
-    };
-
     flake.modules.darwin.core = {config, ...}: let
         homeDirectory = config.users.users.${username}.home;
     in {
@@ -32,5 +21,16 @@ in {
 
     flake.modules.nixos.core = _: {
         imports = [self.modules.generic.system-core-shell];
+    };
+
+    flake.modules.generic.system-core-shell = {pkgs, ...}: {
+        programs.fish.enable = true;
+        users.users.${username}.shell = pkgs.fish;
+        environment = {
+            shells = [pkgs.fish];
+            variables = {
+                EDITOR = "nvim";
+            };
+        };
     };
 }

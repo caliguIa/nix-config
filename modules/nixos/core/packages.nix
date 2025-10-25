@@ -1,30 +1,12 @@
-{
+{self, ...}: {
     flake.modules.darwin.core = {pkgs, ...}: {
+        imports = [self.modules.generic.system-core-packages];
         programs = {
             _1password-gui.enable = true;
         };
         environment.systemPackages = with pkgs; [
-            # inputs.self.packages.${pkgs.system}.nvim
-            bat
-            bottom
-            curl
-            eza
-            fd
-            fish
-            gitu
-            gnupg
-            gh
             gh-dash
-            htop
-            jq
-            just
-            nix-output-monitor
             prr
-            ripgrep
-            tree
-            yazi
-            wget
-
             _1password-cli
             hurl
             iina
@@ -37,9 +19,12 @@
         ];
     };
 
-    flake.modules.nixos.core = {pkgs, ...}: {
+    flake.modules.nixos.core = {
+        imports = [self.modules.generic.system-core-packages];
+    };
+
+    flake.modules.generic.system-core-packages = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            # inputs.self.packages.${pkgs.system}.nvim
             bat
             bottom
             curl
