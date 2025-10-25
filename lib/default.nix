@@ -1,0 +1,4 @@
+{
+    username = "caligula";
+    mediaUser = "media";
+}

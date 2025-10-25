@@ -1,5 +1,5 @@
-let
-    username = "caligula";
+{self, ...}: let
+    inherit (import (self + /lib)) username;
 in {
     flake.modules.darwin.desktop = {
         services.aerospace = {

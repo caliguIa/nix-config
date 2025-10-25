@@ -1,15 +1,19 @@
-{
-    flake.modules.nixos.host_george = {
+{self, ...}: let
+    inherit (import (self + /lib)) username;
+in {
+    flake.modules.nixos.host_george = {config, ...}: let
+        homeDirectory = config.users.users.${username}.home;
+    in {
         services.cloudflared = {
             enable = true;
-            certificateFile = "/home/caligula/.cloudflared/cert.pem";
+            certificateFile = "${homeDirectory}/.cloudflared/cert.pem";
             tunnels = {
                 "93cd8f38-e60c-4b91-8e46-c7d8c5273350" = {
                     credentialsFile = "/var/lib/cloudflared/93cd8f38-e60c-4b91-8e46-c7d8c5273350.json";
                     default = "http_status:404";
                 };
                 "4ea6e900-1983-443e-82bc-a7607fecd5e4" = {
-                    credentialsFile = "/home/caligula/.cloudflared/4ea6e900-1983-443e-82bc-a7607fecd5e4.json";
+                    credentialsFile = "${homeDirectory}/.cloudflared/4ea6e900-1983-443e-82bc-a7607fecd5e4.json";
                     default = "http_status:404";
                     ingress = {
                         "audiobooks.calrichards.io" = {

@@ -1,4 +1,10 @@
-topLevel @ {inputs, ...}: {
+topLevel @ {
+    inputs,
+    self,
+    ...
+}: let
+    inherit (import (self + /lib)) username;
+in {
     flake.modules.darwin.home-manager = {config, ...}: let
         inherit (config.networking) hostName;
     in {
@@ -8,7 +14,7 @@ topLevel @ {inputs, ...}: {
         home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.caligula.imports = [
+            users.${username}.imports = [
                 topLevel.config.flake.modules.homeManager.core
                 (topLevel.config.flake.modules.homeManager."host_${hostName}" or {})
                 inputs.nixCats.homeModule
@@ -31,7 +37,7 @@ topLevel @ {inputs, ...}: {
         home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.caligula.imports = [
+            users.${username}.imports = [
                 topLevel.config.flake.modules.homeManager.core
                 (topLevel.config.flake.modules.homeManager."host_${hostName}" or {})
             ];

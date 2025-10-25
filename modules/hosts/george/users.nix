@@ -1,18 +1,18 @@
-let
-    username = "caligula";
+{self, ...}: let
+    inherit (import (self + /lib)) username mediaUser;
 in {
     flake.modules.nixos.users = {
         users = {
             users = {
-                ${username}.extraGroups = ["wheel" "networkmanager" "media"];
-                media = {
+                ${username}.extraGroups = ["wheel" "networkmanager" mediaUser];
+                ${mediaUser} = {
                     isSystemUser = true;
-                    group = "media";
+                    group = mediaUser;
                 };
             };
             groups = {
                 ${username} = {};
-                media = {};
+                ${mediaUser} = {};
             };
         };
     };

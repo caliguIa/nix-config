@@ -1,7 +1,11 @@
-{inputs, ...}: {
-    flake.modules.darwin.desktop = let
-        username = "caligula";
-    in {
+{
+    inputs,
+    self,
+    ...
+}: let
+    inherit (import (self + /lib)) username;
+in {
+    flake.modules.darwin.desktop = {
         imports = [inputs.nix-homebrew.darwinModules.nix-homebrew];
         nix-homebrew.enable = true;
         nix-homebrew.user = username;
