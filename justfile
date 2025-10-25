@@ -1,9 +1,20 @@
-build:
+switch:
     git add .
     @if [ -x "$(command -v darwin-rebuild)" ]; then \
         nh darwin switch .; \
     elif [ -x "$(command -v nixos-rebuild)" ]; then \
         nh os switch .; \
+    else \
+        echo "Error: Neither darwin-rebuild nor nixos-rebuild found"; \
+        exit 1; \
+    fi
+
+build:
+    git add .
+    @if [ -x "$(command -v darwin-rebuild)" ]; then \
+        nh darwin build .; \
+    elif [ -x "$(command -v nixos-rebuild)" ]; then \
+        nh os build .; \
     else \
         echo "Error: Neither darwin-rebuild nor nixos-rebuild found"; \
         exit 1; \
