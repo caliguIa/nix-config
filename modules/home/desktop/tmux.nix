@@ -30,7 +30,7 @@
                 set -gas terminal-overrides "*:RGB" # true color support
 
                 set -g status-left ' #S - '
-                set -g status-right '(whoami)@(hostname -s) '
+                set -g status-right '#(whoami)@#(hostname -s) '
                 setw -g window-status-format '#I:#W '
                 setw -g window-status-current-format '#I:#W '
 
