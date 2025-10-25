@@ -27,5 +27,23 @@
             url = "git+ssh://git@github.com/caliguIa/fonts";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nixCats.url = "github:BirdeeHub/nixCats-nvim";
+        neovim-nightly-overlay = {
+            url = "github:nix-community/neovim-nightly-overlay";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        plugins-indentmini = {
+            url = "github:nvimdev/indentmini.nvim";
+            flake = false;
+        };
+        plugins-zendiagram = {
+            url = "github:caliguIa/zendiagram.nvim";
+            flake = false;
+        };
+        # plugins-timber = {
+        #     url = "github:Goose97/timber.nvim";
+        #     flake = false;
+        # };
+        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     };
 }

@@ -7,7 +7,7 @@
         themeConfig = import (self + /utils/colours);
         colours = themeConfig.tmux;
         copyCmd =
-            if pkgs.stdenv.isDarwin
+            if pkgs.stdenvNoCC.isDarwin
             then "pbcopy"
             else "wl-copy";
     in {
