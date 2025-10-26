@@ -1,5 +1,6 @@
 {inputs, ...}: {
     flake.modules.homeManager.core = {pkgs, ...}: {
+        stylix.targets.neovim.enable = false;
         programs.neovim = {
             enable = true;
             package = inputs.nvim-nightly.packages.${pkgs.system}.neovim;

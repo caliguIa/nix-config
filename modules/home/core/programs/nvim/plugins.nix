@@ -1,49 +1,33 @@
 {
-    flake.modules.homeManager.core = {
-        pkgs,
-        config,
-        ...
-    }: let
-        customPlugins = {
-            indentmini = pkgs.vimUtils.buildVimPlugin {
+    flake.modules.homeManager.core = {pkgs, ...}: let
+        customPlugins = with pkgs; {
+            indentmini = vimUtils.buildVimPlugin {
                 name = "indentmini.nvim";
-                src = pkgs.fetchFromGitHub {
+                src = fetchFromGitHub {
                     owner = "nvimdev";
                     repo = "indentmini.nvim";
                     rev = "main";
                     hash = "sha256-YDO48kLOkzbJ9HDiQ0rQ/bbvyD8FQ9iNfSl1V0naUAs=";
                 };
             };
-            zendiagram = pkgs.vimUtils.buildVimPlugin {
+            zendiagram = vimUtils.buildVimPlugin {
                 name = "zendiagram.nvim";
-                src = pkgs.fetchFromGitHub {
+                src = fetchFromGitHub {
                     owner = "caliguIa";
                     repo = "zendiagram.nvim";
                     rev = "main";
                     hash = "sha256-vJMoeMUAKliPy9MF6oUd+gSQ1cNXPCEcju8OXEMvYew=";
                 };
             };
-            timber = pkgs.vimUtils.buildVimPlugin {
+            timber = vimUtils.buildVimPlugin {
                 name = "timber.nvim";
-                src = pkgs.fetchFromGitHub {
+                src = fetchFromGitHub {
                     owner = "Goose97";
                     repo = "timber.nvim";
                     rev = "main";
                     hash = "";
                 };
             };
-            # zendiagram_local = pkgs.vimUtils.buildVimPlugin {
-            #     name = "zendiagram.nvim";
-            #     src =
-            #         config.lib.file.mkOutOfStoreSymlink
-            #         "${config.home.homeDirectory}/dev/nvim-plugins/zendiagram.nvim";
-            # };
-            # timber_local = pkgs.vimUtils.buildVimPlugin {
-            #     name = "timber.nvim";
-            #     src =
-            #         config.lib.file.mkOutOfStoreSymlink
-            #         "${config.home.homeDirectory}/dev/nvim-plugins/timber.nvim";
-            # };
         };
         allPlugins = pkgs.vimPlugins // customPlugins;
     in {
