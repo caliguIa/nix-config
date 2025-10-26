@@ -1,5 +1,5 @@
-{self, ...}: let
-    inherit (import (self + /lib)) username;
+{config, ...}: let
+    users = config.flake.meta.users;
 in {
     flake.modules.homeManager.home-manager = {
         lib,
@@ -9,11 +9,11 @@ in {
         home.stateVersion = "24.11";
         programs.home-manager.enable = true;
         home = {
-            username = lib.mkForce username;
+            username = lib.mkForce users.primary;
             homeDirectory = lib.mkForce (
                 if pkgs.stdenvNoCC.isDarwin
-                then "/Users/${username}"
-                else "/home/${username}"
+                then "/Users/${users.primary}"
+                else "/home/${users.primary}"
             );
         };
     };

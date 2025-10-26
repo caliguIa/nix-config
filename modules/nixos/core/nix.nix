@@ -1,5 +1,9 @@
-{self, ...}: let
-    inherit (import (self + /lib)) username;
+{
+    self,
+    config,
+    ...
+}: let
+    users = config.flake.meta.users;
 in {
     flake.modules.darwin.nix = {
         imports = [self.modules.generic.system-core-nix];
@@ -34,7 +38,7 @@ in {
                 trusted-users = [
                     "@wheel"
                     "root"
-                    "${username}"
+                    "${users.primary}"
                 ];
                 auto-optimise-store = true;
                 experimental-features = ["nix-command" "flakes"];

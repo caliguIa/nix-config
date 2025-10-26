@@ -1,18 +1,18 @@
-{self, ...}: let
-    inherit (import (self + /lib)) username mediaUser;
+topLevel @ {...}: let
+    users = topLevel.config.flake.meta.users;
 in {
     flake.modules.nixos.users = {
         users = {
             users = {
-                ${username}.extraGroups = ["wheel" "networkmanager" mediaUser];
-                ${mediaUser} = {
+                ${users.primary}.extraGroups = ["wheel" "networkmanager" users.media];
+                ${users.media} = {
                     isSystemUser = true;
-                    group = mediaUser;
+                    group = users.media;
                 };
             };
             groups = {
-                ${username} = {};
-                ${mediaUser} = {};
+                ${users.primary} = {};
+                ${users.media} = {};
             };
         };
     };

@@ -1,5 +1,5 @@
-{self, ...}: let
-    inherit (import (self + /lib)) mediaUser;
+{config, ...}: let
+    mediaUser = config.flake.meta.users.media;
 in {
     flake.modules.nixos.host_george = {
         systemd.tmpfiles.rules = [

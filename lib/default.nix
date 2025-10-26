@@ -1,4 +1,0 @@
-{
-    username = "caligula";
-    mediaUser = "media";
-}

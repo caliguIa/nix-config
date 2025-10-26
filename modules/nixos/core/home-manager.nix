@@ -3,7 +3,7 @@ topLevel @ {
     self,
     ...
 }: let
-    inherit (import (self + /lib)) username;
+    users = topLevel.config.flake.meta.users;
 in {
     flake.modules.darwin.home-manager = {
         imports = [
@@ -25,7 +25,7 @@ in {
         home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${username}.imports = [
+            users.${users.primary}.imports = [
                 topLevel.config.flake.modules.homeManager.core
                 (topLevel.config.flake.modules.homeManager."host_${hostName}" or {})
                 inputs.nixCats.homeModule

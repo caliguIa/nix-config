@@ -1,8 +1,6 @@
-{self, ...}: let
-    inherit (import (self + /lib)) username;
-in {
+topLevel @ {...}: {
     flake.modules.nixos.host_george = {config, ...}: let
-        homeDirectory = config.users.users.${username}.home;
+        homeDirectory = config.users.users.${topLevel.config.flake.meta.users.primary}.home;
     in {
         services.cloudflared = {
             enable = true;

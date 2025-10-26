@@ -1,8 +1,12 @@
-{self, ...}: let
-    inherit (import (self + /lib)) username;
+{
+    self,
+    config,
+    ...
+}: let
+    users = config.flake.meta.users;
 in {
     flake.modules.darwin.core = {config, ...}: let
-        homeDirectory = config.users.users.${username}.home;
+        homeDirectory = config.users.users.${users.primary}.home;
     in {
         imports = [self.modules.generic.system-core-shell];
         environment = {
@@ -25,7 +29,7 @@ in {
 
     flake.modules.generic.system-core-shell = {pkgs, ...}: {
         programs.fish.enable = true;
-        users.users.${username}.shell = pkgs.fish;
+        users.users.${users.primary}.shell = pkgs.fish;
         environment = {
             shells = [pkgs.fish];
             variables = {

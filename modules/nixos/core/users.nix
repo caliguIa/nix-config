@@ -1,5 +1,9 @@
-{self, ...}: let
-    inherit (import (self + /lib)) username;
+{
+    self,
+    config,
+    ...
+}: let
+    username = config.flake.meta.users.primary;
 in {
     flake.modules.darwin.users = {
         imports = [self.modules.generic.system-core-users];

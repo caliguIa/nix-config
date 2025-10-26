@@ -1,5 +1,9 @@
-topLevel @ {self, ...}: let
-    inherit (import (self + /lib)) username;
+{
+    config,
+    self,
+    ...
+}: let
+    users = config.flake.meta.users;
 in {
     flake.modules.darwin.desktop = {
         imports = [self.modules.generic.system-desktop-home];
@@ -10,6 +14,6 @@ in {
     };
 
     flake.modules.generic.system-desktop-home = {
-        home-manager.users.${username}.imports = [topLevel.config.flake.modules.homeManager.desktop];
+        home-manager.users.${users.primary}.imports = [config.flake.modules.homeManager.desktop];
     };
 }
