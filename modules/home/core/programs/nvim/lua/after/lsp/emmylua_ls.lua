@@ -1,22 +1,3 @@
-local function get_plugin_lua_paths()
-    local packpath = vim.env.NVIM_PACKPATH
-    if not packpath then return {} end
-
-    local start_path = packpath .. '/pack/nvim/start'
-    local handle = vim.uv.fs_scandir(start_path)
-    if not handle then return {} end
-
-    local lua_paths = {}
-    for name, type in vim.uv.fs_scandir_next, handle do
-        if type == 'directory' or type == 'link' then
-            local lua_dir = start_path .. '/' .. name .. '/lua'
-            if vim.uv.fs_stat(lua_dir) then lua_paths[#lua_paths + 1] = lua_dir end
-        end
-    end
-
-    return lua_paths
-end
-
 ---@type vim.lsp.Config
 return {
     on_attach = function(client)
@@ -65,10 +46,15 @@ return {
                 docBaseConstMatchBaseType = true,
             },
             workspace = {
-                library = vim.list_extend({
-                    '$VIMRUNTIME',
-                }, get_plugin_lua_paths()),
+                ignoreSubmodules = true,
                 ignoreGlobs = { '**/*_spec.lua' },
+                library = vim.list_extend(
+                    { vim.env.VIMRUNTIME },
+                    vim.tbl_filter(function(p)
+                        local lua_dir = p .. '/lua'
+                        return vim.uv.fs_stat(lua_dir) ~= nil
+                    end, vim.api.nvim_list_runtime_paths())
+                ),
             },
         },
     },

@@ -11,7 +11,6 @@ lsp.enable({
     'just',
     'stylelint_lsp',
     'emmylua_ls',
-    -- 'lua_ls',
     'laravel_ls',
     'marksman',
     'nixd',
@@ -20,6 +19,9 @@ lsp.enable({
     'vtsls',
     'zls',
 })
+
+require('zendiagram').setup()
+vim.diagnostic.open_float = Zendiagram.open
 
 local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
 vim.api.nvim_create_autocmd('LspAttach', {

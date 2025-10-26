@@ -1,4 +1,4 @@
-{inputs, ...}: {
+topLevel @ {inputs, ...}: {
     flake.modules.homeManager.core = {
         pkgs,
         config,
