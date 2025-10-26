@@ -170,7 +170,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "neovim-nightly-overlay",
+          "nvim-nightly",
           "nixpkgs"
         ]
       },
@@ -265,10 +265,10 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": "flake-compat_2",
+        "flake-compat": "flake-compat_3",
         "gitignore": "gitignore",
         "nixpkgs": [
-          "neovim-nightly-overlay",
+          "nvim-nightly",
           "nixpkgs"
         ]
       },
@@ -289,7 +289,7 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "neovim-nightly-overlay",
+          "nvim-nightly",
           "git-hooks",
           "nixpkgs"
         ]
@@ -328,11 +328,11 @@
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": [
-          "neovim-nightly-overlay",
+          "nvim-nightly",
           "flake-parts"
         ],
         "nixpkgs": [
-          "neovim-nightly-overlay",
+          "nvim-nightly",
           "nixpkgs"
         ]
       },
@@ -401,32 +401,6 @@
         "type": "github"
       }
     },
-    "neovim-nightly-overlay": {
-      "inputs": {
-        "flake-compat": "flake-compat",
-        "flake-parts": "flake-parts_2",
-        "git-hooks": "git-hooks",
-        "hercules-ci-effects": "hercules-ci-effects",
-        "neovim-src": "neovim-src",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": "treefmt-nix"
-      },
-      "locked": {
-        "lastModified": 1761437965,
-        "narHash": "sha256-X4SNeOXdFkE7Gt+waO5ck3TqfqWskqJHxt1WIu3nnUQ=",
-        "owner": "nix-community",
-        "repo": "neovim-nightly-overlay",
-        "rev": "21595d9f79b5da0eef177dcfdd84ca981ac253a9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "neovim-nightly-overlay",
-        "type": "github"
-      }
-    },
     "neovim-src": {
       "flake": false,
       "locked": {
@@ -483,7 +457,7 @@
     },
     "nix-minecraft": {
       "inputs": {
-        "flake-compat": "flake-compat_3",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
       },
@@ -498,21 +472,6 @@
       "original": {
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "type": "github"
-      }
-    },
-    "nixCats": {
-      "locked": {
-        "lastModified": 1759730664,
-        "narHash": "sha256-boRlBQ/c4CaHsK/z04QL6+t81mcar37Io94HBX2GflY=",
-        "owner": "BirdeeHub",
-        "repo": "nixCats-nvim",
-        "rev": "77dffad8235eb77684fcb7599487c8e9f23d5b8f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "nixCats-nvim",
         "type": "github"
       }
     },
@@ -588,35 +547,29 @@
         "type": "github"
       }
     },
-    "plugins-indentmini": {
-      "flake": false,
+    "nvim-nightly": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "flake-parts": "flake-parts_2",
+        "git-hooks": "git-hooks",
+        "hercules-ci-effects": "hercules-ci-effects",
+        "neovim-src": "neovim-src",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
       "locked": {
-        "lastModified": 1759833692,
-        "narHash": "sha256-YDO48kLOkzbJ9HDiQ0rQ/bbvyD8FQ9iNfSl1V0naUAs=",
-        "owner": "nvimdev",
-        "repo": "indentmini.nvim",
-        "rev": "e0f1e381a3949ea6757365fa33f8f1722d3eae90",
+        "lastModified": 1761437965,
+        "narHash": "sha256-X4SNeOXdFkE7Gt+waO5ck3TqfqWskqJHxt1WIu3nnUQ=",
+        "owner": "nix-community",
+        "repo": "neovim-nightly-overlay",
+        "rev": "21595d9f79b5da0eef177dcfdd84ca981ac253a9",
         "type": "github"
       },
       "original": {
-        "owner": "nvimdev",
-        "repo": "indentmini.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-zendiagram": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1746047023,
-        "narHash": "sha256-vJMoeMUAKliPy9MF6oUd+gSQ1cNXPCEcju8OXEMvYew=",
-        "owner": "caliguIa",
-        "repo": "zendiagram.nvim",
-        "rev": "956ca3b9bffde1b5b2d3dcae98c7fcfb7a8953e9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "caliguIa",
-        "repo": "zendiagram.nvim",
+        "owner": "nix-community",
+        "repo": "neovim-nightly-overlay",
         "type": "github"
       }
     },
@@ -627,14 +580,11 @@
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "import-tree": "import-tree",
-        "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-minecraft": "nix-minecraft",
-        "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_2",
-        "plugins-indentmini": "plugins-indentmini",
-        "plugins-zendiagram": "plugins-zendiagram",
+        "nvim-nightly": "nvim-nightly",
         "stylix": "stylix"
       }
     },
@@ -786,7 +736,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "neovim-nightly-overlay",
+          "nvim-nightly",
           "nixpkgs"
         ]
       },
