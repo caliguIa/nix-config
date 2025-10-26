@@ -1,25 +1,24 @@
-{
-    inputs,
-    config,
-    ...
-}: let
-    users = config.flake.meta.users;
+topLevel @ {inputs, ...}: let
+    users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.darwin.desktop = {
+    flake.modules.darwin.desktop = {config, ...}: {
         imports = [inputs.nix-homebrew.darwinModules.nix-homebrew];
         nix-homebrew.enable = true;
         nix-homebrew.user = users.primary;
-        nix-homebrew.taps = {
-            "homebrew/homebrew-core" = inputs.homebrew-core;
-            "homebrew/homebrew-cask" = inputs.homebrew-cask;
-        };
+        nix-homebrew.taps = {"homebrew/homebrew-cask" = inputs.homebrew-cask;};
         nix-homebrew.mutableTaps = false;
         nix-homebrew.autoMigrate = true;
         homebrew = {
             enable = true;
             onActivation = {
                 autoUpdate = true;
+                cleanup = "zap";
                 upgrade = true;
+            };
+            taps = builtins.attrNames config.nix-homebrew.taps;
+            global = {
+                brewfile = true;
+                lockfiles = false;
             };
         };
     };

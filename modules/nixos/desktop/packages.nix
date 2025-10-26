@@ -2,14 +2,11 @@
     flake.modules.darwin.desktop = {pkgs, ...}: {
         homebrew.casks = [
             "docker-desktop"
-            "losslessswitcher"
-            "ghostty"
+            "ghostty@tip"
             "onyx"
-            "sabnzbd"
-            "slack"
             "tableplus"
         ];
-        environment.systemPackages = with pkgs; [];
+        environment.systemPackages = with pkgs; [slack];
     };
     flake.modules.nixos.desktop = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [];

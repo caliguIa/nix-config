@@ -386,22 +386,6 @@
         "type": "github"
       }
     },
-    "homebrew-core": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1761464181,
-        "narHash": "sha256-v/q7CSearUV/mbyyOiURVK2ikpzoPMPJ2WQS+lUJuvg=",
-        "owner": "homebrew",
-        "repo": "homebrew-core",
-        "rev": "447c3c013efdd77e236626594fefcbfb9b750130",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "repo": "homebrew-core",
-        "type": "github"
-      }
-    },
     "import-tree": {
       "locked": {
         "lastModified": 1761120675,
@@ -642,7 +626,6 @@
         "fonts": "fonts",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
-        "homebrew-core": "homebrew-core",
         "import-tree": "import-tree",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",

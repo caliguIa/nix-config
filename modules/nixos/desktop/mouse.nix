@@ -10,7 +10,6 @@
                 };
                 NSGlobalDomain = {
                     "com.apple.mouse.tapBehavior" = null;
-                    ApplePressAndHoldEnabled = true;
                     AppleEnableMouseSwipeNavigateWithScrolls = false;
                     AppleEnableSwipeNavigateWithScrolls = false;
                 };
