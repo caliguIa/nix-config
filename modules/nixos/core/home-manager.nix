@@ -28,7 +28,6 @@ in {
             users.${users.primary}.imports = [
                 topLevel.config.flake.modules.homeManager.core
                 (topLevel.config.flake.modules.homeManager."host_${hostName}" or {})
-                # inputs.nixCats.homeModule
             ];
             extraSpecialArgs.inputs = inputs;
         };

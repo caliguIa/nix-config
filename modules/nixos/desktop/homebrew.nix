@@ -1,7 +1,7 @@
 topLevel @ {inputs, ...}: let
     users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.darwin.desktop = {config, ...}: {
+    flake.modules.darwin.system-desktop-homebrew = {config, ...}: {
         imports = [inputs.nix-homebrew.darwinModules.nix-homebrew];
         nix-homebrew.enable = true;
         nix-homebrew.user = users.primary;

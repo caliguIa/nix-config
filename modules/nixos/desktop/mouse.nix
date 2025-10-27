@@ -1,5 +1,5 @@
 {
-    flake.modules.darwin.desktop = {
+    flake.modules.darwin.system-desktop-mouse = {
         system = {
             defaults = {
                 trackpad = {
@@ -17,5 +17,5 @@
         };
     };
 
-    flake.modules.nixos.desktop = {};
+    flake.modules.nixos.system-desktop-mouse = {};
 }

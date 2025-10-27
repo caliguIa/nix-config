@@ -1,7 +1,7 @@
 {config, ...}: let
     users = config.flake.meta.users;
 in {
-    flake.modules.darwin.desktop = {
+    flake.modules.darwin.system-desktop-wm = {
         config,
         pkgs,
         ...
@@ -90,5 +90,5 @@ in {
         };
     };
 
-    flake.modules.nixos.desktop = {};
+    flake.modules.nixos.system-desktop-wm = {};
 }

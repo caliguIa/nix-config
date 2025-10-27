@@ -1,5 +1,5 @@
 {
-    flake.modules.darwin.desktop = {
+    flake.modules.darwin.system-desktop-keymap = {
         system = {
             keyboard = {
                 enableKeyMapping = true;
@@ -70,5 +70,5 @@
         };
     };
 
-    flake.modules.nixos.desktop = {};
+    flake.modules.nixos.system-desktop-keymap = {};
 }

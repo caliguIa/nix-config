@@ -3,14 +3,14 @@
     self,
     ...
 }: {
-    flake.modules.darwin.desktop = {
+    flake.modules.darwin.system-desktop-theme = {
         imports = [
             inputs.stylix.darwinModules.stylix
             self.modules.generic.system-desktop-theme
         ];
     };
 
-    flake.modules.nixos.desktop = {
+    flake.modules.nixos.system-desktop-theme = {
         imports = [
             inputs.stylix.nixosModules.stylix
             self.modules.generic.system-desktop-theme
