@@ -5,6 +5,7 @@ topLevel: {
             substituters
             nix
             users
+            secrets
         ];
     };
 
@@ -14,6 +15,7 @@ topLevel: {
             substituters
             nix
             users
+            secrets
         ];
     };
 }
