@@ -1,82 +1,54 @@
 {
     flake.modules.homeManager.desktop = {pkgs, ...}: {
-        home.packages = [pkgs.kanata];
-        xdg.configFile."kanata/kanata.kbd".text = ''
-            (defcfg
-              concurrent-tap-hold yes
-            )
+        home.packages =
+            if pkgs.stdenvNoCC.isDarwin
+            then [pkgs.kanata]
+            else [];
+        xdg.configFile =
+            if pkgs.stdenvNoCC.isDarwin
+            then {
+                "kanata/kanata.kbd".text = ''
+                    (defsrc
+                      caps
+                      rmet
+                      fn
+                      h    j    k    l
+                      f1   f2   f3   f4   f5   f6
+                      f7   f8   f9   f10  f11  f12
+                    )
 
-            (defsrc
-              esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-              Backquote    1    2    3    4    5    6    7    8    9    0    -    =    bspc
-              tab  q    w    e    r    t    y    u    i    o    p    [    ]
-              caps a    s    d    f    g    h    j    k    l    ;    '    \    ret
-              lsft IntlBackslash    z    x    c    v    b    n    m    ,    .    /    rsft
-              fn   lctl lalt lmet           spc            rmet ralt
-            )
+                    (defalias
+                      ;; Vim arrow keys with right ctrl
+                      h (fork h left (rctl))
+                      j (fork j down (rctl))
+                      k (fork k up (rctl))
+                      l (fork l rght (rctl))
 
-            (defvar
-              tap-time 200
-              hold-time 200
-            )
+                      ;; Function keys with fn modifier
+                      f1 (fork brdn f1 (fn))
+                      f2 (fork brup f2 (fn))
+                      f3 (fork f3 f3 (fn))
+                      f4 (fork f4 f4 (fn))
+                      f5 (fork f5 f5 (fn))
+                      f6 (fork f6 f6 (fn))
+                      f7 (fork prev f7 (fn))
+                      f8 (fork pp f8 (fn))
+                      f9 (fork next f9 (fn))
+                      f10 (fork mute f10 (fn))
+                      f11 (fork vold f11 (fn))
+                      f12 (fork volu f12 (fn))
+                    )
 
-            (defalias
-              ;; Modifiers
-              ;; hyp (multi lsft lctl lmet lalt)  ;; Hyper key
-
-              ;; Function key
-              fnk (tap-hold $tap-time $hold-time fn (layer-toggle function))
-
-              ;; Navigation with ctrl preserved
-              nav (layer-toggle navigation)
-              ctl-nav (multi rctl @nav)  ;; Right Ctrl activates nav layer while preserving Ctrl
-
-              ;; Arrow keys that release ctrl when needed
-              arr-l (multi (release-key rctl) left)
-              arr-d (multi (release-key rctl) down)
-              arr-u (multi (release-key rctl) up)
-              arr-r (multi (release-key rctl) right)
-
-              ;; Media keys
-              bdn brdn
-              bup brup
-              prv prev
-              pla pp
-              nxt next
-              mut mute
-              vdn vold
-              vup volu
-            )
-
-            ;; Base layer
-            (deflayer base
-              caps @bdn @bup _    _    _    _    @prv @pla @nxt @mut @vdn @vup
-              Backquote    1    2    3    4    5    6    7    8    9    0    -    =    bspc
-              tab  q    w    e    r    t    y    u    i    o    p    [    ]
-              esc  a    s    d    f    g    h    j    k    l    ;    '    \    ret
-              lsft `    z    x    c    v    b    n    m    ,    .    /    rsft
-              @fnk lctl lalt lmet spc    @ctl-nav ralt
-            )
-
-            ;; Navigation layer - activated by right Ctrl
-            (deflayer navigation
-              _    _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _    _    _    _    @arr-l @arr-d @arr-u @arr-r _ _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _              _              _    _    _    _
-            )
-
-            ;; Function key layer
-            (deflayer function
-              _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-              _    _    _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _
-              _    _    _              _              _    _    _    _
-            )
-        '';
+                    (deflayer base
+                      esc
+                      rctl
+                      fn
+                      @h   @j   @k   @l
+                      @f1  @f2  @f3  @f4  @f5  @f6
+                      @f7  @f8  @f9  @f10 @f11 @f12
+                    )
+                '';
+            }
+            else {};
     };
 }

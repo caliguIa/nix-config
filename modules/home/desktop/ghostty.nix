@@ -1,10 +1,13 @@
 {
-    flake.modules.homeManager.desktop = {
+    flake.modules.homeManager.desktop = {pkgs, ...}: {
         stylix.targets.ghostty.enable = true;
         programs.ghostty = {
             enable = true;
             enableFishIntegration = true;
-            package = null;
+            package =
+                if pkgs.stdenvNoCC.isDarwin
+                then null
+                else pkgs.ghostty;
             settings = {
                 font-feature = "+liga";
                 macos-titlebar-style = "transparent";

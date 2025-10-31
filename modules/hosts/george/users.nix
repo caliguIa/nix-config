@@ -1,7 +1,7 @@
 topLevel @ {...}: let
     users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.nixos.users = {
+    flake.modules.nixos.host_george = {
         users = {
             users = {
                 ${users.primary}.extraGroups = ["wheel" "networkmanager" users.media];

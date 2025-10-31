@@ -9,6 +9,7 @@
         nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
         home-manager.url = "github:nix-community/home-manager";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        apple-silicon.url = "github:nix-community/nixos-apple-silicon";
         agenix.url = "github:ryantm/agenix";
         agenix.inputs.nixpkgs.follows = "nixpkgs";
         nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";

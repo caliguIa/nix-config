@@ -70,5 +70,31 @@
         };
     };
 
-    flake.modules.nixos.system-desktop-keymap = {};
+    flake.modules.nixos.system-desktop-keymap = {
+        services.kanata = {
+            enable = true;
+            keyboards.internalKeyboard.config = ''
+                (defsrc
+                  caps
+                  rmet
+                  h    j    k    l
+                  KEY_FN
+                )
+
+                (defalias
+                  h (fork h left (rctl))
+                  j (fork j down (rctl))
+                  k (fork k up (rctl))
+                  l (fork l rght (rctl))
+                )
+
+                (deflayer base
+                  esc
+                  rctl
+                  @h   @j   @k   @l
+                  KEY_FN
+                )
+            '';
+        };
+    };
 }
