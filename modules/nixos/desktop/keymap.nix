@@ -78,7 +78,6 @@
                   caps
                   rmet
                   h    j    k    l
-                  KEY_FN
                 )
 
                 (defalias
@@ -92,7 +91,6 @@
                   esc
                   rctl
                   @h   @j   @k   @l
-                  KEY_FN
                 )
             '';
         };

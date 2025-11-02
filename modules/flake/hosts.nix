@@ -28,6 +28,7 @@
             modules = [
                 inputs.self.modules.nixos.core
                 (config.flake.modules.nixos.host_westerby or {})
+                (config.flake.modules.homeManager.host_westerby or {})
             ];
         };
     };

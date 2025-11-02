@@ -16,5 +16,6 @@
         system-desktop-packages
         system-desktop-theme
         system-desktop-wm
+        system-desktop-glide
     ];
 }
