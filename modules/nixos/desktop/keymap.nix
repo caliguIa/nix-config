@@ -76,20 +76,33 @@
             keyboards.internalKeyboard.config = ''
                 (defsrc
                   caps
+                  lmet
                   rmet
+                  ralt
                   h    j    k    l
                 )
 
                 (defalias
-                  h (fork h left (rctl))
-                  j (fork j down (rctl))
-                  k (fork k up (rctl))
-                  l (fork l rght (rctl))
+                  rct (multi rctl (layer-while-held arrows))
+                  h (multi (release-key rctl) left)
+                  j (multi (release-key rctl) down)
+                  k (multi (release-key rctl) up)
+                  l (multi (release-key rctl) rght)
                 )
 
                 (deflayer base
                   esc
-                  rctl
+                  lctl
+                  @rct
+                  rmet
+                  h    j    k    l
+                )
+
+                (deflayer arrows
+                  _
+                  _
+                  _
+                  _
                   @h   @j   @k   @l
                 )
             '';

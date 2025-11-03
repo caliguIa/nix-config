@@ -52,10 +52,10 @@
                         nix build = ${mkCmdRunner "${nhBin} os build"}
                         nix gc = ${mkCmdRunner "${nhBin} clean all"}
                         nix gc root = ${mkCmdRunner "sudo ${nhBin} clean all"}
-                        nix update = ${mkCmdRunner "${pkgs.nix}/bin/nix flake update --flake ~/nix-config"}
+                        nix update = ${mkCmdRunner "${pkgs.nix}/bin/nix flake update --flake ~/nix-config; echo 'Press any key to exit...'; read -n 1"}
                         nixpkgs = kickoff-nixpkgs-search
-                        poweroff = sudo poweroff
-                        reboot = sudo reboot
+                        poweroff = poweroff
+                        reboot = reboot
                         slack = ${mkFirefoxPWA "01K902TKNCJT4KVWV1HP92CGZ9"}
                     EOF)
                     echo "$custom_entries" | ${pkgs.kickoff}/bin/kickoff --from-stdin "$@"
