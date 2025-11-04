@@ -1,20 +1,28 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop = {
+        lib,
+        pkgs,
+        ...
+    }: {
+        systemd.user.services.swayosd = {
+            Unit = {
+                StartLimitIntervalSec = lib.mkForce 1;
+                After = ["graphical-session.target"];
+                PartOf = ["graphical-session.target"];
+                Requisite = ["graphical-session.target"];
+            };
+            Service.Slice = "background.slice";
+            Install.WantedBy = ["graphical-session.target"];
+        };
         services.swayosd = {
             enable = true;
             stylePath = pkgs.writeText "swayosd-style.css" ''
                 window#osd {
-                  border-radius: 50px;
+                  border-radius: 10px;
                   border: none;
-                  background: #{"alpha(@theme_bg_color, 0.5)"};
 
                   #container {
                     margin: 8px;
-                  }
-
-                  image,
-                  label {
-                    color: #{"@theme_fg_color"};
                   }
 
                   progressbar:disabled,
@@ -32,13 +40,11 @@
                     min-height: inherit;
                     border-radius: inherit;
                     border: none;
-                    background: #{"alpha(@theme_fg_color, 0.5)"};
                   }
                   progress {
                     min-height: inherit;
                     border-radius: inherit;
                     border: none;
-                    background: #{"@theme_fg_color"};
                   }
                 }
             '';

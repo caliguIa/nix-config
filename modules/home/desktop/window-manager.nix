@@ -6,6 +6,7 @@
         ...
     }: {
         stylix.targets.sway.enable = false;
+        services.swayidle.enable = true;
         wayland.windowManager.sway = let
             workspace = {
                 "1" = "1";
@@ -137,7 +138,7 @@
                     "${mod}+m" = "fullscreen";
                     "${mod}+Shift+space" = "floating toggle";
                     "${mod}+r" = "mode resize";
-                    "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise --max-volume 120";
+                    "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise";
                     "XF86AudioLowerVolume" = "exec swayosd-client --output-volume lower";
                     "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
                     "XF86MonBrightnessUp" = "exec swayosd-client --brightness raise";
@@ -162,11 +163,6 @@
                         ${pkgs.libnotify}/bin/notify-send "Screenshot Taken" "$(basename "$filename")"
                     ''}";
                 };
-                startup = [
-                    {command = "mako";}
-                    {command = "swayosd-server";}
-                    {command = "swayidle -w timeout 300 \"swaylock -f -c 000000\" timeout 301 \"swaymsg 'output * power off'\" resume \"swaymsg 'output * power on'\" before-sleep \"swaylock -f -c 000000\"";}
-                ];
                 modes = {
                     resize = {
                         "h" = "resize shrink width 10px";

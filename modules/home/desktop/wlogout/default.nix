@@ -27,7 +27,7 @@
                 }
                 {
                     label = "lock";
-                    action = "swaylock -f -c 000000";
+                    action = "hyprlock";
                     text = "Lock";
                     keybind = "l";
                 }

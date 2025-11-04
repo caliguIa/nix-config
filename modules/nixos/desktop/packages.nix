@@ -24,7 +24,7 @@
         programs.sway.enable = true;
         services.displayManager.ly.enable = true;
         services.gnome.gnome-keyring.enable = true;
-        security.pam.services.swaylock = {};
+        security.pam.services.hyprlock = {};
         security.polkit.enable = true;
     };
 }
