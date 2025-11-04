@@ -7,9 +7,9 @@
         stylix.targets.sway.enable = false;
         wayland.windowManager.sway = let
             workspace = {
-                "1" = "";
-                "2" = "";
-                "3" = "";
+                "1" = "1";
+                "2" = "2";
+                "3" = "3";
                 "4" = "4";
                 "5" = "5";
                 "6" = "6";
@@ -22,18 +22,16 @@
             enable = true;
             package = null;
             xwayland = true;
-            systemd.enable = true;
             wrapperFeatures = {gtk = true;};
             config = {
                 modifier = "Mod4";
-                floating.modifier = "Mod4";
                 terminal = "ghostty";
                 menu = "kickoff";
                 left = "h";
                 down = "j";
                 up = "k";
                 right = "l";
-                defaultWorkspace = workspace."1";
+                defaultWorkspace = "workspace ${workspace."1"}";
                 output = {
                     eDP-1 = {
                         resolution = "2560x1600";
@@ -44,18 +42,25 @@
                         background = "${config.home.homeDirectory}/Pictures/bg/horse.jpg fill";
                     };
                 };
+                floating.criteria = [
+                    {app_id = ".blueman-manager-wrapped";}
+                    {app_id = "nm-openconnect-auth-dialog";}
+                    {app_id = "nm-connection-editor";}
+                    {app_id = "pavucontrol";}
+                    {app_id = "flameshot";}
+                    {
+                        app_id = "thunderbird";
+                        title = "Edit Event*";
+                    }
+                    {app_id = "xdg-desktop-portal-gtk";} # file picker
+                    {title = "(Sharing Indicator)";}
+                ];
+                bars = [{command = lib.getExe config.programs.waybar.package;}];
                 window = {
                     titlebar = lib.mkForce false;
                     border = lib.mkForce 0;
                     hideEdgeBorders = lib.mkForce "smart";
                     commands = [
-                        {
-                            criteria = {
-                                app_id = "firefox";
-                                title = "About Mozilla Firefox";
-                            };
-                            command = "floating enable";
-                        }
                         {
                             criteria = {
                                 app_id = "firefox";
@@ -68,24 +73,6 @@
                             };
                             command = "move container to workspace ${workspace."3"}";
                         }
-                        {
-                            criteria = {
-                                title = "Save File";
-                            };
-                            command = "floating enable, resize set width 600px height 800px";
-                        }
-                        {
-                            criteria = {
-                                title = "(Sharing Indicator)";
-                            };
-                            command = "inhibit_idle visible, floating enable";
-                        }
-                        {
-                            criteria = {
-                                class = "1Password";
-                            };
-                            command = "floating enable";
-                        }
                     ];
                 };
                 gaps.smartGaps = true;
@@ -94,10 +81,10 @@
                     mod = config.wayland.windowManager.sway.config.modifier;
                 in {
                     "${mod}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
-                    "${mod}+Shift+q" = "kill";
+                    "${mod}+q" = "kill";
                     "${mod}+Space" = "exec ${config.wayland.windowManager.sway.config.menu}";
-                    "${mod}+Shift+c" = "reload";
-                    "${mod}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'";
+                    "${mod}+ctrl+c" = "reload";
+                    "${mod}+ctrl+e" = "exec wlogout";
                     "${mod}+h" = "focus left";
                     "${mod}+j" = "focus down";
                     "${mod}+k" = "focus up";
@@ -149,22 +136,19 @@
                     "${mod}+m" = "fullscreen";
                     "${mod}+Shift+space" = "floating toggle";
                     "${mod}+r" = "mode resize";
-                    "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-                    "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
-                    "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
-                    "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-                    "XF86AudioPlay" = "exec playerctl play-pause";
-                    "XF86AudioPause" = "exec playerctl play-pause";
+                    "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise --max-volume 120";
+                    "XF86AudioLowerVolume" = "exec swayosd-client --output-volume lower";
+                    "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
+                    "XF86MonBrightnessUp" = "exec swayosd-client --brightness raise";
+                    "XF86MonBrightnessDown" = "exec swayosd-client --brightness lower";
+                    "XF86AudioPlay" = "exec swayosd-client --playerctl play-pause";
                     "XF86AudioPrev" = "exec playerctl previous";
                     "XF86AudioNext" = "exec playerctl next";
-                    "XF86AudioStop" = "exec playerctl stop";
-                    "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
-                    "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
                     "Print" = "exec grim";
                 };
                 startup = [
                     {command = "mako";}
-                    {command = "wob";}
+                    {command = "swayosd-server";}
                     {command = "swayidle -w timeout 300 \"swaylock -f -c 000000\" timeout 301 \"swaymsg 'output * power off'\" resume \"swaymsg 'output * power on'\" before-sleep \"swaylock -f -c 000000\"";}
                 ];
                 modes = {
@@ -195,7 +179,6 @@
                         action = "output ${laptop} enable";
                     };
                 };
-                bars = [];
                 # assigns = {
                 #     "1: web" = [{class = "^Firefox$";}];
                 # };

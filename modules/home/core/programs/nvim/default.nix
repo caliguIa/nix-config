@@ -3,7 +3,7 @@
         stylix.targets.neovim.enable = false;
         programs.neovim = {
             enable = true;
-            package = inputs.nvim-nightly.packages.${pkgs.system}.neovim;
+            package = inputs.nvim-nightly.packages.${pkgs.stdenv.system}.neovim;
             viAlias = true;
             vimAlias = true;
             vimdiffAlias = true;

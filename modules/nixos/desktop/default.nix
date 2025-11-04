@@ -17,5 +17,7 @@
         system-desktop-theme
         system-desktop-wm
         system-desktop-glide
+        system-desktop-swayosd
+        system-desktop-bluetooth
     ];
 }

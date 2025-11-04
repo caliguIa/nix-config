@@ -42,7 +42,7 @@
                 pkgs.writeShellScriptBin "kickoff" ''
                     custom_entries=$(cat <<'EOF'
                         docs nixos = ${mkOpen "https://search.nixos.org/options?channel=unstable"}
-                        docs home-manager = ${mkOpen "https://home-manager-options.extranix.com/?query=&release=master"}
+                        docs home-manager = ${mkOpen "https://home-manager-options.extranix.com/?release=master"}
                         docs nix-darwin = ${mkOpen "https://nix-darwin.github.io/nix-darwin/manual/"}
                         foot = ${pkgs.foot}/bin/foot
                         firefox = firefox
@@ -52,11 +52,12 @@
                         nix build = ${mkCmdRunner "${nhBin} os build"}
                         nix gc = ${mkCmdRunner "${nhBin} clean all"}
                         nix gc root = ${mkCmdRunner "sudo ${nhBin} clean all"}
-                        nix update = ${mkCmdRunner "${pkgs.nix}/bin/nix flake update --flake ~/nix-config; echo 'Press any key to exit...'; read -n 1"}
+                        nix update = ${mkCmdRunner "${pkgs.nix}/bin/nix flake update --flake ~/nix-config && echo 'Press any key to exit...' && read -n 1"}
                         nixpkgs = kickoff-nixpkgs-search
                         poweroff = poweroff
                         reboot = reboot
                         slack = ${mkFirefoxPWA "01K902TKNCJT4KVWV1HP92CGZ9"}
+                        wlogout = wlogout
                     EOF)
                     echo "$custom_entries" | ${pkgs.kickoff}/bin/kickoff --from-stdin "$@"
                 '';
@@ -75,6 +76,7 @@
                 sleep 0.1
                 ${pkgs.kickoff}/bin/kickoff --from-file ${nixpkgsEntries} "$@"
             '')
+            # pkgs.wox
         ];
     };
 }

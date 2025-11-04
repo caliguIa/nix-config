@@ -13,10 +13,13 @@
 
     flake.modules.nixos.system-desktop-packages = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            xwayland-satellite
             grim
+            mpv
+            networkmanagerapplet
+            oculante
             slurp
             wl-clipboard
+            xwayland-satellite
         ];
         programs.sway.enable = true;
         services.displayManager.ly.enable = true;

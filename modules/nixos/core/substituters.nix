@@ -24,6 +24,11 @@
                 publicKey = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
                 priority = 3;
             }
+            {
+                url = "https://nixos-apple-silicon.cachix.org";
+                publicKey = "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20=";
+                priority = 4;
+            }
         ];
     in {
         nix.settings = {

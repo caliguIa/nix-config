@@ -28,7 +28,7 @@
                     };
                 };
             in
-                sources.${pkgs.system};
+                sources.${pkgs.stdenv.system};
             passthru = {
                 nativeMessagingHosts = [];
             };
