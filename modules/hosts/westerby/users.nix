@@ -8,6 +8,7 @@ in {
             "audio"
             "video"
             "realtime"
+            "docker"
         ];
         users.groups.${users.primary} = {};
     };

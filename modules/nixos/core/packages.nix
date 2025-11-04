@@ -12,7 +12,6 @@
             iina
             broot
             jira-cli-go
-            lazydocker
             pika
             raycast
             wiki-tui
@@ -35,6 +34,7 @@
             gh
             htop
             jq
+            lazydocker
             just
             nix-output-monitor
             ripgrep
