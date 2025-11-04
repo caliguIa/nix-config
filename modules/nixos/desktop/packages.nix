@@ -1,4 +1,4 @@
-{
+topLevel @ {...}: {
     flake.modules.darwin.system-desktop-packages = {pkgs, ...}: {
         homebrew.casks = [
             "docker-desktop"
@@ -21,6 +21,8 @@
             wl-clipboard
             xwayland-satellite
         ];
+        programs._1password-gui.enable = true;
+        programs._1password-gui.polkitPolicyOwners = [topLevel.config.flake.meta.users.primary];
         programs.sway.enable = true;
         services.displayManager.ly.enable = true;
         services.gnome.gnome-keyring.enable = true;

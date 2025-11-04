@@ -41,6 +41,7 @@
             in
                 pkgs.writeShellScriptBin "kickoff" ''
                     custom_entries=$(cat <<'EOF'
+                        1password = 1password
                         docs nixos = ${mkOpen "https://search.nixos.org/options?channel=unstable"}
                         docs home-manager = ${mkOpen "https://home-manager-options.extranix.com/?release=master"}
                         docs nix-darwin = ${mkOpen "https://nix-darwin.github.io/nix-darwin/manual/"}

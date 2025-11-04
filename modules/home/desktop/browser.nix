@@ -1,5 +1,9 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop = {
+        config,
+        pkgs,
+        ...
+    }: {
         home.packages = with pkgs; [
             firefoxpwa
         ];
@@ -54,6 +58,18 @@
                 PictureInPicture = false;
                 PostQuantumKeyAgreementEnabled = true;
                 SkipTermsOfUse = true;
+            };
+        };
+        xdg.systemDirs.data = ["/usr/share" "/usr/local/share" "${config.xdg.dataHome}"];
+        xdg.desktopEntries = {
+            glide = {
+                name = "Glide";
+                genericName = "Web Browser";
+                exec = "glide %u";
+                terminal = false;
+                categories = ["Network" "WebBrowser"];
+                mimeType = ["text/html" "text/xml"];
+                type = "Application";
             };
         };
     };

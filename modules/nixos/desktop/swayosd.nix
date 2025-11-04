@@ -1,7 +1,7 @@
 {
     flake.modules.nixos.system-desktop-swayosd = {pkgs, ...}: {
         environment.systemPackages = [pkgs.swayosd];
-        services.udev.packages = [pkgs.swayosd];
+        services.udev.packages = with pkgs; [swayosd];
         systemd.services.swayosd-libinput-backend = {
             description = "SwayOSD LibInput backend for listening to certain keys like CapsLock, ScrollLock, VolumeUp, etc.";
             documentation = ["https://github.com/ErikReider/SwayOSD"];
