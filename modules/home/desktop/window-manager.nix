@@ -2,6 +2,7 @@
     flake.modules.homeManager.desktop = {
         config,
         lib,
+        pkgs,
         ...
     }: {
         stylix.targets.sway.enable = false;
@@ -144,7 +145,22 @@
                     "XF86AudioPlay" = "exec swayosd-client --playerctl play-pause";
                     "XF86AudioPrev" = "exec playerctl previous";
                     "XF86AudioNext" = "exec playerctl next";
-                    "Print" = "exec grim";
+                    "ctrl+shift+3" = "exec ${pkgs.writeShellScript "screenshot-focused" ''
+                        filename="${config.home.homeDirectory}/Pictures/screenshots/$(date +%s_screenshot.png)"
+                        ${pkgs.grim}/bin/grim -g \
+                          "$(${pkgs.sway}/bin/swaymsg -t get_tree \
+                          | ${pkgs.jq}/bin/jq -j '..
+                          | select(.type?)
+                          | select(.focused).rect
+                          | "\(.x),\(.y) \(.width)x\(.height)"')" \
+                          "$filename"
+                        ${pkgs.libnotify}/bin/notify-send "Screenshot Taken" "$(basename "$filename")"
+                    ''}";
+                    "ctrl+shift+4" = "exec ${pkgs.writeShellScript "screenshot-area" ''
+                        filename="${config.home.homeDirectory}/Pictures/screenshots/$(date +%s_screenshot.png)"
+                        ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$filename"
+                        ${pkgs.libnotify}/bin/notify-send "Screenshot Taken" "$(basename "$filename")"
+                    ''}";
                 };
                 startup = [
                     {command = "mako";}

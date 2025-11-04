@@ -14,10 +14,10 @@
     flake.modules.nixos.system-desktop-packages = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
             grim
+            slurp
             mpv
             networkmanagerapplet
             oculante
-            slurp
             wl-clipboard
             xwayland-satellite
         ];

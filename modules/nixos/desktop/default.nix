@@ -19,5 +19,6 @@
         system-desktop-glide
         system-desktop-swayosd
         system-desktop-bluetooth
+        system-desktop-battery
     ];
 }
