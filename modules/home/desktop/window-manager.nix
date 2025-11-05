@@ -48,7 +48,7 @@
                     {app_id = "io.github.kaii_lb.Overskride";}
                     {app_id = "org.twosheds.iwgtk";}
                     {app_id = "pavucontrol";}
-                    {app_id = "flameshot";}
+                    {app_id = "org.gnome.Nautilus";}
                     {
                         app_id = "thunderbird";
                         title = "Edit Event*";
@@ -88,7 +88,7 @@
                     "${mod}+q" = "kill";
                     "${mod}+Space" = "exec ${config.wayland.windowManager.sway.config.menu}";
                     "${mod}+ctrl+c" = "reload";
-                    "${mod}+ctrl+e" = "exec clipvault list | ${pkgs.kickoff}/bin/kickoff --from-stdin --stdout | ${pkgs.gawk}/bin/awk '{print $1}' | clipvault get | ${pkgs.wl-clipboard}/bin/wl-copy";
+                    "${mod}+ctrl+e" = "exec wlogout";
                     "${mod}+c" = "exec kickoff-clipvault";
                     "${mod}+h" = "focus left";
                     "${mod}+j" = "focus down";

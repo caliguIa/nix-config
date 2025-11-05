@@ -4,21 +4,28 @@
         config,
         ...
     }: {
+        home.pointerCursor = {
+            enable = true;
+            gtk.enable = true;
+            package = pkgs.whitesur-cursors;
+            name = "WhiteSur-cursors";
+            size = 16;
+        };
         gtk = {
             enable = true;
             colorScheme = "dark";
-            cursorTheme = {
-                name = "Vanilla-DMZ";
-                package = pkgs.vanilla-dmz;
-                size = 128;
+            theme = {
+                package = pkgs.flat-remix-gtk;
+                name = "Flat-Remix-GTK-Grey-Darkest";
             };
-            font.name = config.stylix.fonts.monospace.name;
-        };
-        home.pointerCursor = {
-            enable = true;
-            size = 128;
-            name = "Vanilla-DMZ";
-            package = pkgs.vanilla-dmz;
+            iconTheme = {
+                package = pkgs.adwaita-icon-theme;
+                name = "Adwaita";
+            };
+            font = {
+                name = config.stylix.fonts.monospace.name;
+                size = 11;
+            };
         };
     };
 }

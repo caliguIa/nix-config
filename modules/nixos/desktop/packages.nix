@@ -33,8 +33,10 @@ topLevel @ {...}: {
             grim
             slurp
             mpv
+            nautilus
             oculante
             xwayland-satellite
+            kdePackages.qtwayland
         ];
 
         environment.variables.MOZ_GMP_PATH = ["${widevine-firefox}/gmp-widevinecdm/system-installed"];

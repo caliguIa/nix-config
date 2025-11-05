@@ -60,6 +60,7 @@
                     docs home-manager = ${mkOpen "https://home-manager-options.extranix.com/?release=master"}
                     docs nix-darwin = ${mkOpen "https://nix-darwin.github.io/nix-darwin/manual/"}
                     foot = ${pkgs.foot}/bin/foot
+                    finder = ${pkgs.nautilus}/bin/nautilus
                     firefox = ${pkgs.firefox}/bin/firefox
                     ghostty = ${pkgs.ghostty}/bin/ghostty
                     glide = glide
