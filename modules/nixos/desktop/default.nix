@@ -20,5 +20,6 @@
         system-desktop-swayosd
         system-desktop-bluetooth
         system-desktop-battery
+        system-desktop-clipboard
     ];
 }

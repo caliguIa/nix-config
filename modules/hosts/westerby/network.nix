@@ -1,14 +1,20 @@
 {
     flake.modules.nixos.host_westerby = let
         hostname = "westerby";
-    in {
-        networking = {
-            networkmanager.enable = true;
-            hostName = hostname;
-            wireless.iwd = {
-                enable = true;
-                settings.General.EnableNetworkConfiguration = true;
+    in
+        {pkgs, ...}: {
+            environment.systemPackages = with pkgs; [iwgtk];
+            networking = {
+                hostName = hostname;
+                wireless.enable = false;
+                networkmanager.enable = false;
+                wireless.iwd = {
+                    enable = true;
+                    settings = {
+                        General.EnableNetworkConfiguration = true;
+                        Settings.AutoConnect = true;
+                    };
+                };
             };
         };
-    };
 }

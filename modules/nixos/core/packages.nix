@@ -39,6 +39,7 @@
             nix-output-monitor
             ripgrep
             tree
+            uutils-coreutils-noprefix
             wget
         ];
     };

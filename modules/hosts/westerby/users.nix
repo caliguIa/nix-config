@@ -4,7 +4,6 @@ in {
     flake.modules.nixos.host_westerby = {
         users.users.${users.primary}.extraGroups = [
             "wheel"
-            "networkmanager"
             "audio"
             "video"
             "realtime"

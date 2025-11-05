@@ -13,7 +13,6 @@
             font = "monospace";
         };
         services = {
-            blueman-applet.enable = true;
             network-manager-applet.enable = true;
         };
         programs.waybar = {
@@ -42,7 +41,7 @@
                         format-icons = {
                             default = "";
                             "1" = "";
-                            "2" = "";
+                            "2" = "󰖟";
                             "3" = "";
                             "4" = "";
                             "5" = "5";
@@ -71,7 +70,7 @@
                         format-connected = "󰂱";
                         tooltip-format-connected = "{device_enumerate}";
                         tooltip-format-enumerate-connected = "{device_alias} {device_battery_percentage}%";
-                        on-click = "${pkgs.blueman}/bin/blueman-manager";
+                        on-click = "${pkgs.overskride}/bin/overskride";
                     };
                     clock = {
                         format = "{:%a %d %b  %H:%M:%S}";
@@ -82,7 +81,7 @@
                         format-disconnected = "󰖪";
                         format-ethernet = "";
                         format-icons = [""];
-                        on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+                        on-click = "${pkgs.iwgtk}/bin/iwgtk";
                         tooltip = false;
                     };
                     "custom/github" = {

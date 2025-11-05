@@ -28,7 +28,7 @@
             config = {
                 modifier = "Mod4";
                 terminal = "ghostty";
-                menu = "kickoff";
+                menu = "kickoff-programs";
                 left = "h";
                 down = "j";
                 up = "k";
@@ -45,16 +45,15 @@
                     };
                 };
                 floating.criteria = [
-                    {app_id = ".blueman-manager-wrapped";}
-                    {app_id = "nm-openconnect-auth-dialog";}
-                    {app_id = "nm-connection-editor";}
+                    {app_id = "io.github.kaii_lb.Overskride";}
+                    {app_id = "org.twosheds.iwgtk";}
                     {app_id = "pavucontrol";}
                     {app_id = "flameshot";}
                     {
                         app_id = "thunderbird";
                         title = "Edit Event*";
                     }
-                    {app_id = "xdg-desktop-portal-gtk";} # file picker
+                    {app_id = "xdg-desktop-portal-gtk";}
                     {title = "(Sharing Indicator)";}
                 ];
                 bars = [{command = lib.getExe config.programs.waybar.package;}];
@@ -77,6 +76,9 @@
                         }
                     ];
                 };
+                startup = [
+                    {command = "exec wl-paste --watch clipvault store";}
+                ];
                 gaps.smartGaps = true;
                 focus.newWindow = "focus";
                 keybindings = let
@@ -86,7 +88,8 @@
                     "${mod}+q" = "kill";
                     "${mod}+Space" = "exec ${config.wayland.windowManager.sway.config.menu}";
                     "${mod}+ctrl+c" = "reload";
-                    "${mod}+ctrl+e" = "exec wlogout";
+                    "${mod}+ctrl+e" = "exec clipvault list | ${pkgs.kickoff}/bin/kickoff --from-stdin --stdout | ${pkgs.gawk}/bin/awk '{print $1}' | clipvault get | ${pkgs.wl-clipboard}/bin/wl-copy";
+                    "${mod}+c" = "exec kickoff-clipvault";
                     "${mod}+h" = "focus left";
                     "${mod}+j" = "focus down";
                     "${mod}+k" = "focus up";

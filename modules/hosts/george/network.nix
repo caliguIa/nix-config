@@ -4,7 +4,6 @@
     in {
         networking = {
             useDHCP = true;
-            networkmanager.enable = false;
             defaultGateway = {
                 address = "192.168.0.1";
                 interface = "enp1s0";
