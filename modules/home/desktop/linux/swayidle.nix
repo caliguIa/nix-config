@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-linux = {pkgs, ...}: {
         services.swayidle = {
             enable = true;
             timeouts = [

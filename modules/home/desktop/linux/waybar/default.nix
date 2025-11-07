@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {
+    flake.modules.homeManager.desktop-linux = {
         pkgs,
         config,
         ...
@@ -11,9 +11,6 @@
             enableLeftBackColors = false;
             enableRightBackColors = false;
             font = "monospace";
-        };
-        services = {
-            network-manager-applet.enable = true;
         };
         programs.waybar = {
             enable = true;
