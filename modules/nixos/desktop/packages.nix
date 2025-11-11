@@ -8,6 +8,9 @@ topLevel @ {...}: {
         ];
         environment.systemPackages = with pkgs; [
             slack
+            colima
+            docker
+            crush
         ];
     };
 

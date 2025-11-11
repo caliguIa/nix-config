@@ -1,9 +1,6 @@
 {
     flake.modules.homeManager.desktop = {pkgs, ...}: {
-        home.packages =
-            if pkgs.stdenvNoCC.isDarwin
-            then [pkgs.kanata]
-            else [];
+        home.packages = [pkgs.kanata];
         xdg.configFile =
             if pkgs.stdenvNoCC.isDarwin
             then {
@@ -18,13 +15,12 @@
                     )
 
                     (defalias
-                      ;; Vim arrow keys with right ctrl
-                      h (fork h left (rctl))
-                      j (fork j down (rctl))
-                      k (fork k up (rctl))
-                      l (fork l rght (rctl))
+                      rct (multi rctl (layer-while-held arrows))
+                      h (multi (release-key rctl) left)
+                      j (multi (release-key rctl) down)
+                      k (multi (release-key rctl) up)
+                      l (multi (release-key rctl) rght)
 
-                      ;; Function keys with fn modifier
                       f1 (fork brdn f1 (fn))
                       f2 (fork brup f2 (fn))
                       f3 (fork f3 f3 (fn))
@@ -41,11 +37,20 @@
 
                     (deflayer base
                       esc
-                      rctl
+                      @rct
                       fn
-                      @h   @j   @k   @l
+                      h    j    k    l
                       @f1  @f2  @f3  @f4  @f5  @f6
                       @f7  @f8  @f9  @f10 @f11 @f12
+                    )
+
+                    (deflayer arrows
+                      _
+                      _
+                      _
+                      @h   @j   @k   @l
+                      _  _  _  _  _  _
+                      _  _  _  _  _  _
                     )
                 '';
             }
