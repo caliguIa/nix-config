@@ -1,15 +1,13 @@
-{config, ...}: let
-    users = config.flake.meta.users;
+topLevel @ {...}: let
+    users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.darwin.system-desktop-wm = {
-        config,
-        pkgs,
-        ...
-    }: {
+    flake.modules.darwin.system-desktop-wm = {config, ...}: let
+        homeDirectory = config.users.users.${users.primary}.home;
+        kickoffCmd = "${homeDirectory}/.cargo/bin/frisk --apps --commands";
+    in {
         services.aerospace = {
             enable = true;
             settings = {
-                after-startup-command = ["exec-and-forget sudo ${pkgs.kanata}/bin/kanata -c ${config.users.users.${users.primary}.home}/.config/kanata/kanata.kbd"];
                 enable-normalization-flatten-containers = true;
                 enable-normalization-opposite-orientation-for-nested-containers = true;
                 accordion-padding = 0;
@@ -41,6 +39,8 @@ in {
                     alt-w = "exec-and-forget open -a '/Applications/Zen Browser.app'";
                     alt-e = "exec-and-forget open -a /Applications/Slack.app";
                     alt-r = "exec-and-forget open -a /Applications/Music.app";
+                    alt-space = "exec-and-forget ${kickoffCmd}";
+                    cmd-space = "exec-and-forget ${kickoffCmd}";
                     alt-left = "focus left";
                     alt-down = "focus down";
                     alt-up = "focus up";

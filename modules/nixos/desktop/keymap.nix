@@ -1,5 +1,125 @@
-{
-    flake.modules.darwin.system-desktop-keymap = {
+let
+    kanataConfig = ''
+        (defcfg danger-enable-cmd yes)
+        (deflocalkeys-linux fn 464)
+        (defsrc
+          caps
+          lmet
+          rmet
+          ralt
+          fn
+          h    j    k    l
+          f1   f2   f3   f4   f5   f6
+          f7   f8   f9   f10  f11  f12
+        )
+        (defalias
+          rct (multi rctl (layer-while-held arrows))
+          h (multi (release-key rctl) left)
+          j (multi (release-key rctl) down)
+          k (multi (release-key rctl) up)
+          l (multi (release-key rctl) rght)
+        )
+        (platform (linux)
+            (deflayer base
+              esc
+              lctl
+              @rct
+              rmet
+              _
+              h    j    k    l
+              _  _  _  _  _  _
+              _  _  _  _  _  _
+            )
+        )
+        (platform (macos)
+          (defalias
+            f1 (fork brdn f1 (fn))
+            f2 (fork brup f2 (fn))
+            f3 (fork f3 f3 (fn))
+            f4 (fork f4 f4 (fn))
+            f5 (fork f5 f5 (fn))
+            f6 (fork f6 f6 (fn))
+            f7 (fork prev f7 (fn))
+            f8 (fork pp f8 (fn))
+            f9 (fork next f9 (fn))
+            f10 (fork mute f10 (fn))
+            f11 (fork vold f11 (fn))
+            f12 (fork volu f12 (fn))
+          )
+        )
+        (platform (macos)
+          (deflayer base
+            esc
+            _
+            @rct
+            _
+            fn
+            h    j    k    l
+            @f1  @f2  @f3  @f4  @f5  @f6
+            @f7  @f8  @f9  @f10 @f11 @f12
+          )
+        )
+        (deflayer arrows
+          _
+          _
+          _
+          _
+          _
+          @h   @j   @k   @l
+          _  _  _  _  _  _
+          _  _  _  _  _  _
+        )
+    '';
+in {
+    flake.modules.darwin.system-desktop-keymap = {pkgs, ...}: {
+        environment.systemPackages = with pkgs; [kanata-with-cmd];
+        launchd.daemons.karabiner-vhiddaemon = {
+            serviceConfig = {
+                Label = "org.nixos.karabiner-vhiddaemon";
+                KeepAlive = true;
+                RunAtLoad = true;
+                StandardOutPath = "/var/log/karabiner-vhiddaemon.log";
+                StandardErrorPath = "/var/log/karabiner-vhiddaemon-error.log";
+                Program = "/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon";
+                WorkingDirectory = "/tmp";
+                ThrottleInterval = 30;
+                Nice = -5;
+            };
+        };
+        # launchd.daemons.karabiner-vhidmanager = {
+        #     serviceConfig = {
+        #         Label = "org.nixos.karabiner-vhidmanager";
+        #         KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhiddaemon" = true;
+        #         RunAtLoad = true;
+        #         StandardOutPath = "/var/log/karabiner-vhidmanager.log";
+        #         StandardErrorPath = "/var/log/karabiner-vhidmanager-error.log";
+        #         ProgramArguments = [
+        #             "/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager"
+        #             "activate"
+        #         ];
+        #         WorkingDirectory = "/tmp";
+        #         ThrottleInterval = 30;
+        #         Nice = -5;
+        #     };
+        # };
+        launchd.daemons.kanata = {
+            serviceConfig = {
+                Label = "org.nixos.kanata";
+                ProgramArguments = [
+                    "sudo"
+                    "${pkgs.kanata-with-cmd}/bin/kanata"
+                    "--cfg"
+                    "${pkgs.writeText "kanata.kbd" "${kanataConfig}"}"
+                ];
+                KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhiddaemon" = true;
+                # KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhidmanager" = true;
+                RunAtLoad = true;
+                StandardOutPath = "/var/log/kanata.log";
+                StandardErrorPath = "/var/log/kanata-error.log";
+                WorkingDirectory = "/tmp";
+                ThrottleInterval = 30;
+            };
+        };
         system = {
             keyboard = {
                 enableKeyMapping = true;
@@ -16,96 +136,13 @@
                 NSAutomaticSpellingCorrectionEnabled = false;
             };
         };
-        environment.launchDaemons."org.nixos.karabiner-vhiddaemon.plist" = {
-            enable = true;
-            text = ''
-                <?xml version="1.0" encoding="UTF-8"?>
-                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                <plist version="1.0">
-                <dict>
-                    <key>Label</key>
-                    <string>org.nixos.karabiner-vhiddaemon</string>
-
-                    <key>ProgramArguments</key>
-                    <array>
-                        <string>/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon</string>
-                    </array>
-
-                    <key>RunAtLoad</key>
-                    <true/>
-
-                    <key>KeepAlive</key>
-                    <true/>
-                </dict>
-                </plist>
-            '';
-        };
-        environment.launchDaemons."org.nixos.karabiner-vhidmanager.plist" = {
-            enable = true;
-            text = ''
-                <?xml version="1.0" encoding="UTF-8"?>
-                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                <plist version="1.0">
-                <dict>
-                    <key>Label</key>
-                    <string>org.nixos.karabiner-vhidmanager</string>
-
-                    <key>ProgramArguments</key>
-                    <array>
-                        <string>/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager</string>
-                        <string>activate</string>
-                    </array>
-
-                    <key>RunAtLoad</key>
-                    <true/>
-
-                    <key>OtherJobEnabled</key>
-                    <dict>
-                      <key>org.nixos.karabiner-vhiddaemon</key>
-                      <true />
-                    </dict>
-                </dict>
-                </plist>
-            '';
-        };
     };
 
-    flake.modules.nixos.system-desktop-keymap = {
+    flake.modules.nixos.system-desktop-keymap = {pkgs, ...}: {
         services.kanata = {
             enable = true;
-            keyboards.internalKeyboard.config = ''
-                (defsrc
-                  caps
-                  lmet
-                  rmet
-                  ralt
-                  h    j    k    l
-                )
-
-                (defalias
-                  rct (multi rctl (layer-while-held arrows))
-                  h (multi (release-key rctl) left)
-                  j (multi (release-key rctl) down)
-                  k (multi (release-key rctl) up)
-                  l (multi (release-key rctl) rght)
-                )
-
-                (deflayer base
-                  esc
-                  lctl
-                  @rct
-                  rmet
-                  h    j    k    l
-                )
-
-                (deflayer arrows
-                  _
-                  _
-                  _
-                  _
-                  @h   @j   @k   @l
-                )
-            '';
+            package = pkgs.kanata-with-cmd;
+            keyboards.internalKeyboard.configFile = "${pkgs.writeText "kanata.kbd" "${kanataConfig}"}";
         };
     };
 }

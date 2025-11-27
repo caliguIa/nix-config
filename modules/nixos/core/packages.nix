@@ -13,7 +13,6 @@
             broot
             jira-cli-go
             pika
-            raycast
             wiki-tui
         ];
     };

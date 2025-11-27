@@ -5,12 +5,14 @@ topLevel @ {...}: {
             "ghostty@tip"
             "onyx"
             "tableplus"
+            "qobuz"
         ];
         environment.systemPackages = with pkgs; [
             slack
             colima
             docker
             crush
+            lima
         ];
     };
 
