@@ -1,7 +1,7 @@
 topLevel @ {...}: {
     flake.modules.darwin.system-desktop-packages = {pkgs, ...}: {
         homebrew.casks = [
-            "docker-desktop"
+            # "docker-desktop"
             "ghostty@tip"
             "onyx"
             "tableplus"

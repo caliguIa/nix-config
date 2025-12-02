@@ -9,10 +9,10 @@
             self.modules.generic.system-desktop-theme
         ];
         stylix.fonts.sizes = {
-            applications = 14;
-            desktop = 14;
-            popups = 14;
-            terminal = 14;
+            applications = 11;
+            desktop = 11;
+            popups = 11;
+            terminal = 11;
         };
     };
 
