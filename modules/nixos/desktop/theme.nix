@@ -9,10 +9,10 @@
             self.modules.generic.system-desktop-theme
         ];
         stylix.fonts.sizes = {
-            applications = 11;
-            desktop = 11;
-            popups = 11;
-            terminal = 11;
+            applications = 14;
+            desktop = 14;
+            popups = 14;
+            terminal = 14;
         };
     };
 
@@ -36,7 +36,7 @@
             fonts = rec {
                 monospace = {
                     name = "Berkeley Mono";
-                    package = pkgs.berkeley-mono;
+                    package = inputs.fonts.packages.${pkgs.stdenvNoCC.system}.berkeley-mono;
                 };
                 serif = monospace;
                 sansSerif = monospace;

@@ -41,6 +41,8 @@
                 shell-integration-features = "sudo,cursor,no-title";
                 keybind = [
                     "alt+3=text:#"
+                    "ctrl+a>c=toggle_quick_terminal"
+                    # "ctrl+space>shift+-=new_split:down"
                 ];
             };
         };

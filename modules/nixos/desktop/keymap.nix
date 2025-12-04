@@ -86,22 +86,6 @@ in {
                 Nice = -5;
             };
         };
-        # launchd.daemons.karabiner-vhidmanager = {
-        #     serviceConfig = {
-        #         Label = "org.nixos.karabiner-vhidmanager";
-        #         KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhiddaemon" = true;
-        #         RunAtLoad = true;
-        #         StandardOutPath = "/var/log/karabiner-vhidmanager.log";
-        #         StandardErrorPath = "/var/log/karabiner-vhidmanager-error.log";
-        #         ProgramArguments = [
-        #             "/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager"
-        #             "activate"
-        #         ];
-        #         WorkingDirectory = "/tmp";
-        #         ThrottleInterval = 30;
-        #         Nice = -5;
-        #     };
-        # };
         launchd.daemons.kanata = {
             serviceConfig = {
                 Label = "org.nixos.kanata";
@@ -112,7 +96,6 @@ in {
                     "${pkgs.writeText "kanata.kbd" "${kanataConfig}"}"
                 ];
                 KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhiddaemon" = true;
-                # KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhidmanager" = true;
                 RunAtLoad = true;
                 StandardOutPath = "/var/log/kanata.log";
                 StandardErrorPath = "/var/log/kanata-error.log";

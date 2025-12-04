@@ -11,8 +11,9 @@ topLevel @ {...}: {
             slack
             colima
             docker
-            crush
+            claude-code
             lima
+            scooter
         ];
     };
 
