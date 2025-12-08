@@ -16,7 +16,8 @@ lsp.enable({
     'nixd',
     'rust_analyzer',
     'taplo',
-    'vtsls',
+    -- 'vtsls',
+    'tsgo',
     'zls',
 })
 

@@ -1,7 +1,7 @@
 {
     flake.modules.homeManager.desktop = {pkgs, ...}: {
         programs.newsboat = {
-            enable = false;
+            enable = true;
             autoReload = true;
             browser = toString (pkgs.writeShellScript "newsboat-url" ''
                 url="$1"

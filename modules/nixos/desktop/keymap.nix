@@ -71,38 +71,7 @@ let
         )
     '';
 in {
-    flake.modules.darwin.system-desktop-keymap = {pkgs, ...}: {
-        environment.systemPackages = with pkgs; [kanata-with-cmd];
-        launchd.daemons.karabiner-vhiddaemon = {
-            serviceConfig = {
-                Label = "org.nixos.karabiner-vhiddaemon";
-                KeepAlive = true;
-                RunAtLoad = true;
-                StandardOutPath = "/var/log/karabiner-vhiddaemon.log";
-                StandardErrorPath = "/var/log/karabiner-vhiddaemon-error.log";
-                Program = "/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon";
-                WorkingDirectory = "/tmp";
-                ThrottleInterval = 30;
-                Nice = -5;
-            };
-        };
-        launchd.daemons.kanata = {
-            serviceConfig = {
-                Label = "org.nixos.kanata";
-                ProgramArguments = [
-                    "sudo"
-                    "${pkgs.kanata-with-cmd}/bin/kanata"
-                    "--cfg"
-                    "${pkgs.writeText "kanata.kbd" "${kanataConfig}"}"
-                ];
-                KeepAlive.OtherJobEnabled."org.nixos.karabiner-vhiddaemon" = true;
-                RunAtLoad = true;
-                StandardOutPath = "/var/log/kanata.log";
-                StandardErrorPath = "/var/log/kanata-error.log";
-                WorkingDirectory = "/tmp";
-                ThrottleInterval = 30;
-            };
-        };
+    flake.modules.darwin.system-desktop-keymap = {
         system = {
             keyboard = {
                 enableKeyMapping = true;

@@ -1,24 +1,6 @@
 {
     flake.modules.homeManager.core = {pkgs, ...}: let
         customPlugins = with pkgs; {
-            bufstate = vimUtils.buildVimPlugin {
-                name = "bufstate.nvim";
-                src = fetchFromGitHub {
-                    owner = "syntaxpresso";
-                    repo = "bufstate.nvim";
-                    rev = "main";
-                    hash = "sha256-UMAo0L/FkNKbxDzjiZsCxaluZreSGBJDEGT6gOwS0cE=";
-                };
-            };
-            nvim-external-tui = vimUtils.buildVimPlugin {
-                name = "nvim-external-tui";
-                src = fetchFromGitHub {
-                    owner = "gfontenot";
-                    repo = "nvim-external-tui";
-                    rev = "main";
-                    hash = "";
-                };
-            };
             indentmini = vimUtils.buildVimPlugin {
                 name = "indentmini.nvim";
                 src = fetchFromGitHub {
@@ -51,7 +33,6 @@
     in {
         programs.neovim.plugins = with allPlugins; [
             aerial-nvim
-            bufstate
             codecompanion-nvim
             conform-nvim
             fff-nvim
@@ -61,7 +42,6 @@
             mini-nvim
             neogit
             nvim-bqf
-            # nvim-external-tui
             nvim-lspconfig
             nvim-treesitter
             nvim-treesitter.withAllGrammars
@@ -72,7 +52,6 @@
             snacks-nvim
             ts-comments-nvim
             vim-test
-            vim-tmux-navigator
             zendiagram
         ];
     };

@@ -2,7 +2,7 @@
     flake.modules.homeManager.desktop = {pkgs, ...}: {
         stylix.targets.ghostty.enable = true;
         programs.ghostty = {
-            enable = true;
+            enable = false;
             enableFishIntegration = true;
             package =
                 if pkgs.stdenvNoCC.isDarwin

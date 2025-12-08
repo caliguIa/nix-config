@@ -10,6 +10,7 @@
             nodePackages.bash-language-server
             alejandra
             lua-language-server
+            typescript-go
             sleek
             stylua
             sqruff
