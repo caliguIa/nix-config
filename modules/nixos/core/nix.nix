@@ -9,6 +9,7 @@ in {
         imports = [self.modules.generic.system-core-nix];
         nix.enable = false;
         nix.gc.automatic = false;
+        nix.optimise.automatic = false;
     };
 
     flake.modules.nixos.nix = {
@@ -23,12 +24,14 @@ in {
     };
 
     flake.modules.generic.system-core-nix = {
+        pkgs,
         inputs,
         lib,
         ...
     }: {
         nix = {
             enable = lib.mkDefault true;
+            package = pkgs.nix;
             nixPath = ["nixpkgs=${inputs.nixpkgs}"];
             gc = {
                 automatic = lib.mkDefault true;
@@ -40,10 +43,10 @@ in {
                     "root"
                     "${users.primary}"
                 ];
-                auto-optimise-store = true;
                 experimental-features = ["nix-command" "flakes"];
                 warn-dirty = false;
             };
+            optimise.automatic = lib.mkDefault true;
         };
         nixpkgs.config.allowUnfree = true;
     };
