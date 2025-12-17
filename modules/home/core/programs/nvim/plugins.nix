@@ -39,6 +39,7 @@
             git-conflict-nvim
             indentmini
             kanso-nvim
+            kitty-scrollback-nvim
             mini-nvim
             neogit
             nvim-bqf

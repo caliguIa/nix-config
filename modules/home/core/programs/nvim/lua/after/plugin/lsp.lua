@@ -3,6 +3,7 @@ local lsp = vim.lsp
 lsp.enable({
     'cssls',
     'cssmodules_ls',
+    -- 'css_variables',
     'docker_compose_language_service',
     'dockerls',
     'eslint',

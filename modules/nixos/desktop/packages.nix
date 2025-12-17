@@ -11,9 +11,11 @@ topLevel @ {...}: {
             slack
             colima
             docker
+            duckdb
             claude-code
             lima
             scooter
+            thunderbird
         ];
     };
 

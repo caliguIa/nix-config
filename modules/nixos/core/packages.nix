@@ -36,6 +36,7 @@
             lazydocker
             just
             nix-output-monitor
+            ouch
             ripgrep
             tree
             uutils-coreutils-noprefix
