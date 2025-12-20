@@ -6,11 +6,31 @@
     }: let
         contactsDir = "${config.xdg.dataHome}/share/contacts/personal";
         mailDir = "${config.home.homeDirectory}/Maildir";
+        openAercKitty = pkgs.writeShellScriptBin "openAercKitty"
+        #sh
+        ''
+            KITTY_SOCKET=$(ls /tmp/kitty-* 2>/dev/null | head -n 1)
+            if [ -n "$KITTY_SOCKET" ]; then
+              "${pkgs.kitty}/bin/kitty" @ --to unix:$KITTY_SOCKET launch --type=tab --tab-title 'email' ${pkgs.fish}/bin/fish -c ${pkgs.aerc}/bin/aerc;
+              open -a ${pkgs.kitty}/bin/kitty;
+            else
+              "${pkgs.kitty}/bin/kitty" ${pkgs.aerc}/bin/aerc;
+            fi
+        '';
+        opGetSecret = uuid: let
+            wrapper = pkgs.writeShellScript "op-with-env" ''
+                set -a
+                source ~/.local/auth/.env
+                set +a
+                exec ${pkgs._1password-cli}/bin/op "$@"
+            '';
+        in "${wrapper} item get ${uuid} --field credential --reveal --vault dev";
     in {
         home.packages = with pkgs; [
             khard
             vdirsyncer
             pandoc
+            openAercKitty
         ];
         programs.aerc.enable = true;
         programs.mbsync.enable = true;
@@ -60,7 +80,7 @@
                 auth = "basic"
                 url = "https://carddav.fastmail.com/dav/addressbooks/user/cal@caligula.io/Default"
                 username = "cal@calrichards.io"
-                password.fetch = ["command", "op", "item", "get", "aydqjt2af4k3ymcdsgwwij7nw4", "--field", "credential", "--reveal"]
+                password.fetch = ["command", "${opGetSecret "i24qznsengvh33lxivzanpmody"}"]
             '';
         xdg.configFile."khard/khard.conf".text =
             # toml
@@ -78,8 +98,8 @@
                 outgoing             = smtps://cal%40calrichards.io@smtp.fastmail.com:465
                 maildir-store        = ${mailDir}
                 maildir-account-path = calrichards
-                outgoing-cred-cmd    = op item get rf6ogfumkjzvkeh4eyirbpv5r4 --field credential --reveal
-                check-mail-cmd       = ${(pkgs.writeScriptBin "mail-sync"
+                outgoing-cred-cmd    = ${opGetSecret "3654mfor3dic6s6di2akugfoje"}
+                check-mail-cmd       = ${(pkgs.writeShellScriptBin "mail-sync"
                 #sh
                 ''
                     MBSYNC=$(pgrep mbsync)
@@ -354,7 +374,7 @@
             Host imap.fastmail.com
             Port 993
             User cal@calrichards.io
-            PassCmd "op item get rf6ogfumkjzvkeh4eyirbpv5r4 --field credential --reveal"
+            PassCmd "${opGetSecret "rhbbqexkalscdz5iy3voavjxle"}"
             TLSType IMAPS
             SystemCertificates yes
 
@@ -376,5 +396,49 @@
             SyncState *
             Create Both
         '';
+        launchd.agents.mail-sync = {
+            enable = true;
+            config = {
+                ProgramArguments = [
+                    "${pkgs.writeShellScriptBin "mail-sync-notify"
+                    #sh
+                    ''
+                        # Count unread emails before sync
+                        BEFORE=$(${pkgs.notmuch}/bin/notmuch count tag:unread 2>/dev/null || echo 0)
+
+                        # Run mail sync
+                        MBSYNC=$(pgrep mbsync)
+                        NOTMUCH=$(pgrep notmuch)
+                        if [ -n "$MBSYNC" -o -n "$NOTMUCH" ]; then
+                            echo "Already running one instance of mbsync or notmuch. Exiting..."
+                            exit 0
+                        fi
+
+                        echo "Deleting messages tagged as *deleted*"
+                        ${pkgs.notmuch}/bin/notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
+
+                        ${pkgs.isync}/bin/mbsync -Va
+                        ${pkgs.notmuch}/bin/notmuch new
+
+                        # Count unread emails after sync
+                        AFTER=$(${pkgs.notmuch}/bin/notmuch count tag:unread 2>/dev/null || echo 0)
+
+                        # Calculate new emails
+                        NEW=$((AFTER - BEFORE))
+
+                        # Send notification if there are new emails
+                        if [ $NEW -gt 0 ]; then
+                            ${pkgs.terminal-notifier}/bin/terminal-notifier -group "mail-sync" -title "New email(s)" -message "You have received $NEW new email(s)" -sound Funk -execute "open -a ${openAercKitty}/bin/openAercKitty"
+                        fi
+                    ''}/bin/mail-sync-notify"
+                ];
+                StartInterval = 30; # 5 minutes in seconds
+                RunAtLoad = true;
+                ProcessType = "Interactive";
+                LimitLoadToSessionType = ["Aqua"];
+                StandardOutPath = "${config.home.homeDirectory}/.local/state/mail-sync/stdout.log";
+                StandardErrorPath = "${config.home.homeDirectory}/.local/state/mail-sync/stderr.log";
+            };
+        };
     };
 }
