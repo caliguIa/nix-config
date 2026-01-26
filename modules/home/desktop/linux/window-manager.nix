@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop-linux = {
+    flake.modules.homeManager.desktop-linux-window-manager = {
         config,
         lib,
         pkgs,

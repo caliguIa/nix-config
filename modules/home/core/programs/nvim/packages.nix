@@ -10,10 +10,12 @@
             nodePackages.bash-language-server
             alejandra
             lua-language-server
-            typescript-go
+            # typescript-go
             sleek
             stylua
             sqruff
+            vtsls
+            biome
         ];
     };
 }

@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-database = {pkgs, ...}: {
         home.packages = with pkgs; [rainfrog];
         xdg.configFile."rainfrog/rainfrog_config.toml".text = ''
             [db]

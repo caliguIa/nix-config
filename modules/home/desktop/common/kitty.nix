@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-kitty = {pkgs, ...}: {
         stylix.targets.kitty.enable = true;
         programs.kitty = {
             enable = true;

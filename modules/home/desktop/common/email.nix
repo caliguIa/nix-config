@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {
+    flake.modules.homeManager.desktop-common-email = {
         pkgs,
         config,
         ...
@@ -139,12 +139,12 @@
                 [ui]
                 fuzzy-complete=true
                 archive=+archived -inbox
-                icon-new=✨
-                icon-attachment=📎
-                icon-old=🕰️
-                icon-replied=📝
-                icon-flagged=🚩
-                icon-deleted=🗑️
+                icon-new=
+                icon-attachment=󰁦
+                icon-old=
+                icon-replied=
+                icon-flagged=
+                icon-deleted=
 
                 [viewer]
                 alternatives=text/plain,text/html

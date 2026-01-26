@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {
+    flake.modules.homeManager.desktop-common-ai = {
         programs.opencode = {
             enable = true;
             settings = {

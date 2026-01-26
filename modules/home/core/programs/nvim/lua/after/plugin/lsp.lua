@@ -17,8 +17,8 @@ lsp.enable({
     'nixd',
     'rust_analyzer',
     'taplo',
-    -- 'vtsls',
-    'tsgo',
+    'vtsls',
+    -- 'tsgo',
     'zls',
 })
 
@@ -90,7 +90,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.api.nvim_create_autocmd('LspNotify', {
     callback = function(args)
         if args.data.method == lsp.protocol.Methods.textDocument_didOpen then
-            vim.schedule(function() lsp.foldclose('imports') end)
+            -- vim.schedule(function() lsp.foldclose('imports') end)
         end
     end,
 })

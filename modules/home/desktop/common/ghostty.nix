@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-ghostty = {pkgs, ...}: {
         stylix.targets.ghostty.enable = true;
         programs.ghostty = {
             enable = false;

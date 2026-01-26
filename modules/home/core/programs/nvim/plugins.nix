@@ -28,10 +28,18 @@
                     hash = "sha256-vJMoeMUAKliPy9MF6oUd+gSQ1cNXPCEcju8OXEMvYew=";
                 };
             };
+            ts-textobjects = vimUtils.buildVimPlugin {
+                name = "nvim-treesitter-textobjects";
+                src = fetchFromGitHub {
+                    owner = "nvim-treesitter";
+                    repo = "nvim-treesitter-textobjects";
+                    rev = "main";
+                    hash = "sha256-5VeIAW09my+4fqXbzVG7RnLXrjpXAk/g2vd7RbhNws8=";
+                };
+            };
         };
-        allPlugins = pkgs.vimPlugins // customPlugins;
     in {
-        programs.neovim.plugins = with allPlugins; [
+        programs.neovim.plugins = with pkgs.vimPlugins // customPlugins; [
             aerial-nvim
             codecompanion-nvim
             conform-nvim
@@ -45,12 +53,12 @@
             nvim-bqf
             nvim-lspconfig
             nvim-treesitter
-            nvim-treesitter.withAllGrammars
-            nvim-treesitter-textobjects
+            ts-textobjects
+            # switch back once nixpkgs uses main
+            # nvim-treesitter-textobjects
             nvim-ts-autotag
             oil-nvim
             plenary-nvim
-            snacks-nvim
             ts-comments-nvim
             vim-test
             zendiagram

@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop-linux = {config, ...}: {
+    flake.modules.homeManager.desktop-linux-hyprlock = {config, ...}: {
         programs.hyprlock = {
             enable = true;
             settings = let

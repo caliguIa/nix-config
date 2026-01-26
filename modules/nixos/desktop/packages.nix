@@ -16,6 +16,10 @@ topLevel @ {...}: {
             lima
             scooter
             thunderbird
+            yt-dlp
+            (writeShellScriptBin "youtube-dl" ''
+                exec ${yt-dlp}/bin/yt-dlp "$@"
+            '')
         ];
     };
 

@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop-linux = {config, ...}: {
+    flake.modules.homeManager.desktop-linux-mako = {config, ...}: {
         services.mako = {
             enable = true;
             settings = let

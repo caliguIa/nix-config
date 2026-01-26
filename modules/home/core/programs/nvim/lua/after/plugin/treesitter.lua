@@ -1,9 +1,15 @@
-require('nvim-treesitter.configs').setup({
-    incremental_selection = { enable = false },
-    textobjects = { enable = false },
-    indent = { enable = true },
-    highlight = { enable = true },
+vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
+    desc = 'Enable treesitter highlighting and indentation',
+    callback = function(ev)
+        local lang = vim.treesitter.language.get_lang(ev.match) or ev.match
+        local is_installed = #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) > 0
+        if not is_installed then require('nvim-treesitter').install({ lang }) end
+        local ok = pcall(vim.treesitter.start, ev.buf, lang)
+        if ok then vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
+    end,
 })
+
 require('ts-comments').setup()
 require('nvim-ts-autotag').setup()
 require('timber').setup({

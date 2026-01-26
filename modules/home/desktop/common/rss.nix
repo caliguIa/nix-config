@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-rss = {pkgs, ...}: {
         programs.newsboat = {
             enable = true;
             autoReload = true;

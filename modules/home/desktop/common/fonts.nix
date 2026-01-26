@@ -1,5 +1,5 @@
 {inputs, ...}: {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-fonts = {pkgs, ...}: {
         fonts.fontconfig.enable = true;
         home.packages = [
             inputs.fonts.packages.${pkgs.stdenv.system}.berkeley-mono

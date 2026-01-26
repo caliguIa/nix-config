@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop-linux = {
+    flake.modules.homeManager.desktop-linux-waybar = {
         pkgs,
         config,
         ...

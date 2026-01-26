@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-helix = {pkgs, ...}: {
         stylix.targets.helix.enable = true;
         programs.helix = {
             enable = true;
