@@ -19,6 +19,7 @@ lsp.enable({
     'taplo',
     'vtsls',
     -- 'tsgo',
+    'biome',
     'zls',
 })
 

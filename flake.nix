@@ -20,5 +20,12 @@
         nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
         nvim-nightly.inputs.nixpkgs.follows = "nixpkgs";
         nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+        zen-browser = {
+            url = "github:0xc000022070/zen-browser-flake";
+            inputs = {
+                nixpkgs.follows = "nixpkgs";
+                home-manager.follows = "home-manager";
+            };
+        };
     };
 }

@@ -85,6 +85,14 @@ in {
                         "if".app-name-regex-substring = "TablePlus";
                         run = ["layout floating"];
                     }
+                    {
+                        "if".app-name-regex-substring = "IINA";
+                        run = ["layout floating"];
+                    }
+                    {
+                        "if".window-title-regex-substring = "Bitwarden Password Manager";
+                        run = ["layout floating"];
+                    }
                 ];
             };
         };

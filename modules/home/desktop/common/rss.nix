@@ -1,7 +1,12 @@
 {
-    flake.modules.homeManager.desktop-common-rss = {pkgs, ...}: {
+    flake.modules.homeManager.desktop-common-rss = {
+        pkgs,
+        inputs,
+        ...
+    }: {
         programs.newsboat = {
-            enable = true;
+            enable = false;
+            package = inputs.nixpkgs-stable.pkgs.newsboat;
             autoReload = true;
             browser = toString (pkgs.writeShellScript "newsboat-url" ''
                 url="$1"

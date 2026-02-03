@@ -109,13 +109,6 @@
         };
     in {
         environment.systemPackages = [glide-browser];
-        environment.etc."1password/custom_allowed_browsers" = {
-            text = ''
-                glide
-                glide-browser
-            '';
-            mode = "0755";
-        };
         services.udev.packages = with pkgs; [
             yubikey-personalization
             libu2f-host

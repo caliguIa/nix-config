@@ -2,10 +2,7 @@ topLevel @ {...}: {
     flake.modules.darwin.system-desktop-packages = {pkgs, ...}: {
         homebrew.casks = [
             # "docker-desktop"
-            "ghostty@tip"
-            "onyx"
             "tableplus"
-            "qobuz"
         ];
         environment.systemPackages = with pkgs; [
             slack
@@ -13,6 +10,7 @@ topLevel @ {...}: {
             docker
             duckdb
             claude-code
+            topLevel.inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
             lima
             scooter
             thunderbird
@@ -42,6 +40,7 @@ topLevel @ {...}: {
         };
     in {
         environment.systemPackages = with pkgs; [
+            topLevel.inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
             grim
             slurp
             mpv
@@ -52,8 +51,6 @@ topLevel @ {...}: {
         ];
 
         environment.variables.MOZ_GMP_PATH = ["${widevine-firefox}/gmp-widevinecdm/system-installed"];
-        programs._1password-gui.enable = true;
-        programs._1password-gui.polkitPolicyOwners = [topLevel.config.flake.meta.users.primary];
         programs.sway.enable = true;
         services.displayManager.ly.enable = true;
         services.gnome.gnome-keyring.enable = true;

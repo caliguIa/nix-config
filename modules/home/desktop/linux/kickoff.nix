@@ -54,7 +54,6 @@
         in [
             (pkgs.writeShellScriptBin "kickoff-programs" ''
                 custom_entries=$(cat <<'EOF'
-                    1password = ${pkgs._1password-gui}/bin/1password
                     clipboard history = sleep 0.1 && kickoff-clipvault
                     docs nixos = ${mkOpen "https://search.nixos.org/options?channel=unstable"}
                     docs home-manager = ${mkOpen "https://home-manager-options.extranix.com/?release=master"}

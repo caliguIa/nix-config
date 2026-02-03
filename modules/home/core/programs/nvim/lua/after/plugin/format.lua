@@ -4,7 +4,7 @@ conform.setup({
     formatters_by_ft = {
         lua = { 'stylua' },
         php = { 'pint' },
-        typescript = { 'prettier' },
+        typescript = { 'prettier', 'biome', stop_after_first = true },
         typescriptreact = { 'prettier' },
         javascript = { 'prettier' },
         javascriptreact = { 'prettier' },
