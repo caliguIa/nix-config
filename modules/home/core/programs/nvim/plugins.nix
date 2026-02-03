@@ -7,7 +7,7 @@
                     owner = "nvimdev";
                     repo = "indentmini.nvim";
                     rev = "main";
-                    hash = "sha256-YDO48kLOkzbJ9HDiQ0rQ/bbvyD8FQ9iNfSl1V0naUAs=";
+                    hash = "sha256-J3D+nbalJqZ4aeFBD7veW6TuI0BEU2jbx5pMEew4dkA=";
                 };
             };
             timber = vimUtils.buildVimPlugin {
@@ -34,7 +34,7 @@
                     owner = "nvim-treesitter";
                     repo = "nvim-treesitter-textobjects";
                     rev = "main";
-                    hash = "sha256-5VeIAW09my+4fqXbzVG7RnLXrjpXAk/g2vd7RbhNws8=";
+                    hash = "sha256-J3D+nbalJqZ4aeFBD7veW6TuI0BEU2jbx5pMEew4dkA=";
                 };
             };
         };

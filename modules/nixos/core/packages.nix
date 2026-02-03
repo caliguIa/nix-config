@@ -25,7 +25,7 @@
             eza
             fd
             fish
-            gitu
+            # gitu
             gnupg
             gh
             htop

@@ -13,7 +13,6 @@ topLevel @ {...}: {
             topLevel.inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
             lima
             scooter
-            thunderbird
             yt-dlp
             (writeShellScriptBin "youtube-dl" ''
                 exec ${yt-dlp}/bin/yt-dlp "$@"
