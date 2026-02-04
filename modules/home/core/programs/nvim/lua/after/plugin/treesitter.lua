@@ -1,8 +1,20 @@
+local filetype_ignore = {
+    'fff_input',
+    'fff_preview',
+    'fff_list',
+    'cmd',
+    'dialog',
+    'msg',
+    'pager',
+}
+
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
     desc = 'Enable treesitter highlighting and indentation',
     callback = function(ev)
-        local lang = vim.treesitter.language.get_lang(ev.match) or ev.match
+        if vim.tbl_contains(filetype_ignore, ev.match) then return end
+
+        local lang = vim.treesitter.language.get_lang(ev.match)
         local is_installed = #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) > 0
         if not is_installed then require('nvim-treesitter').install({ lang }) end
         local ok = pcall(vim.treesitter.start, ev.buf, lang)
