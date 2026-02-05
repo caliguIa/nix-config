@@ -1,25 +1,18 @@
-local filetype_ignore = {
-    'fff_input',
-    'fff_preview',
-    'fff_list',
-    'cmd',
-    'dialog',
-    'msg',
-    'pager',
+--stylua: ignore
+local ensure_languages = {
+    'bash', 'c',          'cpp',  'css',   'diff', 'go', 'jsx',
+    'html', 'javascript', 'json', 'julia', 'nu',   'php', 'python',
+    'r',    'regex',      'rst',  'rust',  'toml', 'tsx', 'typescript', 'yaml',
 }
-
+local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
+local to_install = vim.tbl_filter(isnt_installed, ensure_languages)
+if #to_install > 0 then require('nvim-treesitter').install(to_install) end
+local filetypes = vim.iter(ensure_languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
-    desc = 'Enable treesitter highlighting and indentation',
-    callback = function(ev)
-        if vim.tbl_contains(filetype_ignore, ev.match) then return end
-
-        local lang = vim.treesitter.language.get_lang(ev.match)
-        local is_installed = #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) > 0
-        if not is_installed then require('nvim-treesitter').install({ lang }) end
-        local ok = pcall(vim.treesitter.start, ev.buf, lang)
-        if ok then vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
-    end,
+    pattern = filetypes,
+    desc = 'Ensure enabled tree-sitter',
+    callback = function(ev) vim.treesitter.start(ev.buf) end,
 })
 
 require('ts-comments').setup()
