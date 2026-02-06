@@ -15,7 +15,7 @@ vim.keymap.set('v', '>', '>gv', { desc = 'Indent reselect', silent = true })
 vim.keymap.set('n', '<leader>fn', cmd.enew, { desc = 'New File', silent = true })
 vim.keymap.set('n', '<leader>wd', '<C-W>c', { desc = 'Delete Window', silent = true, remap = true })
 vim.keymap.set('n', '<leader>w', '<c-w>', { desc = 'Windows', silent = true, remap = true })
-vim.keymap.set('n', '<leader>co', function()
+vim.keymap.set('n', '<leader>q', function()
     local cur_tabnr = vim.fn.tabpagenr()
     for _, wininfo in ipairs(vim.fn.getwininfo()) do
         if wininfo.quickfix == 1 and wininfo.tabnr == cur_tabnr then return cmd('cclose') end

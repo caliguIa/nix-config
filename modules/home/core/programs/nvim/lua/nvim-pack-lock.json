@@ -4,9 +4,17 @@
       "rev": "7a6a42791eb2b54a7115c7db4488981f93471770",
       "src": "https://github.com/stevearc/aerial.nvim"
     },
+    "codediff.nvim": {
+      "rev": "648610cb97c40640bc25e4c1bcbe6bf8c76ff826",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "conform.nvim": {
       "rev": "c2526f1cde528a66e086ab1668e996d162c75f4f",
       "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "diffs.nvim": {
+      "rev": "294cbad749119c00869dc9e3cf994cb63cebda13",
+      "src": "https://github.com/barrettruth/diffs.nvim"
     },
     "fff.nvim": {
       "rev": "0523fe39ffc59373de0648ba636705d35a6fdfc2",
@@ -35,6 +43,10 @@
     "neogit": {
       "rev": "73870229977fdd8747025820e15e98cfde787b9c",
       "src": "https://github.com/NeogitOrg/neogit"
+    },
+    "nui.nvim": {
+      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-bqf": {
       "rev": "f65fba733268ffcf9c5b8ac381287eca7c223422",
@@ -72,6 +84,10 @@
     "ts-comments.nvim": {
       "rev": "123a9fb12e7229342f807ec9e6de478b1102b041",
       "src": "https://github.com/folke/ts-comments.nvim"
+    },
+    "vim-fugitive": {
+      "rev": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4",
+      "src": "https://github.com/tpope/vim-fugitive"
     },
     "vim-test": {
       "rev": "c174652ef8e4959628a52e3134f102923b7a6f0d",
