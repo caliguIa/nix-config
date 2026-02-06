@@ -4,7 +4,7 @@ vim.loader.enable()
 vim.cmd.packadd('nvim.undotree')
 vim.schedule(
     function()
-        require('vim._extui').enable({
+        require('vim._core.ui2').enable({
             enable = true,
             msg = {
                 target = 'msg',
