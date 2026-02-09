@@ -1,3 +1,5 @@
+require('codediff').setup()
+
 vim.keymap.set('n', '<leader>gg', vim.cmd.CodeDiff, { desc = 'Status', silent = true })
 vim.keymap.set('n', '<leader>gb', function() vim.cmd.G('blame') end, { desc = 'Blame', silent = true })
 vim.keymap.set(
