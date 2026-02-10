@@ -11,9 +11,10 @@
                 inputs.self.modules.nixos.core
                 (config.flake.modules.nixos.host_karla or {})
                 (config.flake.modules.homeManager.host_karla or {})
+                inputs.nixos-hardware.nixosModules.framework-16-7040-amd
             ];
         };
-    
+
         flake.darwinConfigurations.polyakov = inputs.nix-darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             specialArgs.inputs = inputs;

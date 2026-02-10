@@ -5,6 +5,7 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
         flake-parts.url = "github:hercules-ci/flake-parts";
         import-tree.url = "github:vic/import-tree";
+        nixos-hardware.url = "github:NixOS/nixos-hardware/master";
         nix-darwin.url = "github:LnL7/nix-darwin";
         nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
         home-manager.url = "github:nix-community/home-manager";
