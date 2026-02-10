@@ -16,7 +16,7 @@
         system-desktop-packages
         system-desktop-theme
         system-desktop-wm
-        system-desktop-glide
+        # system-desktop-glide
         system-desktop-swayosd
         system-desktop-bluetooth
         system-desktop-battery

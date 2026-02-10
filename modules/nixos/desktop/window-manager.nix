@@ -98,5 +98,8 @@ in {
         };
     };
 
-    flake.modules.nixos.system-desktop-wm = {};
+    flake.modules.nixos.system-desktop-wm = {
+        programs.hyprland.enable = true;
+        environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    };
 }

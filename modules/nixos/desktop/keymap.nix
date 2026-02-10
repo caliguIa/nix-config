@@ -92,7 +92,7 @@ in {
 
     flake.modules.nixos.system-desktop-keymap = {pkgs, ...}: {
         services.kanata = {
-            enable = true;
+            enable = false;
             package = pkgs.kanata-with-cmd;
             keyboards.internalKeyboard.configFile = "${pkgs.writeText "kanata.kbd" "${kanataConfig}"}";
         };

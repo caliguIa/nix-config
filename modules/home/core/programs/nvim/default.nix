@@ -11,5 +11,9 @@
             withPython3 = false;
             withRuby = false;
         };
+        home.packages = with pkgs; [
+            tree-sitter
+            gcc
+        ];
     };
 }

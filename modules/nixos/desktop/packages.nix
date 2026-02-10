@@ -20,24 +20,7 @@ topLevel @ {...}: {
         ];
     };
 
-    flake.modules.nixos.system-desktop-packages = {pkgs, ...}: let
-        widevine-firefox = pkgs.stdenv.mkDerivation {
-            name = "widevine-firefox";
-            version = pkgs.widevine-cdm.version;
-
-            buildCommand = ''
-                mkdir -p $out/gmp-widevinecdm/system-installed
-                ln -s "${pkgs.widevine-cdm}/share/google/chrome/WidevineCdm/manifest.json" $out/gmp-widevinecdm/system-installed/manifest.json
-                ln -s "${pkgs.widevine-cdm}/share/google/chrome/WidevineCdm/_platform_specific/linux_arm64/libwidevinecdm.so" $out/gmp-widevinecdm/system-installed/libwidevinecdm.so
-            '';
-
-            meta =
-                pkgs.widevine-cdm.meta
-                // {
-                    platforms = ["aarch64-linux"];
-                };
-        };
-    in {
+    flake.modules.nixos.system-desktop-packages = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
             grim
@@ -47,11 +30,17 @@ topLevel @ {...}: {
             oculante
             xwayland-satellite
             kdePackages.qtwayland
+            bitwarden-cli
+            bitwarden-desktop
+            mullvad-vpn
+            mullvad
+            filen-cli
+            filen-desktop
+            ente-desktop
         ];
 
-        environment.variables.MOZ_GMP_PATH = ["${widevine-firefox}/gmp-widevinecdm/system-installed"];
         programs.sway.enable = true;
-        services.displayManager.ly.enable = true;
+        services.displayManager.ly.enable = false;
         services.gnome.gnome-keyring.enable = true;
         security.pam.services.hyprlock = {};
         security.polkit.enable = true;

@@ -7,6 +7,65 @@
     }: {
         stylix.targets.sway.enable = false;
         services.swayidle.enable = true;
+        wayland.windowManager.hyprland = {
+            enable = true;
+            xwayland.enable = true;
+            systemd.variables = ["--all"];
+            settings = {
+                "$mod" = "SUPER";
+                "$terminal" = "kitty";
+                "$menu" = "kickoff --from-path";
+                monitor = "eDP-1, 2560x1600@165, 0x0, 1.60";
+                input = {
+                    kb_options = "caps:swapescape";
+                    touchpad = {
+                        natural_scroll = 1;
+                        tap-to-click = 0;
+                        clickfinger_behavior = "yes";
+                    };
+                };
+                bind = [
+                    "$mod, Return, exec, $terminal"
+                    "$mod, T, exec, $terminal"
+                    "$mod, R, exec, $menu"
+                    "$mod, Q, killactive,"
+
+                    "$mod, H, movefocus, l"
+                    "$mod, J, movefocus, d"
+                    "$mod, K, movefocus, u"
+                    "$mod, L, movefocus, r"
+
+                    "$mod, A, workspace, 1"
+                    "$mod, S, workspace, 2"
+                    "$mod, D, workspace, 3"
+                    "$mod, F, workspace, 4"
+                    "$mod SHIFT, A, movetoworkspace, 1"
+                    "$mod SHIFT, S, movetoworkspace, 2"
+                    "$mod SHIFT, D, movetoworkspace, 3"
+                    "$mod SHIFT, F, movetoworkspace, 4"
+                ];
+                bindm = [
+                    "$mod, mouse:272, movewindow"
+                    "$mod, mouse:274, resizewindow"
+                ];
+                bindl = [
+                    ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+                    ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+                    ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+                    ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+                    ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
+                    ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+                    ", XF86AudioNext, exec, playerctl next"
+                    ", XF86AudioPause, exec, playerctl play-pause"
+                    ", XF86AudioPlay, exec, playerctl play-pause"
+                    ", XF86AudioPrev, exec, playerctl previous"
+                ];
+                exec-once = [
+                    "$terminal"
+                    "waybar"
+                ];
+            };
+        };
         wayland.windowManager.sway = let
             workspace = {
                 "1" = "1";
