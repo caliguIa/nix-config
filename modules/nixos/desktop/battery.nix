@@ -8,7 +8,7 @@
                 Type = "simple";
                 ExecStart = "${pkgs.writeShellScript "battery-monitor" ''
                     STATE_FILE="/tmp/battery-notif-state"
-                    BATTERY_PATH="/sys/class/power_supply/macsmc-battery"
+                    BATTERY_PATH="/sys/class/power_supply/BAT1"
 
                     check_battery() {
                         CAPACITY=$(cat "$BATTERY_PATH/capacity")

@@ -1,35 +1,7 @@
-{
-    inputs,
-    self,
-    ...
-}: {
-    flake.modules.darwin.system-desktop-theme = {
-        imports = [
-            inputs.stylix.darwinModules.stylix
-            self.modules.generic.system-desktop-theme
-        ];
-        stylix.fonts.sizes = {
-            applications = 14;
-            desktop = 14;
-            popups = 14;
-            terminal = 14;
-        };
-    };
+{inputs, ...}: {
+    flake.modules.nixos.system-desktop-theme = {pkgs, ...}: {
+        imports = [inputs.stylix.nixosModules.stylix];
 
-    flake.modules.nixos.system-desktop-theme = {
-        imports = [
-            inputs.stylix.nixosModules.stylix
-            self.modules.generic.system-desktop-theme
-        ];
-        stylix.fonts.sizes = {
-            applications = 11;
-            desktop = 11;
-            popups = 11;
-            terminal = 11;
-        };
-    };
-
-    flake.modules.generic.system-desktop-theme = {pkgs, ...}: {
         stylix = {
             enable = true;
             autoEnable = false;
@@ -40,6 +12,12 @@
                 };
                 serif = monospace;
                 sansSerif = monospace;
+                sizes = {
+                    applications = 11;
+                    desktop = 11;
+                    popups = 11;
+                    terminal = 11;
+                };
             };
             base16Scheme = {
                 base00 = "#14171d"; # inkBg0 - Default Background

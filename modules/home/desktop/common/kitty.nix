@@ -8,9 +8,6 @@
                 allow_remote_control = "yes";
                 scrollback_lines = 10000;
                 update_check_interval = 0;
-                macos_quit_when_last_window_closed = "yes";
-                macos_show_window_title_in = "none";
-                macos_colorspace = "default";
                 hide_window_decorations = "titlebar-and-corners";
                 allow_hyperlinks = "yes";
                 open_url_modifiers = "cmd";

@@ -15,16 +15,17 @@
         programs.waybar = {
             enable = true;
             style = builtins.readFile ./style.css;
+            systemd.enable = true;
             settings = {
                 mainBar = {
                     layer = "top";
                     position = "top";
                     height = 10;
                     reload_style_on_change = true;
-                    modules-left = ["sway/workspaces" "sway/mode"];
+                    modules-left = ["hyprland/workspaces" "hyprland/submap"];
                     modules-center = ["clock" "custom/github"];
                     modules-right = ["cpu" "memory" "bluetooth" "network" "battery" "custom/system"];
-                    "sway/workspaces" = {
+                    "hyprland/workspaces" = {
                         disable-scroll = true;
                         disable-scroll-wraparound = true;
                         all-outputs = true;
@@ -48,9 +49,6 @@
                             "9" = "9";
                             "10" = "10";
                         };
-                    };
-                    "sway/window" = {
-                        max-length = 50;
                     };
                     cpu.format = "{usage}% ";
                     memory.format = "{used}GiB ";

@@ -1,24 +1,80 @@
 {
-    flake.modules.homeManager.desktop-linux-hyprlock = {config, ...}: {
+    flake.modules.homeManager.desktop-linux-hypr = {
+        config,
+        pkgs,
+        ...
+    }: {
+        home.packages = with pkgs; [
+            hyprpicker
+            hyprsysteminfo
+            hyprpwcenter
+            hyprshutdown
+        ];
+        services.hyprpolkitagent.enable = true;
+        services.hyprpaper = {
+            enable = true;
+            settings = {
+                splash = false;
+                wallpaper = [
+                    {
+                        monitor = "";
+                        path = "/share/wallpapers/shinchan.jpg";
+                        fit_mode = "cover";
+                    }
+                ];
+            };
+        };
+        services.hypridle = {
+            enable = true;
+            settings = {
+                general = {
+                    lock_cmd = "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
+                    before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
+                    after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+                };
+                listener = [
+                    {
+                        timeout = 300;
+                        on-timeout = "brightnessctl -s set 10"; # set monitor backlight to minimum.
+                        on-resume = "brightnessctl -r"; # monitor backlight restore.
+                    }
+                    {
+                        timeout = 600;
+                        on-timeout = "loginctl lock-session";
+                    }
+                    {
+                        timeout = 630;
+                        on-timeout = "hyprctl dispatch dpms off";
+                        on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
+                    }
+                    {
+                        timeout = 900;
+                        on-timeout = "systemctl suspend";
+                    }
+                ];
+            };
+        };
+
         programs.hyprlock = {
             enable = true;
             settings = let
                 colours = config.lib.stylix.colors;
             in {
                 general = {
-                    hide-cursor = true;
+                    hide-cursor = false;
                     ignore_empty_input = true;
-                    immediate_render = true;
+                    immediate_render = false;
                     text_trim = true;
                     fractional_scaling = 2;
                     screencopy_mode = 0;
                     fail_timeout = 1000;
                 };
-                animations.enabled = false;
+                auth.fingerprint.enabled = true;
                 background = [
                     {
                         monitor = "";
-                        color = "rgb(${colours.base01})";
+                        path = "screenshot";
+                        blur_passes = 3;
                     }
                 ];
                 input-field = [

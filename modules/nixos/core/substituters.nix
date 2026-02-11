@@ -1,13 +1,5 @@
-{self, ...}: {
-    flake.modules.nixos.substituters = {
-        imports = [self.modules.generic.system-core-substituters];
-    };
-
-    flake.modules.darwin.substituters = {
-        imports = [self.modules.generic.system-core-substituters];
-    };
-
-    flake.modules.generic.system-core-substituters = let
+{
+    flake.modules.nixos.substituters = {lib, ...}: let
         substituters = [
             {
                 url = "https://cache.nixos.org";
@@ -15,13 +7,13 @@
                 priority = 1;
             }
             {
-                url = "https://nix-cache.ynh.ovh";
-                publicKey = "nix-cache.ynh.ovh:9qrjMrCm2hFYIuEgexkBxJTG0/6kT2jqd8muFtUezbk=";
+                url = "https://nix-community.cachix.org";
+                publicKey = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
                 priority = 2;
             }
             {
-                url = "https://nix-community.cachix.org";
-                publicKey = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+                url = "https://hyprland.cachix.org";
+                publicKey = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
                 priority = 3;
             }
             {
@@ -33,7 +25,12 @@
     in {
         nix.settings = {
             trusted-public-keys = builtins.catAttrs "publicKey" substituters;
-            substituters = builtins.map (def: "${def.url}?priority=${toString def.priority}") substituters;
+            substituters = lib.mkForce (map (def: "${def.url}?priority=${toString def.priority}") substituters);
+            fallback = true;
+            connect-timeout = 5;
+            warn-dirty = false;
+            max-substitution-jobs = 16;
+            http-connections = 25;
         };
     };
 }

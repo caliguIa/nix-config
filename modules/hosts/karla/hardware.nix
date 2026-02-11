@@ -6,9 +6,7 @@
         pkgs,
         ...
     }: {
-        imports = [
-            (modulesPath + "/installer/scan/not-detected.nix")
-        ];
+        imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
         boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod"];
@@ -19,6 +17,9 @@
             systemd-boot.enable = true;
             efi.canTouchEfiVariables = true;
         };
+
+        hardware.framework.enableKmod = true;
+        hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
         fileSystems."/" = {
             device = "/dev/disk/by-uuid/e4dd47e6-8455-417d-98e1-e99c0ea0f360";
@@ -34,8 +35,5 @@
         swapDevices = [
             {device = "/dev/disk/by-uuid/830029dd-1bdc-46d7-9d31-632f42ba80c7";}
         ];
-
-        nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-        hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }

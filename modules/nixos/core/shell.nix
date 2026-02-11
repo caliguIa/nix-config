@@ -1,29 +1,7 @@
-topLevel @ {self, ...}: let
+topLevel @ {...}: let
     users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.darwin.core = {config, ...}: let
-        homeDirectory = config.users.users.${users.primary}.home;
-    in {
-        imports = [self.modules.generic.system-core-shell];
-        environment = {
-            systemPath = [
-                "/Applications/Docker.app/Contents/Resources/bin"
-                "${homeDirectory}/.cargo/bin"
-                "${homeDirectory}/.local/bin"
-                "${homeDirectory}/go/bin"
-            ];
-            variables = {
-                XDEBUG_MODE = "off";
-                RAINFROG_CONFIG = "${homeDirectory}/.config/rainfrog";
-            };
-        };
-    };
-
-    flake.modules.nixos.core = _: {
-        imports = [self.modules.generic.system-core-shell];
-    };
-
-    flake.modules.generic.system-core-shell = {
+    flake.modules.nixos.core = {
         config,
         pkgs,
         ...

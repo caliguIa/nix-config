@@ -1,105 +1,12 @@
-topLevel @ {...}: let
-    users = topLevel.config.flake.meta.users;
-in {
-    flake.modules.darwin.system-desktop-wm = {config, ...}: let
-        homeDirectory = config.users.users.${users.primary}.home;
-        kickoffCmd = "${homeDirectory}/.cargo/bin/frisk --apps --commands";
-    in {
-        services.aerospace = {
-            enable = true;
-            settings = {
-                enable-normalization-flatten-containers = true;
-                enable-normalization-opposite-orientation-for-nested-containers = true;
-                accordion-padding = 0;
-                default-root-container-layout = "tiles";
-                default-root-container-orientation = "auto";
-                key-mapping.preset = "qwerty";
-                gaps = {
-                    inner.horizontal = 0;
-                    inner.vertical = 0;
-                    outer.left = 0;
-                    outer.bottom = 0;
-                    outer.top = 0;
-                    outer.right = 0;
-                };
-                mode.main.binding = {
-                    cmd-h = []; # Disable "hide application"
-                    cmd-alt-h = []; # Disable "hide others"
-                    alt-minus = "resize smart -50";
-                    alt-equal = "resize smart +50";
-                    alt-a = "workspace 1";
-                    alt-s = "workspace 2";
-                    alt-d = "workspace 3";
-                    alt-f = "workspace 4";
-                    alt-ctrl-a = "move-node-to-workspace 1";
-                    alt-ctrl-s = "move-node-to-workspace 2";
-                    alt-ctrl-d = "move-node-to-workspace 3";
-                    alt-ctrl-f = "move-node-to-workspace 4";
-                    alt-q = "exec-and-forget open -a /Applications/Ghostty.app";
-                    alt-w = "exec-and-forget open -a '/Applications/Zen Browser.app'";
-                    alt-e = "exec-and-forget open -a /Applications/Slack.app";
-                    alt-r = "exec-and-forget open -a /Applications/Music.app";
-                    alt-space = "exec-and-forget ${kickoffCmd}";
-                    cmd-space = "exec-and-forget ${kickoffCmd}";
-                    alt-left = "focus left";
-                    alt-down = "focus down";
-                    alt-up = "focus up";
-                    alt-right = "focus right";
-                    alt-shift-h = "move left";
-                    alt-shift-j = "move down";
-                    alt-shift-k = "move up";
-                    alt-shift-l = "move right";
-                    alt-slash = "layout tiles horizontal vertical";
-                    alt-comma = "layout accordion horizontal vertical";
-                    alt-m = "fullscreen";
-                    alt-semicolon = "mode service";
-                };
-                mode.service.binding = {
-                    esc = [
-                        "reload-config"
-                        "mode main"
-                    ];
-                    r = [
-                        "flatten-workspace-tree"
-                        "mode main"
-                    ]; # reset layout
-                    f = [
-                        "layout floating tiling"
-                        "mode main"
-                    ]; # Toggle between floating and tiling layout
-                    backspace = [
-                        "close-all-windows-but-current"
-                        "mode main"
-                    ];
-                };
-                on-window-detected = [
-                    {
-                        "if".app-name-regex-substring = "finder";
-                        run = ["layout floating"];
-                    }
-                    {
-                        "if".app-name-regex-substring = "mail";
-                        run = ["layout floating"];
-                    }
-                    {
-                        "if".app-name-regex-substring = "TablePlus";
-                        run = ["layout floating"];
-                    }
-                    {
-                        "if".app-name-regex-substring = "IINA";
-                        run = ["layout floating"];
-                    }
-                    {
-                        "if".window-title-regex-substring = "Bitwarden Password Manager";
-                        run = ["layout floating"];
-                    }
-                ];
-            };
-        };
-    };
+{inputs, ...}: {
+    flake.modules.nixos.system-desktop-wm = {pkgs, ...}: {
+        imports = [inputs.hyprland.nixosModules.default];
 
-    flake.modules.nixos.system-desktop-wm = {
-        programs.hyprland.enable = true;
+        programs.hyprland = {
+            enable = true;
+            package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+            portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+        };
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
     };
 }

@@ -1,20 +1,12 @@
 {config, ...}: let
     users = config.flake.meta.users;
 in {
-    flake.modules.homeManager.home-manager = {
-        lib,
-        pkgs,
-        ...
-    }: {
+    flake.modules.homeManager.home-manager = {lib, ...}: {
         home.stateVersion = "24.11";
         programs.home-manager.enable = true;
         home = {
             username = lib.mkForce users.primary;
-            homeDirectory = lib.mkForce (
-                if pkgs.stdenvNoCC.isDarwin
-                then "/Users/${users.primary}"
-                else "/home/${users.primary}"
-            );
+            homeDirectory = lib.mkForce "/home/${users.primary}";
         };
     };
 }

@@ -1,27 +1,11 @@
-topLevel @ {
-    inputs,
-    self,
-    ...
-}: let
+topLevel @ {inputs, ...}: let
     users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.darwin.home-manager = {
-        imports = [
-            inputs.home-manager.darwinModules.home-manager
-            self.modules.generic.system-core-home
-        ];
-    };
-
-    flake.modules.nixos.home-manager = {
-        imports = [
-            inputs.home-manager.nixosModules.home-manager
-            self.modules.generic.system-core-home
-        ];
-    };
-
-    flake.modules.generic.system-core-home = {config, ...}: let
+    flake.modules.nixos.home-manager = {config, ...}: let
         inherit (config.networking) hostName;
     in {
+        imports = [inputs.home-manager.nixosModules.home-manager];
+
         home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;

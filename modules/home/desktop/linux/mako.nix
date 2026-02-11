@@ -11,7 +11,6 @@
                 font = "${config.stylix.fonts.monospace.name} ${toString (config.stylix.fonts.sizes.popups)}";
                 height = 100;
                 default-timeout = 5000;
-                # icons = true;
                 ignore-timeout = false;
                 layer = "top";
                 margin = 10;
