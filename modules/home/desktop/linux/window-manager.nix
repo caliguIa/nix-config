@@ -1,7 +1,6 @@
 {inputs, ...}: {
     flake.modules.homeManager.desktop-linux-window-manager = {
         config,
-        lib,
         pkgs,
         ...
     }: {
@@ -15,7 +14,7 @@
                 "$mod" = "SUPER";
                 "$terminal" = "kitty";
                 "$menu" = "kickoff --from-path";
-                monitor = "eDP-1, 2560x1600@165, 0x0, 1.60";
+                monitor = "eDP-1, 2560x1600@165, 0x0, 1.00";
                 input = {
                     kb_options = "caps:swapescape";
                     touchpad = {

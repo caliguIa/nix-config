@@ -1,6 +1,6 @@
 {
-    flake.modules.nixos.system-desktop-bluetooth = {pkgs, ...}: {
-        environment.systemPackages = with pkgs; [overskride];
+    flake.modules.nixos.system-desktop-bluetooth = {
+        services.blueman.enable = true;
         hardware.bluetooth = {
             enable = true;
             powerOnBoot = true;

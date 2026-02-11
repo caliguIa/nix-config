@@ -13,10 +13,10 @@
                 serif = monospace;
                 sansSerif = monospace;
                 sizes = {
-                    applications = 11;
-                    desktop = 11;
-                    popups = 11;
-                    terminal = 11;
+                    applications = 14;
+                    desktop = 14;
+                    popups = 14;
+                    terminal = 14;
                 };
             };
             base16Scheme = {

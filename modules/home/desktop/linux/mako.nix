@@ -17,7 +17,7 @@
                 markup = true;
                 padding = 8;
                 text-color = "#${colours.base07}";
-                width = 300;
+                width = 500;
             };
         };
     };

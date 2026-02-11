@@ -4,14 +4,7 @@
         config,
         ...
     }: {
-        stylix.targets.waybar = {
-            enable = false;
-            addCss = true;
-            enableCenterBackColors = false;
-            enableLeftBackColors = false;
-            enableRightBackColors = false;
-            font = "monospace";
-        };
+        stylix.targets.waybar.enable = false;
         programs.waybar = {
             enable = true;
             style = builtins.readFile ./style.css;
@@ -22,19 +15,18 @@
                     position = "top";
                     height = 10;
                     reload_style_on_change = true;
-                    modules-left = ["hyprland/workspaces" "hyprland/submap"];
+                    modules-left = ["hyprland/workspaces"];
                     modules-center = ["clock" "custom/github"];
-                    modules-right = ["cpu" "memory" "bluetooth" "network" "battery" "custom/system"];
+                    modules-right = ["cpu" "memory" "pulseaudio" "bluetooth" "network" "battery" "custom/system"];
                     "hyprland/workspaces" = {
-                        disable-scroll = true;
-                        disable-scroll-wraparound = true;
-                        all-outputs = true;
                         format = "{icon}";
                         persistent-workspaces = {
-                            "1" = [];
-                            "2" = [];
-                            "3" = [];
-                            "4" = [];
+                            "*" = {
+                                "1" = [];
+                                "2" = [];
+                                "3" = [];
+                                "4" = [];
+                            };
                         };
                         format-icons = {
                             default = "";
@@ -47,16 +39,19 @@
                             "7" = "7";
                             "8" = "8";
                             "9" = "9";
-                            "10" = "10";
+                            "0" = "0";
                         };
                     };
                     cpu.format = "{usage}% ";
-                    memory.format = "{used}GiB ";
+                    memory.format = "{used}GB ";
                     battery = {
-                        format = "{capacity}% <span font='14'>{icon}</span>";
-                        format-charging = "{capacity}% ";
-                        format-icons = ["" "" "" "" ""];
-                        tooltip = false;
+                        format = "{icon}";
+                        format-icons = {
+                            default = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+                            charging = ["󰢟" "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
+                        };
+                        tooltip = true;
+                        tooltip-format = "{capacity}% {timeTo}";
                     };
                     bluetooth = {
                         format-on = "󰂯";
@@ -65,19 +60,31 @@
                         format-connected = "󰂱";
                         tooltip-format-connected = "{device_enumerate}";
                         tooltip-format-enumerate-connected = "{device_alias} {device_battery_percentage}%";
-                        on-click = "${pkgs.overskride}/bin/overskride";
+                        on-click = "${pkgs.blueman}/bin/blueman-manager";
                     };
                     clock = {
                         format = "{:%a %d %b  %H:%M:%S}";
                         interval = 1;
                     };
                     network = {
-                        format-wifi = "{essid} {icon}";
+                        format-wifi = "{icon}";
                         format-disconnected = "󰖪";
                         format-ethernet = "";
                         format-icons = [""];
+                        tooltip = true;
+                        tooltip-format = "";
+                        tooltip-format-wifi = "{essid} - {frequency}";
                         on-click = "${pkgs.iwgtk}/bin/iwgtk";
+                    };
+                    pulseaudio = {
+                        on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";
                         tooltip = false;
+                        scroll-step = 5;
+                        format = "{icon}";
+                        format-muted = "";
+                        format-icons = {
+                            default = ["" "" "" "" "" "" "" "" "" ""];
+                        };
                     };
                     "custom/github" = {
                         format = "{}";

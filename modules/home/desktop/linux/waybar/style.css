@@ -6,7 +6,7 @@
 
 window * {
   font-family: "Berkeley Mono";
-  font-size: 14px;
+  font-size: 20px;
   border: none;
   border-radius: 4px;
   color: @palette-white;
@@ -32,19 +32,24 @@ window#waybar {
 #custom-github,
 #mode,
 #window,
+#pulseaudio,
 #workspaces button
 {
-  padding: 0 8px;
-  margin: 2px 4px;
+  padding: 4px 8px;
+  margin: 4px;
   background: @palette-dark-1;
 }
 
 
 #custom-system,
-#battery span,
-#workspaces#battery-icon,
+#custom-github,
+#battery,
 #bluetooth {
-  font-size: 16px;
+  font-size: 22px;
+}
+
+#pulseaudio {
+  min-width: 14px;
 }
 
 #mode {
@@ -52,16 +57,17 @@ window#waybar {
 }
 
 #workspaces button {
+  color: @palette-dark-3;
   border-bottom: 3px solid @palette-dark-3;
 }
 
-#workspaces button.focused {
+#workspaces button.active {
   color: @palette-dark-1;
-  background: @palette-white;
+  border-bottom: 3px solid @palette-white;
 }
 #workspaces button.urgent {
   border-bottom: 3px solid @palette-red;
 }
-#workspaces button.persistent {
-  color: @palette-dark-3;
-}
+/* #workspaces button.persistent { */
+/*   color: @palette-dark-3; */
+/* } */

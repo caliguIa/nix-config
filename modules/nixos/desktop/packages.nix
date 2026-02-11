@@ -2,13 +2,15 @@ topLevel @ {...}: {
     flake.modules.nixos.system-desktop-packages = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
+            pwvucontrol
             brightnessctl
             playerctl
             grim
             slurp
             mpv
             nautilus
-            oculante
+            imv
+            zathura
             xwayland-satellite
             kdePackages.qtwayland
             bitwarden-cli

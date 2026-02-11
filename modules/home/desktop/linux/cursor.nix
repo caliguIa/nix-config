@@ -9,22 +9,22 @@
             gtk.enable = true;
             package = pkgs.whitesur-cursors;
             name = "WhiteSur-cursors";
-            size = 16;
+            size = 20;
         };
         gtk = {
             enable = true;
             colorScheme = "dark";
             theme = {
-                package = pkgs.flat-remix-gtk;
-                name = "Flat-Remix-GTK-Grey-Darkest";
+                name = "Adwaita";
+                package = pkgs.gnome-themes-extra;
             };
             iconTheme = {
-                package = pkgs.adwaita-icon-theme;
                 name = "Adwaita";
+                package = pkgs.adwaita-icon-theme;
             };
             font = {
                 name = config.stylix.fonts.monospace.name;
-                size = 11;
+                size = 16;
             };
         };
     };
