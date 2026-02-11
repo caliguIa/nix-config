@@ -3,17 +3,11 @@
         hostname = "karla";
     in
         {pkgs, ...}: {
-            environment.systemPackages = with pkgs; [iwgtk];
+            environment.systemPackages = with pkgs; [networkmanagerapplet];
             networking = {
                 hostName = hostname;
-                networkmanager.enable = false;
-                wireless.enable = false;
-                wireless.iwd = {
+                networkmanager = {
                     enable = true;
-                    settings = {
-                        General.EnableNetworkConfiguration = true;
-                        Settings.AutoConnect = true;
-                    };
                 };
             };
         };

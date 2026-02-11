@@ -1,7 +1,7 @@
 {
     flake.modules.darwin.core = {
         networking = {
-            dns = ["8.8.8.8"];
+            dns = ["1.1.1.1" "1.0.0.1"];
             applicationFirewall = {
                 enable = true;
                 blockAllIncoming = false;
@@ -11,7 +11,6 @@
     };
     flake.modules.nixos.core = {
         networking = {
-            nameservers = ["1.1.1.1"];
             firewall = {
                 enable = false;
                 allowPing = true;

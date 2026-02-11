@@ -6,7 +6,6 @@
         ...
     }: {
         stylix.targets.sway.enable = false;
-        services.swayidle.enable = true;
         wayland.windowManager.hyprland = {
             enable = true;
             xwayland.enable = true;
@@ -29,6 +28,8 @@
                     "$mod, T, exec, $terminal"
                     "$mod, R, exec, $menu"
                     "$mod, Q, killactive,"
+
+                    "$mod, M, fullscreen, 1"
 
                     "$mod, H, movefocus, l"
                     "$mod, J, movefocus, d"

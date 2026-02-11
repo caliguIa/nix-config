@@ -8,8 +8,6 @@
         desktop-linux-hyprlock
         desktop-linux-kickoff
         desktop-linux-mako
-        desktop-linux-swayidle
-        desktop-linux-swayosd
         desktop-linux-window-manager
     ];
 }

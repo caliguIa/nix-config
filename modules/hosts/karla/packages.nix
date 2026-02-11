@@ -4,11 +4,7 @@
             spotify
             slack
             google-chrome
+            unzip
         ];
-        # system.activationScripts.binbash = {
-        #     text = ''
-        #         ln -sf ${pkgs.bash}/bin/bash /bin/bash
-        #     '';
-        # };
     };
 }

@@ -32,8 +32,6 @@ topLevel @ {...}: {
             kdePackages.qtwayland
             bitwarden-cli
             bitwarden-desktop
-            mullvad-vpn
-            mullvad
             filen-cli
             filen-desktop
             ente-desktop

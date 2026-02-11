@@ -1,6 +1,6 @@
 {
     flake.modules.nixos.host_karla = {pkgs, ...}: {
-        hardware.opengl.enable = true;
+        hardware.graphics.enable = true;
         services.xserver.videoDrivers = ["amdgpu"];
         programs.steam.enable = true;
         programs.steam.gamescopeSession.enable = true;
