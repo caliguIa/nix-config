@@ -8,5 +8,6 @@
         system-desktop-bluetooth
         system-desktop-battery
         system-desktop-clipboard
+        system-desktop-accounts
     ];
 }

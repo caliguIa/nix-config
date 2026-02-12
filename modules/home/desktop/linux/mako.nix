@@ -18,6 +18,9 @@
                 padding = 8;
                 text-color = "#${colours.base07}";
                 width = 500;
+                "app-name=evolution-alarm-notify" = {
+                    default-timeout = 0;
+                };
             };
         };
     };

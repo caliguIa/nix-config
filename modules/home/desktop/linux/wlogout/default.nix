@@ -15,13 +15,13 @@
             layout = lib.mkForce [
                 {
                     label = "reboot";
-                    action = "systemctl reboot";
+                    action = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl reboot'";
                     text = "Restart";
                     keybind = "r";
                 }
                 {
                     label = "shutdown";
-                    action = "systemctl poweroff";
+                    action = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'";
                     text = "Shutdown";
                     keybind = "s";
                 }
@@ -33,7 +33,7 @@
                 }
                 {
                     label = "logout";
-                    action = "swaymsg exit";
+                    action = "hyprshutdown";
                     text = "Logout";
                     keybind = "e";
                 }
