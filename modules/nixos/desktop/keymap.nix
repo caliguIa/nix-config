@@ -1,5 +1,9 @@
 {
     flake.modules.nixos.system-desktop-keymap = {
+        services.logind = {
+            powerKey = "ignore";
+            powerKeyLongPress = "poweroff";
+        };
         services.keyd = {
             enable = true;
             keyboards.default = {

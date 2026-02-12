@@ -43,7 +43,7 @@
                     "$mod SHIFT, D, movetoworkspace, 3"
                     "$mod SHIFT, F, movetoworkspace, 4"
                     # Screenshot focused window
-                    "CTRL SHIFT, 3, exec, ${pkgs.writeShellScript "screenshot-focused" ''
+                    "$mod SHIFT, 3, exec, ${pkgs.writeShellScript "screenshot-focused" ''
                         filename="${config.home.homeDirectory}/Pictures/screenshots/$(date +%s_screenshot.png)"
                         ${pkgs.grim}/bin/grim -g \
                           "$(${pkgs.hyprland}/bin/hyprctl activewindow -j \
@@ -52,7 +52,7 @@
                         ${pkgs.libnotify}/bin/notify-send "Screenshot Taken" "$(basename "$filename")"
                     ''}"
                     # Screenshot selected area
-                    "CTRL SHIFT, 4, exec, ${pkgs.writeShellScript "screenshot-area" ''
+                    "$mod SHIFT, 4, exec, ${pkgs.writeShellScript "screenshot-area" ''
                         filename="${config.home.homeDirectory}/Pictures/screenshots/$(date +%s_screenshot.png)"
                         ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$filename"
                         ${pkgs.libnotify}/bin/notify-send "Screenshot Taken" "$(basename "$filename")"
@@ -63,6 +63,7 @@
                     "$mod ALT, mouse:272, resizewindow"
                 ];
                 bindl = [
+                    ",XF86PowerOff, exec, wlogout"
                     ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
                     ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
                     ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
