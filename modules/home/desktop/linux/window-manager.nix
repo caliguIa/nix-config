@@ -16,7 +16,6 @@
                 "$menu" = "kickoff --from-path";
                 monitor = "eDP-1, 2560x1600@165, 0x0, 1.00";
                 input = {
-                    kb_options = "caps:swapescape";
                     touchpad = {
                         natural_scroll = 1;
                         tap-to-click = 0;

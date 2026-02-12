@@ -11,9 +11,9 @@
                 settings = {
                     main = {
                         esc = "capslock";
+                        capslock = "esc";
                         leftcontrol = "layer(alt)";
-                        leftalt = "layer(meta)";
-                        meta = "layer(control)";
+                        leftalt = "layer(control)";
                         rightalt = "layer(control)";
                         rightcontrol = "layer(altgr)";
                     };
