@@ -20,7 +20,6 @@
                     "${config.flake.meta.users.primary}"
                 ];
                 experimental-features = ["nix-command" "flakes"];
-                warn-dirty = false;
             };
             optimise.automatic = lib.mkDefault true;
         };
@@ -29,7 +28,7 @@
             autoUpgrade = {
                 enable = true;
                 allowReboot = true;
-                channel = "https://channels.nixos.org/nixos-unstable";
+                flake = "github:caliguIa/nix-config";
             };
         };
     };
