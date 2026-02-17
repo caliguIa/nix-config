@@ -1,8 +1,8 @@
 {
-    flake.modules.nixos.system-desktop-keymap = {
-        services.logind = {
-            powerKey = "ignore";
-            powerKeyLongPress = "poweroff";
+    flake.modules.nixos.desktop = {
+        services.logind.settings.Login = {
+            HandlePowerKey = "ignore";
+            HandlePowerKeyLongPress = "poweroff";
         };
         services.keyd = {
             enable = true;
@@ -15,9 +15,9 @@
                         leftcontrol = "layer(alt)";
                         leftalt = "layer(control)";
                         rightalt = "layer(control)";
-                        rightcontrol = "layer(altgr)";
+                        rightcontrol = "layer(meta)";
                     };
-                    "altgr:C" = {
+                    "control:C" = {
                         h = "left";
                         j = "down";
                         k = "up";

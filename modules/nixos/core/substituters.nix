@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.substituters = {lib, ...}: let
+    flake.modules.nixos.core = {lib, ...}: let
         substituters = [
             {
                 url = "https://cache.nixos.org";

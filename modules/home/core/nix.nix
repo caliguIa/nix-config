@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.nix = {
+    flake.modules.homeManager.core = {
         nix.settings = {
             warn-dirty = false;
             experimental-features = "nix-command flakes";

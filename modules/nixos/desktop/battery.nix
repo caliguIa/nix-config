@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.system-desktop-battery = {pkgs, ...}: {
+    flake.modules.nixos.desktop = {pkgs, ...}: {
         systemd.user.services.battery-monitor = {
             description = "Battery level monitor";
             after = ["graphical-session.target"];

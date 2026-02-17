@@ -1,6 +1,6 @@
 {
-    description = "NixOS and Darwin system configuration";
-    outputs = {flake-parts, ...} @ inputs: flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
+    description = "NixOS system configuration";
+    outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
         flake-parts.url = "github:hercules-ci/flake-parts";
@@ -28,6 +28,10 @@
         };
         nextmeeting = {
             url = "github:chmouel/nextmeeting?dir=packaging";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        vicinae-extensions = {
+            url = "github:vicinaehq/extensions";
             inputs.nixpkgs.follows = "nixpkgs";
         };
     };

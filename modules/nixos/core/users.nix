@@ -1,7 +1,7 @@
 {config, ...}: let
     username = config.flake.meta.users.primary;
 in {
-    flake.modules.nixos.users = {
+    flake.modules.nixos.core = {
         users.users.${username} = {
             name = username;
             home = "/home/${username}";

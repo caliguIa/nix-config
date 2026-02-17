@@ -1,8 +1,10 @@
 topLevel @ {...}: {
-    flake.modules.nixos.system-desktop-packages = {pkgs, ...}: {
+    flake.modules.nixos.desktop = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            topLevel.inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
+            topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
+            tableplus
             pwvucontrol
+            wl-clipboard
             brightnessctl
             playerctl
             grim
@@ -15,10 +17,11 @@ topLevel @ {...}: {
             kdePackages.qtwayland
             bitwarden-cli
             bitwarden-desktop
-            filen-cli
-            filen-desktop
-            ente-desktop
             claude-code
+            hyprpicker
+            hyprsysteminfo
+            hyprpwcenter
+            hyprshutdown
         ];
 
         services.gnome.gnome-keyring.enable = true;

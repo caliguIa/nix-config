@@ -29,6 +29,8 @@
             {device = "/dev/disk/by-uuid/f61df574-ebc2-4430-ad1f-ddb1a919bd8a";}
         ];
 
+        systemd.tmpfiles.rules = ["d /data 0755 root root -"];
+
         networking.useDHCP = lib.mkDefault true;
 
         nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -1,5 +1,5 @@
 {inputs, ...}: {
-    flake.modules.nixos.system-desktop-theme = {pkgs, ...}: {
+    flake.modules.nixos.desktop = {pkgs, ...}: {
         imports = [inputs.stylix.nixosModules.stylix];
 
         stylix = {

@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.system-desktop-bluetooth = {
+    flake.modules.nixos.desktop = {
         services.blueman.enable = true;
         hardware.bluetooth = {
             enable = true;

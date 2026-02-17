@@ -1,7 +1,7 @@
 topLevel @ {inputs, ...}: let
     users = topLevel.config.flake.meta.users;
 in {
-    flake.modules.nixos.home-manager = {config, ...}: let
+    flake.modules.nixos.core = {config, ...}: let
         inherit (config.networking) hostName;
     in {
         imports = [inputs.home-manager.nixosModules.home-manager];

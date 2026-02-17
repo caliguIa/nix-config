@@ -1,6 +1,6 @@
 {
     flake.modules.nixos.host_westerby = {pkgs, ...}: let
-        widevine-firefox = pkgs.stdenv.mkDerivation {
+        widevine-firefox = pkgs.stdenvNoCC.mkDerivation {
             name = "widevine-firefox";
             version = pkgs.widevine-cdm.version;
 
@@ -17,7 +17,6 @@
                 };
         };
     in {
-
         environment.variables.MOZ_GMP_PATH = ["${widevine-firefox}/gmp-widevinecdm/system-installed"];
         environment.systemPackages = with pkgs; [
             mesa-demos
