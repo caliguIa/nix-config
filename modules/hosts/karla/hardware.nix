@@ -1,4 +1,4 @@
-{
+{inputs, ...}: {
     flake.modules.nixos.host_karla = {
         config,
         lib,
@@ -6,7 +6,10 @@
         pkgs,
         ...
     }: {
-        imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+        imports = [
+            (modulesPath + "/installer/scan/not-detected.nix")
+            inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+        ];
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
         boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod"];
