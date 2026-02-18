@@ -10,6 +10,11 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        agenix = {
+            url = "github:ryantm/agenix";
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.darwin.follows = "";
+        };
         apple-silicon.url = "github:nix-community/nixos-apple-silicon";
         hyprland.url = "github:hyprwm/Hyprland";
         fonts.url = "git+ssh://git@github.com/caliguIa/fonts";

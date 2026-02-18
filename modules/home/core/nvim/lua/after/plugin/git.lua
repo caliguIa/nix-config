@@ -1,5 +1,11 @@
 require('codediff').setup()
 
+vim.g.diffs = {
+    fugitive = true,
+    neogit = false,
+    extra_filetypes = { 'diff' },
+}
+
 vim.keymap.set('n', '<leader>gg', vim.cmd.CodeDiff, { desc = 'Status', silent = true })
 vim.keymap.set('n', '<leader>gb', function() vim.cmd.G('blame') end, { desc = 'Blame', silent = true })
 vim.keymap.set(

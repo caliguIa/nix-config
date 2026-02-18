@@ -31,14 +31,11 @@
                 prefix = "ctrl+[";
                 cmd-runner = pkgs.writeScriptBin "kitty-cmd-runner.sh" ''
                     commands=(
-                        "nix switch::cd ~/nix-config; ${pkgs.just}/bin/just switch"
-                        "nix build::cd ~/nix-config; ${pkgs.just}/bin/just build"
-                        "nix update::cd ~/nix-config; ${pkgs.just}/bin/just update"
+                        "nix switch::cd ~/nix-config; git add .; nh os switch ."
                         "nix gc::sudo nh clean all; nh clean all"
-                        "ous bounce::cd ~/ous; make down; make platform-up"
-                        "ous down::cd ~/ous; make down"
-                        "ous up::cd ~/ous; make platform-up"
-                        "pr review::prr-review.sh"
+                        "ous bounce::cd ~/ous; ${pkgs.gnumake}/bin/make down; ${pkgs.gnumake}/bin/make platform-up"
+                        "ous down::cd ~/ous; ${pkgs.gnumake}/bin/make down"
+                        "ous up::cd ~/ous; ${pkgs.gnumake}/bin/make platform-up"
                     )
 
                     main() {

@@ -1,25 +1,22 @@
 {
     inputs,
     config,
+    lib,
     ...
-}: {
+}: let
+    hosts = {
+        karla = "x86_64-linux";
+        george = "x86_64-linux";
+        westerby = "aarch64-linux";
+    };
+in {
     config = {
-        flake.nixosConfigurations.karla = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs.inputs = inputs;
-            modules = [(config.flake.modules.nixos.host_karla or {})];
-        };
-
-        flake.nixosConfigurations.george = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs.inputs = inputs;
-            modules = [(config.flake.modules.nixos.host_george or {})];
-        };
-
-        flake.nixosConfigurations.westerby = inputs.nixpkgs.lib.nixosSystem {
-            system = "aarch64-linux";
-            specialArgs.inputs = inputs;
-            modules = [(config.flake.modules.nixos.host_westerby or {})];
-        };
+        flake.nixosConfigurations = lib.mapAttrs (name: system:
+            inputs.nixpkgs.lib.nixosSystem {
+                inherit system;
+                specialArgs.inputs = inputs;
+                modules = [(config.flake.modules.nixos."host_${name}" or {})];
+            })
+        hosts;
     };
 }

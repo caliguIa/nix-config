@@ -21,7 +21,6 @@ add({ 'https://github.com/folke/ts-comments.nvim' })
 add({ 'https://github.com/vim-test/vim-test' })
 add({ 'https://github.com/Goose97/timber.nvim' })
 add({ 'https://github.com/caliguIa/zendiagram.nvim' })
-add({ 'https://github.com/dmtrKovalenko/fff.nvim' })
 add({
     'https://github.com/esmuellert/codediff.nvim',
     'https://github.com/MunifTanjim/nui.nvim',
