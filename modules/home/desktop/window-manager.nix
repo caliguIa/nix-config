@@ -24,11 +24,14 @@
                         clickfinger_behavior = "yes";
                     };
                 };
+                exec-once = [
+                    "vicinae server"
+                ];
                 bind = [
                     "$mod, Return, exec, $terminal"
                     "$mod, Space, exec, $menu"
                     "$mod, R, exec, $menu"
-                    "$mod SHIFT, Q, killactive,"
+                    "$mod SHIFT, Q, forcekillactive,"
                     "$mod, M, fullscreen, 1"
 
                     "$mod, A, workspace, 1"
@@ -41,10 +44,15 @@
                     "$mod, 3, movetoworkspace, 3"
                     "$mod, 4, movetoworkspace, 4"
 
-                    "$mod, H, movefocus, l"
-                    "$mod, J, movefocus, d"
-                    "$mod, K, movefocus, u"
-                    "$mod, L, movefocus, r"
+                    "ALT SHIFT, H, movefocus, l"
+                    "ALT SHIFT, J, movefocus, d"
+                    "ALT SHIFT, K, movefocus, u"
+                    "ALT SHIFT, L, movefocus, r"
+
+                    "SHIFT, Left, resizeactive, -50 0"
+                    "SHIFT, Down, resizeactive, 0 50"
+                    "SHIFT, Up, resizeactive, 0 -50"
+                    "SHIFT, Right, resizeactive, 50 0"
 
                     # Screenshot focused window
                     "CTRL SHIFT, 3, exec, ${pkgs.writeShellScript "screenshot-focused" ''

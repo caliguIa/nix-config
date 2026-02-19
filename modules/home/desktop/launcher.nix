@@ -2,14 +2,11 @@
     flake.modules.homeManager.desktop = {pkgs, ...}: {
         programs.vicinae = {
             enable = true;
-            systemd = {
-                enable = true;
-                autoStart = true;
-            };
+            systemd.enable = false;
             settings = {
-                close_on_focus_loss = true;
-                consider_preedit = true;
-                pop_to_root_on_close = true;
+                close_on_focus_loss = false;
+                consider_preedit = false;
+                pop_to_root_on_close = false;
                 favicon_service = "twenty";
                 search_files_in_root = true;
                 font = {

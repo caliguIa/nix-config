@@ -21,6 +21,10 @@
                 "app-name=evolution-alarm-notify" = {
                     default-timeout = 0;
                 };
+                "category=email.arrived" = {
+                    default-timeout = 0;
+                    on-button-left = "invoke-action mail-reply-sender";
+                };
             };
         };
     };

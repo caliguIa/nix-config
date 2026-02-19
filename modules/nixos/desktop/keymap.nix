@@ -1,5 +1,6 @@
 {
-    flake.modules.nixos.desktop = {
+    flake.modules.nixos.desktop = {pkgs, ...}: {
+        environment.systemPackages = with pkgs; [keyd];
         services.logind.settings.Login = {
             HandlePowerKey = "ignore";
             HandlePowerKeyLongPress = "poweroff";
@@ -12,12 +13,12 @@
                     main = {
                         esc = "capslock";
                         capslock = "esc";
-                        leftcontrol = "layer(alt)";
                         leftalt = "layer(control)";
+                        leftmeta = "layer(alt)";
                         rightalt = "layer(control)";
                         rightcontrol = "layer(meta)";
                     };
-                    "control:C" = {
+                    "meta:C" = {
                         h = "left";
                         j = "down";
                         k = "up";

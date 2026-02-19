@@ -9,7 +9,8 @@ let
     allSystems = builtins.attrValues systems;
 in {
     "passwordfile-caligula.age".publicKeys = allUsers ++ allSystems;
-    "token-fastmail-vdirsyncer.age".publicKeys = allUsers ++ allSystems;
+    "token-fastmail-vdirsyncer-carddav.age".publicKeys = allUsers ++ allSystems;
+    "token-fastmail-vdirsyncer-caldav.age".publicKeys = allUsers ++ allSystems;
     "token-fastmail-aerc.age".publicKeys = allUsers ++ allSystems;
     "token-fastmail-mbsync.age".publicKeys = allUsers ++ allSystems;
 }

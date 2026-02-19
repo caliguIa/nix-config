@@ -21,16 +21,11 @@
                     modules-right = ["cpu" "memory" "pulseaudio" "bluetooth" "network" "battery" "custom/system"];
                     "hyprland/workspaces" = {
                         format = "{icon}";
+                        persistent-only = true;
                         persistent-workspaces = {
-                            "*" = {
-                                "1" = [];
-                                "2" = [];
-                                "3" = [];
-                                "4" = [];
-                            };
+                            "*" = [1 2 3 4];
                         };
                         format-icons = {
-                            default = "";
                             "1" = "";
                             "2" = "󰖟";
                             "3" = "";
