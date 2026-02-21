@@ -1,6 +1,7 @@
 {
     flake.modules.nixos.desktop = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [keyd];
+        services.xserver.xkb.layout = "gb";
         services.logind.settings.Login = {
             HandlePowerKey = "ignore";
             HandlePowerKeyLongPress = "poweroff";

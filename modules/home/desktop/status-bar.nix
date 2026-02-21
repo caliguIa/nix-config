@@ -104,7 +104,7 @@
                     "custom/system" = {
                         format = "";
                         interval = "once";
-                        on-click = "wlogout";
+                        on-click = "wlogout -b 2";
                     };
                     "custom/agenda" = let
                         nextmeeting = lib.getExe inputs.nextmeeting.packages.${pkgs.stdenvNoCC.hostPlatform.system}.default;
@@ -152,7 +152,7 @@
                 @define-color palette-white #f2f1ef;
                 @define-color palette-red #c4746e;
                 window * {
-                  font-family: "Berkeley Mono";
+                  font-family: "${config.stylix.fonts.sansSerif.name}";
                   font-size: 20px;
                   border: none;
                   border-radius: 4px;

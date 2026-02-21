@@ -1,10 +1,12 @@
 {inputs, ...}: {
     flake.modules.homeManager.desktop = {pkgs, ...}: {
         fonts.fontconfig.enable = true;
-        home.packages = [
+        home.packages = with pkgs; [
             inputs.fonts.packages.${pkgs.stdenvNoCC.system}.berkeley-mono
-            pkgs.nerd-fonts.symbols-only
-            pkgs.font-awesome
+            nerd-fonts.symbols-only
+            material-symbols
+            dm-sans
+            inter
         ];
     };
 }

@@ -1,5 +1,22 @@
 {inputs, ...}: {
     flake.modules.homeManager.desktop = {pkgs, ...}: {
+        stylix.targets.fuzzel.enable = true;
+        stylix.targets.vicinae.enable = true;
+        programs.fuzzel = {
+            enable = true;
+            settings = {
+                main = {
+                    terminal = "${pkgs.kitty}/bin/kitty";
+                    layer = "overlay";
+                    prompt = ">>  ";
+                };
+                border = {
+                    radius = 17;
+                    width = 1;
+                };
+                dmenu.exit-immediately-if-empty = "yes";
+            };
+        };
         programs.vicinae = {
             enable = true;
             systemd.enable = false;
@@ -9,24 +26,6 @@
                 pop_to_root_on_close = false;
                 favicon_service = "twenty";
                 search_files_in_root = true;
-                font = {
-                    normal = {
-                        size = 18;
-                    };
-                };
-                theme = {
-                    light = {
-                        name = "vicinae-light";
-                        icon_theme = "default";
-                    };
-                    dark = {
-                        name = "vicinae-dark";
-                        icon_theme = "default";
-                    };
-                };
-                launcher_window = {
-                    opacity = 0.95;
-                };
             };
             extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenvNoCC.hostPlatform.system}; [
                 bluetooth

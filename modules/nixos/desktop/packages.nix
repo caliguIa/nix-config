@@ -1,8 +1,12 @@
 topLevel @ {...}: {
     flake.modules.nixos.desktop = {pkgs, ...}: {
+        services.gnome.gnome-keyring.enable = true;
+        security.pam.services.hyprlock = {};
+        security.polkit.enable = true;
+        services.dbus.enable = true;
+        programs.dconf.enable = true;
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
-            tableplus
             pwvucontrol
             wl-clipboard
             brightnessctl
@@ -22,10 +26,7 @@ topLevel @ {...}: {
             hyprsysteminfo
             hyprpwcenter
             hyprshutdown
+            tableplus
         ];
-
-        services.gnome.gnome-keyring.enable = true;
-        security.pam.services.hyprlock = {};
-        security.polkit.enable = true;
     };
 }

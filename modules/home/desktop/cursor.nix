@@ -23,7 +23,7 @@
                 package = pkgs.adwaita-icon-theme;
             };
             font = {
-                name = config.stylix.fonts.monospace.name;
+                name = config.stylix.fonts.sansSerif.name;
                 size = 16;
             };
         };

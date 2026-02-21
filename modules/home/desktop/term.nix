@@ -5,21 +5,22 @@
             enable = true;
             shellIntegration.enableFishIntegration = true;
             settings = {
-                allow_remote_control = "yes";
                 scrollback_lines = 10000;
                 update_check_interval = 0;
+                confirm_os_window_close = 0;
                 hide_window_decorations = "titlebar-and-corners";
                 allow_hyperlinks = "yes";
                 open_url_modifiers = "cmd";
                 cursor_trail = 100;
                 modify_font = "cell_height 165%";
-                listen_on = "unix:/tmp/kitty";
-                shellIntegration = "enabled";
+                allow_remote_control = "socket-only";
+                listen_on = "unix:@mykitty";
+                shell_integration = "enabled";
                 enabled_layouts = "tall, splits";
             };
             extraConfig = ''
                 # kitty-scrollback.nvim Kitten alias
-                action_alias kitty_scrollback_nvim kitten /nix/store/zdairpnlmqa27hwa4wkqmxsw05a18kdf-vim-pack-dir/pack/myNeovimPackages/start/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
+                action_alias kitty_scrollback_nvim kitten /home/caligula/.local/share/nvim/site/pack/core/opt/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
                 # Browse scrollback buffer in nvim
                 map kitty_mod+h kitty_scrollback_nvim
                 # Browse output of the last shell command in nvim
@@ -60,6 +61,7 @@
                     main
                 '';
             in {
+                "ctrl+c" = "copy_or_interrupt";
                 "alt+h" = "neighboring_window left";
                 "alt+j" = "neighboring_window bottom";
                 "alt+k" = "neighboring_window top";
@@ -68,6 +70,8 @@
                 "${prefix}>k" = "close_tab";
                 "${prefix}>n" = "next_tab";
                 "${prefix}>p" = "previous_tab";
+                "ctrl+shift+]" = "next_tab";
+                "ctrl+shift+[" = "previous_tab";
                 "${prefix}>f" = "launch --type=overlay kission";
                 "${prefix}>q" = "close_window";
                 "${prefix}>v" = "new_window_with_cwd";

@@ -1,86 +1,149 @@
 {
-    flake.modules.homeManager.desktop = {config, ...}: {
+    flake.modules.homeManager.desktop = {
+        config,
+        pkgs,
+        ...
+    }: {
         programs.hyprlock = {
             enable = true;
             settings = let
-                colours = config.lib.stylix.colors;
-            in {
-                general = {
-                    hide-cursor = false;
-                    ignore_empty_input = true;
-                    immediate_render = false;
-                    text_trim = true;
-                    fractional_scaling = 2;
-                    screencopy_mode = 0;
-                    fail_timeout = 1000;
+                style = {
+                    font = "${config.stylix.fonts.sansSerif.name} Medium";
+                    text = "rgba(d9e2ffFF)";
+                    input = {
+                        text = "rgba(d9e2ffFF)";
+                        bg = "rgba(00194411)";
+                        border = "rgba(8f909955)";
+                    };
                 };
+            in {
                 auth.fingerprint.enabled = true;
                 background = [
                     {
                         monitor = "";
-                        path = "screenshot";
-                        blur_passes = 3;
+                        color = "rgba(181818FF)";
                     }
                 ];
                 input-field = [
                     {
                         monitor = "";
-                        size = "350, 60";
+                        size = "250, 50";
                         outline_thickness = 2;
-                        rounding = 8;
-                        dots_size = 0.2;
-                        dots_spacing = 0.2;
-                        dots_center = true;
-                        outer_color = "rgb(${colours.base02})";
-                        inner_color = "rgb(${colours.base00})";
-                        font_color = "rgb(${colours.base06})";
-                        check_color = "rgb(${colours.base02})";
-                        fail_color = "rgb(${colours.base08})";
-                        fade_on_empty = false;
-                        font_family = config.stylix.fonts.monospace.name;
-                        placeholder_text = ''<i><span foreground="##${colours.base03}">Enter Password</span></i>'';
-                        hide_input = false;
-                        position = "0, 0";
+                        dots_size = 0.1;
+                        dots_spacing = 0.3;
+                        fade_on_empty = true;
+                        position = "0, 20";
                         halign = "center";
                         valign = "center";
+                        outer_color = style.input.border;
+                        inner_color = style.input.bg;
+                        font_color = style.input.text;
                     }
                 ];
                 label = [
                     {
                         monitor = "";
-                        text = ''cmd[update:100000] echo "$(date "+%a %e %b")"'';
-                        color = "rgb(${colours.base07})";
-                        font_size = 36;
-                        font_family = "${config.stylix.fonts.monospace.name} Bold";
-                        position = "0, -30";
-                        valign = "top";
-                        halign = "center";
-                        shadow_passes = 3;
-                        shadow_size = 3;
+                        text = "$LAYOUT";
+                        color = style.text;
+                        font_size = 14;
+                        font_family = style.font;
+                        position = "-30, 30";
+                        halign = "right";
+                        valign = "bottom";
                     }
                     {
+                        # Caps Lock Warning
+                        monitor = "";
+                        text = "cmd[update:250] ${pkgs.writeShellScriptBin "check-capslock" ''
+                            MAIN_KB_CAPS=$(hyprctl devices | grep -B 6 "main: yes" | grep "capsLock" | head -1 | awk '{print $2}')
+                            if [ "$MAIN_KB_CAPS" = "yes" ]; then
+                                echo "Caps Lock active"
+                            else
+                                echo ""
+                            fi
+                        ''}/bin/check-capslock";
+                        color = style.text;
+                        font_size = 13;
+                        font_family = style.font;
+                        position = "0, -25";
+                        halign = "center";
+                        valign = "center";
+                    }
+                    {
+                        # Clock
                         monitor = "";
                         text = "$TIME";
-                        color = "rgb(${colours.base07})";
-                        font_size = 100;
-                        font_family = "${config.stylix.fonts.monospace.name} Bold";
-                        position = "0, -100";
-                        valign = "top";
+                        color = style.text;
+                        font_size = 65;
+                        font_family = style.font;
+                        position = "0, 300";
                         halign = "center";
-                        shadow_passes = 3;
-                        shadow_size = 3;
+                        valign = "center";
                     }
                     {
+                        # Date
+                        monitor = "";
+                        text = "cmd[update:5000] date +'%A, %B %d'";
+                        color = style.text;
+                        font_size = 18;
+                        font_family = style.font;
+                        position = "0, 240";
+                        halign = "center";
+                        valign = "center";
+                    }
+                    {
+                        # User
                         monitor = "";
                         text = "$USER";
-                        color = "rgb(${colours.base06})";
-                        font_size = 18;
-                        font_family = config.stylix.fonts.monospace.name;
-                        position = "0, 60";
-                        valign = "center";
+                        color = style.text;
+                        outline_thickness = 2;
+                        dots_size = 0.2;
+                        dots_spacing = 0.2;
+                        dots_center = true;
+                        font_size = 20;
+                        font_family = style.font;
+                        position = "0, 50";
                         halign = "center";
-                        shadow_passes = 3;
-                        shadow_size = 3;
+                        valign = "bottom";
+                    }
+                    {
+                        # Status
+                        monitor = "";
+                        text = "cmd[update:5000] ${pkgs.writeShellScriptBin "battery-status" ''
+                            enable_battery=false
+                            battery_charging=false
+
+                            for battery in /sys/class/power_supply/*BAT*; do
+                              if [[ -f "$battery/uevent" ]]; then
+                                enable_battery=true
+                                if [[ $(cat /sys/class/power_supply/*/status | head -1) == "Charging" ]]; then
+                                  battery_charging=true
+                                fi
+                                break
+                              fi
+                            done
+
+                            if [[ $enable_battery == true ]]; then
+                              if [[ $battery_charging == true ]]; then
+                                echo -n "󰂅 "
+                              fi
+                              if [[ $battery_charging == false ]]; then
+                                echo -n "󰁹 "
+                              fi
+                              echo -n "$(cat /sys/class/power_supply/*/capacity | head -1)"%
+                              if [[ $battery_charging == false ]]; then
+                                echo -n " remaining"
+                              fi
+                            fi
+
+                            echo ""
+                        ''}/bin/battery-status";
+                        color = style.text;
+                        font_size = 14;
+                        font_family = style.font;
+                        position = "30, -30";
+                        halign = "left";
+                        valign = "top";
                     }
                 ];
             };

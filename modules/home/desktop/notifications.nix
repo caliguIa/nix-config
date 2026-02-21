@@ -8,7 +8,7 @@
                 background-color = "#${colours.base00}";
                 border-color = "#${colours.base01}";
                 border-radius = 4;
-                font = "${config.stylix.fonts.monospace.name} ${toString (config.stylix.fonts.sizes.popups)}";
+                font = "${config.stylix.fonts.sansSerif.name} ${toString (config.stylix.fonts.sizes.popups)}";
                 height = 100;
                 default-timeout = 5000;
                 ignore-timeout = false;

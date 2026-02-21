@@ -8,5 +8,7 @@
             portalPackage = inputs.hyprland.packages.${pkgs.stdenvNoCC.hostPlatform.system}.xdg-desktop-portal-hyprland;
         };
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
+        environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
+        environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
     };
 }

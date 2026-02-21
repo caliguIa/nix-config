@@ -1,17 +1,22 @@
 {inputs, ...}: {
     flake.modules.nixos.desktop = {pkgs, ...}: {
         imports = [inputs.stylix.nixosModules.stylix];
-
         stylix = {
             enable = true;
             autoEnable = false;
-            fonts = rec {
+            fonts = {
                 monospace = {
                     name = "Berkeley Mono";
                     package = inputs.fonts.packages.${pkgs.stdenvNoCC.system}.berkeley-mono;
                 };
-                serif = monospace;
-                sansSerif = monospace;
+                serif = {
+                    name = "DM Sans";
+                    package = pkgs.dm-sans;
+                };
+                sansSerif = {
+                    name = "DM Sans";
+                    package = pkgs.dm-sans;
+                };
                 sizes = {
                     applications = 14;
                     desktop = 14;

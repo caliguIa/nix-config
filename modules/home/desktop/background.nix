@@ -7,7 +7,7 @@
                 wallpaper = [
                     {
                         monitor = "";
-                        path = "/share/wallpapers/shinchan.jpg";
+                        path = "/share/wallpapers/bg.jpg";
                         fit_mode = "cover";
                     }
                 ];
