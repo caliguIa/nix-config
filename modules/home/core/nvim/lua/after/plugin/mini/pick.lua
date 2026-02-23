@@ -1,7 +1,8 @@
-require('mini.pick').setup()
+local pick = require('mini.pick')
+pick.setup()
 
 local cmd = vim.cmd
-vim.ui.select = MiniPick.ui_select
+vim.ui.select = pick.ui_select
 
 local pick_files = function()
     require('mini.pick').builtin.cli({
@@ -51,12 +52,13 @@ vim.keymap.set('n', '<leader>sh', function() cmd.Pick('help') end, { desc = 'Hel
 vim.keymap.set('n', '<leader>sH', function() cmd.Pick('hl_groups') end, { desc = 'Highlight groups', silent = true })
 vim.keymap.set('n', '<leader>sk', function() cmd.Pick('keymaps') end, { desc = 'Keymaps', silent = true })
 vim.keymap.set('n', '<leader>sr', function() cmd.Pick('resume') end, { desc = 'Resume', silent = true })
+vim.keymap.set('n', '<leader>sc', function() cmd.Pick('commands') end, { desc = 'Resume', silent = true })
 vim.keymap.set('n', '<leader>sb', function()
-    MiniPick.builtin.buffers({ include_current = false }, {
+    pick.builtin.buffers({ include_current = false }, {
         mappings = {
             wipeout = {
                 char = '<C-d>',
-                func = function() vim.api.nvim_buf_delete(MiniPick.get_picker_matches().current.bufnr, {}) end,
+                func = function() vim.api.nvim_buf_delete(pick.get_picker_matches().current.bufnr, {}) end,
             },
         },
     })

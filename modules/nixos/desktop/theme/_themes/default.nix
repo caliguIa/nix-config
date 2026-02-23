@@ -1,0 +1,3 @@
+{
+    kanso = import ./kanso;
+}

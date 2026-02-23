@@ -18,12 +18,12 @@
                 };
             in {
                 auth.fingerprint.enabled = true;
-                background = [
-                    {
-                        monitor = "";
-                        color = "rgba(181818FF)";
-                    }
-                ];
+                # background = [
+                #     {
+                #         monitor = "";
+                #         color = "rgba(181818FF)";
+                #     }
+                # ];
                 input-field = [
                     {
                         monitor = "";

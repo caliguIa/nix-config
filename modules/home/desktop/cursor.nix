@@ -1,9 +1,5 @@
 {
-    flake.modules.homeManager.desktop = {
-        pkgs,
-        config,
-        ...
-    }: {
+    flake.modules.homeManager.desktop = {pkgs, ...}: {
         home.pointerCursor = {
             enable = true;
             gtk.enable = true;
@@ -13,18 +9,10 @@
         };
         gtk = {
             enable = true;
-            colorScheme = "dark";
-            theme = {
-                name = "Adwaita";
-                package = pkgs.gnome-themes-extra;
-            };
+            # colorScheme = "dark";
             iconTheme = {
                 name = "Adwaita";
                 package = pkgs.adwaita-icon-theme;
-            };
-            font = {
-                name = config.stylix.fonts.sansSerif.name;
-                size = 16;
             };
         };
     };

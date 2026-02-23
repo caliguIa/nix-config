@@ -7,8 +7,8 @@
     }: {
         accounts.calendar.basePath = "${config.xdg.dataHome}/calendars";
         accounts.calendar.accounts.personal = {
-            primary = true;
-            primaryCollection = "personal";
+            # primary = true;
+            # primaryCollection = "personal";
             remote = {
                 userName = "cal@calrichards.io";
                 passwordCommand = ["sh" "-c" "${pkgs.coreutils}/bin/cat ${config.age.secrets.token-fastmail-vdirsyncer-caldav.path}"];
@@ -50,7 +50,7 @@
             enable = true;
             settings = {
                 default = {
-                    default_calendar = "personal";
+                    default_calendar = "Personal";
                     default_event_alarm = "15m";
                     default_event_duration = "30m";
                     highlight_event_days = true;

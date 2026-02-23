@@ -13,7 +13,7 @@ topLevel @ {...}: {
             playerctl
             grim
             slurp
-            mpv
+            # mpv
             nautilus
             imv
             zathura

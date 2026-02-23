@@ -1,8 +1,11 @@
+local misc = require('mini.misc')
 require('mini.surround').setup()
-require('mini.misc').setup()
+require('mini.notify').setup()
 
-MiniMisc.setup_restore_cursor()
-vim.keymap.set('n', '<leader>wm', MiniMisc.zoom, { desc = 'Maximise window', silent = true })
+misc.setup()
+misc.setup_restore_cursor()
+
+vim.api.nvim_create_user_command('Maximise', function() misc.zoom() end, { desc = 'Maximise window' })
 
 vim.api.nvim_create_autocmd('BufEnter', {
     desc = 'Find root and change current directory',
@@ -13,7 +16,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
         if vim.bo[data.buf].filetype == 'NeogitStatus' then return end
 
         vim.o.autochdir = false
-        local root = MiniMisc.find_root(data.buf, { '.git', 'Makefile' })
+        local root = misc.find_root(data.buf, { '.git', 'Makefile' })
         if root == nil then return end
         vim.fn.chdir(root)
     end),

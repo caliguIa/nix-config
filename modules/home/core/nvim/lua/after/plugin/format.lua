@@ -1,5 +1,6 @@
 local conform = require('conform')
 
+---@diagnostic disable-next-line: param-type-mismatch
 conform.setup({
     formatters_by_ft = {
         lua = { 'stylua' },
@@ -23,6 +24,7 @@ conform.setup({
         yaml = { 'prettier' },
     },
 })
+
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('format-on-write', { clear = true }),
     callback = function()

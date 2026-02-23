@@ -1,7 +1,6 @@
 {
     flake.modules.homeManager.desktop = {config, ...}: {
         wayland.windowManager.hyprland.settings = {
-            monitor = "eDP-1, 2560x1600@165, 0x0, 1.00";
             misc = {
                 font_family = config.stylix.fonts.sansSerif.name;
                 focus_on_activate = true;

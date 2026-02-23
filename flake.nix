@@ -23,21 +23,12 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
         zen-browser = {
             url = "github:0xc000022070/zen-browser-flake";
             inputs = {
                 nixpkgs.follows = "nixpkgs";
                 home-manager.follows = "home-manager";
             };
-        };
-        nextmeeting = {
-            url = "github:chmouel/nextmeeting?dir=packaging";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        vicinae-extensions = {
-            url = "github:vicinaehq/extensions";
-            inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 }

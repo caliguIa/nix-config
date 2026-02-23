@@ -176,6 +176,15 @@ local function setup_artisan_command()
             nargs = 0,
         })
 
+        -- Command to clear the cached list of Artisan commands
+        vim.api.nvim_create_user_command('ArtisanCacheClear', function()
+            state.commands_cache = nil
+            vim.notify('Cleared Artisan command cache')
+        end, {
+            desc = 'Clears the cache of available Artisan commands',
+            nargs = 0,
+        })
+
         vim.keymap.set('n', '<leader>la', vim.cmd.ArtisanPicker, { desc = 'Artisan commands', silent = true })
 
         state.has_command = true
@@ -189,15 +198,6 @@ end
 
 -- Initialize the integration
 setup_artisan_command()
-
--- Command to clear the cached list of Artisan commands
-vim.api.nvim_create_user_command('ArtisanCacheClear', function()
-    state.commands_cache = nil
-    vim.notify('Cleared Artisan command cache')
-end, {
-    desc = 'Clears the cache of available Artisan commands',
-    nargs = 0,
-})
 
 -- Update the command when changing directories
 vim.api.nvim_create_autocmd('DirChanged', {

@@ -14,4 +14,3 @@ g.loaded_matchit = 1
 g.loaded_2html_plugin = 1
 g.loaded_rrhelper = 1
 g.loaded_netrwPlugin = 1
-g.loaded_matchparen = 1

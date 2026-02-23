@@ -1,8 +1,6 @@
 local aerial = require('aerial')
 aerial.setup({
-    open_automatic = function(bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 80 and aerial.num_symbols(bufnr) > 4 and not aerial.was_closed()
-    end,
+    open_automatic = false,
     on_attach = function(bufnr)
         vim.keymap.set('n', '{', vim.cmd.AerialPrev, { buffer = bufnr })
         vim.keymap.set('n', '}', vim.cmd.AerialNext, { buffer = bufnr })

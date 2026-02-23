@@ -1,3 +1,14 @@
+local get_lua_plugin_dirs = function()
+    local expanded = vim.fs.normalize('$XDG_DATA_HOME/nvim/site/pack/core/opt')
+
+    return vim.iter(vim.fs.dir(expanded))
+        :filter(
+            function(name, type) return type == 'directory' and vim.uv.fs_stat(expanded .. '/' .. name .. '/lua') ~= nil end
+        )
+        :map(function(name) return expanded .. '/' .. name end)
+        :totable()
+end
+
 ---@type vim.lsp.Config
 return {
     on_attach = function(client)
@@ -16,8 +27,11 @@ return {
                 postfix = '@',
                 baseFunctionIncludesName = true,
             },
+            codeAction = { insertSpace = false },
             codeLens = { enable = true },
             doc = { syntax = 'md' },
+            documentColor = { enable = true },
+            hover = { enable = true },
             hint = {
                 enable = true,
                 paramHint = true,
@@ -50,10 +64,7 @@ return {
                 ignoreGlobs = { '**/*_spec.lua' },
                 library = vim.list_extend(
                     { vim.env.VIMRUNTIME },
-                    vim.tbl_filter(function(p)
-                        local lua_dir = p .. '/lua'
-                        return vim.uv.fs_stat(lua_dir) ~= nil
-                    end, vim.api.nvim_list_runtime_paths())
+                    get_lua_plugin_dirs('$XDG_DATA_HOME/nvim/site/pack/core/opt')
                 ),
             },
         },

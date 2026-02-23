@@ -26,13 +26,13 @@ statusline.setup({
     content = {
 
         active = function()
-            local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-            local filename = MiniStatusline.section_filename({ trunc_width = 75 })
-            local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+            local diagnostics = statusline.section_diagnostics({ trunc_width = 75 })
+            local filename = statusline.section_filename()
+            local fileinfo = statusline.section_fileinfo()
             local git = '󰊢  ' .. vim.fn['FugitiveHead']()
-            local location = MiniStatusline.section_location({ trunc_width = 75 })
-            local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
-            return MiniStatusline.combine_groups({
+            local location = statusline.section_location()
+            local search = statusline.section_searchcount({ trunc_width = 75 })
+            return statusline.combine_groups({
                 { hl = 'Normal', strings = { git } },
                 { hl = 'Normal', strings = { filename } },
                 '%=', -- End left alignment
@@ -42,8 +42,8 @@ statusline.setup({
             })
         end,
         inactive = function()
-            local filename = MiniStatusline.section_filename({ trunc_width = 80 })
-            return MiniStatusline.combine_groups({
+            local filename = statusline.section_filename()
+            return statusline.combine_groups({
                 { strings = { filename } },
             })
         end,

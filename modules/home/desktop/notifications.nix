@@ -1,14 +1,15 @@
 {
     flake.modules.homeManager.desktop = {config, ...}: {
+        stylix.targets.mako.enable = true;
         services.mako = {
             enable = true;
             settings = let
                 colours = config.lib.stylix.colors;
             in {
-                background-color = "#${colours.base00}";
-                border-color = "#${colours.base01}";
+                # background-color = "#${colours.base00}";
+                # border-color = "#${colours.base01}";
                 border-radius = 4;
-                font = "${config.stylix.fonts.sansSerif.name} ${toString (config.stylix.fonts.sizes.popups)}";
+                # font = "${config.stylix.fonts.sansSerif.name} ${toString (config.stylix.fonts.sizes.popups)}";
                 height = 100;
                 default-timeout = 5000;
                 ignore-timeout = false;
@@ -16,7 +17,7 @@
                 margin = 10;
                 markup = true;
                 padding = 8;
-                text-color = "#${colours.base07}";
+                # text-color = "#${colours.base07}";
                 width = 500;
                 "app-name=evolution-alarm-notify" = {
                     default-timeout = 0;

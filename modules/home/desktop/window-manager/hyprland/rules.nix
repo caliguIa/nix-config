@@ -152,8 +152,6 @@
                 "match:namespace quickshell:wTaskView, no_anim on"
                 # Launchers — must be fast
                 "match:namespace gtk4-layer-shell, no_anim on"
-                "match:namespace vicinae, blur on, ignore_alpha 0"
-                "match:namespace vicinae, no_anim on"
                 "match:namespace fuzzel, blur on, ignore_alpha 0"
                 "match:namespace fuzzel, no_anim on"
             ];

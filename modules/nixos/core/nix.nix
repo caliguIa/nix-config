@@ -24,12 +24,5 @@
             optimise.automatic = lib.mkDefault true;
         };
         nixpkgs.config.allowUnfree = true;
-        system = {
-            autoUpgrade = {
-                enable = true;
-                allowReboot = true;
-                flake = "github:caliguIa/nix-config";
-            };
-        };
     };
 }
