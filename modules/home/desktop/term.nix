@@ -11,7 +11,6 @@
                 hide_window_decorations = "titlebar-and-corners";
                 allow_hyperlinks = "yes";
                 open_url_modifiers = "cmd";
-                cursor_trail = 100;
                 modify_font = "cell_height 165%";
                 allow_remote_control = "socket-only";
                 listen_on = "unix:@mykitty";
@@ -32,11 +31,11 @@
                 prefix = "ctrl+[";
                 cmd-runner = pkgs.writeScriptBin "kitty-cmd-runner.sh" ''
                     commands=(
-                        "nix switch::cd ~/nix-config; git add .; nh os switch ."
+                        "nix rebuild::cd ~/nix-config; git add .; nh os switch ."
                         "nix gc::sudo nh clean all; nh clean all"
-                        "ous bounce::cd ~/ous; ${pkgs.gnumake}/bin/make down; ${pkgs.gnumake}/bin/make platform-up"
-                        "ous down::cd ~/ous; ${pkgs.gnumake}/bin/make down"
-                        "ous up::cd ~/ous; ${pkgs.gnumake}/bin/make platform-up"
+                        "ous bounce::cd ~/ous/platform; ${pkgs.gnumake}/bin/make bounce"
+                        "ous down::cd ~/ous/platform; ${pkgs.gnumake}/bin/make down"
+                        "ous up::cd ~/ous/platform; ${pkgs.gnumake}/bin/make up"
                     )
 
                     main() {

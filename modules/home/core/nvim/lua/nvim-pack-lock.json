@@ -4,6 +4,10 @@
       "rev": "f93dceed41e2f926074944fdf94c93c747bb7d19",
       "src": "gh:stevearc/aerial.nvim"
     },
+    "avante.nvim": {
+      "rev": "2475e71982cadc8d38ba20b9b6112873f33caf31",
+      "src": "gh:yetone/avante.nvim"
+    },
     "codediff.nvim": {
       "rev": "0a2f5d71cdf2e8e0ca37acb604cf7cb09998b045",
       "src": "gh:esmuellert/codediff.nvim"
@@ -11,6 +15,10 @@
     "conform.nvim": {
       "rev": "e969e302bced7ffb9a0a0323629f31feb0ca35a6",
       "src": "gh:stevearc/conform.nvim"
+    },
+    "copilot.lua": {
+      "rev": "1eecd6c47e2b1c1a7affaa23a3ab61d344be56d1",
+      "src": "gh:zbirenbaum/copilot.lua"
     },
     "diffs.nvim": {
       "rev": "dfebc68a1fc3e93dae5b6d49133243ec1886cb19",
@@ -64,6 +72,10 @@
     "plenary.nvim": {
       "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
       "src": "gh:nvim-lua/plenary.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "1c958131c083c8557ea499fdb08c88b8afb05c4e",
+      "src": "gh:MeanderingProgrammer/render-markdown.nvim"
     },
     "timber.nvim": {
       "rev": "1038a15f846e73840819355cab1c4346e6cf97f6",

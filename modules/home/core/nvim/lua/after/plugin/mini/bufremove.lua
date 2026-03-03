@@ -1,14 +1,7 @@
 local bufremove = require('mini.bufremove')
 bufremove.setup()
 
-vim.keymap.set(
-    'n',
-    '<leader>d',
-    function() bufremove.delete(vim.api.nvim_get_current_buf()) end,
-    { desc = 'Delete current buffer', silent = true }
-)
-
-vim.api.nvim_create_user_command('BufDeleteOthers', function()
+local delete_other_buffers = function()
     local current_buf = vim.api.nvim_get_current_buf()
     local all_bufs = vim.api.nvim_list_bufs()
 
@@ -18,4 +11,14 @@ vim.api.nvim_create_user_command('BufDeleteOthers', function()
             bufremove.delete(buf, true) -- Using force=true to skip confirmation
         end
     end
-end, { desc = 'Delete other buffers' })
+end
+
+vim.api.nvim_create_user_command('BufDeleteOthers', delete_other_buffers, { desc = 'Delete other buffers' })
+
+vim.keymap.set('n', '<leader>bo', delete_other_buffers, { desc = 'Delete other buffers', silent = true })
+vim.keymap.set(
+    'n',
+    '<leader>bd',
+    function() bufremove.delete(vim.api.nvim_get_current_buf()) end,
+    { desc = 'Delete current buffer', silent = true }
+)

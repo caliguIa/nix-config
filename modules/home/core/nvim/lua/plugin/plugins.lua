@@ -21,5 +21,8 @@ add({
     'gh:folke/ts-comments.nvim',
     'gh:tpope/vim-fugitive',
     'gh:vim-test/vim-test',
-    'gh:caliguIa/zendiagram.nvim',
+    'gh:gh:caliguIa/zendiagram.nvim',
+    'gh:yetone/avante.nvim',
+    'gh:zbirenbaum/copilot.lua',
+    'gh:MeanderingProgrammer/render-markdown.nvim',
 })

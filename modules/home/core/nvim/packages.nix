@@ -15,7 +15,7 @@
             stylua
             sqruff
             vtsls
-            biome
+            # biome
         ];
     };
 }

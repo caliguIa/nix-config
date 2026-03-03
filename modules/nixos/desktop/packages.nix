@@ -5,6 +5,12 @@ topLevel @ {...}: {
         security.polkit.enable = true;
         services.dbus.enable = true;
         programs.dconf.enable = true;
+        programs.nix-ld = {
+            enable = true;
+            libraries = with pkgs; [
+                # common libs, or leave empty to use defaults
+            ];
+        };
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
             pwvucontrol
