@@ -8,6 +8,7 @@
                 token-fastmail-vdirsyncer-caldav.file = ../../../.secrets/token-fastmail-vdirsyncer-caldav.age;
                 token-fastmail-aerc.file = ../../../.secrets/token-fastmail-aerc.age;
                 token-fastmail-mbsync.file = ../../../.secrets/token-fastmail-mbsync.age;
+                intelephense.file = ../../../.secrets/intelephense.age;
             };
         };
     };

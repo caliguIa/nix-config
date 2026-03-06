@@ -6,7 +6,7 @@ lsp.enable({
     -- 'css_variables',
     'docker_compose_language_service',
     'dockerls',
-    -- 'eslint',
+    'eslint',
     'intelephense',
     'jsonls',
     'just',

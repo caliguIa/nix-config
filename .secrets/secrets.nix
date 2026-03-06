@@ -13,4 +13,5 @@ in {
     "token-fastmail-vdirsyncer-caldav.age".publicKeys = allUsers ++ allSystems;
     "token-fastmail-aerc.age".publicKeys = allUsers ++ allSystems;
     "token-fastmail-mbsync.age".publicKeys = allUsers ++ allSystems;
+    "intelephense.age".publicKeys = allUsers ++ allSystems;
 }

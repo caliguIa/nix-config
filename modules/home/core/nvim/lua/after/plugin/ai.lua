@@ -1,19 +1,9 @@
 require('copilot').setup()
+---@diagnostic disable-next-line: missing-fields, param-type-mismatch
 require('avante').setup({
-    provider = 'copilot', -- The provider used in Aider mode or in the planning phase of Cursor Planning Mode
+    provider = 'copilot',
     mode = 'agentic',
     auto_suggestions_provider = 'copilot',
-    providers = {
-        copilot = {
-            endpoint = 'https://api.anthropic.com',
-            model = 'claude-sonnet-4-20250514',
-            timeout = 30000, -- Timeout in milliseconds
-            extra_request_body = {
-                temperature = 0.75,
-                max_tokens = 20480,
-            },
-        },
-    },
 })
 
 vim.api.nvim_create_autocmd('PackChanged', {

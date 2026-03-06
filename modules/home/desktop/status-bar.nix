@@ -54,7 +54,7 @@
                         format-disabled = "${key "BT" {}} OFF";
                         format-connected = "${key "BT" {}} {device_alias}";
                         tooltip = false;
-                        on-click = "${pkgs.blueman}/bin/blueman-manager";
+                        on-click = "${pkgs.overskride}/bin/overskride";
                     };
                     battery = {
                         format = "${key "BAT" {}} {capacity} ${key "%" {}}${key " CHG" {colour = "#c8c7c5";}}";
@@ -77,7 +77,8 @@
                         format-disconnected = "${key "WIFI" {}} DISC.";
                         format-ethernet = "${key "ETH" {}} {ifname}";
                         tooltip = false;
-                        on-click = "${pkgs.iwgtk}/bin/iwgtk";
+                        on-click = "${pkgs.iwmenu}/bin/iwmenu -l fuzzel";
+                        on-click-right = "${pkgs.iwgtk}/bin/iwgtk";
                     };
                     pulseaudio = {
                         on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";

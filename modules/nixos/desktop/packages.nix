@@ -16,6 +16,7 @@ topLevel @ {...}: {
             pwvucontrol
             wl-clipboard
             brightnessctl
+            iwmenu
             playerctl
             grim
             slurp

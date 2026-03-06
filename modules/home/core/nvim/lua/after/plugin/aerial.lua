@@ -13,4 +13,4 @@ aerial.setup({
         },
     },
 })
-vim.keymap.set('n', '<leader>a', function() vim.cmd.AerialToggle('right') end, { desc = 'Aerial' })
+vim.keymap.set('n', '<leader>co', function() vim.cmd.AerialToggle('right') end, { desc = 'Aerial' })

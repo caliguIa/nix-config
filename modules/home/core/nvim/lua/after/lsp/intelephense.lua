@@ -1,9 +1,8 @@
 ---@type vim.lsp.Config
 return {
     init_options = {
-        storagePath = '/tmp/intelephense',
         globalStoragePath = os.getenv('HOME') .. '/.cache/intelephense',
-        licenceKey = os.getenv('INTELEPHENSE_KEY'),
+        licenceKey = os.getenv('INTELEPHENSE_KEY_PATH'),
         ['language_server_configuration.auto_config'] = true,
         ['code_transform.import_globals'] = true,
     },

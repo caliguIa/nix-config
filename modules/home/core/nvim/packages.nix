@@ -1,5 +1,9 @@
 {
-    flake.modules.homeManager.core = {pkgs, ...}: {
+    flake.modules.homeManager.core = {
+        pkgs,
+        config,
+        ...
+    }: {
         programs.neovim.extraPackages = with pkgs; [
             emmylua-ls
             marksman
@@ -17,5 +21,8 @@
             vtsls
             # biome
         ];
+        home.sessionVariables = {
+            INTELEPHENSE_KEY_PATH = config.age.secrets.intelephense.path;
+        };
     };
 }
