@@ -1,5 +1,39 @@
 {
     flake.modules.homeManager.core = {
+        xdg.configFile."gitu/config.toml".text = ''
+            [style]
+            diff_highlight.tag_old = { fg = "#bf616a" }
+            diff_highlight.tag_new = { fg = "#a3be8c" }
+            diff_highlight.unchanged_old = { fg = "#d8dee9" }
+            diff_highlight.unchanged_new = { fg = "#d8dee9" }
+            diff_highlight.changed_old = { fg = "#bf616a" }
+            diff_highlight.changed_new = { fg = "#a3be8c" }
+
+            # Syntax highlighting
+            syntax_highlight.enabled = true
+            syntax_highlight.attribute = { fg = "#ebcb8b" }
+            syntax_highlight.comment = { fg = "#4c566a" }
+            syntax_highlight.constant_builtin = { fg = "#d08770" }
+            syntax_highlight.constant = { fg = "#d08770" }
+            syntax_highlight.constructor = { fg = "#8fbcbb" }
+            syntax_highlight.embedded = { fg = "#b48ead" }
+            syntax_highlight.function_builtin = { fg = "#88c0d0" }
+            syntax_highlight.function = { fg = "#81a1c1" }
+            syntax_highlight.keyword = { fg = "#81a1c1" }
+            syntax_highlight.number = { fg = "#d08770" }
+            syntax_highlight.module = { fg = "#8fbcbb" }
+            syntax_highlight.property = { fg = "#8fbcbb" }
+            syntax_highlight.operator = { fg = "#81a1c1" }
+            syntax_highlight.punctuation_bracket = { fg = "#d8dee9" }
+            syntax_highlight.punctuation_delimiter = { fg = "#d8dee9" }
+            syntax_highlight.string_special = { fg = "#ebcb8b" }
+            syntax_highlight.string = { fg = "#a3be8c" }
+            syntax_highlight.tag = { fg = "#81a1c1" }
+            syntax_highlight.type = { fg = "#8fbcbb" }
+            syntax_highlight.type_builtin = { fg = "#8fbcbb" }
+            syntax_highlight.variable_builtin = { fg = "#81a1c1" }
+            syntax_highlight.variable_parameter = { fg = "#d08770" }
+        '';
         programs.git = {
             enable = true;
             settings = {

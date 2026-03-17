@@ -12,31 +12,11 @@
                     position = "top";
                     height = 32;
                     reload_style_on_change = true;
-                    modules-left = ["hyprland/workspaces" "custom/meeting" "hyprland/window"];
+                    modules-left = ["clock#time" "clock#date" "custom/meeting"];
                     modules-center = [];
-                    modules-right = ["cpu" "memory" "bluetooth" "network" "pulseaudio" "battery" "clock#time" "clock#date"];
-                    "hyprland/workspaces" = {
-                        format = "{icon}";
-                        persistent-only = true;
-                        persistent-workspaces = {
-                            "*" = [1 2 3 4];
-                        };
-                        format-icons = {
-                            "1" = "1";
-                            "2" = "2";
-                            "3" = "3";
-                            "4" = "4";
-                            "5" = "5";
-                            "6" = "6";
-                            "7" = "7";
-                            "8" = "8";
-                            "9" = "9";
-                            "0" = "0";
-                        };
-                    };
-                    "hyprland/window" = {
-                        format = ''<span background="#1a1a18" color="#f2f1ef" weight="700" size="small" rise="1pt"> ACTIVE </span> {}'';
-                        separate-outputs = true;
+                    modules-right = ["power-profiles-daemon" "cpu" "memory" "bluetooth" "network" "pulseaudio" "battery"];
+                    power-profiles-daemon = {
+                        format = "${key "PWR" {}} {profile}";
                         tooltip = false;
                     };
                     cpu = {
@@ -63,12 +43,12 @@
                         tooltip = false;
                     };
                     "clock#date" = {
-                        format = "{:%a %d %b}";
+                        format = "${key "DATE" {}} {:%a %d %b}";
                         interval = 60;
                         tooltip = false;
                     };
                     "clock#time" = {
-                        format = "{0:%H}:{0:%M}:{0:%S}";
+                        format = "${key "TIME" {}} {0:%H}:{0:%M}:{0:%S}";
                         interval = 1;
                         tooltip = false;
                     };
@@ -194,117 +174,32 @@
                     };
                 };
             };
-            #       font-family: "${config.stylix.fonts.sansSerif.name}";
-            #     @define-color base00 #${config.lib.stylix.colors.base00};
-            #     @define-color base01 #${config.lib.stylix.colors.base01};
-            #     @define-color base02 #${config.lib.stylix.colors.base02};
-            #     @define-color base03 #${config.lib.stylix.colors.base03};
-            #     @define-color base04 #${config.lib.stylix.colors.base04};
-            #     @define-color base05 #${config.lib.stylix.colors.base05};
-            #     @define-color base06 #${config.lib.stylix.colors.base06};
-            #     @define-color base07 #${config.lib.stylix.colors.base07};
-            #     @define-color base08 #${config.lib.stylix.colors.base08};
-            #     @define-color base09 #${config.lib.stylix.colors.base09};
-            #     @define-color base0A #${config.lib.stylix.colors.base0A};
-            #     @define-color base0B #${config.lib.stylix.colors.base0B};
-            #     @define-color base0C #${config.lib.stylix.colors.base0C};
-            #     @define-color base0D #${config.lib.stylix.colors.base0D};
-            #     @define-color base0E #${config.lib.stylix.colors.base0E};
-            #     @define-color base0F #${config.lib.stylix.colors.base0F};
             style = pkgs.writeText "waybar.css" ''
                 @define-color bg     #f2f1ef;
-                @define-color bg1    #e8e7e4;
-                @define-color border #c8c7c5;
-                @define-color bstr   #888886;
                 @define-color fg     #1a1a18;
-                @define-color dim    #666662;
-
                 * {
-                  font-family: "Berkeley Mono", "IBM Plex Mono", monospace;
+                  font-family: "Berkeley Mono", monospace;
                   font-size: 18px;
                   border: none;
                   border-radius: 0;
                   padding: 0;
                   margin: 0;
                 }
-
                 window#waybar {
-                  background: @bg;
-                  border: 1px solid @fg;
-                  color: @fg;
+                    border-bottom: 1px solid @fg;
                 }
-
-                #workspaces {
-                  border-right: 1px solid @fg;
-                }
-
-                #workspaces button {
-                  min-width: 32px;
-                  padding: 0;
-                  margin: 0;
-                  background: transparent;
-                  color: @bstr;
-                  border-right: 1px solid @border;
-                  border-radius: 0;
-                  font-weight: 700;
-                }
-
-                #workspaces button:last-child {
-                  border-right: none;
-                }
-
-                #workspaces button.active {
-                  background: @fg;
-                  color: @bg;
-                }
-
-                #window {
-                  padding: 0 12px;
-                  border-right: 1px solid @fg;
-                  color: @fg;
-                  font-weight: 500;
-                }
-
-                #cpu,
-                #memory,
-                #bluetooth,
-                #network,
-                #pulseaudio,
-                #battery,
-                #clock.date,
-                #clock.time {
+                .module {
                   padding: 0 10px;
-                  border-left: 1px solid @fg;
                   color: @fg;
                   font-weight: 700;
                   background: transparent;
                 }
-
-                #cpu {
+                .modules-left .module {
+                  border-right: 1px solid @fg;
+                }
+                .modules-right .module {
                   border-left: 1px solid @fg;
                 }
-
-                #custom-meeting {
-                  padding: 0 11px;
-                  border-right: 2px solid @bstr;
-                  font-weight: 700;
-                  color: @fg;
-                }
-
-                #custom-meeting.soon {
-                  background: @bg;
-                  color: @fg;
-                }
-
-                #custom-meeting.none {
-                  color: @bstr;
-                }
-
-                #custom-meeting.active {
-                  background: @fg;
-                  color: @bg;
-                }
-
             '';
         };
     };

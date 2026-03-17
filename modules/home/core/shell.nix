@@ -20,6 +20,9 @@
                 '';
             };
         };
+        home.sessionPath = [
+            "/home/caligula/.local/bin"
+        ];
         home.shellAliases = {
             ".." = "cd ..";
             "..." = "cd ../..";

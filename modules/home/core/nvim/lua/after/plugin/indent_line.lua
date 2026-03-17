@@ -1,0 +1,254 @@
+local api = vim.api
+local ns = api.nvim_create_namespace('IndentLine')
+local ffi, treesitter = require('ffi'), vim.treesitter
+
+local UP, DOWN, INVALID = -1, 1, -1
+local DEBOUNCE_MS = 150
+
+local exclude_ft = { 'dashboard', 'lazy', 'help', 'nofile', 'terminal', 'prompt', 'qf' }
+local exclude_nodetype = {}
+local char = '│'
+local only_current = false
+
+local extmark_cfg = {
+    virt_text = { { char } },
+    virt_text_pos = 'overlay',
+    hl_mode = 'combine',
+    ephemeral = true,
+}
+
+ffi.cdef([[
+  typedef struct {} Error;
+  typedef struct file_buffer buf_T;
+  buf_T *find_buffer_by_handle(int buffer, Error *err);
+  int get_sw_value(buf_T *buf);
+  typedef int32_t linenr_T;
+  int get_indent_lnum(linenr_T lnum);
+  char *ml_get(linenr_T lnum);
+]])
+local C = ffi.C
+
+local highlight_ready = true
+local timer = vim.uv.new_timer()
+
+api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+    callback = function()
+        highlight_ready = false
+        timer:start(
+            DEBOUNCE_MS,
+            0,
+            vim.schedule_wrap(function()
+                highlight_ready = true
+                api.nvim__redraw({ buf = api.nvim_get_current_buf(), valid = false })
+            end)
+        )
+    end,
+})
+
+local function pack(empty, indent, cols)
+    return bit.bor(bit.lshift(empty and 1 or 0, 15), bit.lshift(bit.band(indent, 0x3F), 9), bit.band(cols, 0x1FF))
+end
+
+local function unpack(p)
+    return {
+        is_empty = bit.band(bit.rshift(p, 15), 1) == 1,
+        indent = bit.band(bit.rshift(p, 9), 0x3F),
+        indent_cols = bit.band(p, 0x1FF),
+    }
+end
+
+local ctx = { snapshot = {} }
+
+local function make_snapshot(lnum)
+    local line_text = ffi.string(C.ml_get(lnum))
+    local is_empty = #line_text == 0 or not line_text:find('[^ \t]')
+
+    if is_empty and ctx.has_ts then
+        local node = treesitter.get_node({ pos = { lnum - 1, 0 } })
+        if node then
+            ctx.tree_root = ctx.tree_root or node:tree():root():type()
+            local indent = 0
+            if ctx.tree_root and node:type() ~= ctx.tree_root then
+                local parent = node:parent()
+                if parent then
+                    local p_srow = parent:range()
+                    if p_srow > 0 then indent = C.get_indent_lnum(p_srow + 1) + ctx.step end
+                end
+            end
+            ctx.snapshot[lnum] = pack(true, indent, indent)
+            return unpack(ctx.snapshot[lnum])
+        end
+    end
+
+    local indent = is_empty and 0 or C.get_indent_lnum(lnum)
+
+    if not is_empty and not ctx.mixup and indent % ctx.step ~= 0 then
+        local col = api.nvim_win_get_cursor(0)[2]
+        if col > 0 and not api.nvim_get_current_line():sub(1, col):find('%w') then
+            indent = ctx.step + math.floor((indent - ctx.step) / ctx.step) * ctx.step
+        end
+    end
+
+    if is_empty then
+        local prev = lnum - 1
+        while prev >= 1 do
+            local sp = ctx.snapshot[prev] and unpack(ctx.snapshot[prev]) or make_snapshot(prev)
+            if (not sp.is_empty and sp.indent == 0) or sp.indent > 0 then
+                if sp.indent > 0 then indent = sp.indent end
+                break
+            end
+            prev = prev - 1
+        end
+    end
+
+    local prev_packed = ctx.snapshot[lnum - 1]
+    if prev_packed then
+        local prev = unpack(prev_packed)
+        if prev.is_empty and prev.indent < indent then
+            local p = lnum - 1
+            while p >= 1 do
+                local sp_packed = ctx.snapshot[p]
+                if not sp_packed then break end
+                local sp = unpack(sp_packed)
+                if not sp.is_empty or sp.indent >= indent then break end
+                ctx.snapshot[p] = pack(true, indent, indent)
+                p = p - 1
+            end
+        end
+    end
+
+    local col_pos = line_text:find('[^ \t]')
+    local indent_cols = is_empty and indent or (col_pos and col_pos - 1 or INVALID)
+
+    ctx.snapshot[lnum] = pack(is_empty, indent, indent_cols)
+    return unpack(ctx.snapshot[lnum])
+end
+
+local function find_current_range(currow_indent)
+    local curlevel = math.ceil(currow_indent / ctx.tabstop)
+    local function seek(row, dir)
+        while row >= 0 and row < ctx.count do
+            local sp = ctx.snapshot[row + 1] and unpack(ctx.snapshot[row + 1]) or make_snapshot(row + 1)
+            local level = math.ceil(sp.indent / ctx.tabstop)
+            if
+                (not sp.is_empty and not ctx.mixup and sp.indent < currow_indent)
+                or (ctx.mixup and level < curlevel)
+            then
+                if row < ctx.currow then
+                    ctx.range_srow = row
+                else
+                    ctx.range_erow = row
+                end
+                return
+            end
+            row = row + dir
+        end
+    end
+    seek(ctx.currow - 1, UP)
+    seek(ctx.currow + 1, DOWN)
+    if ctx.range_srow and not ctx.range_erow then ctx.range_erow = ctx.count - 1 end
+    ctx.cur_inlevel = ctx.mixup and math.ceil(currow_indent / ctx.tabstop) or math.floor(currow_indent / ctx.step)
+end
+
+local function on_line(_, _, bufnr, row)
+    local sp = ctx.snapshot[row + 1] and unpack(ctx.snapshot[row + 1]) or make_snapshot(row + 1)
+    if sp.indent == 0 then return end
+    if only_current and ctx.range_srow and ctx.range_erow and (row < ctx.range_srow or row > ctx.range_erow) then
+        return
+    end
+
+    local currow_insert = api.nvim_get_mode().mode == 'i' and ctx.currow == row
+    local total = ctx.mixup and math.ceil(sp.indent / ctx.tabstop) or sp.indent - 1
+    local step = ctx.mixup and 1 or ctx.step
+
+    for i = 1, total, step do
+        local col = i - 1
+        local level = ctx.mixup and i or math.floor(col / ctx.step) + 1
+        if ctx.is_tab and not ctx.mixup then col = level - 1 end
+
+        if ctx.has_ts then
+            local node = treesitter.get_node({ bufnr = bufnr, pos = { row, col }, ignore_injections = true })
+            local skip = false
+            while node do
+                if vim.tbl_contains(exclude_nodetype, node:type()) then
+                    skip = true
+                    break
+                end
+                node = node:parent()
+            end
+            if skip then goto continue end
+        end
+
+        if
+            col >= ctx.leftcol
+            and (not only_current or level == ctx.cur_inlevel)
+            and col < sp.indent_cols
+            and (not currow_insert or col ~= ctx.curcol)
+        then
+            local in_curblock = highlight_ready and ctx.range_srow and (row > ctx.range_srow and row <= ctx.range_erow)
+            extmark_cfg.virt_text[1][2] = in_curblock and level == ctx.cur_inlevel and 'IndentLineCurrent'
+                or 'IndentLine'
+            if sp.is_empty and col > 0 then
+                extmark_cfg.virt_text_win_col = ctx.mixup and (i - 1) * ctx.tabstop or i - 1 - ctx.leftcol
+            end
+            api.nvim_buf_set_extmark(bufnr, ns, row, col, extmark_cfg)
+            extmark_cfg.virt_text_win_col = nil
+        end
+        ::continue::
+    end
+end
+
+local function on_win(_, winid, bufnr, toprow, botrow)
+    if bufnr ~= api.nvim_get_current_buf() then return false end
+    if vim.iter(exclude_ft):find(function(v) return v == vim.bo[bufnr].ft or v == vim.bo[bufnr].buftype end) then
+        return false
+    end
+
+    extmark_cfg.virt_text_repeat_linebreak = vim.wo[winid].wrap and vim.wo[winid].breakindent
+
+    ctx = { snapshot = {} }
+    ctx.is_tab = not vim.bo[bufnr].expandtab
+    ctx.step = C.get_sw_value(C.find_buffer_by_handle(bufnr, ffi.new('Error')))
+    ctx.tabstop = vim.bo[bufnr].tabstop
+    ctx.softtabstop = vim.bo[bufnr].softtabstop
+    ctx.mixup = ctx.is_tab and ctx.tabstop > ctx.softtabstop
+    ctx.has_ts = pcall(treesitter.get_parser, bufnr)
+    ctx.leftcol = vim.fn.winsaveview().leftcol
+    ctx.count = api.nvim_buf_line_count(bufnr)
+
+    for i = toprow, botrow do
+        make_snapshot(i + 1)
+    end
+
+    api.nvim_win_set_hl_ns(winid, ns)
+
+    local pos = api.nvim_win_get_cursor(winid)
+    ctx.currow = pos[1] - 1
+    ctx.curcol = pos[2]
+
+    if highlight_ready then
+        local cur_indent = (ctx.snapshot[ctx.currow + 1] and unpack(ctx.snapshot[ctx.currow + 1]) or make_snapshot(
+            ctx.currow + 1
+        )).indent
+        local next_indent = ctx.currow + 1 < ctx.count
+                and (ctx.snapshot[ctx.currow + 2] and unpack(ctx.snapshot[ctx.currow + 2]) or make_snapshot(
+                    ctx.currow + 2
+                )).indent
+            or 0
+
+        local line_text = api.nvim_get_current_line()
+        local target = cur_indent
+        if next_indent > cur_indent then
+            target = next_indent
+        elseif line_text:find('^%s*[})%]]') or line_text:find('^%s*end') then
+            local prev_indent = ctx.currow > 0
+                    and (ctx.snapshot[ctx.currow] and unpack(ctx.snapshot[ctx.currow]) or make_snapshot(ctx.currow)).indent
+                or 0
+            if prev_indent > cur_indent then target = prev_indent end
+        end
+
+        find_current_range(target)
+    end
+end
+
+api.nvim_set_decoration_provider(ns, { on_win = on_win, on_line = on_line })

@@ -1,43 +1,31 @@
 {
   "plugins": {
     "aerial.nvim": {
-      "rev": "f93dceed41e2f926074944fdf94c93c747bb7d19",
+      "rev": "645d108a5242ec7b378cbe643eb6d04d4223f034",
       "src": "gh:stevearc/aerial.nvim"
     },
-    "avante.nvim": {
-      "rev": "2475e71982cadc8d38ba20b9b6112873f33caf31",
-      "src": "gh:yetone/avante.nvim"
-    },
     "codediff.nvim": {
-      "rev": "0a2f5d71cdf2e8e0ca37acb604cf7cb09998b045",
+      "rev": "93cd80c56f71af4671388c568a37d4c84c3ddefa",
       "src": "gh:esmuellert/codediff.nvim"
     },
     "conform.nvim": {
-      "rev": "e969e302bced7ffb9a0a0323629f31feb0ca35a6",
+      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "gh:stevearc/conform.nvim"
     },
     "copilot.lua": {
-      "rev": "1eecd6c47e2b1c1a7affaa23a3ab61d344be56d1",
+      "rev": "11f6d961881783c4db4bc916bad900d26599b366",
       "src": "gh:zbirenbaum/copilot.lua"
-    },
-    "diffs.nvim": {
-      "rev": "dfebc68a1fc3e93dae5b6d49133243ec1886cb19",
-      "src": "gh:barrettruth/diffs.nvim"
-    },
-    "indentmini.nvim": {
-      "rev": "38572ce5a7a064a5deb89d6d861b7c40fc929ab1",
-      "src": "gh:nvimdev/indentmini.nvim"
     },
     "kanso.nvim": {
       "rev": "1afbbb449aa0254823dbe1932e3cbb51886ff9fe",
       "src": "gh:webhooked/kanso.nvim"
     },
     "kitty-scrollback.nvim": {
-      "rev": "5574df779fbe03205a08af4d9154279ff491be75",
+      "rev": "aa05d5ade0b744d8e49f4c992f34dadc7079bce8",
       "src": "gh:mikesmithgh/kitty-scrollback.nvim"
     },
     "mini.nvim": {
-      "rev": "ccfc8c35cac348070a9528410c794459c4cc2eeb",
+      "rev": "9990c41f10f54f29a888d13024c9f765037bde23",
       "src": "gh:nvim-mini/mini.nvim"
     },
     "nui.nvim": {
@@ -49,15 +37,15 @@
       "src": "gh:kevinhwang91/nvim-bqf"
     },
     "nvim-lspconfig": {
-      "rev": "5a855bcfec7973767a1a472335684bbd71d2fa2b",
+      "rev": "0203a9608d63eda57679b01e69f33a7b4c34b0d1",
       "src": "gh:neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "dc42c209f3820bdfaae0956f15de29689aa6b451",
+      "rev": "493890b87a81dfe6a7e577dbc364ae33fa482da9",
       "src": "gh:nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "a0e182ae21fda68c59d1f36c9ed45600aef50311",
+      "rev": "4e91b5d0394329a229725b021a8ea217099826ef",
       "src": "gh:nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -66,16 +54,12 @@
       "src": "gh:windwp/nvim-ts-autotag"
     },
     "oil.nvim": {
-      "rev": "48fc83a9978c5f25833634700c08be583ee78eb7",
+      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "gh:stevearc/oil.nvim"
     },
     "plenary.nvim": {
       "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
       "src": "gh:nvim-lua/plenary.nvim"
-    },
-    "render-markdown.nvim": {
-      "rev": "1c958131c083c8557ea499fdb08c88b8afb05c4e",
-      "src": "gh:MeanderingProgrammer/render-markdown.nvim"
     },
     "timber.nvim": {
       "rev": "1038a15f846e73840819355cab1c4346e6cf97f6",
@@ -85,12 +69,8 @@
       "rev": "123a9fb12e7229342f807ec9e6de478b1102b041",
       "src": "gh:folke/ts-comments.nvim"
     },
-    "vim-fugitive": {
-      "rev": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4",
-      "src": "gh:tpope/vim-fugitive"
-    },
     "vim-test": {
-      "rev": "f881edb21e7a092f5793687d058c257dddb961d3",
+      "rev": "e4d4fa7f5ce354e7df473550080d9e78207ef4a0",
       "src": "gh:vim-test/vim-test"
     },
     "zendiagram.nvim": {

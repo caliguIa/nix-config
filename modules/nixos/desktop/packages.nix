@@ -1,7 +1,7 @@
 topLevel @ {...}: {
     flake.modules.nixos.desktop = {pkgs, ...}: {
         services.gnome.gnome-keyring.enable = true;
-        security.pam.services.hyprlock = {};
+        security.pam.services.swaylock = {};
         security.polkit.enable = true;
         services.dbus.enable = true;
         programs.dconf.enable = true;
@@ -29,11 +29,16 @@ topLevel @ {...}: {
             bitwarden-cli
             bitwarden-desktop
             claude-code
+            opencode
             hyprpicker
             hyprsysteminfo
             hyprpwcenter
             hyprshutdown
             tableplus
+            gitkraken
+            wl-screenrec
+            ffmpeg
+            mpv
         ];
     };
 }

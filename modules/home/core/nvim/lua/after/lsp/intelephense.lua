@@ -15,6 +15,17 @@ return {
                 associations = { '*.php', '*.blade.php' },
                 maxSize = 5000000,
             },
+            inlayHint = {
+                parameterNames = false,
+                parameterTypes = false,
+                returnTypes = false,
+            },
+            references = {
+                exclude = {
+                    '**/vendor/**',
+                    '**/_ide_helper*.php',
+                },
+            },
         },
         php = { completion = { callSnippet = 'Replace' } },
     },

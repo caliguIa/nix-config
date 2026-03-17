@@ -3,6 +3,7 @@
         environment.systemPackages = with pkgs; [
             fish
             bottom
+            broot
             eza
             fd
             gnupg
@@ -16,6 +17,7 @@
             curl
             wget
             hurl
+            gitu
         ];
     };
 }

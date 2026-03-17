@@ -16,7 +16,6 @@
             inputs.darwin.follows = "";
         };
         apple-silicon.url = "github:nix-community/nixos-apple-silicon";
-        hyprland.url = "github:hyprwm/Hyprland";
         fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
         stylix = {
             url = "github:nix-community/stylix";

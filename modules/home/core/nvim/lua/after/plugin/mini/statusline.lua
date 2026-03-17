@@ -29,11 +29,11 @@ statusline.setup({
             local diagnostics = statusline.section_diagnostics({ trunc_width = 75 })
             local filename = statusline.section_filename()
             local fileinfo = statusline.section_fileinfo()
-            local git = '󰊢  ' .. vim.fn['FugitiveHead']()
+            local branch = vim.g.git_branch ~= '' and ('󰊢  ' .. vim.g.git_branch) or ''
             local location = statusline.section_location()
             local search = statusline.section_searchcount({ trunc_width = 75 })
             return statusline.combine_groups({
-                { hl = 'Normal', strings = { git } },
+                { hl = 'Normal', strings = { branch } },
                 { hl = 'Normal', strings = { filename } },
                 '%=', -- End left alignment
                 { hl = 'Normal', strings = { diagnostics } },

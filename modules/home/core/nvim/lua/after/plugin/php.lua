@@ -1,0 +1,33 @@
+-- require('laravel').setup({
+--     features = {
+--         pickers = {
+--             provider = 'us.select',
+--         },
+--     },
+-- })
+-- vim.keymap.set('n', '<leader>ll', function() Laravel.pickers.laravel() end, { desc = 'Laravel: Open Laravel Picker' })
+-- vim.keymap.set('n', '<c-g>', function() Laravel.commands.run('view:finder') end, { desc = 'Laravel: Open View Finder' })
+-- vim.keymap.set('n', '<leader>la', function() Laravel.pickers.artisan() end, { desc = 'Laravel: Open Artisan Picker' })
+-- vim.keymap.set(
+--     'n',
+--     '<leader>lt',
+--     function() Laravel.commands.run('actions') end,
+--     { desc = 'Laravel: Open Actions Picker' }
+-- )
+-- vim.keymap.set('n', '<leader>lr', function() Laravel.pickers.routes() end, { desc = 'Laravel: Open Routes Picker' })
+-- vim.keymap.set('n', '<leader>lh', function() Laravel.run('artisan docs') end, { desc = 'Laravel: Open Documentation' })
+-- vim.keymap.set('n', '<leader>lm', function() Laravel.pickers.make() end, { desc = 'Laravel: Open Make Picker' })
+-- vim.keymap.set('n', '<leader>lc', function() Laravel.pickers.commands() end, { desc = 'Laravel: Open Commands Picker' })
+-- vim.keymap.set(
+--     'n',
+--     '<leader>lo',
+--     function() Laravel.pickers.resources() end,
+--     { desc = 'Laravel: Open Resources Picker' }
+-- )
+-- vim.keymap.set(
+--     'n',
+--     '<leader>lp',
+--     function() Laravel.commands.run('command_center') end,
+--     { desc = 'Laravel: Open Command Center' }
+-- )
+-- vim.keymap.set('n', '<leader>lu', function() Laravel.commands.run('hub') end, { desc = 'Laravel Artisan hub' })

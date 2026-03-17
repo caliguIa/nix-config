@@ -12,14 +12,9 @@
                 priority = 2;
             }
             {
-                url = "https://hyprland.cachix.org";
-                publicKey = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
-                priority = 3;
-            }
-            {
                 url = "https://nixos-apple-silicon.cachix.org";
                 publicKey = "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20=";
-                priority = 4;
+                priority = 3;
             }
         ];
     in {

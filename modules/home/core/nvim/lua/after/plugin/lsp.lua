@@ -7,6 +7,7 @@ lsp.enable({
     'docker_compose_language_service',
     'dockerls',
     'eslint',
+    'gopls',
     'intelephense',
     'jsonls',
     'just',
@@ -78,6 +79,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 vim.wo[win][0].foldmethod = 'expr'
                 vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
                 vim.wo[win][0].foldtext = 'v:lua.vim.lsp.foldtext()'
+            end
+
+            if client:supports_method(lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+                lsp.inlay_hint.enable(true, { bufnr = event.buf })
+                vim.keymap.set(
+                    'n',
+                    '<leader>th',
+                    function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled()) end,
+                    { desc = 'Toggle inlay hints' }
+                )
             end
         end
 

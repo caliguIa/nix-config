@@ -27,6 +27,7 @@ conform.setup({
         javascript = { 'prettier' },
         javascriptreact = { 'prettier' },
         css = { 'prettier' },
+        go = { 'gofmt' },
         html = { 'prettier' },
         json = { 'prettier' },
         jsonc = { 'prettier' },

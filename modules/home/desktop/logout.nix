@@ -9,13 +9,13 @@
             layout = lib.mkForce [
                 {
                     label = "reboot";
-                    action = "hyprctl clients -j | jq -r '.[].pid' | xargs kill; systemctl reboot || loginctl reboot";
+                    action = "systemctl reboot || loginctl reboot";
                     text = "restart_alt";
                     keybind = "r";
                 }
                 {
                     label = "shutdown";
-                    action = "hyprctl clients -j | jq -r '.[].pid' | xargs kill; systemctl poweroff || loginctl poweroff";
+                    action = "systemctl poweroff || loginctl poweroff";
                     text = "power_settings_new";
                     keybind = "p";
                 }
@@ -27,7 +27,7 @@
                 }
                 {
                     label = "logout";
-                    action = "hyprctl clients -j | jq -r '.[].pid' | xargs kill; pkill Hyprland || loginctl terminate-user $USER";
+                    action = "loginctl terminate-user $USER";
                     text = "logout";
                     keybind = "e";
                 }

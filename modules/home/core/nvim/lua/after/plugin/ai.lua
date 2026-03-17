@@ -1,16 +1,16 @@
 require('copilot').setup()
----@diagnostic disable-next-line: missing-fields, param-type-mismatch
-require('avante').setup({
-    provider = 'copilot',
-    mode = 'agentic',
-    auto_suggestions_provider = 'copilot',
-})
-
-vim.api.nvim_create_autocmd('PackChanged', {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
-        if name == 'avante' and (kind == 'install' or kind == 'update') then
-            vim.system({ 'make' }, { cwd = ev.data.path })
-        end
-    end,
-})
+------@diagnostic disable-next-line: missing-fields, param-type-mismatch
+---require('avante').setup({
+---    provider = 'copilot',
+---    mode = 'agentic',
+---    auto_suggestions_provider = 'copilot',
+---})
+---
+---vim.api.nvim_create_autocmd('PackChanged', {
+---    callback = function(ev)
+---        local name, kind = ev.data.spec.name, ev.data.kind
+---        if name == 'avante' and (kind == 'install' or kind == 'update') then
+---            vim.system({ 'make' }, { cwd = ev.data.path })
+---        end
+---    end,
+---})

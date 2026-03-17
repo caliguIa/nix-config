@@ -1,5 +1,6 @@
 {
     flake.modules.nixos.desktop = {pkgs, ...}: {
+        services.power-profiles-daemon.enable = true;
         systemd.user.services.battery-monitor = {
             description = "Battery level monitor";
             after = ["graphical-session.target"];
