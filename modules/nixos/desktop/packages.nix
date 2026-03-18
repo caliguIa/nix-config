@@ -1,5 +1,9 @@
 topLevel @ {...}: {
-    flake.modules.nixos.desktop = {pkgs, ...}: {
+    flake.modules.nixos.desktop = {
+        pkgs,
+        pkgs-stable,
+        ...
+    }: {
         services.gnome.gnome-keyring.enable = true;
         security.pam.services.swaylock = {};
         security.polkit.enable = true;
@@ -20,14 +24,12 @@ topLevel @ {...}: {
             playerctl
             grim
             slurp
-            # mpv
             nautilus
             imv
             zathura
             xwayland-satellite
             kdePackages.qtwayland
             bitwarden-cli
-            bitwarden-desktop
             claude-code
             opencode
             hyprpicker
@@ -39,6 +41,8 @@ topLevel @ {...}: {
             wl-screenrec
             ffmpeg
             mpv
+
+            pkgs-stable.bitwarden-desktop
         ];
     };
 }
