@@ -18,8 +18,8 @@ lsp.enable({
     'nixd',
     'rust_analyzer',
     'taplo',
-    'vtsls',
-    -- 'tsgo',
+    -- 'vtsls',
+    'tsgo',
     'biome',
     'zls',
 })
