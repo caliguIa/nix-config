@@ -23,12 +23,12 @@
                         PREV_STATE=""
                         [ -f "$STATE_FILE" ] && PREV_STATE=$(cat "$STATE_FILE")
 
-                        if [ "$CAPACITY" -le 10 ] && [ "$PREV_STATE" != "10" ]; then
-                            ${pkgs.libnotify}/bin/notify-send -u critical "Battery Critical" "Battery at ''${CAPACITY}%. Please plug in charger!"
-                            echo "10" > "$STATE_FILE"
-                        elif [ "$CAPACITY" -le 20 ] && [ "$PREV_STATE" != "20" ] && [ "$PREV_STATE" != "10" ]; then
-                            ${pkgs.libnotify}/bin/notify-send -u normal "Battery Low" "Battery at ''${CAPACITY}%"
-                            echo "20" > "$STATE_FILE"
+                        if [ "$CAPACITY" -le 5 ] && [ "$PREV_STATE" != "5" ]; then
+                            ${pkgs.libnotify}/bin/notify-send -t 0 -u critical "Battery Critical" "Battery at ''${CAPACITY}%. Please plug in charger!"
+                            echo "5" > "$STATE_FILE"
+                        elif [ "$CAPACITY" -le 15 ] && [ "$PREV_STATE" != "15" ] && [ "$PREV_STATE" != "5" ]; then
+                            ${pkgs.libnotify}/bin/notify-send -t 0 -u normal "Battery Low" "Battery at ''${CAPACITY}%"
+                            echo "15" > "$STATE_FILE"
                         fi
                     }
 

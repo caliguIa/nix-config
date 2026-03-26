@@ -2,6 +2,7 @@
 {
     flake.modules.homeManager.desktop = {
         pkgs,
+        pkgs-stable,
         config,
         ...
     }: {
@@ -17,7 +18,7 @@
             aerc = {
                 enable = true;
                 extraAccounts = {
-                    address-book-cmd = "${pkgs.khard}/bin/khard email -a personal --parsable --remove-first-line %s";
+                    address-book-cmd = "${pkgs-stable.khard}/bin/khard email -a personal --parsable --remove-first-line %s";
                     cache-headers = true;
                     cache-state = true;
                     cache-blobs = true;

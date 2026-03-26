@@ -1,6 +1,7 @@
 {
     flake.modules.homeManager.desktop = {
         pkgs,
+        pkgs-stable,
         config,
         lib,
         ...
@@ -37,7 +38,10 @@
             }))
         ];
 
-        programs.khard.enable = true;
+        programs.khard = {
+            enable = true;
+            package = pkgs-stable.khard;
+        };
         xdg.configFile."khard/khard.conf".text = lib.mkForce ''
             [addressbooks]
             [[personal]]

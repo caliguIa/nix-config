@@ -17,6 +17,7 @@ topLevel @ {...}: {
         };
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
+            sublime-merge
             pwvucontrol
             wl-clipboard
             brightnessctl
@@ -37,10 +38,10 @@ topLevel @ {...}: {
             hyprpwcenter
             hyprshutdown
             tableplus
-            gitkraken
             wl-screenrec
             ffmpeg
             mpv
+            kdePackages.kdeconnect-kde
 
             pkgs-stable.bitwarden-desktop
         ];

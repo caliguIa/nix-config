@@ -7,6 +7,20 @@
             networking = {
                 hostName = hostname;
                 wireless.enable = false;
+                firewall = {
+                    allowedTCPPortRanges = [
+                        {
+                            from = 1714;
+                            to = 1764;
+                        }
+                    ];
+                    allowedUDPPortRanges = [
+                        {
+                            from = 1714;
+                            to = 1764;
+                        }
+                    ];
+                };
                 networkmanager.enable = false;
                 dhcpcd.enable = false;
                 nameservers = ["1.1.1.1" "8.8.8.8"];
