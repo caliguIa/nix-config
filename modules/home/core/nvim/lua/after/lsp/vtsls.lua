@@ -1,5 +1,33 @@
 ---@type vim.lsp.Config
 return {
+    on_attach = function(client)
+        local caps = client.server_capabilities
+        caps.hoverProvider = false
+        caps.completionProvider = false
+        caps.definitionProvider = true
+        caps.declarationProvider = false
+        caps.implementationProvider = false
+        caps.referencesProvider = false
+        caps.renameProvider = false
+        caps.codeActionProvider = true
+        caps.signatureHelpProvider = false
+        caps.documentHighlightProvider = false
+
+        -- symbols / navegation
+        caps.documentSymbolProvider = false
+        caps.workspaceSymbolProvider = false
+
+        -- format / tokens
+        caps.documentFormattingProvider = false
+        caps.documentRangeFormattingProvider = false
+        caps.semanticTokensProvider = nil
+
+        -- other
+        caps.typeDefinitionProvider = false
+        caps.callHierarchyProvider = false
+        caps.selectionRangeProvider = false
+        caps.inlayHintProvider = false
+    end,
     settings = {
         complete_function_calls = true,
         vtsls = {

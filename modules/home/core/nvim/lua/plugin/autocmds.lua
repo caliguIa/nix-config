@@ -41,3 +41,28 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
         if vim.o.filetype == 'help' then vim.cmd.wincmd('L') end
     end,
 })
+
+vim.api.nvim_create_autocmd('LspProgress', {
+    callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if not client then return end
+        local value = ev.data.params.value
+        local msg = ('[%s] %s %s'):format(client.name, value.kind == 'end' and '✓' or '', value.title or '')
+        vim.notify(msg)
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'msg',
+    callback = function()
+        local ui2 = require('vim._core.ui2')
+        local win = ui2.wins and ui2.wins.msg
+        if win and vim.api.nvim_win_is_valid(win) then
+            vim.api.nvim_set_option_value(
+                'winhighlight',
+                'Normal:NormalFloat,FloatBorder:FloatBorder',
+                { scope = 'local', win = win }
+            )
+        end
+    end,
+})

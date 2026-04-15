@@ -4,9 +4,6 @@ topLevel @ {...}: {
         pkgs-stable,
         ...
     }: {
-        services.gnome.gnome-keyring.enable = true;
-        security.pam.services.swaylock = {};
-        security.polkit.enable = true;
         services.dbus.enable = true;
         programs.dconf.enable = true;
         programs.nix-ld = {
@@ -42,8 +39,8 @@ topLevel @ {...}: {
             ffmpeg
             mpv
             kdePackages.kdeconnect-kde
-
             pkgs-stable.bitwarden-desktop
+            ungoogled-chromium
         ];
     };
 }

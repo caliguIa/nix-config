@@ -1,5 +1,6 @@
 local add = vim.pack.add
 
+vim.cmd.packadd('nvim.undotree')
 add({
     'gh:nvim-treesitter/nvim-treesitter',
     { src = 'gh:nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
@@ -21,3 +22,8 @@ add({
     'gh:caliguIa/zendiagram.nvim',
     'gh:zbirenbaum/copilot.lua',
 })
+
+local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)
+local function add_local_plugin(name) vim.opt.runtimepath:prepend(string.format('%s%s', dev_path, name)) end
+
+add_local_plugin('timber.nvim')

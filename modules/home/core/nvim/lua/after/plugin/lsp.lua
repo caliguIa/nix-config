@@ -18,7 +18,7 @@ lsp.enable({
     'nixd',
     'rust_analyzer',
     'taplo',
-    -- 'vtsls',
+    'vtsls',
     'tsgo',
     -- 'oxlint',
     'zls',
@@ -38,6 +38,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         safe_del('n', 'gri')
         safe_del('n', 'grn')
         safe_del('n', 'grt')
+        safe_del('n', 'grx')
 
         vim.keymap.set('n', 'gd', lsp.buf.definition, { desc = 'Definition', silent = true })
         vim.keymap.set('n', 'gr', lsp.buf.references, { desc = 'References', silent = true })

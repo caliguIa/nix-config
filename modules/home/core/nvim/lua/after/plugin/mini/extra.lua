@@ -1,6 +1,5 @@
 local misc = require('mini.misc')
 require('mini.surround').setup()
-require('mini.notify').setup()
 
 misc.setup()
 misc.setup_restore_cursor()

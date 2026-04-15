@@ -2,6 +2,7 @@
     flake.modules.nixos.host_karla = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
             spotify
+            nicotine-plus
             (slack.overrideAttrs (old: {
                 postInstall =
                     (old.postInstall or "")
