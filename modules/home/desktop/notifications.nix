@@ -2,7 +2,7 @@
     flake.modules.homeManager.desktop = {
         stylix.targets.mako.enable = true;
         services.mako = {
-            enable = true;
+            enable = false;
             settings = {
                 border-radius = 0;
                 height = 100;

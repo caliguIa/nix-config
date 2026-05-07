@@ -1,10 +1,13 @@
 {
     flake.modules.nixos.desktop = {
+        services.displayManager = {
+            plasma-login-manager.enable = true;
+        };
         services.greetd = {
-            enable = true;
+            enable = false;
         };
         programs.regreet = {
-            enable = true;
+            enable = false;
             settings = {
                 widget.clock = {
                     format = "%T\n%A %B %e, %Y\nTime zone: %:V";

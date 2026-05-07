@@ -2,7 +2,7 @@
     flake.modules.homeManager.desktop = {pkgs, ...}: {
         stylix.targets.waybar.enable = false;
         programs.waybar = {
-            enable = true;
+            enable = false;
             systemd.enable = true;
             settings = {
                 mainBar = let

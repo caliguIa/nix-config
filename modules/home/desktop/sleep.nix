@@ -1,7 +1,7 @@
 {
     flake.modules.homeManager.desktop = {
         services.swayidle = {
-            enable = true;
+            enable = false;
             events = {
                 before-sleep = "loginctl lock-session";
                 lock = "pidof swaylock || swaylock";

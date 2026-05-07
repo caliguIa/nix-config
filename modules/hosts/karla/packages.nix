@@ -1,6 +1,7 @@
 {
     flake.modules.nixos.host_karla = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
+            bitwig-studio
             spotify
             nicotine-plus
             (slack.overrideAttrs (old: {

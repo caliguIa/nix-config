@@ -6,9 +6,9 @@
                 pos = "0 0";
                 scale = "1";
             };
-            "Dell Inc. DELL S2719DC 41ZBV13" = {
+            "DP-2" = {
                 mode = "2560x1440@74.968Hz";
-                pos = "0 -2000";
+                pos = "0 -2560";
                 scale = "1";
             };
         };
