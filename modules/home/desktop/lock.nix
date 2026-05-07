@@ -1,6 +1,5 @@
 {
     flake.modules.homeManager.desktop = {pkgs, ...}: {
-        stylix.targets.swaylock.enable = true;
         programs.swaylock = {
             enable = false;
             package = pkgs.swaylock-effects;

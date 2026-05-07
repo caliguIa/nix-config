@@ -4,7 +4,7 @@
             enable = true;
             xwayland = true;
             systemd.variables = ["--all"];
-            wrapperFeatures.gtk = true;
+            wrapperFeatures.gtk = false;
             swaynag.enable = true;
         };
     };

@@ -1,6 +1,5 @@
 {
     flake.modules.homeManager.desktop = {
-        stylix.targets.mako.enable = true;
         services.mako = {
             enable = false;
             settings = {

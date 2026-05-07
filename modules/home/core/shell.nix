@@ -1,6 +1,5 @@
 {
     flake.modules.homeManager.core = {
-        stylix.targets.fish.enable = true;
         programs.fish = {
             enable = true;
             generateCompletions = true;

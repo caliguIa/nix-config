@@ -16,6 +16,5 @@
                 };
             };
         };
-        stylix.targets.regreet.enable = true;
     };
 }

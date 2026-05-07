@@ -1,6 +1,5 @@
 {
     flake.modules.homeManager.core = {
-        stylix.targets.starship.enable = true;
         programs.starship = {
             enable = true;
             enableZshIntegration = true;

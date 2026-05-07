@@ -1,9 +1,16 @@
 {
-    flake.modules.homeManager.desktop = {pkgs, ...}: {
-        stylix.targets.kitty.enable = true;
+    flake.modules.homeManager.desktop = {
+        style,
+        pkgs,
+        ...
+    }: {
         programs.kitty = {
             enable = true;
             shellIntegration.enableFishIntegration = true;
+            font = {
+                name = style.font.monospace.name;
+                size = style.font.monospace.size;
+            };
             settings = {
                 scrollback_lines = 10000;
                 update_check_interval = 0;
