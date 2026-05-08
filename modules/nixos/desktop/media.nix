@@ -3,8 +3,6 @@
         environment.systemPackages = with pkgs; [
             pwvucontrol
             playerctl
-            grim
-            slurp
             imv
             zathura
             wl-screenrec

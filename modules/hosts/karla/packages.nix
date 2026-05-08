@@ -12,7 +12,6 @@
                             --replace-fail "-s %U" "--ozone-platform=wayland --ozone-platform-hint=wayland -s %U"
                     '';
             }))
-            # google-chrome
         ];
     };
 }

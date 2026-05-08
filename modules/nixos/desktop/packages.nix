@@ -8,21 +8,14 @@ topLevel @ {...}: {
         programs.dconf.enable = true;
         programs.nix-ld = {
             enable = true;
-            libraries = with pkgs; [
-                # common libs, or leave empty to use defaults
-            ];
+            libraries = [];
         };
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
-            sublime-merge
+            sourcegit
             pwvucontrol
-            wl-clipboard
-            brightnessctl
             iwmenu
             playerctl
-            grim
-            slurp
-            nautilus
             imv
             zathura
             xwayland-satellite
@@ -30,12 +23,7 @@ topLevel @ {...}: {
             bitwarden-cli
             claude-code
             opencode
-            hyprpicker
-            hyprsysteminfo
-            hyprpwcenter
-            hyprshutdown
             tableplus
-            wl-screenrec
             ffmpeg
             mpv
             kdePackages.kdeconnect-kde

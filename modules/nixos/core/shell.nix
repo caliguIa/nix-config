@@ -11,7 +11,7 @@ in {
         programs.fish.enable = true;
         users.users.${users.primary}.shell = pkgs.fish;
         environment = {
-            shells = [pkgs.fish];
+            shells = [pkgs.fish pkgs.brush];
             variables = {
                 EDITOR = "nvim";
                 XDG_CACHE_HOME = "${homeDirectory}/.cache";
