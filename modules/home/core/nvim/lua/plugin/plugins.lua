@@ -8,7 +8,6 @@ add({
     'gh:stevearc/conform.nvim',
     'gh:esmuellert/codediff.nvim',
     'gh:webhooked/kanso.nvim',
-    'gh:mikesmithgh/kitty-scrollback.nvim',
     'gh:nvim-mini/mini.nvim',
     'gh:MunifTanjim/nui.nvim',
     'gh:kevinhwang91/nvim-bqf',
