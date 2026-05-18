@@ -31,6 +31,7 @@
 
         systemd.tmpfiles.rules = ["d /data 0755 root root -"];
 
+        time.timeZone = "Europe/London";
         networking.useDHCP = lib.mkDefault true;
 
         nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

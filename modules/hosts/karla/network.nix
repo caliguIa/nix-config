@@ -21,8 +21,11 @@
                     ];
                 };
                 wireless.enable = true;
-                networkmanager.enable = true;
-                nameservers = ["1.1.1.1" "8.8.8.8"];
+                networkmanager = {
+                    enable = true;
+                    dns = "none";
+                };
+                nameservers = ["192.168.0.27" "1.1.1.1" "8.8.8.8"];
                 wireless.iwd = {
                     enable = false;
                     settings = {
@@ -33,6 +36,10 @@
                         Rank.BandModifier5Ghz = 2.0;
                     };
                 };
+            };
+            services.avahi = {
+                enable = true;
+                nssmdns4 = true;
             };
         };
 }

@@ -11,9 +11,9 @@ let
     allSystems = builtins.attrValues systems;
 in {
     "passwordfile-caligula.age".publicKeys = allUsers ++ allSystems;
-    "token-fastmail-vdirsyncer-carddav.age".publicKeys = allUsers ++ allSystems;
-    "token-fastmail-vdirsyncer-caldav.age".publicKeys = allUsers ++ allSystems;
-    "token-fastmail-aerc.age".publicKeys = allUsers ++ allSystems;
-    "token-fastmail-mbsync.age".publicKeys = allUsers ++ allSystems;
     "intelephense.age".publicKeys = allUsers ++ allSystems;
+    "cloudflared-audiobookshelf.age".publicKeys = allUsers ++ allSystems;
+    "cloudflared-navidrome.age".publicKeys = allUsers ++ allSystems;
+    "cloudflared-slskd.age".publicKeys = allUsers ++ allSystems;
+    "slskd-envars.age".publicKeys = allUsers ++ allSystems;
 }
