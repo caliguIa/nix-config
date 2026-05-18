@@ -8,10 +8,10 @@ in {
     }: let
         homeDirectory = config.users.users.${users.primary}.home;
     in {
-        programs.fish.enable = true;
-        users.users.${users.primary}.shell = pkgs.fish;
+        users.defaultUserShell = pkgs.brush;
+        users.users.${users.primary}.shell = pkgs.brush;
         environment = {
-            shells = [pkgs.fish pkgs.brush];
+            shells = [pkgs.brush];
             variables = {
                 EDITOR = "nvim";
                 XDG_CACHE_HOME = "${homeDirectory}/.cache";

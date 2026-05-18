@@ -2,7 +2,7 @@
     flake.modules.homeManager.core = {
         programs.yazi = {
             enable = true;
-            enableFishIntegration = true;
+            enableBashIntegration = true;
             shellWrapperName = "y";
             settings = {
                 mgr = {
