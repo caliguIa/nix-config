@@ -1,36 +1,37 @@
 {
     flake.modules.nixos.desktop = {pkgs, ...}: {
-        security.pam.services.swaylock = {};
+        services.gnome.gnome-keyring.enable = true;
         security.pam.services.sudo.fprintAuth = true;
-        security.pam.services.login.kwallet.enable = true;
         security.pam.services.polkit-1.fprintAuth = true;
+        security.pam.services.login.enableGnomeKeyring = true;
         security.polkit.enable = true;
-        security.polkit.extraConfig = ''
-            polkit.addRule(function(action, subject) {
-              if (
-                subject.isInGroup("users")
-                  && (
-                    action.id == "org.freedesktop.login1.reboot" ||
-                    action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
-                    action.id == "org.freedesktop.login1.power-off" ||
-                    action.id == "org.freedesktop.login1.power-off-multiple-sessions"
-                  )
-                )
-              {
-                return polkit.Result.YES;
-              }
-            });
-            polkit.addRule(function(action, subject) {
-              if ((action.id == "net.reactivated.fprint.device.enroll" ||
-                   action.id == "net.reactivated.fprint.device.setusername" ||
-                   action.id == "net.reactivated.fprint.device.verify") &&
-                  subject.isInGroup("wheel")) {
-                return polkit.Result.YES;
-              }
-            });
-        '';
+        # security.polkit.extraConfig = ''
+        #     polkit.addRule(function(action, subject) {
+        #       if (
+        #         subject.isInGroup("users")
+        #           && (
+        #             action.id == "org.freedesktop.login1.reboot" ||
+        #             action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+        #             action.id == "org.freedesktop.login1.power-off" ||
+        #             action.id == "org.freedesktop.login1.power-off-multiple-sessions"
+        #           )
+        #         )
+        #       {
+        #         return polkit.Result.YES;
+        #       }
+        #     });
+        #     polkit.addRule(function(action, subject) {
+        #       if ((action.id == "net.reactivated.fprint.device.enroll" ||
+        #            action.id == "net.reactivated.fprint.device.setusername" ||
+        #            action.id == "net.reactivated.fprint.device.verify") &&
+        #           subject.isInGroup("wheel")) {
+        #         return polkit.Result.YES;
+        #       }
+        #     });
+        # '';
         environment.systemPackages = with pkgs; [
             polkit
+            seahorse
         ];
         environment.etc."polkit-1/actions/com.bitwarden.Bitwarden.policy" = {
             text = ''

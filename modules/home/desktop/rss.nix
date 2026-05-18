@@ -1,21 +1,21 @@
 {
     flake.modules.homeManager.desktop = {
         pkgs,
-        inputs,
+        pkgs-stable,
         ...
     }: {
         programs.newsboat = {
-            enable = false;
-            package = inputs.nixpkgs-stable.pkgs.newsboat;
+            enable = true;
+            package = pkgs-stable.newsboat;
             autoReload = true;
-            browser = toString (pkgs.writeShellScript "newsboat-url" ''
-                url="$1"
-                if echo "$url" | grep -q "youtube.com\|youtu.be"; then
-                    "${pkgs.iina}/bin/iina" "$url"
-                else
-                    "${pkgs.xdg-utils}/bin/xdg-open" "$url"
-                fi
-            '');
+            # browser = toString (pkgs.writeShellScript "newsboat-url" ''
+            #     url="$1"
+            #     if echo "$url" | grep -q "youtube.com\|youtu.be"; then
+            #         "${pkgs.iina}/bin/iina" "$url"
+            #     else
+            #         "${pkgs.xdg-utils}/bin/xdg-open" "$url"
+            #     fi
+            # '');
             urls = [
                 {
                     title = "r/neovim";

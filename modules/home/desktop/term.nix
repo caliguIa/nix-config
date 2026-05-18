@@ -7,8 +7,11 @@
             installBatSyntax = true;
             installVimSyntax = true;
             settings = {
+                selection-clear-on-copy = true;
+                copy-on-select = true;
                 font-family = style.font.monospace.name;
                 font-size = style.font.monospace.size;
+                adjust-cell-height = "25%";
                 background = style.colors.background;
                 foreground = style.colors.foreground;
                 palette = [

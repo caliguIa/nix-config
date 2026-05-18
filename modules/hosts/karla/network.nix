@@ -6,7 +6,6 @@
             environment.systemPackages = with pkgs; [iwgtk];
             networking = {
                 hostName = hostname;
-                wireless.enable = false;
                 firewall = {
                     allowedTCPPortRanges = [
                         {
@@ -21,11 +20,11 @@
                         }
                     ];
                 };
-                networkmanager.enable = false;
-                dhcpcd.enable = false;
+                wireless.enable = true;
+                networkmanager.enable = true;
                 nameservers = ["1.1.1.1" "8.8.8.8"];
                 wireless.iwd = {
-                    enable = true;
+                    enable = false;
                     settings = {
                         General.EnableNetworkConfiguration = true;
                         DriverQuirks.DefaultInterface = true;
@@ -35,6 +34,5 @@
                     };
                 };
             };
-            services.resolved.enable = true;
         };
 }

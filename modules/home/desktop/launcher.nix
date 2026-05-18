@@ -4,7 +4,7 @@
             enable = true;
             settings = {
                 main = {
-                    terminal = "${pkgs.kitty}/bin/kitty";
+                    terminal = "${pkgs.ghostty}/bin/ghostty";
                     layer = "overlay";
                     prompt = "'run: '";
                     dpi-aware = "no";
