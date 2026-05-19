@@ -8,13 +8,25 @@
             installVimSyntax = true;
             settings = {
                 theme = "kanso-zen";
+                window-decoration = "none";
                 maximize = true;
                 selection-clear-on-copy = true;
                 copy-on-select = true;
                 font-family = "Berkeley Mono";
                 font-size = 14;
                 adjust-cell-height = "25%";
-                keybind = [
+                keybind = let
+                    leader = "ctrl+space>";
+                in [
+                    "performable:ctrl+c=copy_to_clipboard"
+                    "ctrl+v=paste_from_clipboard"
+                    "${leader}c=new_tab"
+                    "${leader}n=next_tab"
+                    "${leader}p=previous_tab"
+                    "${leader}v=new_split:right"
+                    "${leader}h=new_split:down"
+                    "${leader}equal=equalize_splits"
+                    "${leader}q=close_surface"
                     "alt+h=goto_split:left"
                     "alt+j=goto_split:down"
                     "alt+k=goto_split:up"

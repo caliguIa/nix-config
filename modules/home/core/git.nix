@@ -124,7 +124,7 @@
             gco = "git checkout";
             gp = "git push";
             gu = "git pull";
-            gfp = "git fetch && git pull";
+            gfp = "git fetch; git pull";
             gcl = "git clone";
             undocommit = "git reset --soft HEAD^";
         };

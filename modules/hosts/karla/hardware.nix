@@ -21,6 +21,7 @@
             efi.canTouchEfiVariables = true;
         };
 
+        hardware.enableAllFirmware = true;
         hardware.framework.enableKmod = true;
         hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
