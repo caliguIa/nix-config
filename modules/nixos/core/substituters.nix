@@ -21,8 +21,10 @@
         nix.settings = {
             trusted-public-keys = builtins.catAttrs "publicKey" substituters;
             substituters = lib.mkForce (map (def: "${def.url}?priority=${toString def.priority}") substituters);
+            trusted-substituters = lib.mkForce (map (def: "${def.url}?priority=${toString def.priority}") substituters);
             fallback = true;
-            connect-timeout = 5;
+            connect-timeout = 15;
+            stalled-download-timeout = 10;
             warn-dirty = false;
             max-substitution-jobs = 16;
             http-connections = 25;
