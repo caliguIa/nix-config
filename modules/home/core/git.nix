@@ -8,19 +8,19 @@
                     name = "Cal";
                     email = "acc@calrichards.io";
                 };
-                alias = {
-                    a = "add";
-                    aa = "add .";
-                    b = "branch";
-                    c = "commit";
-                    co = "checkout";
-                    p = "push";
-                    u = "pull";
-                    f = "fetch --all";
-                    undocommit = "reset --soft HEAD^";
-                    commits = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
-                    cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop\\|main' | xargs -n 1 -r git branch -d";
-                };
+                # alias = {
+                #     a = "add";
+                #     aa = "add .";
+                #     b = "branch";
+                #     c = "commit";
+                #     co = "checkout";
+                #     p = "push";
+                #     u = "pull";
+                #     f = "fetch --all --prune";
+                #     undocommit = "reset --soft HEAD^";
+                #     commits = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+                #     cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop\\|main' | xargs -n 1 -r git branch -d";
+                # };
                 advice = {
                     addEmptyPathspec = false;
                     pushNonFastForward = false;
@@ -124,8 +124,8 @@
             gco = "git checkout";
             gp = "git push";
             gu = "git pull";
-            gfp = "git fetch; git pull";
             gcl = "git clone";
+            gmm = "git merge origin/main";
             undocommit = "git reset --soft HEAD^";
         };
     };

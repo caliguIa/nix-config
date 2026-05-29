@@ -19,9 +19,9 @@ conform.setup({
         nix = { 'alejandra' },
         rust = { 'rustfmt' },
         scss = js_formatter,
-        sql = { 'sleek' },
         toml = { 'taplo' },
-        mysql = { 'sleek' },
+        sql = { 'sqruff' },
+        mysql = { 'sqruff' },
         vue = js_formatter,
         yaml = js_formatter,
     },
@@ -29,8 +29,8 @@ conform.setup({
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('format-on-write', { clear = true }),
-    callback = function()
+    callback = function(args)
         if vim.fn.exists(':LspEslintFixAll') > 0 then vim.cmd.LspEslintFixAll() end
-        conform.format({ bufnr = vim.api.nvim_get_current_buf(), timeout_ms = 5000 })
+        conform.format({ bufnr = args.buf, timeout_ms = 5000 })
     end,
 })

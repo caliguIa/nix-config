@@ -21,6 +21,11 @@
             efi.canTouchEfiVariables = true;
         };
 
+        boot.kernelParams = [
+            "amdgpu.dcdebugmask=0x410"
+            "amdgpu.runpm=0"
+        ];
+
         hardware.enableAllFirmware = true;
         hardware.framework.enableKmod = true;
         hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

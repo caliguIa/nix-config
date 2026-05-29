@@ -4,12 +4,12 @@ return {
         local caps = client.server_capabilities
         caps.hoverProvider = true
         caps.completionProvider = true
-        caps.definitionProvider = false
+        caps.definitionProvider = true
         caps.declarationProvider = true
         caps.implementationProvider = true
         caps.referencesProvider = true
         caps.renameProvider = true
-        caps.codeActionProvider = false
+        caps.codeActionProvider = true
         caps.signatureHelpProvider = true
         caps.documentHighlightProvider = true
 

@@ -13,6 +13,7 @@
         home.packages = with pkgs; [
             tree-sitter
             gcc
+            mago
         ];
         xdg.desktopEntries.nvim = {
             name = "Neovim";

@@ -16,7 +16,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.darwin.follows = "";
         };
-        # apple-silicon.url = "github:nix-community/nixos-apple-silicon";
+        apple-silicon.url = "github:nix-community/nixos-apple-silicon";
         fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
         nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
         zen-browser = {

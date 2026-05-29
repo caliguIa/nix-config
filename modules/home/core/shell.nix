@@ -23,6 +23,11 @@
                 music-import() {
                     ssh caligula@george.local "cd /data/downloads/complete/music && beet import ."
                 }
+
+                gfp() {
+                    git fetch --all --prune && git pull
+                }
+
                 _c_fg_bold=$'\e[1;38;2;197;201;199m'  # #c5c9c7 — foreground
                 _c_fg=$'\e[38;2;197;201;199m'         # #c5c9c7 — foreground
                 _c_dim=$'\e[38;2;92;96;102m'          # #5c6066 — palette 8  (dim/comments)

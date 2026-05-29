@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- stylua: ignore
     pattern = {
         "checkhealth", "dbout", "git", "help", "lspinfo", "qf", "fugitive",
-        "notify", "startuptime", "tsplayground", "fugitiveblame"
+        "notify", "startuptime", "tsplayground", "fugitiveblame", "sqls_output",
     },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
