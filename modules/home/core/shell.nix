@@ -16,6 +16,23 @@
             ls = "eza --color=always --long -a --git --icons=always";
             cat = "bat";
             dps = "docker ps";
+            dcu = "docker compose up -d";
+            dcua = "docker compose up";
+            ga = "git add";
+            gaa = "git add .";
+            gap = "git add --patch";
+            gb = "git branch";
+            gc = "git commit";
+            gd = "git diff";
+            gi = "git init";
+            gst = "git status";
+            gs = "git switch";
+            gn = "git switch -t";
+            gp = "git push";
+            gu = "git pull";
+            gcl = "git clone";
+            gmm = "git merge origin/main";
+            undocommit = "git reset --soft HEAD^";
         };
         programs.bash = {
             enable = true;

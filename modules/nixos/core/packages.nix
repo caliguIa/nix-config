@@ -2,6 +2,7 @@
     flake.modules.nixos.core = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
             brush
+            bat
             bottom
             eza
             fd

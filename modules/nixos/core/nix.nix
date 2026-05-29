@@ -9,10 +9,6 @@
             enable = lib.mkDefault true;
             package = pkgs.nix;
             nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-            gc = {
-                automatic = lib.mkDefault true;
-                options = "--delete-older-than 30d";
-            };
             settings = {
                 trusted-users = [
                     "@wheel"
@@ -24,5 +20,10 @@
             optimise.automatic = lib.mkDefault true;
         };
         nixpkgs.config.allowUnfree = true;
+        programs.nh = {
+            enable = true;
+            flake = "/home/caligula/nix-config";
+            clean.enable = true;
+        };
     };
 }

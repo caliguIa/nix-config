@@ -31,6 +31,9 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'BufEnter', 'FocusGained' }, {
     callback = update_git_branch,
 })
 
+require('blame').setup()
+
+vim.keymap.set('n', '<leader>gb', vim.cmd.BlameToggle, { desc = 'Blame', silent = true })
 vim.keymap.set('n', '<leader>gd', vim.cmd.CodeDiff, { desc = 'Status', silent = true })
 
 vim.api.nvim_create_user_command(

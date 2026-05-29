@@ -16,7 +16,8 @@ add({
     'gh:Goose97/timber.nvim',
     'gh:folke/ts-comments.nvim',
     'gh:vim-test/vim-test',
-    'gh:caliguIa/zendiagram.nvim',
+    'cal:zendiagram.nvim',
+    'gh:FabijanZulj/blame.nvim',
 })
 
 -- local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)
