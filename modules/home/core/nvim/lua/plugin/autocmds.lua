@@ -47,7 +47,8 @@ vim.api.nvim_create_autocmd('LspProgress', {
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         if not client then return end
         local value = ev.data.params.value
-        local msg = ('[%s] %s %s'):format(client.name, value.kind == 'end' and '✓' or '', value.title or '')
+        if not value.kind == 'end' then return end
+        local msg = ('[%s] %s %s'):format(client.name, '✓', value.title or '')
         vim.notify(msg)
     end,
 })

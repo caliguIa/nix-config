@@ -48,10 +48,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         local client = lsp.get_client_by_id(event.data.client_id)
         if client then
-            lsp.completion.enable(true, client.id, event.buf, {
-                autotrigger = true,
-                convert = function(item) return { abbr = item.label:gsub('%b()', '') } end,
-            })
+            -- lsp.completion.enable(true, client.id, event.buf, {
+            --     autotrigger = true,
+            --     convert = function(item) return { abbr = item.label:gsub('%b()', '') } end,
+            -- })
 
             if client:supports_method(lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
                 vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {

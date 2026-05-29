@@ -3,8 +3,9 @@ local ensure_languages = {
     'bash', 'c',          'cpp',  'css',   'diff', 'go', 'jsx',
     'html', 'javascript', 'json', 'julia', 'nu',   'php', 'python',
     'r',    'regex',      'rst',  'rust',  'toml', 'tsx', 'typescript', 'yaml',
+    'log'
 }
-local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
+local isnt_installed = function(lang) return not pcall(vim.treesitter.language.add, lang) end
 local to_install = vim.tbl_filter(isnt_installed, ensure_languages)
 if #to_install > 0 then require('nvim-treesitter').install(to_install) end
 local filetypes = vim.iter(ensure_languages):map(vim.treesitter.language.get_filetypes):flatten():totable()

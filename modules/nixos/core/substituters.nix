@@ -25,7 +25,6 @@
             fallback = true;
             connect-timeout = 15;
             stalled-download-timeout = 10;
-            warn-dirty = false;
             max-substitution-jobs = 16;
             http-connections = 25;
         };

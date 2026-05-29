@@ -26,7 +26,7 @@ end
 
 update_git_branch()
 
-vim.api.nvim_create_autocmd({ 'DirChanged', 'BufEnter', 'FocusGained' }, {
+vim.api.nvim_create_autocmd({ 'DirChanged', 'FocusGained' }, {
     group = vim.api.nvim_create_augroup('GitBranchTrack', { clear = true }),
     callback = update_git_branch,
 })
@@ -70,7 +70,7 @@ nvim --server %s --remote-send "<C-\><C-N>:lua $LUA<CR>"
     if f == nil then return end
     f:write(script)
     f:close()
-    os.execute('chmod +x ' .. script_path)
+    vim.uv.fs_chmod(script_path, 0x1ED)
 
     vim.cmd('tabnew')
     local term_bufnr = vim.api.nvim_get_current_buf()

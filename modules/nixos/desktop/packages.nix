@@ -1,9 +1,5 @@
 topLevel @ {...}: {
-    flake.modules.nixos.desktop = {
-        pkgs,
-        pkgs-stable,
-        ...
-    }: {
+    flake.modules.nixos.desktop = {pkgs, ...}: {
         services.dbus.enable = true;
         programs.dconf.enable = true;
         programs.nix-ld = {

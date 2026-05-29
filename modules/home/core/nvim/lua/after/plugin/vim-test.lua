@@ -17,9 +17,7 @@ vim.g['test#neovim#term_position'] = 'vert'
 vim.g['test#javascript#runner'] = 'vitest'
 
 local function RunVimTest(cmd_name)
-    local root = require('lspconfig').util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git')(
-        vim.fn.expand('%:p')
-    )
+    local root = vim.fs.root(0, { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' })
     if root then vim.g['test#project_root'] = root end
     vim.cmd[cmd_name]()
 end

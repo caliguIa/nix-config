@@ -62,9 +62,7 @@ local function build_artisan_cmd(laravel_path)
 
     if not has_compose then return { 'php', vim.fn.shellescape(laravel_path .. '/artisan') } end
 
-    local compose = vim.system({ 'docker', 'compose', '--version' }, { text = true }):wait().code == 0
-            and { 'docker', 'compose' }
-        or { 'docker-compose' }
+    local compose = { 'docker', 'compose' }
     local tty = vim.fn.has('tty') == 1 and '' or '-T'
     return vim.list_extend(compose, { 'exec', tty, config.docker.service_name, 'php', 'artisan' })
 end

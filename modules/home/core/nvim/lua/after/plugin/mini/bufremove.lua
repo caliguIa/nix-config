@@ -7,7 +7,7 @@ local delete_other_buffers = function()
 
     for _, buf in ipairs(all_bufs) do
         -- Skip the current buffer and non-listed/invalid buffers
-        if buf ~= current_buf and vim.fn.buflisted(buf) == 1 and vim.api.nvim_buf_is_valid(buf) then
+        if buf ~= current_buf and vim.bo[buf].buflisted == 1 and vim.api.nvim_buf_is_valid(buf) then
             bufremove.delete(buf, true) -- Using force=true to skip confirmation
         end
     end

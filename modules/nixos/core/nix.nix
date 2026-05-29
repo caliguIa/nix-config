@@ -16,6 +16,7 @@
                     "${config.flake.meta.users.primary}"
                 ];
                 experimental-features = ["nix-command" "flakes"];
+                warn-dirty = false;
             };
             optimise.automatic = lib.mkDefault true;
         };
