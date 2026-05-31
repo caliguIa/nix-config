@@ -18,6 +18,7 @@
             wget
             hurl
             gitu
+            difftastic
             unzip
         ];
     };

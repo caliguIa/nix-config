@@ -18,6 +18,7 @@ add({
     'gh:vim-test/vim-test',
     'cal:zendiagram.nvim',
     'gh:FabijanZulj/blame.nvim',
+    'gh:kdheepak/lazygit.nvim',
 })
 
 -- local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)
