@@ -3,7 +3,7 @@ local ensure_languages = {
     'bash', 'c',          'cpp',  'css',   'diff', 'go', 'jsx',
     'html', 'javascript', 'json', 'julia', 'nu',   'php', 'python',
     'r',    'regex',      'rst',  'rust',  'toml', 'tsx', 'typescript', 'yaml',
-    'log'
+    'log', 'nix', 'zig',
 }
 local isnt_installed = function(lang) return not pcall(vim.treesitter.language.add, lang) end
 local to_install = vim.tbl_filter(isnt_installed, ensure_languages)

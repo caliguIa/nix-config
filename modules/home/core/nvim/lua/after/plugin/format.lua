@@ -24,6 +24,7 @@ conform.setup({
         mysql = { 'sqruff' },
         vue = js_formatter,
         yaml = js_formatter,
+        zig = { 'zigfmt' },
     },
 })
 

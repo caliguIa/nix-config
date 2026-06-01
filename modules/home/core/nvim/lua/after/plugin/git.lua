@@ -43,6 +43,30 @@ vim.api.nvim_create_user_command(
 )
 vim.api.nvim_create_user_command('Diff', function() vim.cmd.CodeDiff('file HEAD~1') end, { desc = 'Diff current file' })
 
+local function lazygit()
+    if vim.fn.executable('lazygit') ~= 1 then
+        vim.notify('lazygit not found in PATH', vim.log.levels.ERROR)
+        return
+    end
+
+    -- new tab with a fresh [No Name] buffer that we'll turn into the terminal
+    vim.cmd.tabnew()
+    local buf = vim.api.nvim_get_current_buf()
+
+    vim.fn.jobstart({ 'lazygit' }, {
+        term = true,
+        on_exit = function()
+            -- reload any buffers lazygit changed on disk (checkout, stash, etc.)
+            vim.cmd('silent! checktime')
+            -- closing the terminal buffer closes its tab and returns you to the previous tab automatically
+            if vim.api.nvim_buf_is_valid(buf) then vim.api.nvim_buf_delete(buf, { force = true }) end
+        end,
+    })
+
+    vim.api.nvim_buf_set_name(buf, 'gitu')
+    vim.cmd.startinsert()
+end
+vim.api.nvim_create_user_command('LazyGit', lazygit, {})
 vim.keymap.set('n', '<leader>gg', vim.cmd.LazyGit, { desc = 'Git' })
 
 function EditLineFromLazygit(file_path, line)
@@ -63,61 +87,3 @@ function EditFromLazygit(file_path)
         vim.cmd('e ' .. file_path)
     end
 end
--- vim.keymap.set('n', '<leader>gg', function()
---     local server = vim.v.servername
---     local winnr = vim.api.nvim_get_current_win()
---
---     local script_path = '/tmp/gitu_open.sh'
---     local script = string.format(
---         [[#!/bin/sh
--- FILE="${1%%:*}"
--- LINE="${1##*:}"
--- [ "$FILE" = "$LINE" ] && LINE=""
---
--- LUA="vim.api.nvim_set_current_win(%d); vim.cmd('edit ' .. vim.fn.fnameescape('$FILE'))"
--- if [ -n "$LINE" ]; then
---   LUA="$LUA; vim.api.nvim_win_set_cursor(0, {$LINE, 0})"
--- fi
--- LUA="$LUA; vim.api.nvim_exec_autocmds('User', { pattern = 'GituOpenFile' })"
---
--- nvim --server %s --remote-send "<C-\><C-N>:lua $LUA<CR>"
--- ]],
---         winnr,
---         server
---     )
---
---     local f = io.open(script_path, 'w')
---     if f == nil then return end
---     f:write(script)
---     f:close()
---     vim.uv.fs_chmod(script_path, 0x1ED)
---
---     vim.cmd('tabnew')
---     local term_bufnr = vim.api.nvim_get_current_buf()
---     local term_winnr = vim.api.nvim_get_current_win()
---
---     local function cleanup()
---         vim.schedule(function()
---             if vim.api.nvim_win_is_valid(term_winnr) then vim.api.nvim_win_close(term_winnr, true) end
---             if vim.api.nvim_buf_is_valid(term_bufnr) then vim.api.nvim_buf_delete(term_bufnr, { force = true }) end
---         end)
---     end
---
---     local autocmd_id = vim.api.nvim_create_autocmd('User', {
---         pattern = 'GituOpenFile',
---         once = true,
---         callback = cleanup,
---     })
---
---     vim.fn.jobstart('gitu', {
---         term = true,
---         env = { VISUAL = script_path },
---         on_exit = function()
---             pcall(vim.api.nvim_del_autocmd, autocmd_id)
---             cleanup()
---         end,
---     })
---
---     vim.api.nvim_buf_set_name(term_bufnr, 'gitu')
---     vim.cmd('startinsert')
--- end, { desc = 'Open gitu' })

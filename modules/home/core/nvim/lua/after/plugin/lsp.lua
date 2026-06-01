@@ -46,55 +46,48 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>rn', lsp.buf.rename, { desc = 'Rename', silent = true })
         vim.keymap.set('n', '<leader>ca', lsp.buf.code_action, { desc = 'Code actions', silent = true })
 
-        local client = lsp.get_client_by_id(event.data.client_id)
-        if client then
-            -- lsp.completion.enable(true, client.id, event.buf, {
-            --     autotrigger = true,
-            --     convert = function(item) return { abbr = item.label:gsub('%b()', '') } end,
-            -- })
-
-            if client:supports_method(lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-                vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                    buffer = event.buf,
-                    group = highlight_augroup,
-                    callback = lsp.buf.document_highlight,
-                })
-                vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                    buffer = event.buf,
-                    group = highlight_augroup,
-                    callback = lsp.buf.clear_references,
-                })
-                vim.api.nvim_create_autocmd('LspDetach', {
-                    group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
-                    callback = function(e)
-                        lsp.buf.clear_references()
-                        vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = e.buf })
-                    end,
-                })
-            end
-
-            if client:supports_method(lsp.protocol.Methods.textDocument_foldingRange) then
-                local win = vim.api.nvim_get_current_win()
-                vim.wo[win][0].foldmethod = 'expr'
-                vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-                vim.wo[win][0].foldtext = 'v:lua.vim.lsp.foldtext()'
-            end
-
-            if client:supports_method(lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-                -- lsp.inlay_hint.enable(true, { bufnr = event.buf })
-                vim.keymap.set(
-                    'n',
-                    '<leader>th',
-                    function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled()) end,
-                    { desc = 'Toggle inlay hints' }
-                )
-            end
-        end
-
         vim.diagnostic.config({
             signs = false,
             virtual_text = false,
             underline = true,
         })
+        local client = lsp.get_client_by_id(event.data.client_id)
+        if not client then return end
+        if client:supports_method(lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = lsp.buf.document_highlight,
+            })
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = lsp.buf.clear_references,
+            })
+            vim.api.nvim_create_autocmd('LspDetach', {
+                group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+                callback = function(e)
+                    lsp.buf.clear_references()
+                    vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = e.buf })
+                end,
+            })
+        end
+
+        if client:supports_method(lsp.protocol.Methods.textDocument_foldingRange) then
+            local win = vim.api.nvim_get_current_win()
+            vim.wo[win][0].foldmethod = 'expr'
+            vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+            vim.wo[win][0].foldtext = 'v:lua.vim.lsp.foldtext()'
+        end
+
+        if client:supports_method(lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            -- lsp.inlay_hint.enable(true, { bufnr = event.buf })
+            vim.keymap.set(
+                'n',
+                '<leader>th',
+                function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled()) end,
+                { desc = 'Toggle inlay hints' }
+            )
+        end
     end,
 })
