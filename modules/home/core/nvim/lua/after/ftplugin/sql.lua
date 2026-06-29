@@ -48,14 +48,22 @@ local function parse_connection(line)
     return line
 end
 
+local float_winid = nil
+
+local function close_connection_float()
+    if float_winid and vim.api.nvim_win_is_valid(float_winid) then vim.api.nvim_win_close(float_winid, true) end
+    float_winid = nil
+end
+
 local function show_connection_float(win)
     if not active_connection then return end
+    close_connection_float() -- close any existing float first
     local label = ' 󱘖 ' .. active_connection .. ' '
     local win_width = vim.api.nvim_win_get_width(win)
     local float_bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(float_bufnr, 0, -1, false, { label })
     vim.api.nvim_set_hl(0, 'SqlsConnection', { link = 'FloatBorder' })
-    vim.api.nvim_open_win(float_bufnr, false, {
+    float_winid = vim.api.nvim_open_win(float_bufnr, false, {
         relative = 'win',
         win = win,
         row = 0,
@@ -86,6 +94,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client and client.name == 'sqls' then vim.schedule(function() init_connection() end) end
     end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
+    pattern = { '*.sql' },
+    callback = close_connection_float,
 })
 
 -- Execute the SQL statement under the cursor

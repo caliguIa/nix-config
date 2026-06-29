@@ -27,7 +27,7 @@
             gi = "git init";
             gst = "git status";
             gs = "git switch";
-            gn = "git switch -t";
+            gn = "git switch -c";
             gp = "git push";
             gu = "git pull";
             gcl = "git clone";

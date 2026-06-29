@@ -11,7 +11,10 @@
             nixd
             taplo
             vscode-langservers-extracted
+            docker-compose-language-service
+            dockerfile-language-server
             bash-language-server
+            intelephense
             typescript-go
             sqls
             # formatter

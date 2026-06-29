@@ -3,6 +3,8 @@
         environment.systemPackages = with pkgs; [
             spotify
             slack
+            jetbrains.phpstorm
+            jetbrains.datagrip
         ];
     };
 }

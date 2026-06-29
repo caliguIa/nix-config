@@ -1,5 +1,8 @@
 {
-    flake.modules.homeManager.core = {
+    flake.modules.homeManager.core = {pkgs, ...}: {
+        programs.gh-dash.enable = true;
+        programs.gh.enable = true;
+        programs.gh.extensions = with pkgs; [gh-dash];
         programs.git = {
             enable = true;
             signing.format = null;

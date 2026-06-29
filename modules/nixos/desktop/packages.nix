@@ -17,6 +17,7 @@ topLevel @ {...}: {
             gelly
             sourcegit
             opencode
+            claude-code
             bitwarden-cli
             bitwarden-desktop
         ];

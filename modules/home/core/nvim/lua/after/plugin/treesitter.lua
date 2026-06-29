@@ -21,15 +21,18 @@ require('nvim-ts-autotag').setup()
 require('timber').setup({
     log_templates = {
         default = {
-            php = [[dump('%log_target', %log_target);]],
+            php = [[dd('%log_target', %log_target);]],
         },
         plain = {
-            php = [[dump(%insert_cursor);]],
+            php = [[dd(%insert_cursor);]],
         },
         batch_log_templates = {
             default = {
-                php = [[dump(%repeat<'%log_target', %log_target>);]],
+                php = [[dd(%repeat<'%log_target', %log_target>);]],
             },
         },
     },
+})
+require('treesitter-context').setup({
+    max_lines = 4,
 })

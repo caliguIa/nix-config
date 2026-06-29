@@ -1,22 +1,19 @@
-local get_lua_plugin_dirs = function()
-    local expanded = vim.fs.normalize('$XDG_DATA_HOME/nvim/site/pack/core/opt')
-
-    return vim.iter(vim.fs.dir(expanded))
-        :filter(
-            function(name, type) return type == 'directory' and vim.uv.fs_stat(expanded .. '/' .. name .. '/lua') ~= nil end
-        )
-        :map(function(name) return expanded .. '/' .. name end)
-        :totable()
-end
-
 ---@type vim.lsp.Config
 return {
-    on_attach = function(client)
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
+    on_init = function(client)
+        if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+                path ~= vim.fn.stdpath('config')
+                and (vim.uv.fs_stat(path .. '/.emmyrc.json') or vim.uv.fs_stat(path .. '/.luarc.json'))
+            then
+                client.config.settings = {}
+            end
+        end
     end,
     settings = {
-        Lua = {
+        emmylua = {
+            diagnostics = { globals = { 'vim' } },
             completion = {
                 enable = true,
                 autoRequire = true,
@@ -32,14 +29,7 @@ return {
             doc = { syntax = 'md' },
             documentColor = { enable = true },
             hover = { enable = true },
-            hint = {
-                enable = true,
-                paramHint = true,
-                indexHint = true,
-                localHint = true,
-                overrideHint = true,
-                metaCallHint = true,
-            },
+            hint = { enable = true },
             inlineValues = { enable = true },
             runtime = {
                 version = 'LuaJIT',
@@ -62,10 +52,7 @@ return {
             workspace = {
                 ignoreSubmodules = true,
                 ignoreGlobs = { '**/*_spec.lua' },
-                library = vim.list_extend(
-                    { vim.env.VIMRUNTIME },
-                    get_lua_plugin_dirs('$XDG_DATA_HOME/nvim/site/pack/core/opt')
-                ),
+                library = vim.api.nvim_get_runtime_file('', true),
             },
         },
     },
