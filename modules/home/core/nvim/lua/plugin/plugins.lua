@@ -23,5 +23,12 @@ add({
     'gh:barrettruth/diffs.nvim',
 })
 
--- local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)
--- local function add_local_plugin(name) vim.opt.runtimepath:prepend(string.format('%s%s', dev_path, name)) end
+-- On-demand plugins, not loaded until ":packadd …".
+add({
+    'gh:MeanderingProgrammer/render-markdown.nvim',
+}, {
+    load = function() end,
+})
+
+local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)
+local function add_local_plugin(name) vim.opt.runtimepath:prepend(string.format('%s%s', dev_path, name)) end

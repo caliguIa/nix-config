@@ -24,7 +24,7 @@ o.sidescrolloff = 8
 o.shortmess = 'aoOWFcSCs'
 o.showmatch = true
 o.showmode = false
-o.signcolumn = 'no'
+o.signcolumn = 'yes:1'
 o.splitbelow = true
 o.splitright = true
 o.winborder = 'single'
@@ -63,6 +63,9 @@ vim.opt.fillchars:append({
 vim.opt.complete:remove('t')
 o.verbose = 0
 o.completeopt = 'menuone,noinsert,popup,preview'
+o.spell = true
+o.spelllang = 'en_gb'
+o.spellfile = os.getenv('HOME') .. '/nix-config/modules/home/core/nvim/lua/spell/en.utf-8.add'
 o.spelloptions = 'camel'
 
 o.wildmenu = true

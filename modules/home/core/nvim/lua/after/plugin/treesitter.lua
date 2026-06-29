@@ -1,19 +1,10 @@
---stylua: ignore
-local ensure_languages = {
-    'bash', 'c',          'cpp',  'css',   'diff', 'go', 'jsx',
-    'html', 'javascript', 'json', 'julia', 'nu',   'php', 'python',
-    'r',    'regex',      'rst',  'rust',  'toml', 'tsx', 'typescript', 'yaml',
-    'log', 'nix', 'zig',
-}
-local isnt_installed = function(lang) return not pcall(vim.treesitter.language.add, lang) end
-local to_install = vim.tbl_filter(isnt_installed, ensure_languages)
-if #to_install > 0 then require('nvim-treesitter').install(to_install) end
-local filetypes = vim.iter(ensure_languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
-    pattern = filetypes,
-    desc = 'Ensure enabled tree-sitter',
-    callback = function(ev) vim.treesitter.start(ev.buf) end,
+    pattern = nil,
+    callback = function(ev)
+        if not ev.match or ev.match == '' or ev.match == 'text' then vim.treesitter.stop() end
+        pcall(function() vim.treesitter.start() end)
+    end,
 })
 
 require('ts-comments').setup()

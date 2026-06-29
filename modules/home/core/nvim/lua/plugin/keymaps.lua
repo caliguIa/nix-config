@@ -19,5 +19,9 @@ vim.keymap.set('n', '<tab>[', cmd.tabprevious, { desc = 'Previous', silent = tru
 vim.keymap.set('n', '<tab>d', cmd.tabclose, { desc = 'Close current', silent = true })
 vim.keymap.set('n', '<tab>o', cmd.tabonly, { desc = 'Close other', silent = true })
 vim.keymap.set('n', '<leader>ba', function() cmd.b('#') end, { desc = 'Alternate', silent = true })
+vim.keymap.set('n', '<leader>cS', function()
+    vim.o.spell = not vim.o.spell
+    vim.notify('spell ' .. (vim.wo.spell and 'on' or 'off'))
+end, { desc = 'Alternate', silent = true })
 vim.keymap.set('n', 'j', 'gj', { desc = 'Navigate through wrapped lines', silent = true })
 vim.keymap.set('n', 'k', 'gk', { desc = 'Navigate through wrapped lines', silent = true })

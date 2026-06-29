@@ -1,46 +1,21 @@
 local pick = require('mini.pick')
-pick.setup()
+
+local choose_all = function()
+    local mappings = pick.get_picker_opts().mappings
+    vim.api.nvim_input(mappings.mark_all .. mappings.choose_marked)
+end
+
+pick.setup({
+    mappings = {
+        choose_all = { char = '<C-q>', func = choose_all },
+    },
+})
 
 local cmd = vim.cmd
 vim.ui.select = pick.ui_select
 
-local pick_files = function()
-    require('mini.pick').builtin.cli({
-        command = {
-            'fd',
-            '--type',
-            'f',
-            '--no-ignore',
-            '--hidden',
-            '--follow',
-            '--exclude',
-            '.git',
-            '--exclude',
-            'node_modules',
-            '--exclude',
-            'build',
-            '--exclude',
-            'tmp',
-            '--exclude',
-            'vendor',
-            '--exclude',
-            '.direnv',
-        },
-    }, {
-        source = {
-            name = 'All Files',
-        },
-    })
-end
-
 vim.keymap.set('n', '<leader>cs', function() cmd.Pick('spellsuggest') end, { desc = 'Spelling', silent = true })
-vim.keymap.set(
-    'n',
-    '<leader>sm',
-    function() cmd.Pick('visit_paths', 'filter="core"') end,
-    { desc = 'Marked files', silent = true }
-)
-vim.keymap.set('n', '<leader>sf', pick_files, { desc = 'Search files', silent = true })
+vim.keymap.set('n', '<leader>sf', function() cmd.Pick('files') end, { desc = 'Search files', silent = true })
 vim.keymap.set('n', '<leader>sg', function() cmd.Pick('grep_live') end, { desc = 'Grep', silent = true })
 vim.keymap.set(
     'n',
