@@ -10,15 +10,17 @@ add({
     'gh:windwp/nvim-ts-autotag',
     'gh:stevearc/aerial.nvim',
     'gh:stevearc/conform.nvim',
-    'gh:esmuellert/codediff.nvim',
+    'gh:stevearc/quicker.nvim',
+    'gh:stevearc/oil.nvim',
     'gh:webhooked/kanso.nvim',
     'gh:nvim-mini/mini.nvim',
-    'gh:kevinhwang91/nvim-bqf',
     'gh:neovim/nvim-lspconfig',
-    'gh:stevearc/oil.nvim',
     'gh:vim-test/vim-test',
     'cal:zendiagram.nvim',
     'gh:FabijanZulj/blame.nvim',
+    'gh:niekdomi/conflict.nvim',
+    'gh:justinmk/guh.nvim',
+    'gh:barrettruth/diffs.nvim',
 })
 
 -- local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)

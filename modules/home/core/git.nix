@@ -101,6 +101,10 @@
                     edit = "[ -z \"$NVIM\" ] && (nvim -- {{filename}}) || (nvim --server $NVIM --remote-send '<cmd>close<cr><cmd>lua EditFromLazygit({{filename}})<CR>')";
                     editAtLine = "[ -z \"$NVIM\" ] && (nvim +{{line}} -- {{filename}}) || nvim --server $NVIM --remote-send '<cmd>close<CR><cmd>lua EditLineFromLazygit({{filename}},{{line}})<CR>'";
                 };
+                keybinding.universal = {
+                    quitWithoutChangingDirectory = ["q" "<ctrl+c>"];
+                    quit = ["Q"];
+                };
             };
         };
     };

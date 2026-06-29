@@ -1,4 +1,9 @@
-require('codediff').setup()
+require('conflict').setup({
+    default_mappings = {
+        current = 'co',
+        incoming = 'ct',
+    },
+})
 
 -- Git branch tracking
 -- Asynchronously resolves the current git branch and stores it in vim.g.git_branch.
@@ -34,14 +39,6 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'FocusGained' }, {
 require('blame').setup()
 
 vim.keymap.set('n', '<leader>gb', vim.cmd.BlameToggle, { desc = 'Blame', silent = true })
-vim.keymap.set('n', '<leader>gd', vim.cmd.CodeDiff, { desc = 'Status', silent = true })
-
-vim.api.nvim_create_user_command(
-    'History',
-    function() vim.cmd.CodeDiff('history HEAD~20 %') end,
-    { desc = 'History (current file)' }
-)
-vim.api.nvim_create_user_command('Diff', function() vim.cmd.CodeDiff('file HEAD~1') end, { desc = 'Diff current file' })
 
 local function lazygit()
     if vim.fn.executable('lazygit') ~= 1 then
