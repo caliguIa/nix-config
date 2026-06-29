@@ -1,3 +1,5 @@
+vim.opt_local.spell = true
+
 vim.cmd.packadd('render-markdown.nvim')
 vim.schedule(function() require('render-markdown').toggle() end)
 
