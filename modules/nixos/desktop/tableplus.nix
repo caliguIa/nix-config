@@ -2,11 +2,11 @@
     flake.modules.nixos.desktop = {pkgs, ...}: let
         tableplus = pkgs.stdenv.mkDerivation (finalAttrs: {
             pname = "tableplus";
-            version = "0.1.302";
+            version = "0.1.306";
 
             src = pkgs.fetchurl {
                 url = "https://deb.tableplus.com/debian/22/pool/main/t/tableplus/tableplus_${finalAttrs.version}_amd64.deb";
-                hash = "sha256-JyRnmKUua4iWIyoppsgQLR4or9GSFijBDtshsYgsf2o=";
+                hash = "sha256-xY7Qdm5pmcWoFpIh2RC/Vr70/1nO4ah7uQxnGtxHmgc=";
             };
 
             nativeBuildInputs = with pkgs; [
