@@ -5,6 +5,7 @@
             slack
             jetbrains.phpstorm
             jetbrains.datagrip
+            qbittorrent
         ];
     };
 }

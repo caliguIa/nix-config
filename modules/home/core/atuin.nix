@@ -2,7 +2,7 @@
     flake.modules.homeManager.core = {
         programs.atuin = {
             enable = true;
-            enableBashIntegration = true;
+            enableFishIntegration = true;
             settings = {
                 dialect = "uk";
                 auto_sync = true;

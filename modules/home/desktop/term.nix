@@ -3,13 +3,14 @@
         programs.ghostty = {
             enable = true;
             systemd.enable = true;
-            enableBashIntegration = true;
+            enableFishIntegration = true;
             installBatSyntax = true;
             installVimSyntax = true;
             settings = {
                 theme = "kanso-zen";
                 window-decoration = "none";
                 maximize = true;
+                split-inherit-working-directory = true;
                 selection-clear-on-copy = true;
                 copy-on-select = true;
                 font-family = "Berkeley Mono";

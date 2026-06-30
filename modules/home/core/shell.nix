@@ -30,104 +30,82 @@
             gn = "git switch -c";
             gp = "git push";
             gu = "git pull";
+            gfp = "git fetch --all --prune && git pull";
             gcl = "git clone";
             gmm = "git merge origin/main";
             undocommit = "git reset --soft HEAD^";
         };
-        programs.bash = {
+
+        programs.fish = {
             enable = true;
-            initExtra = ''
-                music-import() {
-                    ssh caligula@george.local "cd /data/downloads/complete/music && beet import ."
-                }
-
-                gfp() {
-                    git fetch --all --prune && git pull
-                }
-
-                _c_fg_bold=$'\e[1;38;2;197;201;199m'  # #c5c9c7 — foreground
-                _c_fg=$'\e[38;2;197;201;199m'         # #c5c9c7 — foreground
-                _c_dim=$'\e[38;2;92;96;102m'          # #5c6066 — palette 8  (dim/comments)
-                _c_dimmer=$'\e[38;2;164;167;164m'     # #a4a7a4 — palette 7  (mid grey)
-                _c_blue=$'\e[38;2;139;164;176m'       # #8ba4b0 — palette 4  (branch)
-                _c_yellow=$'\e[38;2;196;178;138m'     # #c4b28a — palette 3  (dirty)
-                _c_reset=$'\e[0m'
-
-                _sep() {
-                    printf "''${_c_dimmer}    ''${_c_reset}"
-                }
-
-                _pwd() {
-                    local pwd="''${PWD/#$HOME/\~}"
-                    if git rev-parse --is-inside-work-tree &>/dev/null; then
-                        local root
-                        root=$(git rev-parse --show-toplevel 2>/dev/null)
-                        local repo_name
-                        repo_name=$(basename "$root")
-                        local rel
-                        rel="''${PWD#$root}"
-                        printf '%s%s' "$repo_name" "$rel"
-                    else
-                        local parts
-                        IFS='/' read -ra parts <<< "$pwd"
-                        local count=''${#parts[@]}
-                        if [[ $count -gt 3 ]]; then
-                            printf '…/%s/%s' "''${parts[$count-2]}" "''${parts[$count-1]}"
-                        else
-                            printf '%s' "$pwd"
-                        fi
-                    fi
-                }
-
-                _git() {
-                    git rev-parse --is-inside-work-tree &>/dev/null || return
-
-                    local branch
-                    branch=$(git symbolic-ref --short HEAD 2>/dev/null \
-                             || git rev-parse --short HEAD 2>/dev/null)
-
-                    local dirty
-                    dirty=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
-
-                    _sep
-                    printf "''${_c_blue}%s''${_c_reset}" "$branch"
-
-                    if [[ $dirty -gt 0 ]]; then
-                        printf " ''${_c_yellow}±%s''${_c_reset}" "$dirty"
-                    fi
-                }
-
-                _prompt() {
-                    if [[ $_first_prompt -eq 1 ]]; then
-                        _first_prompt=0
-                    else
-                        printf '\n'
-                    fi
-
-                    printf "''${_c_fg_bold}%s''${_c_reset}" "$USER"
-                    printf "''${_c_dim}@%s''${_c_reset}" "''${HOSTNAME%%.*}"
-
-                    _sep
-                    printf "''${_c_fg}%s''${_c_reset}" "$(_pwd)"
-
-                    _git
-
-                    printf '\n'
-                }
-
-                _first_prompt=1
-                PROMPT_COMMAND='_prompt'
-                PS1=$'\[\e[1;38;2;197;201;199m\]󰘧 \[\e[0m\]'
-
-                export PROMPT_COMMAND
+            generateCompletions = true;
+            interactiveShellInit = ''
+                set -g __fish_git_prompt_showdirtystate 1
+                set -g __fish_git_prompt_showuntrackedfiles 1
+                set -g __fish_git_prompt_showupstream auto
             '';
+            functions = {
+                __fish_command_not_found_handler = {
+                    body = "__fish_default_command_not_found_handler $argv[1]";
+                    onEvent = "fish_command_not_found";
+                };
+                music-import = ''ssh caligula@george.local "cd /data/downloads/complete/music && beet import ."'';
+                _sep = ''
+                    set_color a4a7a4   # #a4a7a4 — mid grey (palette 7)
+                    printf '    '
+                    set_color normal
+                '';
+                _pwd = ''
+                    set -l pwd (string replace -r "^$HOME" '~' -- $PWD)
+                    if git rev-parse --is-inside-work-tree &>/dev/null
+                      set -l root (git rev-parse --show-toplevel 2>/dev/null)
+                      printf '%s%s' (basename "$root") (string replace -- "$root" "" $PWD)
+                    else
+                      set -l parts (string split / -- $pwd)
+                      if test (count $parts) -gt 3
+                        printf '…/%s/%s' $parts[-2] $parts[-1]
+                      else
+                        printf '%s' $pwd
+                      end
+                    end
+                '';
+                _git = ''
+                    git rev-parse --is-inside-work-tree &>/dev/null; or return
+                    set -l branch (git symbolic-ref --short HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
+                    set -l dirty (count (git status --porcelain 2>/dev/null))
+                    _sep
+                    set_color 8ba4b0   # #8ba4b0 — branch (palette 4)
+                    printf '%s' $branch
+                    set_color normal
+                    if test $dirty -gt 0
+                      set_color c4b28a # #c4b28a — dirty (palette 3)
+                      printf ' ±%s' $dirty
+                      set_color normal
+                    end
+                '';
+                fish_prompt = ''
+                    if set -q __prompt_seen
+                      echo
+                    else
+                      set -g __prompt_seen 1
+                    end
+                    set_color --bold c5c9c7      # #c5c9c7 — foreground (bold)
+                    printf '%s' $USER
+                    set_color normal
+                    set_color 5c6066             # #5c6066 — dim (palette 8)
+                    printf '@%s' (string split -f1 . $hostname)
+                    set_color normal
+                    _sep
+                    set_color c5c9c7             # #c5c9c7 — foreground
+                    printf '%s' (_pwd)
+                    set_color normal
+                    _git
+                    echo
+                    set_color --bold c5c9c7
+                    printf '󰘧 '
+                    set_color normal
+                '';
+            };
         };
-        xdg.configFile."brush/config.toml".text = ''
-            #:schema https://raw.githubusercontent.com/reubeno/brush/main/schemas/config.schema.json
-            [ui]
-            syntax-highlighting = true
-            [experimental]
-            terminal-shell-integration = true
-        '';
     };
 }

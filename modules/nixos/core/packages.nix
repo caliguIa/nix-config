@@ -1,7 +1,7 @@
 {
     flake.modules.nixos.core = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            brush
+            fish
             bat
             bottom
             eza
