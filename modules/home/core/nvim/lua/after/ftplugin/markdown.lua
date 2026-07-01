@@ -1,5 +1,3 @@
-vim.opt_local.spell = true
-
 vim.cmd.packadd('render-markdown.nvim')
 vim.schedule(function() require('render-markdown').buf_enable() end)
 
@@ -10,7 +8,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
         if vim.bo.readonly or not vim.bo.modifiable then
             vim.opt_local.conceallevel = 3
             vim.opt_local.concealcursor = 'n'
-            vim.opt_local.spell = false
         end
     end,
 })

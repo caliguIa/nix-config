@@ -105,6 +105,9 @@
                     printf '󰘧 '
                     set_color normal
                 '';
+                claude-personal = ''
+                    CLAUDE_CONFIG_DIR=~/.claude-personal claude "$argv"
+                '';
             };
         };
     };

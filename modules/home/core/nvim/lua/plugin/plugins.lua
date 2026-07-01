@@ -21,6 +21,8 @@ add({
     'gh:niekdomi/conflict.nvim',
     'gh:justinmk/guh.nvim',
     'gh:barrettruth/diffs.nvim',
+    'gh:NeogitOrg/neogit',
+    'gh:sindrets/diffview.nvim',
 })
 
 -- On-demand plugins, not loaded until ":packadd …".
