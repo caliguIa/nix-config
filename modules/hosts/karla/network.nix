@@ -25,21 +25,24 @@
                     enable = true;
                     dns = "none";
                 };
-                nameservers = ["192.168.0.27" "1.1.1.1" "8.8.8.8"];
-                wireless.iwd = {
-                    enable = false;
-                    settings = {
-                        General.EnableNetworkConfiguration = true;
-                        DriverQuirks.DefaultInterface = true;
-                        Settings.AutoConnect = true;
-                        Scan.DisablePeriodicScan = false;
-                        Rank.BandModifier5Ghz = 2.0;
-                    };
-                };
+                nameservers = ["127.0.0.1" "1.1.1.1"];
+                wireless.iwd.enable = false;
             };
             services.avahi = {
                 enable = true;
                 nssmdns4 = true;
+            };
+            services.dnsmasq = {
+                enable = true;
+                settings = {
+                    address = ["/local.oneupsales.dev/127.0.0.3"];
+                    server = [
+                        "1.1.1.1"
+                        "8.8.8.8"
+                        "/george.local/192.168.0.27"
+                    ];
+                    no-resolv = true;
+                };
             };
         };
 }
