@@ -6,6 +6,8 @@
             jetbrains.phpstorm
             jetbrains.datagrip
             qbittorrent
+            sentry-cli
+            ente-desktop
         ];
     };
 }

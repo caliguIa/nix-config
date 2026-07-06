@@ -12,3 +12,6 @@ resources
 ts
 spec
 tsx
+redshift
+oso
+deduplicated
