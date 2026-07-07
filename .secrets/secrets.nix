@@ -15,4 +15,5 @@ in {
     "cloudflared-media.age".publicKeys = allUsers ++ allSystems;
     "cloudflare-dns-token.age".publicKeys = allUsers ++ allSystems;
     "slskd-envars.age".publicKeys = allUsers ++ allSystems;
+    "miniflux-admin.age".publicKeys = allUsers ++ allSystems;
 }

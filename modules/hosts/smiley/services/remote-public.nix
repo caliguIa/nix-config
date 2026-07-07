@@ -9,6 +9,7 @@
                     "music.calrichards.io" = "http://localhost:4533";
                     "jellyfin.calrichards.io" = "http://localhost:8096";
                     "books.calrichards.io" = "http://localhost:8083";
+                    "rss.calrichards.io" = "http://localhost:8087";
                 };
                 default = "http_status:404";
             };

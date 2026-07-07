@@ -56,6 +56,11 @@
                     reverse_proxy localhost:61208
                 }
 
+                @rss host rss.smiley.calrichards.io
+                handle @rss {
+                    reverse_proxy localhost:8087
+                }
+
                 # Anything else on the wildcard is refused.
                 handle {
                     abort

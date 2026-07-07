@@ -7,6 +7,7 @@
             cloudflared-media.file = ../../../.secrets/cloudflared-media.age;
             cloudflare-dns-token.file = ../../../.secrets/cloudflare-dns-token.age;
             slskd-envars.file = ../../../.secrets/slskd-envars.age;
+            miniflux-admin.file = ../../../.secrets/miniflux-admin.age;
         };
     };
 }
