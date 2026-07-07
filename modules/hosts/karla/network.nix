@@ -39,10 +39,17 @@
                     server = [
                         "1.1.1.1"
                         "8.8.8.8"
-                        "/george.local/192.168.0.27"
                     ];
                     no-resolv = true;
                 };
+            };
+            # Tailscale for reaching smiley (SSH/SMB/admin UIs) over the tailnet.
+            # Bring up with `sudo tailscale up --accept-dns=false` so tailscaled
+            # leaves karla's dnsmasq/resolv.conf setup alone (we use public DNS
+            # for *.smiley.calrichards.io, not MagicDNS).
+            services.tailscale = {
+                enable = true;
+                openFirewall = true;
             };
         };
 }

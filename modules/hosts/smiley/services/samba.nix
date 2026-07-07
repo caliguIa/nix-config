@@ -1,10 +1,10 @@
 {config, ...}: let
     users = config.flake.meta.users;
 in {
-    flake.modules.nixos.host_george = {
+    flake.modules.nixos.host_smiley = {
         services.samba = {
             enable = true;
-            openFirewall = true;
+            openFirewall = false;
             settings.data = {
                 "path" = "/data";
                 "valid users" = [users.primary users.media];

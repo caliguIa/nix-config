@@ -6,7 +6,7 @@
 }: let
     hosts = {
         karla = "x86_64-linux";
-        george = "x86_64-linux";
+        smiley = "x86_64-linux";
         westerby = "aarch64-linux";
     };
 in {

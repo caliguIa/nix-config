@@ -1,0 +1,40 @@
+{
+    flake.modules.nixos.host_smiley = let
+        hostname = "smiley";
+    in {
+        networking = {
+            hostName = hostname;
+            useDHCP = true;
+            defaultGateway = {
+                address = "192.168.0.1";
+                interface = "enp1s0";
+            };
+            # Full lockdown: no trustedInterfaces. Every port is explicit and
+            # scoped to the interface that legitimately needs it.
+            firewall = {
+                enable = true;
+                interfaces = {
+                    # LAN: only file sharing (SMB), SSH and mDNS discovery.
+                    # No service web UIs are reachable from the LAN directly.
+                    enp1s0 = {
+                        allowedTCPPorts = [22 445];
+                        allowedUDPPorts = [5353];
+                    };
+                    # Tailnet: the caddy reverse proxy (80/443), SSH and SMB.
+                    # Reachable only from tailnet peers (i.e. karla).
+                    tailscale0 = {
+                        allowedTCPPorts = [22 80 443 445];
+                        allowedUDPPorts = [5353];
+                    };
+                };
+            };
+        };
+
+        # Private remote access (SSH + filesystem + admin UIs) rides Tailscale.
+        # Bring the node up once with `sudo tailscale up` after first deploy.
+        services.tailscale = {
+            enable = true;
+            openFirewall = true;
+        };
+    };
+}

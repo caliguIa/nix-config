@@ -1,7 +1,7 @@
 {config, ...}: let
     users = config.flake.meta.users;
 in {
-    flake.modules.nixos.host_george = {pkgs, ...}: {
+    flake.modules.nixos.host_smiley = {pkgs, ...}: {
         systemd.tmpfiles.rules = [
             "d /data 0755 ${users.media} ${users.media} -"
             "d /data/media 0755 ${users.media} ${users.media} -"
@@ -12,11 +12,14 @@ in {
             "d /data/media/tv 0755 ${users.media} ${users.media} -"
             "d /data/media/audiobooks 0755 ${users.media} ${users.media} -"
         ];
+
         services.navidrome = {
             enable = true;
             user = users.media;
             group = users.media;
+            openFirewall = false;
             settings = {
+                Address = "127.0.0.1";
                 Port = 4533;
                 MusicFolder = "/data/media/music";
             };
@@ -24,22 +27,23 @@ in {
         services.audiobookshelf = {
             enable = true;
             port = 8113;
-            host = "0.0.0.0";
+            host = "127.0.0.1";
+            openFirewall = false;
             user = users.media;
             group = users.media;
         };
         services.jellyfin = {
             enable = true;
-            openFirewall = true;
+            openFirewall = false;
             user = users.media;
             group = users.media;
         };
         services.calibre-server = {
             enable = true;
-            openFirewall = true;
+            openFirewall = false;
             port = 8081;
             libraries = ["/data/media/books"];
-            extraFlags = ["--enable-local-write"];
+            extraFlags = ["--enable-local-write" "--listen-on=127.0.0.1"];
             auth = {
                 enable = true;
                 userDb = "/data/media/books/users.sqlite";
@@ -49,18 +53,25 @@ in {
         };
         services.calibre-web = {
             enable = true;
-            openFirewall = true;
+            openFirewall = false;
             options = {
                 enableBookUploading = true;
                 calibreLibrary = "/data/media/books";
             };
             listen = {
-                ip = "0.0.0.0";
+                ip = "127.0.0.1";
                 port = 8083;
             };
             user = users.media;
             group = users.media;
         };
         environment.systemPackages = with pkgs; [calibre xvfb-run imagemagick];
+        hardware.graphics = {
+            enable = true;
+            extraPackages = with pkgs; [
+                intel-media-driver
+                intel-compute-runtime
+            ];
+        };
     };
 }

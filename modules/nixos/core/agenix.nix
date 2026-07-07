@@ -4,9 +4,8 @@
         environment.systemPackages = [inputs.agenix.packages.${pkgs.stdenvNoCC.system}.default];
         age.secrets = {
             passwordfile-caligula.file = ../../../.secrets/passwordfile-caligula.age;
-            cloudflared-audiobookshelf.file = ../../../.secrets/cloudflared-audiobookshelf.age;
-            cloudflared-navidrome.file = ../../../.secrets/cloudflared-navidrome.age;
-            cloudflared-slskd.file = ../../../.secrets/cloudflared-slskd.age;
+            cloudflared-media.file = ../../../.secrets/cloudflared-media.age;
+            cloudflare-dns-token.file = ../../../.secrets/cloudflare-dns-token.age;
             slskd-envars.file = ../../../.secrets/slskd-envars.age;
         };
     };

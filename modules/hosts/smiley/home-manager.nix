@@ -1,5 +1,5 @@
 {
-    flake.modules.homeManager.host_george = {config, ...}: {
+    flake.modules.homeManager.host_smiley = {config, ...}: {
         services.ssh-agent.enable = true;
         programs.ssh = {
             enable = true;

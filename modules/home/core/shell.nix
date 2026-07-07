@@ -49,7 +49,7 @@
                     body = "__fish_default_command_not_found_handler $argv[1]";
                     onEvent = "fish_command_not_found";
                 };
-                music-import = ''ssh caligula@george.local "cd /data/downloads/complete/music && beet import ."'';
+                music-import = ''ssh caligula@smiley.local "cd /data/downloads/complete/music && beet import ."'';
                 _sep = ''
                     set_color a4a7a4   # #a4a7a4 — mid grey (palette 7)
                     printf '    '

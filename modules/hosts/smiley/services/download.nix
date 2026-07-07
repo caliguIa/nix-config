@@ -1,7 +1,7 @@
 topLevel @ {...}: let
     mediaUser = topLevel.config.flake.meta.users.media;
 in {
-    flake.modules.nixos.host_george = {
+    flake.modules.nixos.host_smiley = {
         pkgs,
         config,
         ...
@@ -19,14 +19,18 @@ in {
         ];
         services.sabnzbd = {
             enable = true;
-            openFirewall = true;
-            settings = {};
+            openFirewall = false;
             user = mediaUser;
             group = mediaUser;
+            configFile = null;
+            settings.misc = {
+                host = "127.0.0.1";
+                port = 8085;
+            };
         };
         services.slskd = {
             enable = true;
-            openFirewall = true;
+            openFirewall = false;
             user = mediaUser;
             group = mediaUser;
             environmentFile = config.age.secrets.slskd-envars.path;
@@ -38,7 +42,7 @@ in {
         };
         services.qbittorrent = {
             enable = true;
-            openFirewall = true;
+            openFirewall = false;
             webuiPort = 8080;
             user = mediaUser;
             group = mediaUser;
@@ -48,8 +52,9 @@ in {
                     General.Locale = "en";
                     IPFilter.BannedIPs = "";
                     WebUI = {
+                        Address = "127.0.0.1";
                         Username = "admin";
-                        Password_PBKDF2 = "@ByteArray(ARQ77eY1NUZaQsuDHbIMCA==:0WMRkYTUWVT9wVvdDtHAjU9b3b7uB8NR1Gur2hmQCvCDpm39Q+PsJRJPaCU51dEiz+dTzh8qbPsL8WkFljQYFQ==)";
+                        Password_PBKDF2 = "@ByteArray(+1ZSiSWMaiWPiLNWIHNcug==:usRLXuCrx/sxOTZ+SiM9qvT32DSVxGQWbu2pZZrOI4Fi2PXFjF6PjzoBridfI70z/CqPt9XS7ERMcould3DCMw==)";
                         AlternativeUIEnabled = true;
                         RootFolder = "${pkgs.vuetorrent}/share/vuetorrent";
                         BanDuration = 10;

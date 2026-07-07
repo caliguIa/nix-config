@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.host_george = {
+    flake.modules.nixos.host_smiley = {
         config,
         lib,
         modulesPath,
@@ -11,8 +11,8 @@
 
         boot.initrd.availableKernelModules = ["xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "uas" "sd_mod" "sdhci_pci"];
         boot.initrd.kernelModules = [];
-        boot.kernelModules = ["kvm-intel" "wl"];
-        boot.extraModulePackages = [config.boot.kernelPackages.broadcom_sta];
+        boot.kernelModules = ["kvm-intel"];
+        boot.extraModulePackages = [];
 
         fileSystems."/" = {
             device = "/dev/disk/by-uuid/c96ccbd3-44a6-4f82-bd87-5e77ee5ebfdc";
@@ -28,11 +28,6 @@
         swapDevices = [
             {device = "/dev/disk/by-uuid/f61df574-ebc2-4430-ad1f-ddb1a919bd8a";}
         ];
-
-        systemd.tmpfiles.rules = ["d /data 0755 root root -"];
-
-        time.timeZone = "Europe/London";
-        networking.useDHCP = lib.mkDefault true;
 
         nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
         hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
