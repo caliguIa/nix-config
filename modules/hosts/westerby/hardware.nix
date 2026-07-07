@@ -1,6 +1,5 @@
 {inputs, ...}: {
     flake.modules.nixos.host_westerby = {
-        lib,
         modulesPath,
         ...
     }: {
@@ -25,11 +24,8 @@
 
         swapDevices = [];
 
-        nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-        boot.loader = {
-            systemd-boot.enable = true;
-            efi.canTouchEfiVariables = true;
-        };
+        # boot.loader, time.timeZone, i18n.defaultLocale and nixpkgs.hostPlatform
+        # all come from core (core/misc.nix) + the per-host system in flake/hosts.nix.
         hardware = {
             graphics.enable = true;
             bluetooth.enable = true;
@@ -38,7 +34,5 @@
             asahi.peripheralFirmwareDirectory = ./_firmware;
             apple.touchBar.enable = false;
         };
-        time.timeZone = "Europe/London";
-        i18n.defaultLocale = "en_GB.UTF-8";
     };
 }

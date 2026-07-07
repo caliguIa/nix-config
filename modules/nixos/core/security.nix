@@ -1,10 +1,9 @@
 {
     flake.modules.nixos.core = {
-        security.sudo = {
+        security.sudo.enable = false;
+        security.sudo-rs = {
             enable = true;
-            extraConfig = ''
-                Defaults    timestamp_timeout=30
-            '';
+            extraConfig = "Defaults    timestamp_timeout=30";
         };
     };
 }

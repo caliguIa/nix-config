@@ -13,9 +13,11 @@ in {
     config = {
         flake.nixosConfigurations = lib.mapAttrs (name: system:
             inputs.nixpkgs.lib.nixosSystem {
-                inherit system;
                 specialArgs.inputs = inputs;
-                modules = [(config.flake.modules.nixos."host_${name}" or {})];
+                modules = [
+                    {nixpkgs.hostPlatform = system;}
+                    (config.flake.modules.nixos."host_${name}" or {})
+                ];
             })
         hosts;
     };
