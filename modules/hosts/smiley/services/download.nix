@@ -1,38 +1,32 @@
-topLevel @ {...}: let
-    mediaUser = topLevel.config.flake.meta.users.media;
+topLevel @ {config, ...}: let
+    inherit (topLevel.config.flake.meta) mediaService mediaDir;
 in {
     flake.modules.nixos.host_smiley = {
         pkgs,
         config,
         ...
     }: {
-        systemd.tmpfiles.rules = [
-            "d /data/downloads 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete/movies 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete/tv 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete/audiobooks 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete/books 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete/comics 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/complete/music 0755 ${mediaUser} ${mediaUser} -"
-            "d /data/downloads/incomplete 0755 ${mediaUser} ${mediaUser} -"
+        systemd.tmpfiles.rules = map mediaDir [
+            "/data/downloads"
+            "/data/downloads/complete"
+            "/data/downloads/complete/movies"
+            "/data/downloads/complete/tv"
+            "/data/downloads/complete/audiobooks"
+            "/data/downloads/complete/books"
+            "/data/downloads/complete/comics"
+            "/data/downloads/complete/music"
+            "/data/downloads/incomplete"
         ];
-        services.sabnzbd = {
-            enable = true;
-            openFirewall = false;
-            user = mediaUser;
-            group = mediaUser;
+        services.sabnzbd = mediaService {
+            # configFile defaults to a mutable ini on stateVersion < 26.05, which
+            # makes `settings` be ignored. null lets `settings` take effect.
             configFile = null;
             settings.misc = {
                 host = "127.0.0.1";
                 port = 8085;
             };
         };
-        services.slskd = {
-            enable = true;
-            openFirewall = false;
-            user = mediaUser;
-            group = mediaUser;
+        services.slskd = mediaService {
             environmentFile = config.age.secrets.slskd-envars.path;
             domain = null;
             settings = {
@@ -40,12 +34,8 @@ in {
                 directories.incomplete = "/data/downloads/incomplete";
             };
         };
-        services.qbittorrent = {
-            enable = true;
-            openFirewall = false;
+        services.qbittorrent = mediaService {
             webuiPort = 8080;
-            user = mediaUser;
-            group = mediaUser;
             serverConfig = {
                 LegalNotice.Accepted = true;
                 Preferences = {
