@@ -1,10 +1,16 @@
 topLevel @ {...}: {
     flake.modules.nixos.desktop = {pkgs, ...}: {
         services.dbus.enable = true;
+        services.mullvad-vpn.enable = true;
         programs.dconf.enable = true;
         programs.nix-ld = {
             enable = true;
             libraries = [];
+        };
+        programs.thunderbird.enable = true;
+        programs.firefox = {
+            enable = true;
+            package = pkgs.firefox-devedition;
         };
         # below is needed until bitwarden-desktop updates to electron-41
         # https://github.com/NixOS/nixpkgs/issues/521305
@@ -20,11 +26,8 @@ topLevel @ {...}: {
             claude-code
             bitwarden-cli
             bitwarden-desktop
+            mullvad-vpn
+            mullvad
         ];
-        programs.thunderbird.enable = true;
-        programs.firefox = {
-            enable = true;
-            package = pkgs.firefox-devedition;
-        };
     };
 }
