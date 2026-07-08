@@ -8,6 +8,7 @@
             cloudflare-dns-token.file = ../../../.secrets/cloudflare-dns-token.age;
             slskd-envars.file = ../../../.secrets/slskd-envars.age;
             miniflux-admin.file = ../../../.secrets/miniflux-admin.age;
+            restic-r2.file = ../../../.secrets/restic-r2.age;
         };
     };
 }

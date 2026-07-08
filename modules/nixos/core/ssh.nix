@@ -18,5 +18,20 @@ in {
                 PasswordAuthentication = false;
             };
         };
+
+        # Single personal identity provisioned to every host, decrypted by the
+        # host key at activation. This is the private counterpart of the
+        # `caligula` recipient in .secrets/secrets.nix, so it also lets any host
+        # edit agenix secrets and satisfies home-manager's identityPaths.
+        systemd.tmpfiles.rules = [
+            "d /home/${users.primary}/.ssh 0700 ${users.primary} ${users.primary} -"
+        ];
+        age.secrets.caligula-ssh-key = {
+            file = ../../../.secrets/caligula-ssh-key.age;
+            path = "/home/${users.primary}/.ssh/id_ed25519";
+            owner = users.primary;
+            group = users.primary;
+            mode = "600";
+        };
     };
 }

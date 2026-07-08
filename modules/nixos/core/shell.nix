@@ -19,6 +19,7 @@ in {
                 XDG_CONFIG_HOME = "${homeDirectory}/.config";
                 XDG_DATA_HOME = "${homeDirectory}/.local/share";
             };
+            systemPackages = [pkgs.ghostty.terminfo];
         };
     };
 }
