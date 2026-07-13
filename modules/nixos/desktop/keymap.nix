@@ -29,6 +29,12 @@
                         rightalt = "layer(control)";
                         rightcontrol = "layer(meta)";
                     };
+                    "meta:C" = {
+                        h = "left";
+                        j = "down";
+                        k = "up";
+                        l = "right";
+                    };
                 };
             };
         };

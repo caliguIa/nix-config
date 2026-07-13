@@ -9,7 +9,7 @@ topLevel @ {...}: {
         };
         programs.thunderbird.enable = true;
         programs.firefox = {
-            enable = true;
+            enable = false;
             package = pkgs.firefox-devedition;
         };
         # below is needed until bitwarden-desktop updates to electron-41
