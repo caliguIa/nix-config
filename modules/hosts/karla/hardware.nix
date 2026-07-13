@@ -39,5 +39,16 @@
         swapDevices = [
             {device = "/dev/disk/by-uuid/830029dd-1bdc-46d7-9d31-632f42ba80c7";}
         ];
+
+        services.udev.extraRules = ''
+            # Arm every USB hub (physical + root) so the wake signal can propagate up the tree
+            ACTION=="add|change", SUBSYSTEM=="usb", ATTR{bDeviceClass}=="09", ATTR{power/wakeup}="enabled"
+
+            # Logitech Unifying/Bolt receiver — the wake device
+            ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c52b", ATTR{power/wakeup}="enabled"
+
+            # xHCI host controllers at the PCI level
+            ACTION=="add|change", SUBSYSTEM=="pci", DRIVER=="xhci_hcd", ATTR{power/wakeup}="enabled"
+        '';
     };
 }

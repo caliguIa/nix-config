@@ -16,7 +16,7 @@ lsp.enable({
     'nixd',
     'rust_analyzer',
     'sqls',
-    'sqruff',
+    -- 'sqruff',
     'taplo',
     'tsgo',
     'oxlint',
