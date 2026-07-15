@@ -31,6 +31,11 @@
                     reverse_proxy localhost:8096
                 }
 
+                @photos host photos.smiley.calrichards.io
+                handle @photos {
+                    reverse_proxy localhost:2283
+                }
+
                 @books host books.smiley.calrichards.io
                 handle @books {
                     reverse_proxy localhost:8083

@@ -39,6 +39,10 @@
                 "/var/lib/calibre-web" # users, shelves, read status (app.db)
                 "/data/media/books/metadata.db" # calibre library catalogue
                 "/data/media/books/users.sqlite" # calibre-server auth
+                "/data/photos/library" # immich originals (irreplaceable)
+                "/data/photos/upload" # immich in-flight uploads
+                "/data/photos/profile" # immich user avatars
+                "/data/files/documents" # personal docs
                 "/etc/ssh/ssh_host_ed25519_key" # so a rebuilt smiley can
                 "/etc/ssh/ssh_host_ed25519_key.pub" # decrypt agenix without re-keying
                 stagingDir # miniflux Postgres dump (see prepare cmd)
@@ -49,6 +53,8 @@
                 "/var/lib/navidrome/cache"
                 "/var/lib/jellyfin/transcodes"
                 "/var/lib/jellyfin/metadata" # re-fetchable artwork/nfo
+                "/data/photos/thumbs" # immich thumbnails, regenerated from originals
+                "/data/photos/encoded-video" # immich transcodes, regenerated
             ];
 
             extraBackupArgs = [
@@ -65,6 +71,7 @@
                 set -euo pipefail
                 umask 077
                 ${runuser} -u postgres -- ${pg}/bin/pg_dump -Fc miniflux > ${stagingDir}/miniflux.dump
+                ${runuser} -u postgres -- ${pg}/bin/pg_dump -Fc immich > ${stagingDir}/immich.dump
             '';
 
             # Keep a decent ladder without unbounded growth.

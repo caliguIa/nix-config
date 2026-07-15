@@ -8,6 +8,8 @@
             qbittorrent
             sentry-cli
             ente-desktop
+            ente-cli
+            beekeeper-studio
         ];
     };
 }

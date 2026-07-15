@@ -8,7 +8,6 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 require('ts-comments').setup()
-require('nvim-ts-autotag').setup()
 require('timber').setup({
     log_templates = {
         default = {

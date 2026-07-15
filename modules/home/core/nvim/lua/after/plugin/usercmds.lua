@@ -10,9 +10,9 @@ if vim.fn.filereadable(restart_session) == 1 then
     vim.notify('Restarted nvim', vim.log.levels.INFO)
 end
 
--- Set find func
-function _G.FuzzyFindFunc(cmdarg) return vim.fn.systemlist("fd --hidden . | fzf --filter='" .. cmdarg .. "'") end
-if vim.fn.executable('fd') == 1 and vim.fn.executable('fzf') == 1 then vim.o.findfunc = 'v:lua.FuzzyFindFunc' end
+-- -- Set find func
+-- function _G.FuzzyFindFunc(cmdarg) return vim.fn.systemlist("fd --hidden . | fzf --filter='" .. cmdarg .. "'") end
+-- if vim.fn.executable('fd') == 1 and vim.fn.executable('fzf') == 1 then vim.o.findfunc = 'v:lua.FuzzyFindFunc' end
 
 vim.api.nvim_create_user_command('Update', function()
     local inactive = vim.iter(vim.pack.get())

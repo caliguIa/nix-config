@@ -2,6 +2,10 @@
     users = config.flake.meta.users;
 in {
     flake.modules.nixos.host_smiley = {
+        systemd.tmpfiles.rules = [
+            "d /data/files 0777 ${users.primary} ${users.primary} -"
+            "d /data/files/documents 700 ${users.primary} ${users.primary} -"
+        ];
         services.samba = {
             enable = true;
             openFirewall = false;

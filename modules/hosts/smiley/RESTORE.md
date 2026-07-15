@@ -22,6 +22,19 @@ Miniflux Postgres (custom-format dump):
         /restore/var/backup/restic/miniflux.dump
     systemctl start miniflux
 
+Immich Postgres (custom-format dump). The pgvector/vectorchord extensions are
+provisioned by the `services.immich` module, so they already exist after a
+switch. Restore metadata then the originals:
+
+    systemctl stop immich-server immich-machine-learning
+    runuser -u postgres -- pg_restore -d immich --clean --if-exists \
+        /restore/var/backup/restic/immich.dump
+    rsync -a /restore/data/photos/ /data/photos/   # library, upload, profile
+    systemctl start immich-server immich-machine-learning
+
+Photos live at `/data/photos` (originals under `library/`); `thumbs/` and
+`encoded-video/` are excluded from backup and regenerate on first access.
+
 ## Restore a single service
 
     restic restore latest --target /restore --include /var/lib/jellyfin

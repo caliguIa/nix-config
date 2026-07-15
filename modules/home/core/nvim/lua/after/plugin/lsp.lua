@@ -1,26 +1,10 @@
 local lsp = vim.lsp
 
 lsp.enable({
-    'cssls',
-    'docker_compose_language_service',
-    'dockerls',
-    -- 'eslint',
-    'gopls',
-    -- 'phpantom_lsp',
-    'intelephense',
     'jsonls',
-    'stylelint_lsp',
     'emmylua_ls',
-    -- 'laravel_ls',
-    'marksman',
     'nixd',
-    'rust_analyzer',
-    'sqls',
-    -- 'sqruff',
     'taplo',
-    'tsgo',
-    'oxlint',
-    'zls',
 })
 
 local zendiagram = require('zendiagram')

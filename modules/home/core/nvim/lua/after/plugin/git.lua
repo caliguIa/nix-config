@@ -1,10 +1,3 @@
-require('conflict').setup({
-    default_mappings = {
-        current = 'co',
-        incoming = 'ct',
-    },
-})
-
 local function ous_branch_prefix()
     local cwd = vim.fn.getcwd()
     if cwd:match('/ous/') then return 'OUS-' end

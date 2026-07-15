@@ -13,7 +13,7 @@
                 "image/*" = "imv.desktop";
                 "text/*" = "nvim.desktop";
                 "text/html" = ["zen-twilight.desktop" "nvim.desktop"];
-                "text/markdown" = ["nvim.desktop" "zen-twilight.desktop"];
+                "text/markdown" = ["zen-twilight.desktop" "nvim.desktop"];
                 "video/*" = "mpv.desktop";
             };
         };

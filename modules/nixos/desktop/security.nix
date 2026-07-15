@@ -1,5 +1,9 @@
 {
-    flake.modules.nixos.desktop = {pkgs, config, ...}: let
+    flake.modules.nixos.desktop = {
+        pkgs,
+        config,
+        ...
+    }: let
         # Skip fingerprint auth while the laptop lid is closed (clamshell/docked),
         # since the reader is inaccessible. Extracted from the unmerged nixpkgs
         # PR #342676, adapted to the public security.pam rules API.
@@ -17,7 +21,7 @@
             # Lid open  -> script exits 0 -> "success=ignore" falls through to fprintd.
             control = "[success=ignore default=1]";
             modulePath = "${pkgs.linux-pam}/lib/security/pam_exec.so";
-            args = [ "quiet" "${lidClosedScript}" ];
+            args = ["quiet" "${lidClosedScript}"];
         };
     in {
         services.gnome.gnome-keyring.enable = true;
@@ -27,30 +31,6 @@
         security.pam.services.polkit-1.rules.auth.fprintd-lid = mkLidSkipRule "polkit-1";
         security.pam.services.login.enableGnomeKeyring = true;
         security.polkit.enable = true;
-        # security.polkit.extraConfig = ''
-        #     polkit.addRule(function(action, subject) {
-        #       if (
-        #         subject.isInGroup("users")
-        #           && (
-        #             action.id == "org.freedesktop.login1.reboot" ||
-        #             action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
-        #             action.id == "org.freedesktop.login1.power-off" ||
-        #             action.id == "org.freedesktop.login1.power-off-multiple-sessions"
-        #           )
-        #         )
-        #       {
-        #         return polkit.Result.YES;
-        #       }
-        #     });
-        #     polkit.addRule(function(action, subject) {
-        #       if ((action.id == "net.reactivated.fprint.device.enroll" ||
-        #            action.id == "net.reactivated.fprint.device.setusername" ||
-        #            action.id == "net.reactivated.fprint.device.verify") &&
-        #           subject.isInGroup("wheel")) {
-        #         return polkit.Result.YES;
-        #       }
-        #     });
-        # '';
         environment.systemPackages = with pkgs; [
             polkit
             seahorse

@@ -35,6 +35,7 @@ in {
             };
         };
         services.calibre-web = mediaService {
+            enable = false;
             options = {
                 enableBookUploading = true;
                 calibreLibrary = "/data/media/books";
