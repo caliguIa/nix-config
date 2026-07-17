@@ -1,33 +1,33 @@
 ---@type vim.lsp.Config
 return {
-    on_attach = function(client)
-        local caps = client.server_capabilities
-        caps.hoverProvider = true
-        caps.completionProvider = true
-        caps.definitionProvider = true
-        caps.declarationProvider = true
-        caps.implementationProvider = true
-        caps.referencesProvider = true
-        caps.renameProvider = true
-        caps.codeActionProvider = true
-        caps.signatureHelpProvider = true
-        caps.documentHighlightProvider = true
-
-        -- symbols / navegation
-        caps.documentSymbolProvider = true
-        caps.workspaceSymbolProvider = true
-
-        -- format / tokens
-        caps.documentFormattingProvider = true
-        caps.documentRangeFormattingProvider = true
-        caps.semanticTokensProvider = nil
-
-        -- other
-        caps.typeDefinitionProvider = true
-        caps.callHierarchyProvider = true
-        caps.selectionRangeProvider = true
-        caps.inlayHintProvider = true
-    end,
+    -- on_attach = function(client)
+    --     local caps = client.server_capabilities
+    --     caps.hoverProvider = true
+    --     caps.completionProvider = true
+    --     caps.definitionProvider = true
+    --     caps.declarationProvider = true
+    --     caps.implementationProvider = true
+    --     caps.referencesProvider = true
+    --     caps.renameProvider = true
+    --     caps.codeActionProvider = true
+    --     caps.signatureHelpProvider = true
+    --     caps.documentHighlightProvider = true
+    --
+    --     -- symbols / navegation
+    --     caps.documentSymbolProvider = true
+    --     caps.workspaceSymbolProvider = true
+    --
+    --     -- format / tokens
+    --     caps.documentFormattingProvider = true
+    --     caps.documentRangeFormattingProvider = true
+    --     caps.semanticTokensProvider = nil
+    --
+    --     -- other
+    --     caps.typeDefinitionProvider = true
+    --     caps.callHierarchyProvider = true
+    --     caps.selectionRangeProvider = true
+    --     caps.inlayHintProvider = true
+    -- end,
     settings = {
         complete_function_calls = true,
         typescript = {

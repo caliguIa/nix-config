@@ -1,25 +1,26 @@
 {
     flake.modules.nixos.core = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            fish
             bat
             bottom
+            curl
+            difftastic
             eza
             fd
+            fish
+            gitu
+            gnumake
             gnupg
+            hurl
             jq
-            lazydocker
             just
+            lazydocker
             ouch
+            prr
             ripgrep
             tree
-            prr
-            curl
-            wget
-            hurl
-            gitu
-            difftastic
             unzip
+            wget
         ];
     };
 }

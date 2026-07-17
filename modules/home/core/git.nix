@@ -1,20 +1,84 @@
 {
-    flake.modules.homeManager.core = {pkgs, ...}: {
-        programs.gh-dash.enable = true;
+    flake.modules.homeManager.core = {
+        pkgs,
+        config,
+        ...
+    }: {
         programs.gh.enable = true;
-        programs.gh.extensions = with pkgs; [gh-dash];
+        programs.gh.extensions = with pkgs; [gh-dash gh-enhance];
+        programs.gh-dash = {
+            enable = true;
+            settings = {
+                pager.diff = "diffnav";
+                repoPaths = {
+                    "caliguIa/*" = "${config.home.homeDirectory}/dev/*";
+                    "stormburststudios/oneupsales" = "${config.home.homeDirectory}/ous/";
+                };
+                prSections = [
+                    {
+                        title = "All";
+                        filters = "is:open";
+                    }
+                    {
+                        title = "Author";
+                        filters = "is:open author:@me";
+                    }
+                    {
+                        title = "Requested";
+                        filters = "is:open review-requested:@me";
+                    }
+                    {
+                        title = "Involved";
+                        filters = "is:open involves:@me -author:@me";
+                    }
+                ];
+                keybindings = {
+                    universal = [
+                        {
+                            key = "g";
+                            name = "gitu";
+                            command = ''
+                                cd {{.RepoPath}} && ${pkgs.gitu}/bin/gitu
+                            '';
+                        }
+                    ];
+                    prs = [
+                        {
+                            key = "O";
+                            name = "review";
+                            command = ''
+                                cd {{.RepoPath}} && nvim -c ":Guh {{.PrNumber}}"
+                            '';
+                        }
+                        {
+                            key = "T";
+                            name = "actions";
+                            command = ''
+                                gh enhance -R {{.RepoName}} {{.PrNumber}}
+                            '';
+                        }
+                    ];
+                };
+            };
+        };
+        xdg.configFile."diffnav/config.yml".source = pkgs.writers.writeYAML "config.yaml" {
+            ui.hideHeader = true;
+            ui.hideFooter = true;
+            ui.showFileTree = true;
+            ui.fileTreeWidth = 26;
+            ui.searchTreeWidth = 50;
+            ui.icons = "filetype";
+            ui.colorFileNames = false;
+            ui.showDiffStats = false;
+            ui.sideBySide = true;
+            ui.startFoldersOpenDepth = -1;
+        };
+        programs.delta.enable = true;
+        home.packages = with pkgs; [diffnav];
         programs.git = {
             enable = true;
             signing.format = null;
             settings = {
-                alias = {
-                    dlog = "-c diff.external=difft log --ext-diff";
-                    dshow = "-c diff.external=difft show --ext-diff";
-                    ddiff = "-c diff.external=difft diff";
-                    dl = "-c diff.external=difft log -p --ext-diff";
-                    ds = "-c diff.external=difft show --ext-diff";
-                    dft = "-c diff.external=difft diff";
-                };
                 user = {
                     name = "Cal";
                     email = "acc@calrichards.io";
@@ -32,20 +96,7 @@
                     symlinks = true;
                     autocrlf = "input";
                 };
-                diff = {
-                    external = "difft";
-                    tool = "difftastic";
-                    context = 3;
-                    renames = "copies";
-                    interHunkContext = 10;
-                };
-                difftool = {
-                    prompt = false;
-                    "difftastic" = {
-                        cmd = "difft '$MERGED' '$LOCAL' 'abcdef1' '100644' '$REMOTE' 'abcdef2' '100644'";
-                    };
-                };
-                pager.difftool = true;
+                pager.diff = "diffnav";
                 fetch.prune = true;
                 gc.auto = 200;
                 init.defaultBranch = "main";
@@ -60,10 +111,37 @@
                     default = "current";
                 };
                 interactive.singlekey = true;
+                interactive.diffFilter = "diffnav";
                 status = {
                     branch = true;
                     showStash = true;
                     showUntrackedFiles = "all";
+                };
+                delta = {
+                    "syntax-theme" = "kanso-zen";
+                    "dark" = "true";
+                    "tabs" = "2";
+                    "file-style" = "omit";
+                    "file-decoration-style" = "none";
+                    "line-numbers-left-format" = "{nm:>4} ";
+                    "line-numbers-right-format" = "│ {np:>4} ";
+                    "line-numbers-left-style" = "white dim";
+                    "line-numbers-right-style" = "#1f2335 dim";
+                    "line-numbers-zero-style" = "white dim";
+                    "line-numbers-plus-style" = "white dim ";
+                    "line-numbers-minus-style" = "white dim";
+                    "wrap-left-symbol" = " ";
+                    "wrap-right-symbol" = " ";
+                    "wrap-right-prefix-symbol" = " ";
+                    "plus-style" = "syntax #0e250e";
+                    "plus-emph-style" = "syntax #103610";
+                    "minus-style" = "syntax #402a26";
+                    "minus-emph-style" = "syntax #45221c";
+                    "hunk-label" = "  󰡏 ";
+                    "hunk-header-line-number-style" = "#10233A";
+                    "hunk-header-style" = "#868E99";
+                    "hunk-header-file-style" = "#868E99 dim";
+                    "hunk-header-decoration-style" = "#163050 ol ul";
                 };
                 url = {
                     "git@github.com:" = {
@@ -96,10 +174,6 @@
                     theme = {
                         selectedLineBgColor = ["default"];
                     };
-                };
-                os = {
-                    edit = "[ -z \"$NVIM\" ] && (nvim -- {{filename}}) || (nvim --server $NVIM --remote-send '<cmd>close<cr><cmd>lua EditFromLazygit({{filename}})<CR>')";
-                    editAtLine = "[ -z \"$NVIM\" ] && (nvim +{{line}} -- {{filename}}) || nvim --server $NVIM --remote-send '<cmd>close<CR><cmd>lua EditLineFromLazygit({{filename}},{{line}})<CR>'";
                 };
                 keybinding.universal = {
                     quitWithoutChangingDirectory = ["q" "<ctrl+c>"];

@@ -17,6 +17,8 @@ topLevel @ {...}: {
         nixpkgs.config.permittedInsecurePackages = [
             "electron-39.8.10"
         ];
+
+        environment.sessionVariables.OPENCODE_EXPERIMENTAL_OXFMT = "true";
         environment.systemPackages = with pkgs; [
             topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
             ungoogled-chromium

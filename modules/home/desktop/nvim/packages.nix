@@ -3,16 +3,27 @@
         pkgs,
         config,
         ...
-    }: {
+    }: let
+        stylelint-language-server = let
+            ext = pkgs.vscode-extensions.stylelint.vscode-stylelint;
+            server = "${ext}/share/vscode/extensions/stylelint.vscode-stylelint/dist/start-server.js";
+        in
+            pkgs.writeShellApplication {
+                name = "stylelint-language-server";
+                runtimeInputs = [pkgs.nodejs];
+                text = ''exec node ${server} "$@"'';
+            };
+    in {
         programs.neovim.extraPackages = with pkgs; [
             # lsp
             marksman
-            vscode-langservers-extracted
             docker-compose-language-service
             dockerfile-language-server
+            vscode-langservers-extracted
             intelephense
             typescript-go
             sqls
+            stylelint-language-server
             # formatter
             sqruff
         ];

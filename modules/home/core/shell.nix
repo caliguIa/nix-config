@@ -18,6 +18,7 @@
             dps = "docker ps";
             dcu = "docker compose up -d";
             dcua = "docker compose up";
+            dash = "gh dash";
             ga = "git add";
             gaa = "git add .";
             gap = "git add --patch";
