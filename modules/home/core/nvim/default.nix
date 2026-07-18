@@ -32,7 +32,6 @@
             '';
         });
 
-        # LSPs and formatters placed on Neovim's wrapper PATH.
         tools = with pkgs; [
             # lsp
             emmylua-ls
@@ -73,10 +72,13 @@
             chmod +x $out/bin/vimdiff
         '';
     in {
-        packages = [neovim aliases mago pkgs.tree-sitter pkgs.gcc];
-
-        # Config lives in the repo as out-of-store symlinks so edits apply
-        # without a rebuild. The desktop tree is loaded as a native package.
+        packages = [
+            neovim
+            aliases
+            mago
+            pkgs.tree-sitter
+            pkgs.gcc
+        ];
         files = {
             ".config/nvim/init.lua".source = "${repo}/core/nvim/lua/init.lua";
             ".config/nvim/after".source = "${repo}/core/nvim/lua/after";

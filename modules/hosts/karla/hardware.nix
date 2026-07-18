@@ -13,11 +13,21 @@
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
         boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod"];
+        boot.initrd.systemd.enable = true;
         boot.kernelModules = ["kvm-amd"];
         boot.kernelParams = [
             "amdgpu.dcdebugmask=0x410"
             "amdgpu.runpm=0"
         ];
+
+        # skip systemd-boot menu wait; hold `space` at boot to show the menu
+        boot.loader.timeout = 0;
+
+        # don't block boot waiting for a network lease
+        systemd.services.NetworkManager-wait-online.enable = false;
+
+        # socket-activate docker instead of starting it at boot
+        systemd.services.docker.wantedBy = lib.mkForce [];
 
         hardware.enableAllFirmware = true;
         hardware.framework.enableKmod = true;
