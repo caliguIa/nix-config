@@ -1,6 +1,8 @@
-topLevel @ {inputs, ...}: let
-    users = topLevel.config.flake.meta.users;
-in {
+{
+    inputs,
+    user,
+    ...
+}: {
     flake.modules.nixos.core = {pkgs, ...}: {
         imports = [inputs.agenix.nixosModules.default];
         environment.systemPackages = [inputs.agenix.packages.${pkgs.stdenvNoCC.system}.default];
@@ -13,8 +15,8 @@ in {
             restic-r2.file = ../../../.secrets/restic-r2.age;
             intelephense = {
                 file = ../../../.secrets/intelephense.age;
-                owner = users.primary;
-                group = users.primary;
+                owner = user.primary;
+                group = user.primary;
                 mode = "400";
             };
         };

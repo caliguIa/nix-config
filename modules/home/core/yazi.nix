@@ -1,11 +1,12 @@
 {
     flake.modules.hjem.core = {pkgs, ...}: let
-        toml = (pkgs.formats.toml {}).generate;
+        toml = pkgs.formats.toml {};
     in {
         packages = [pkgs.yazi];
         xdg.config.files = {
-            "yazi/yazi.toml".source = toml "yazi.toml" {
-                mgr = {
+            "yazi/yazi.toml" = {
+                generator = toml.generate "yazi.toml";
+                value.mgr = {
                     ratio = [1 4 3];
                     show_hidden = true;
                     sort_by = "natural";
@@ -17,8 +18,9 @@
                     show_symlink = true;
                 };
             };
-            "yazi/keymap.toml".source = toml "keymap.toml" {
-                mgr.prepend_keymap = [
+            "yazi/keymap.toml" = {
+                generator = toml.generate "keymap.toml";
+                value.mgr.prepend_keymap = [
                     {
                         run = ''shell -- qlmanage -p "$@"'';
                         on = ["<C-p>"];

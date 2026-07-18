@@ -1,19 +1,17 @@
-topLevel @ {...}: let
-    users = topLevel.config.flake.meta.users;
-in {
+{user, ...}: {
     flake.modules.nixos.host_smiley = {
         users = {
             users = {
-                ${users.primary}.extraGroups = ["wheel" "networkmanager" "immich" users.media];
-                ${users.media} = {
+                ${user.primary}.extraGroups = ["wheel" "networkmanager" "immich" user.media];
+                ${user.media} = {
                     isSystemUser = true;
-                    group = users.media;
+                    group = user.media;
                     extraGroups = ["render" "video"];
                 };
             };
             groups = {
-                ${users.primary} = {};
-                ${users.media} = {};
+                ${user.primary} = {};
+                ${user.media} = {};
             };
         };
     };

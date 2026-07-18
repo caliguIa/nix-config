@@ -1,14 +1,12 @@
-topLevel @ {...}: let
-    users = topLevel.config.flake.meta.users;
-in {
+{user, ...}: {
     flake.modules.nixos.host_westerby = {
-        users.users.${users.primary}.extraGroups = [
+        users.users.${user.primary}.extraGroups = [
             "wheel"
             "audio"
             "video"
             "realtime"
             "docker"
         ];
-        users.groups.${users.primary} = {};
+        users.groups.${user.primary} = {};
     };
 }

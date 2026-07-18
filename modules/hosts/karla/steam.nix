@@ -1,4 +1,4 @@
-{
+{user, ...}: {
     flake.modules.nixos.host_karla = {pkgs, ...}: {
         hardware.graphics.enable = true;
         services.xserver.videoDrivers = ["amdgpu"];
@@ -9,6 +9,6 @@
             mangohud
             protonup-rs
         ];
-        environment.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/user/.steam/root/compatibilitytools.d";
+        environment.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/${user.primary}/.steam/root/compatibilitytools.d";
     };
 }

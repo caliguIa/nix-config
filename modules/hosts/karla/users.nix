@@ -1,8 +1,6 @@
-topLevel @ {...}: let
-    users = topLevel.config.flake.meta.users;
-in {
+{user, ...}: {
     flake.modules.nixos.host_karla = {
-        users.users.${users.primary}.extraGroups = [
+        users.users.${user.primary}.extraGroups = [
             "wheel"
             "audio"
             "video"
@@ -10,6 +8,6 @@ in {
             "docker"
             "networkmanager"
         ];
-        users.groups.${users.primary} = {};
+        users.groups.${user.primary} = {};
     };
 }

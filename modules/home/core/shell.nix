@@ -1,14 +1,19 @@
-{config, ...}: let
-    users = config.flake.meta.users;
-    home = "/home/${users.primary}";
-in {
-    flake.modules.hjem.core = {pkgs, ...}: let
-        # Program binaries whose fish integration was previously wired by
-        # home-manager's `enableFishIntegration`. Referenced by store path so
-        # they resolve regardless of PATH ordering.
-        atuin = "${pkgs.atuin}/bin/atuin";
-        fzf = "${pkgs.fzf}/bin/fzf";
-        direnv = "${pkgs.direnv}/bin/direnv";
+{
+    flake.modules.hjem.core = {
+        config,
+        pkgs,
+        lib,
+        ...
+    }: let
+        inherit (lib.attrsets) mapAttrsToList;
+        inherit (lib.meta) getExe;
+        inherit (lib.strings) concatLines escapeShellArg;
+
+        home = config.directory;
+
+        atuin = getExe pkgs.atuin;
+        fzf = getExe pkgs.fzf;
+        direnv = getExe pkgs.direnv;
 
         aliases = {
             ".." = "cd ..";
@@ -46,8 +51,8 @@ in {
             undocommit = "git reset --soft HEAD^";
         };
 
-        aliasLines = builtins.concatStringsSep "\n" (
-            builtins.attrValues (builtins.mapAttrs (name: cmd: "alias ${name} ${pkgs.lib.escapeShellArg cmd}") aliases)
+        aliasLines = concatLines (
+            mapAttrsToList (name: cmd: "alias ${name} ${escapeShellArg cmd}") aliases
         );
 
         mkFunction = name: body: {
@@ -63,45 +68,35 @@ in {
                 "fish/config.fish".text = ''
                     fish_add_path ${home}/.local/bin
 
-                    # Session variables (previously home.sessionVariables)
                     set -gx DIRENV_LOG_FORMAT ""
                     set -gx INTELEPHENSE_KEY_PATH /run/agenix/intelephense
-                    # Disable fzf's Ctrl-R history widget; atuin owns Ctrl-R.
                     set -gx FZF_CTRL_R_COMMAND ""
 
                     if status is-interactive
                         ${aliasLines}
 
-                        # Prompt / git-prompt configuration
                         set -g __fish_git_prompt_showdirtystate 1
                         set -g __fish_git_prompt_showuntrackedfiles 1
                         set -g __fish_git_prompt_showupstream auto
 
-                        # fzf: keep Ctrl-T (files) and Alt-C (cd); atuin owns Ctrl-R.
+                        # atuin owns Ctrl-R; fzf keeps Ctrl-T and Alt-C.
                         ${fzf} --fish | source
                         bind --erase \cr 2>/dev/null
-
-                        # atuin: history + Ctrl-R / up-arrow bindings.
                         ${atuin} init fish | source
-
-                        # direnv hook
                         ${direnv} hook fish | source
 
-                        # ghostty shell integration (when launched inside ghostty)
                         if set -q GHOSTTY_RESOURCES_DIR
                             source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
                         end
                     end
                 '';
 
-                # command-not-found handler (was onEvent = fish_command_not_found)
                 "fish/functions/__fish_command_not_found_handler.fish".text = ''
                     function __fish_command_not_found_handler --on-event fish_command_not_found
                         __fish_default_command_not_found_handler $argv[1]
                     end
                 '';
 
-                # yazi wrapper (was programs.yazi shellWrapperName = "y")
                 "fish/functions/y.fish".text = ''
                     function y
                         set -l tmp (mktemp -t "yazi-cwd.XXXXX")
@@ -113,7 +108,6 @@ in {
                     end
                 '';
 
-                # lazygit wrapper (was programs.lazygit enableFishIntegration)
                 "fish/functions/lg.fish".text = ''
                     function lg
                         set -x LAZYGIT_NEW_DIR_FILE ~/.lazygit/newdir
@@ -126,7 +120,7 @@ in {
                 '';
             }
             // (mkFunction "music-import" ''
-                ssh caligula@smiley.local "cd /data/downloads/complete/music && beet import ."'')
+                    ssh caligula@smiley.local "cd /data/downloads/complete/music && beet import ."'')
             // (mkFunction "_sep" ''
                 set_color a4a7a4   # #a4a7a4 — mid grey (palette 7)
                 printf '    '
@@ -179,6 +173,6 @@ in {
                 printf '󰘧 '
                 set_color normal'')
             // (mkFunction "claude-personal" ''
-                CLAUDE_CONFIG_DIR=~/.claude-personal claude "$argv"'');
+                    CLAUDE_CONFIG_DIR=~/.claude-personal claude "$argv"'');
     };
 }

@@ -4,10 +4,13 @@
         lib,
         ...
     }: let
+        inherit (lib.generators) toKeyValue mkKeyValueDefault;
+        inherit (lib.meta) getExe;
+
         # ghostty config is `key = value`, alphabetically sorted; some keys
         # (keybind, palette) repeat, so lists become duplicate keys.
-        ghostty = lib.generators.toKeyValue {
-            mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
+        ghostty = toKeyValue {
+            mkKeyValue = mkKeyValueDefault {} " = ";
             listsAsDuplicateKeys = true;
         };
     in {
@@ -113,7 +116,7 @@
                 Type = "notify-reload";
                 ReloadSignal = "SIGUSR2";
                 BusName = "com.mitchellh.ghostty";
-                ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=true --initial-window=false";
+                ExecStart = "${getExe pkgs.ghostty} --gtk-single-instance=true --initial-window=false";
             };
         };
     };

@@ -1,8 +1,5 @@
 {inputs, ...}: {
-    flake.modules.nixos.host_westerby = {
-        modulesPath,
-        ...
-    }: {
+    flake.modules.nixos.host_westerby = {modulesPath, ...}: {
         imports = [
             (modulesPath + "/installer/scan/not-detected.nix")
             inputs.apple-silicon.nixosModules.apple-silicon-support

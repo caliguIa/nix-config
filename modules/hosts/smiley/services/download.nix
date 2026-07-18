@@ -1,9 +1,9 @@
-topLevel @ {config, ...}: let
-    inherit (topLevel.config.flake.meta) mediaService mediaDir;
-in {
+{
     flake.modules.nixos.host_smiley = {
         pkgs,
         config,
+        mediaService,
+        mediaDir,
         ...
     }: {
         systemd.tmpfiles.rules = map mediaDir [

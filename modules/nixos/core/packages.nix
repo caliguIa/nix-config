@@ -7,7 +7,6 @@
             difftastic
             eza
             fd
-            fish
             gitu
             gnumake
             gnupg

@@ -1,4 +1,4 @@
-{config, ...}: {
+{user, ...}: {
     flake.modules.nixos.core = {
         pkgs,
         inputs,
@@ -13,7 +13,7 @@
                 trusted-users = [
                     "@wheel"
                     "root"
-                    "${config.flake.meta.users.primary}"
+                    user.primary
                 ];
                 experimental-features = ["nix-command" "flakes"];
                 warn-dirty = false;
@@ -23,7 +23,7 @@
         nixpkgs.config.allowUnfree = true;
         programs.nh = {
             enable = true;
-            flake = "/home/caligula/nix-config";
+            flake = "/home/${user.primary}/nix-config";
             clean.enable = true;
         };
     };

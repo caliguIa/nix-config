@@ -1,4 +1,4 @@
-topLevel @ {...}: {
+{inputs, ...}: {
     flake.modules.nixos.desktop = {pkgs, ...}: {
         services.dbus.enable = true;
         services.mullvad-vpn.enable = true;
@@ -20,7 +20,7 @@ topLevel @ {...}: {
 
         environment.sessionVariables.OPENCODE_EXPERIMENTAL_OXFMT = "true";
         environment.systemPackages = with pkgs; [
-            topLevel.inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
+            inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
             ungoogled-chromium
             gelly
             sourcegit

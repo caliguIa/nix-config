@@ -1,5 +1,5 @@
-topLevel @ {...}: let
-    username = topLevel.config.flake.meta.users.primary;
+{user, ...}: let
+    username = user.primary;
 in {
     flake.modules.nixos.core = {config, ...}: {
         users.users.${username} = {

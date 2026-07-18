@@ -1,52 +1,87 @@
-topLevel @ {
-    inputs,
-    lib,
-    ...
-}: {
-    options.flake.meta.nvimExtraPackages = lib.mkOption {
-        type = lib.types.functionTo (lib.types.listOf lib.types.package);
-        default = _: [];
-        description = ''
-            Function taking pkgs and returning packages to place on Neovim's
-            wrapper PATH (LSPs, formatters, etc). Definitions from all modules
-            are merged (list results are concatenated).
-        '';
-    };
+{inputs, ...}: {
+    flake.modules.hjem.core = {
+        config,
+        pkgs,
+        lib,
+        ...
+    }: let
+        inherit (lib.meta) getExe;
+        inherit (lib.strings) makeBinPath;
 
-    config.flake.modules.hjem.core = {pkgs, ...}: let
-        neovimUnwrapped = inputs.nvim-nightly.packages.${pkgs.stdenvNoCC.system}.neovim;
+        repo = "${config.directory}/nix-config/modules/home";
 
-        config = pkgs.neovimUtils.makeNeovimConfig {
-            withNodeJs = true;
-            withPython3 = false;
-            withRuby = false;
-            extraLuaPackages = _: [];
-            plugins = [];
+        stylelint-language-server = pkgs.writeShellApplication {
+            name = "stylelint-language-server";
+            runtimeInputs = [pkgs.nodejs];
+            text = let
+                ext = pkgs.vscode-extensions.stylelint.vscode-stylelint;
+            in ''exec node ${ext}/share/vscode/extensions/stylelint.vscode-stylelint/dist/start-server.js "$@"'';
         };
 
-        neovim = pkgs.wrapNeovimUnstable neovimUnwrapped (config
-            // {
-                wrapperArgs =
-                    (lib.escapeShellArgs config.wrapperArgs)
-                    + " "
-                    + ''--suffix PATH : "${lib.makeBinPath (topLevel.config.flake.meta.nvimExtraPackages pkgs)}"'';
-                wrapRc = false;
-            });
+        mago = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+            pname = "mago";
+            version = "1.30.0";
+            src = pkgs.fetchurl {
+                url = "https://github.com/carthage-software/mago/releases/download/${finalAttrs.version}/mago-${finalAttrs.version}-x86_64-unknown-linux-musl.tar.gz";
+                hash = "sha256-u/UkBh6GhMTgzVwiBugGkvZsxXe6OotsRHDpEgNgxjw=";
+            };
+            installPhase = ''
+                runHook preInstall
+                install -Dm755 mago "$out/bin/mago"
+                runHook postInstall
+            '';
+        });
+
+        # LSPs and formatters placed on Neovim's wrapper PATH.
+        tools = with pkgs; [
+            # lsp
+            emmylua-ls
+            nixd
+            taplo
+            bash-language-server
+            marksman
+            docker-compose-language-service
+            dockerfile-language-server
+            vscode-langservers-extracted
+            intelephense
+            typescript-go
+            sqls
+            stylelint-language-server
+            inputs.phpantom-lsp.packages.${pkgs.stdenvNoCC.system}.phpantom-lsp
+            # formatter
+            alejandra
+            stylua
+            sqruff
+        ];
+
+        neovim = pkgs.wrapNeovimUnstable inputs.nvim-nightly.packages.${pkgs.stdenvNoCC.system}.neovim {
+            withNodeJs = false;
+            withPython3 = false;
+            withRuby = false;
+            wrapRc = false;
+            wrapperArgs = ["--suffix" "PATH" ":" (makeBinPath tools)];
+        };
 
         aliases = pkgs.runCommand "nvim-aliases" {} ''
             mkdir -p $out/bin
-            ln -s ${neovim}/bin/nvim $out/bin/vi
-            ln -s ${neovim}/bin/nvim $out/bin/vim
+            ln -s ${getExe neovim} $out/bin/vi
+            ln -s ${getExe neovim} $out/bin/vim
             cat > $out/bin/vimdiff <<EOF
             #!${pkgs.runtimeShell}
-            exec ${neovim}/bin/nvim -d "\$@"
+            exec ${getExe neovim} -d "\$@"
             EOF
             chmod +x $out/bin/vimdiff
         '';
     in {
-        packages = [
-            neovim
-            aliases
-        ];
+        packages = [neovim aliases mago pkgs.tree-sitter pkgs.gcc];
+
+        # Config lives in the repo as out-of-store symlinks so edits apply
+        # without a rebuild. The desktop tree is loaded as a native package.
+        files = {
+            ".config/nvim/init.lua".source = "${repo}/core/nvim/lua/init.lua";
+            ".config/nvim/after".source = "${repo}/core/nvim/lua/after";
+            ".config/nvim/plugin".source = "${repo}/core/nvim/lua/plugin";
+            ".config/nvim/pack/desktop/start/desktop".source = "${repo}/desktop/nvim/lua";
+        };
     };
 }
