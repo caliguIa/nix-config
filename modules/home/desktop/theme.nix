@@ -19,9 +19,6 @@
         xdg.config.files = {
             "gtk-3.0/settings.ini" = settingsIni;
             "gtk-4.0/settings.ini" = settingsIni;
-            "fish/conf.d/gtk.fish".text = ''
-                set -gx GTK2_RC_FILES $HOME/.config/gtk/.gtkrc-2.0
-            '';
         };
     };
 }

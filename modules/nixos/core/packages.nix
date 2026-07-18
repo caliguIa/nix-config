@@ -1,12 +1,12 @@
 {
     flake.modules.nixos.core = {pkgs, ...}: {
         environment.systemPackages = with pkgs; [
-            bat
             bottom
             curl
             difftastic
             eza
             fd
+            fzf
             gitu
             gnumake
             gnupg

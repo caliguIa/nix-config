@@ -1,5 +1,5 @@
 {
-    flake.modules.hjem.core = {pkgs, ...}: let
+    flake.modules.nixos.core = {pkgs, ...}: let
         batSrc = pkgs.runCommand "bat-src" {} ''
             mkdir -p $out/themes $out/syntaxes
             cp ${./themes/kanso-zen.tmTheme} $out/themes/kanso-zen.tmTheme
@@ -20,9 +20,10 @@
             '';
         };
     in {
-        packages = [bat];
-        xdg.config.files."bat/config".text = ''
-            --theme=kanso-zen
-        '';
+        programs.bat = {
+            enable = true;
+            package = bat;
+            settings.theme = "kanso-zen";
+        };
     };
 }

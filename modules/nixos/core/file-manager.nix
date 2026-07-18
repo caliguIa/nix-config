@@ -1,12 +1,9 @@
 {
-    flake.modules.hjem.core = {pkgs, ...}: let
-        toml = pkgs.formats.toml {};
-    in {
-        packages = [pkgs.yazi];
-        xdg.config.files = {
-            "yazi/yazi.toml" = {
-                generator = toml.generate "yazi.toml";
-                value.mgr = {
+    flake.modules.nixos.core = {pkgs, ...}: {
+        programs.yazi = {
+            enable = true;
+            settings = {
+                yazi.mgr = {
                     ratio = [1 4 3];
                     show_hidden = true;
                     sort_by = "natural";
@@ -17,17 +14,14 @@
                     linemode = "size_and_mtime";
                     show_symlink = true;
                 };
-            };
-            "yazi/keymap.toml" = {
-                generator = toml.generate "keymap.toml";
-                value.mgr.prepend_keymap = [
+                keymap.mgr.prepend_keymap = [
                     {
                         run = ''shell -- qlmanage -p "$@"'';
                         on = ["<C-p>"];
                     }
                 ];
             };
-            "yazi/init.lua".text = ''
+            initLua = pkgs.writeText "yazi-init.lua" ''
                 function Linemode:size_and_mtime()
                 local time = math.floor(self._file.cha.mtime or 0)
                 if time == 0 then
