@@ -18,7 +18,6 @@ topLevel @ {user, ...}: {
             daemonIOSchedClass = "idle";
             package = pkgs.nixVersions.latest;
             nixPath = nixPath;
-            channel.enable = false;
             optimise.automatic = true;
             settings = {
                 experimental-features = ["nix-command" "flakes"];

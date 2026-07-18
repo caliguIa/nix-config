@@ -26,3 +26,4 @@ require('timber').setup({
 require('treesitter-context').setup({
     max_lines = 4,
 })
+require('nvim-ts-autotag').setup()

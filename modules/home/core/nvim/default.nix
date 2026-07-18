@@ -83,7 +83,6 @@
             ".config/nvim/init.lua".source = "${repo}/core/nvim/lua/init.lua";
             ".config/nvim/after".source = "${repo}/core/nvim/lua/after";
             ".config/nvim/plugin".source = "${repo}/core/nvim/lua/plugin";
-            ".config/nvim/pack/desktop/start/desktop".source = "${repo}/desktop/nvim/lua";
         };
     };
 }

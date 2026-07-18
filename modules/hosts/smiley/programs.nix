@@ -19,7 +19,7 @@
                 import = {
                     incremental = "yes";
                     move = "yes";
-                    write = "yes";
+                    write = true;
                     resume = "ask";
                 };
             };
