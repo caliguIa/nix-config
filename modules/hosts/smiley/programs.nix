@@ -17,8 +17,8 @@
                 threaded = "yes";
                 plugins = ["musicbrainz"];
                 import = {
-                    incremental = "yes";
-                    move = "yes";
+                    incremental = true;
+                    move = true;
                     write = true;
                     resume = "ask";
                 };
