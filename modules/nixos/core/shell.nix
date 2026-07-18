@@ -38,7 +38,7 @@
         };
         programs.fish = let
             functions = {
-                music-import = ''ssh smiley "cd /data/downloads/complete/music && beet import ."'';
+                music-import = ''ssh -t smiley beets-import'';
 
                 _sep = ''
                     set_color a4a7a4   # #a4a7a4 — mid grey (palette 7)
