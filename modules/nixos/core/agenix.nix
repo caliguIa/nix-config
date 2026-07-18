@@ -1,4 +1,6 @@
-{inputs, ...}: {
+topLevel @ {inputs, ...}: let
+    users = topLevel.config.flake.meta.users;
+in {
     flake.modules.nixos.core = {pkgs, ...}: {
         imports = [inputs.agenix.nixosModules.default];
         environment.systemPackages = [inputs.agenix.packages.${pkgs.stdenvNoCC.system}.default];
@@ -9,6 +11,12 @@
             slskd-envars.file = ../../../.secrets/slskd-envars.age;
             miniflux-admin.file = ../../../.secrets/miniflux-admin.age;
             restic-r2.file = ../../../.secrets/restic-r2.age;
+            intelephense = {
+                file = ../../../.secrets/intelephense.age;
+                owner = users.primary;
+                group = users.primary;
+                mode = "400";
+            };
         };
     };
 }

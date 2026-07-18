@@ -1,67 +1,53 @@
 {
-    flake.modules.homeManager.desktop = {
-        programs.ghostty = {
-            enable = true;
-            systemd.enable = true;
-            enableFishIntegration = true;
-            installBatSyntax = true;
-            installVimSyntax = true;
-            settings = {
-                theme = "kanso-zen";
-                window-decoration = "none";
-                maximize = true;
-                split-inherit-working-directory = true;
-                selection-clear-on-copy = true;
-                copy-on-select = true;
-                font-family = "Berkeley Mono";
-                font-size = 14;
-                adjust-cell-height = "25%";
-                keybind = let
-                    leader = "ctrl+space>";
-                in [
-                    "performable:ctrl+c=copy_to_clipboard"
-                    "ctrl+v=paste_from_clipboard"
-                    "${leader}c=new_tab"
-                    "${leader}n=next_tab"
-                    "${leader}p=previous_tab"
-                    "${leader}v=new_split:right"
-                    "${leader}h=new_split:down"
-                    "${leader}equal=equalize_splits"
-                    "${leader}q=close_surface"
-                    "alt+h=goto_split:left"
-                    "alt+j=goto_split:down"
-                    "alt+k=goto_split:up"
-                    "alt+l=goto_split:right"
-                    "ctrl+enter=unbind"
-                ];
-            };
-            themes = {
-                kanso-pearl = {
-                    background = "#f2f1ef";
-                    foreground = "#22262D";
-                    selection-background = "#e2e1df";
-                    selection-foreground = "#22262D";
-                    cursor-color = "#22262D";
-                    palette = [
-                        "0=#22262D"
-                        "1=#c84053"
-                        "2=#6f894e"
-                        "3=#77713f"
-                        "4=#4d699b"
-                        "5=#b35b79"
-                        "6=#597b75"
-                        "7=#9F9F99"
-                        "8=#5C6066"
-                        "9=#d7474b"
-                        "10=#6e915f"
-                        "11=#836f4a"
-                        "12=#6693bf"
-                        "13=#624c83"
-                        "14=#5e857a"
-                        "15=#f2f1ef"
+    flake.modules.hjem.desktop = {
+        pkgs,
+        lib,
+        ...
+    }: let
+        # ghostty config is `key = value`, alphabetically sorted; some keys
+        # (keybind, palette) repeat, so lists become duplicate keys.
+        ghostty = lib.generators.toKeyValue {
+            mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
+            listsAsDuplicateKeys = true;
+        };
+    in {
+        packages = [pkgs.ghostty];
+
+        xdg.config.files = {
+            "ghostty/config" = {
+                generator = ghostty;
+                value = {
+                    adjust-cell-height = "25%";
+                    copy-on-select = true;
+                    font-family = "Berkeley Mono";
+                    font-size = 14;
+                    keybind = [
+                        "performable:ctrl+c=copy_to_clipboard"
+                        "ctrl+v=paste_from_clipboard"
+                        "ctrl+space>c=new_tab"
+                        "ctrl+space>n=next_tab"
+                        "ctrl+space>p=previous_tab"
+                        "ctrl+space>v=new_split:right"
+                        "ctrl+space>h=new_split:down"
+                        "ctrl+space>equal=equalize_splits"
+                        "ctrl+space>q=close_surface"
+                        "alt+h=goto_split:left"
+                        "alt+j=goto_split:down"
+                        "alt+k=goto_split:up"
+                        "alt+l=goto_split:right"
+                        "ctrl+enter=unbind"
                     ];
+                    maximize = true;
+                    selection-clear-on-copy = true;
+                    split-inherit-working-directory = true;
+                    theme = "kanso-zen";
+                    window-decoration = "none";
                 };
-                kanso-zen = {
+            };
+
+            "ghostty/themes/kanso-zen" = {
+                generator = ghostty;
+                value = {
                     background = "#090E13";
                     foreground = "#c5c9c7";
                     selection-background = "#22262D";
@@ -86,6 +72,48 @@
                         "15=#c5c9c7"
                     ];
                 };
+            };
+
+            "ghostty/themes/kanso-pearl" = {
+                generator = ghostty;
+                value = {
+                    background = "#f2f1ef";
+                    foreground = "#22262D";
+                    selection-background = "#e2e1df";
+                    selection-foreground = "#22262D";
+                    cursor-color = "#22262D";
+                    palette = [
+                        "0=#22262D"
+                        "1=#c84053"
+                        "2=#6f894e"
+                        "3=#77713f"
+                        "4=#4d699b"
+                        "5=#b35b79"
+                        "6=#597b75"
+                        "7=#9F9F99"
+                        "8=#5C6066"
+                        "9=#d7474b"
+                        "10=#6e915f"
+                        "11=#836f4a"
+                        "12=#6693bf"
+                        "13=#624c83"
+                        "14=#5e857a"
+                        "15=#f2f1ef"
+                    ];
+                };
+            };
+        };
+
+        systemd.services."app-com.mitchellh.ghostty" = {
+            description = "Ghostty";
+            after = ["graphical-session.target" "dbus.socket"];
+            requires = ["dbus.socket"];
+            wantedBy = ["graphical-session.target"];
+            serviceConfig = {
+                Type = "notify-reload";
+                ReloadSignal = "SIGUSR2";
+                BusName = "com.mitchellh.ghostty";
+                ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=true --initial-window=false";
             };
         };
     };

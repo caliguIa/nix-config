@@ -1,13 +1,12 @@
-{
-    flake.modules.homeManager.desktop = {
-        pkgs,
-        config,
-        ...
-    }: {
-        xdg.configFile."filen-cli/syncPairs.json".text = ''
+{config, ...}: let
+    users = config.flake.meta.users;
+    home = "/home/${users.primary}";
+in {
+    flake.modules.hjem.desktop = {pkgs, ...}: {
+        xdg.config.files."filen-cli/syncPairs.json".text = ''
             [
             	{
-            		"local": "${config.xdg.dataHome}/notes",
+            		"local": "${home}/.local/share/notes",
             		"remote": "/notes",
                     "alias": "notes",
             		"syncMode": "twoWay",
@@ -16,29 +15,27 @@
             	}
             ]
         '';
-        systemd.user.services.note-sync = {
-            Unit = {
-                Description = "filen notes sync";
-                After = ["network-online.target"];
-                Wants = ["network-online.target"];
-            };
-            Service = {
+        systemd.services.note-sync = {
+            description = "filen notes sync";
+            after = ["network-online.target"];
+            wants = ["network-online.target"];
+            serviceConfig = {
                 Type = "oneshot";
                 ExecStart = "${pkgs.filen-cli}/bin/filen sync notes";
                 StandardOutput = "append:%S/note-sync.log";
                 StandardError = "append:%S/note-sync.log";
             };
         };
-        systemd.user.timers.note-sync = {
-            Unit.Description = "filen notes sync every 5 minutes";
-            Timer = {
+        systemd.timers.note-sync = {
+            description = "filen notes sync every 5 minutes";
+            wantedBy = ["timers.target"];
+            timerConfig = {
                 OnBootSec = "1min";
                 OnUnitActiveSec = "5min";
                 Persistent = true;
             };
-            Install.WantedBy = ["timers.target"];
         };
-        home.packages = let
+        packages = let
             note = pkgs.writeShellApplication {
                 name = "note";
 

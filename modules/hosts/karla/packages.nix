@@ -5,6 +5,7 @@
             slack
             beekeeper-studio
             bruno
+            tuicr
         ];
     };
 }

@@ -1,10 +1,10 @@
 {
-    flake.modules.homeManager.core = {
-        programs.yazi = {
-            enable = true;
-            enableFishIntegration = true;
-            shellWrapperName = "y";
-            settings = {
+    flake.modules.hjem.core = {pkgs, ...}: let
+        toml = (pkgs.formats.toml {}).generate;
+    in {
+        packages = [pkgs.yazi];
+        xdg.config.files = {
+            "yazi/yazi.toml".source = toml "yazi.toml" {
                 mgr = {
                     ratio = [1 4 3];
                     show_hidden = true;
@@ -17,15 +17,15 @@
                     show_symlink = true;
                 };
             };
-            keymap = {
+            "yazi/keymap.toml".source = toml "keymap.toml" {
                 mgr.prepend_keymap = [
                     {
-                        run = "shell -- qlmanage -p \"$@\"";
+                        run = ''shell -- qlmanage -p "$@"'';
                         on = ["<C-p>"];
                     }
                 ];
             };
-            initLua = ''
+            "yazi/init.lua".text = ''
                 function Linemode:size_and_mtime()
                 local time = math.floor(self._file.cha.mtime or 0)
                 if time == 0 then

@@ -1,6 +1,6 @@
 {
-    flake.modules.homeManager.core = {pkgs, ...}: {
-        programs.neovim.extraPackages = with pkgs; [
+    flake.meta.nvimExtraPackages = pkgs:
+        with pkgs; [
             # lsp
             emmylua-ls
             nixd
@@ -10,7 +10,9 @@
             alejandra
             stylua
         ];
-        home.packages = with pkgs; [
+
+    flake.modules.hjem.core = {pkgs, ...}: {
+        packages = with pkgs; [
             tree-sitter
             gcc
         ];

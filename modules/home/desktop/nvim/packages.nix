@@ -1,9 +1,5 @@
 {inputs, ...}: {
-    flake.modules.homeManager.desktop = {
-        pkgs,
-        config,
-        ...
-    }: let
+    flake.meta.nvimExtraPackages = pkgs: let
         stylelint-language-server = let
             ext = pkgs.vscode-extensions.stylelint.vscode-stylelint;
             server = "${ext}/share/vscode/extensions/stylelint.vscode-stylelint/dist/start-server.js";
@@ -13,8 +9,8 @@
                 runtimeInputs = [pkgs.nodejs];
                 text = ''exec node ${server} "$@"'';
             };
-    in {
-        programs.neovim.extraPackages = with pkgs; [
+    in
+        with pkgs; [
             # lsp
             marksman
             docker-compose-language-service
@@ -27,7 +23,9 @@
             # formatter
             sqruff
         ];
-        home.packages = [
+
+    flake.modules.hjem.desktop = {pkgs, ...}: {
+        packages = [
             (pkgs.stdenvNoCC.mkDerivation rec {
                 pname = "mago";
                 version = "1.30.0";
@@ -43,8 +41,6 @@
             })
             inputs.phpantom-lsp.packages.${pkgs.stdenvNoCC.system}.phpantom-lsp
         ];
-        home.sessionVariables = {
-            INTELEPHENSE_KEY_PATH = config.age.secrets.intelephense.path;
-        };
     };
+
 }

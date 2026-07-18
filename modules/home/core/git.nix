@@ -1,84 +1,36 @@
 {
-    flake.modules.homeManager.core = {
+    flake.modules.hjem.core = {
         pkgs,
-        config,
+        lib,
         ...
-    }: {
-        programs.gh.enable = true;
-        programs.gh.extensions = with pkgs; [gh-dash gh-enhance];
-        programs.gh-dash = {
-            enable = true;
-            settings = {
-                pager.diff = "diffnav";
-                repoPaths = {
-                    "caliguIa/*" = "${config.home.homeDirectory}/dev/*";
-                    "stormburststudios/oneupsales" = "${config.home.homeDirectory}/ous/";
-                };
-                prSections = [
-                    {
-                        title = "All";
-                        filters = "is:open";
-                    }
-                    {
-                        title = "Author";
-                        filters = "is:open author:@me";
-                    }
-                    {
-                        title = "Requested";
-                        filters = "is:open review-requested:@me";
-                    }
-                    {
-                        title = "Involved";
-                        filters = "is:open involves:@me -author:@me";
-                    }
-                ];
-                keybindings = {
-                    universal = [
-                        {
-                            key = "g";
-                            name = "gitu";
-                            command = ''
-                                cd {{.RepoPath}} && ${pkgs.gitu}/bin/gitu
-                            '';
-                        }
-                    ];
-                    prs = [
-                        {
-                            key = "O";
-                            name = "review";
-                            command = ''
-                                cd {{.RepoPath}} && nvim -c ":Guh {{.PrNumber}}"
-                            '';
-                        }
-                        {
-                            key = "T";
-                            name = "actions";
-                            command = ''
-                                gh enhance -R {{.RepoName}} {{.PrNumber}}
-                            '';
-                        }
-                    ];
-                };
-            };
-        };
-        xdg.configFile."diffnav/config.yml".source = pkgs.writers.writeYAML "config.yaml" {
-            ui.hideHeader = true;
-            ui.hideFooter = true;
-            ui.showFileTree = true;
-            ui.fileTreeWidth = 26;
-            ui.searchTreeWidth = 50;
-            ui.icons = "filetype";
-            ui.colorFileNames = false;
-            ui.showDiffStats = false;
-            ui.sideBySide = true;
-            ui.startFoldersOpenDepth = -1;
-        };
-        programs.delta.enable = true;
-        home.packages = with pkgs; [diffnav];
-        programs.git = {
-            enable = true;
-            signing.format = null;
-            settings = {
+    }: let
+        home = "/home/caligula";
+        yaml = (pkgs.formats.yaml {}).generate;
+        ghBin = "${pkgs.gh}/bin/gh";
+
+        # gh extensions, previously installed by home-manager's
+        # `programs.gh.extensions`, symlinked into gh's data dir.
+        ghExtensions = pkgs.runCommand "gh-extensions" {} ''
+            mkdir -p $out
+            ln -s ${pkgs.gh-dash}/bin $out/gh-dash
+            ln -s ${pkgs.gh-enhance}/bin $out/gh-enhance
+        '';
+    in {
+        packages = with pkgs; [
+            git
+            gh
+            gh-dash
+            delta
+            lazygit
+            diffnav
+        ];
+
+        xdg.data.files."gh/extensions".source = ghExtensions;
+
+        xdg.config.files = {
+            "git/config" = {
+                generator = lib.generators.toGitINI;
+                value = {
                 user = {
                     name = "Cal";
                     email = "acc@calrichards.io";
@@ -96,6 +48,13 @@
                     symlinks = true;
                     autocrlf = "input";
                 };
+                # gh credential helper (was programs.gh.gitCredentialHelper)
+                "credential \"https://github.com\"" = {
+                    helper = ["" "${ghBin} auth git-credential"];
+                };
+                "credential \"https://gist.github.com\"" = {
+                    helper = ["" "${ghBin} auth git-credential"];
+                };
                 pager.diff = "diffnav";
                 fetch.prune = true;
                 gc.auto = 200;
@@ -104,14 +63,12 @@
                     autoSetupRemote = true;
                     default = "current";
                 };
-                remote = {
-                    pushDefault = "origin";
+                remote.pushDefault = "origin";
+                pull.default = "current";
+                interactive = {
+                    singlekey = true;
+                    diffFilter = "diffnav";
                 };
-                pull = {
-                    default = "current";
-                };
-                interactive.singlekey = true;
-                interactive.diffFilter = "diffnav";
                 status = {
                     branch = true;
                     showStash = true;
@@ -143,37 +100,92 @@
                     "hunk-header-file-style" = "#868E99 dim";
                     "hunk-header-decoration-style" = "#163050 ol ul";
                 };
-                url = {
-                    "git@github.com:" = {
-                        insteadOf = [
-                            "https://github.com/"
-                            "gh:"
-                        ];
-                    };
-                    "git@github.com:caliguIa/" = {
-                        insteadOf = [
-                            "https://github.com/caliguIa/"
-                            "cal:"
-                        ];
-                    };
+                "url \"git@github.com:\"".insteadOf = [
+                    "https://github.com/"
+                    "gh:"
+                ];
+                "url \"git@github.com:caliguIa/\"".insteadOf = [
+                    "https://github.com/caliguIa/"
+                    "cal:"
+                ];
                 };
             };
-        };
-        programs.lazygit = {
-            enable = true;
-            enableFishIntegration = true;
-            settings = {
-                git = {
-                    pagers = [
-                        {useExternalDiffGitConfig = true;}
+
+            "gh/config.yml".source = yaml "gh-config.yml" {
+                version = "1";
+                git_protocol = "https";
+                editor = "";
+                aliases = {};
+            };
+
+            "gh-dash/config.yml".source = yaml "gh-dash-config.yml" {
+                pager.diff = "diffnav";
+                repoPaths = {
+                    "caliguIa/*" = "${home}/dev/*";
+                    "stormburststudios/oneupsales" = "${home}/ous/";
+                };
+                prSections = [
+                    {
+                        title = "All";
+                        filters = "is:open";
+                    }
+                    {
+                        title = "Author";
+                        filters = "is:open author:@me";
+                    }
+                    {
+                        title = "Requested";
+                        filters = "is:open review-requested:@me";
+                    }
+                    {
+                        title = "Involved";
+                        filters = "is:open involves:@me -author:@me";
+                    }
+                ];
+                keybindings = {
+                    universal = [
+                        {
+                            key = "g";
+                            name = "gitu";
+                            command = "cd {{.RepoPath}} && ${pkgs.gitu}/bin/gitu\n";
+                        }
+                    ];
+                    prs = [
+                        {
+                            key = "O";
+                            name = "review";
+                            command = "cd {{.RepoPath}} && nvim -c \":Guh {{.PrNumber}}\"\n";
+                        }
+                        {
+                            key = "T";
+                            name = "actions";
+                            command = "gh enhance -R {{.RepoName}} {{.PrNumber}}\n";
+                        }
                     ];
                 };
+            };
+
+            "diffnav/config.yml".source = yaml "diffnav-config.yml" {
+                ui.hideHeader = true;
+                ui.hideFooter = true;
+                ui.showFileTree = true;
+                ui.fileTreeWidth = 26;
+                ui.searchTreeWidth = 50;
+                ui.icons = "filetype";
+                ui.colorFileNames = false;
+                ui.showDiffStats = false;
+                ui.sideBySide = true;
+                ui.startFoldersOpenDepth = -1;
+            };
+
+            "lazygit/config.yml".source = yaml "lazygit-config.yml" {
+                git.pagers = [
+                    {useExternalDiffGitConfig = true;}
+                ];
                 gui = {
                     border = "single";
                     nerdFontsVersion = "3";
-                    theme = {
-                        selectedLineBgColor = ["default"];
-                    };
+                    theme.selectedLineBgColor = ["default"];
                 };
                 keybinding.universal = {
                     quitWithoutChangingDirectory = ["q" "<ctrl+c>"];
