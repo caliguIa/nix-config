@@ -51,7 +51,7 @@
             undocommit = "git reset --soft HEAD^";
         };
 
-        aliasLines = concatLines (
+        mkAliases = concatLines (
             mapAttrsToList (name: cmd: "alias ${name} ${escapeShellArg cmd}") aliases
         );
 
@@ -73,7 +73,7 @@
                     set -gx FZF_CTRL_R_COMMAND ""
 
                     if status is-interactive
-                        ${aliasLines}
+                        ${mkAliases}
 
                         set -g __fish_git_prompt_showdirtystate 1
                         set -g __fish_git_prompt_showuntrackedfiles 1
