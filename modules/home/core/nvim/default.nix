@@ -8,8 +8,6 @@
         inherit (lib.meta) getExe;
         inherit (lib.strings) makeBinPath;
 
-        repo = "${config.directory}/nix-config/modules/home";
-
         stylelint-language-server = pkgs.writeShellApplication {
             name = "stylelint-language-server";
             runtimeInputs = [pkgs.nodejs];
@@ -80,9 +78,9 @@
             pkgs.gcc
         ];
         files = {
-            ".config/nvim/init.lua".source = "${repo}/core/nvim/lua/init.lua";
-            ".config/nvim/after".source = "${repo}/core/nvim/lua/after";
-            ".config/nvim/plugin".source = "${repo}/core/nvim/lua/plugin";
+            ".config/nvim/init.lua".source = ./lua/init.lua;
+            ".config/nvim/after".source = ./lua/after;
+            ".config/nvim/plugin".source = ./lua/plugin;
         };
     };
 }
