@@ -1,7 +1,7 @@
 {
     flake.modules.nixos.host_smiley = {config, ...}: {
         services.cloudflared = {
-            enable = true;
+            enable = false;
             tunnels."4c77b017-20a4-4c80-be75-1a99bcf3794d" = {
                 credentialsFile = config.age.secrets.cloudflared-media.path;
                 ingress = {

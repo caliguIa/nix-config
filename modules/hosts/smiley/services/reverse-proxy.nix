@@ -66,6 +66,11 @@
                     reverse_proxy localhost:8087
                 }
 
+                @ntfy host ntfy.smiley.calrichards.io
+                handle @ntfy {
+                    reverse_proxy localhost:2586
+                }
+
                 # Anything else on the wildcard is refused.
                 handle {
                     abort

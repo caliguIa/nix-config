@@ -6,6 +6,7 @@
             beekeeper-studio
             bruno
             tuicr
+            strawberry
         ];
     };
 }
