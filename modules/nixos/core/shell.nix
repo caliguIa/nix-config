@@ -118,6 +118,7 @@
                 cf = "cd ${home}/.config";
                 nc = "cd ${home}/nix-config";
                 ous = "cd ${home}/ous/platform";
+                starrocks = "cd ${home}/ous/starrocks";
                 dev = "cd ${home}/dev";
                 ls = "eza --color=always --long -a --git --icons=always";
                 cat = "bat";
