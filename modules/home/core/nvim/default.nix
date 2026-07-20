@@ -44,6 +44,7 @@
             typescript-go
             sqls
             stylelint-language-server
+            yaml-language-server
             inputs.phpantom-lsp.packages.${pkgs.stdenvNoCC.system}.phpantom-lsp
             # formatter
             alejandra

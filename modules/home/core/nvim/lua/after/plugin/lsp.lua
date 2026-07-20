@@ -18,6 +18,7 @@ lsp.enable({
     'jsonls',
     'emmylua_ls',
     'nixd',
+    'yamlls',
     'taplo',
 })
 

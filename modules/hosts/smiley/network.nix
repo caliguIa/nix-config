@@ -29,9 +29,7 @@
                 };
             };
         };
-
-        # Private remote access (SSH + filesystem + admin UIs) rides Tailscale.
-        # Bring the node up once with `sudo tailscale up` after first deploy.
+        programs.ssh.startAgent = true;
         services.tailscale = {
             enable = true;
             openFirewall = true;

@@ -34,9 +34,10 @@
             settings = {
                 directories.downloads = "/data/downloads/complete/music";
                 directories.incomplete = "/data/downloads/incomplete";
-                # Auto-import each completed album into beets. slskd runs as the
-                # media user, so the hook (which imports + cleans up) runs with
-                # correct ownership without sudo. Fires once per album via the
+                # Auto-import each completed album into beets. The hook just
+                # starts the beets-import@<album> unit (which runs as media and
+                # does the import + cleanup); slskd runs as media so polkit
+                # authorizes the start. Fires once per album via the
                 # DownloadDirectoryComplete event (not per track).
                 # NOTE: slskd 0.24.5 uses the singular top-level key
                 # "integration" (plural "integrations" in newer docs is silently
@@ -47,15 +48,6 @@
                 };
             };
         };
-
-        # The slskd systemd sandbox (ProtectSystem=strict) makes the whole FS
-        # read-only except its ReadWritePaths. The beets-import hook runs as a
-        # child of slskd inside this sandbox, so it needs write access to the
-        # beets state dir and the music library it imports into.
-        systemd.services.slskd.serviceConfig.ReadWritePaths = [
-            "/var/lib/beets"
-            "/data/media/music"
-        ];
         services.qbittorrent = mediaService {
             webuiPort = 8080;
             serverConfig = {
