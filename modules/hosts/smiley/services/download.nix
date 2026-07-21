@@ -20,8 +20,6 @@
             "/data/downloads/incomplete"
         ];
         services.sabnzbd = mediaService {
-            # configFile defaults to a mutable ini on stateVersion < 26.05, which
-            # makes `settings` be ignored. null lets `settings` take effect.
             configFile = null;
             settings.misc = {
                 host = "127.0.0.1";
@@ -34,14 +32,6 @@
             settings = {
                 directories.downloads = "/data/downloads/complete/music";
                 directories.incomplete = "/data/downloads/incomplete";
-                # Auto-import each completed album into beets. The hook just
-                # starts the beets-import@<album> unit (which runs as media and
-                # does the import + cleanup); slskd runs as media so polkit
-                # authorizes the start. Fires once per album via the
-                # DownloadDirectoryComplete event (not per track).
-                # NOTE: slskd 0.24.5 uses the singular top-level key
-                # "integration" (plural "integrations" in newer docs is silently
-                # ignored by the YAML parser).
                 integration.scripts.beets-import = {
                     on = ["DownloadDirectoryComplete"];
                     run.executable = lib.getExe slskdImport;

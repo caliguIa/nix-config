@@ -15,13 +15,11 @@
                 enable = true;
                 interfaces = {
                     # LAN: only file sharing (SMB), SSH and mDNS discovery.
-                    # No service web UIs are reachable from the LAN directly.
                     enp1s0 = {
                         allowedTCPPorts = [22 445];
                         allowedUDPPorts = [5353];
                     };
                     # Tailnet: the caddy reverse proxy (80/443), SSH and SMB.
-                    # Reachable only from tailnet peers (i.e. karla).
                     tailscale0 = {
                         allowedTCPPorts = [22 80 443 445];
                         allowedUDPPorts = [5353];

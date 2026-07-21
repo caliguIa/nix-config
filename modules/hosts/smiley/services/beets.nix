@@ -16,8 +16,6 @@
             directory = library;
             threaded = "yes";
             plugins = ["musicbrainz" "fetchart" "embedart" "permissions"];
-            # Download art from remote sources and embed it into each track.
-            # No standalone cover.jpg is kept (embedart removes it).
             fetchart = {
                 auto = true;
                 sources = ["coverart" "itunes" "amazon" "albumart"];
@@ -26,17 +24,12 @@
                 auto = true;
                 remove_art_file = true;
             };
-            # Ensure imported files/dirs are group-writable so other members of
-            # the media group (e.g. caligula) can manage them.
             permissions = {
                 file = "0664";
                 dir = "0775";
             };
         };
 
-        # Automated config: used by the import service. Never blocks on prompts;
-        # auto-accepts strong matches and imports weak/no matches as-is so the
-        # pipeline never hangs.
         beetsConfig = yaml.generate "beets-config.yaml" (beetsBase
         // {
             import = {
@@ -52,9 +45,6 @@
             };
         });
 
-        # Interactive config: used by the manual `beet` wrapper. Full normal
-        # beets prompting (apply/skip/as-is/duplicate handling). incremental is
-        # off so manual re-imports of already-seen dirs aren't skipped.
         beetsConfigInteractive = yaml.generate "beets-config-interactive.yaml" (beetsBase
         // {
             import = {

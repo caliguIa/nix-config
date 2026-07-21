@@ -50,9 +50,7 @@
         };
         environment.systemPackages = with pkgs; [calibre xvfb-run imagemagick];
 
-        # Intel QuickSync / VAAPI for Jellyfin hardware transcoding. After
-        # deploying, enable "Intel QuickSync (QSV)" under Jellyfin → Dashboard →
-        # Playback → Transcoding (the media user is in render/video for /dev/dri).
+        # Intel QuickSync / VAAPI for Jellyfin hardware transcoding.
         hardware.graphics = {
             enable = true;
             extraPackages = with pkgs; [
