@@ -23,11 +23,6 @@
         apple-silicon.url = "github:nix-community/nixos-apple-silicon";
         fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
         nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
-        phpantom-lsp = {
-            url = "github:PHPantom-dev/phpantom_lsp";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
         zen-browser = {
             url = "github:0xc000022070/zen-browser-flake";
             inputs.nixpkgs.follows = "nixpkgs";
