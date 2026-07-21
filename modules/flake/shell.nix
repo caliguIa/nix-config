@@ -31,13 +31,13 @@
 
             case "''${1:-}" in
                 smiley)
-                    _deploy "smiley" "''${2:-root@smiley.local}"
+                    _deploy "smiley" "''${2:-root@smiley}"
                     ;;
                 *)
                     echo "Usage: deploy <target>"
                     echo ""
                     echo "Targets:"
-                    echo "  smiley    Deploy to smiley (root@smiley.local)"
+                    echo "  smiley    Deploy to smiley (root@smiley)"
                     exit 1
                     ;;
             esac
