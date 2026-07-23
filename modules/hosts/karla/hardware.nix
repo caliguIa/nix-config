@@ -18,6 +18,8 @@
         boot.kernelParams = [
             "amdgpu.dcdebugmask=0x410"
             "amdgpu.runpm=0"
+            # disable kernel split-lock rate-limiting; avoids Proton game stutter
+            "split_lock_detect=off"
         ];
 
         # skip systemd-boot menu wait; hold `space` at boot to show the menu
