@@ -21,7 +21,6 @@
         };
         nixos-core.url = "github:manic-systems/nixos-core";
         apple-silicon.url = "github:nix-community/nixos-apple-silicon";
-        fonts.url = "git+ssh://git@github.com/caliguIa/fonts";
         nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
         zen-browser = {
             url = "github:0xc000022070/zen-browser-flake";

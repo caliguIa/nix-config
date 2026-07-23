@@ -17,4 +17,12 @@ in {
     "miniflux-admin.age".publicKeys = allUsers ++ allSystems;
     "restic-r2.age".publicKeys = allUsers ++ allSystems;
     "caligula-ssh-key.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Regular.otf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Bold.otf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Oblique.otf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Bold-Oblique.otf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Regular.ttf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Bold.ttf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Oblique.ttf.age".publicKeys = allUsers ++ allSystems;
+    "fonts/BerkeleyMono-Bold-Oblique.ttf.age".publicKeys = allUsers ++ allSystems;
 }
