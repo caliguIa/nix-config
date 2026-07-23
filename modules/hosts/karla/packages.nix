@@ -7,6 +7,7 @@
             bruno
             tuicr
             strawberry
+            tableplus
         ];
     };
 }

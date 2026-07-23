@@ -2,15 +2,10 @@
     flake.modules.hjem.desktop = {pkgs, ...}: let
         server = "https://ntfy.smiley.calrichards.io";
         topics = ["smiley-music"];
-
-        # ntfy runs this per incoming message, exporting $title, $message,
-        # $tags, $priority, $topic. Forward it to the desktop notification
-        # daemon (gnome-shell on karla).
         notify = pkgs.writeShellApplication {
             name = "ntfy-notify-exec";
             runtimeInputs = [pkgs.libnotify];
             text = ''
-                # title, message and topic are exported by `ntfy subscribe --exec`.
                 # shellcheck disable=SC2154
                 notify-send --app-name=ntfy "''${title:-$topic}" "$message"
             '';

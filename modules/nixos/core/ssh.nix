@@ -17,10 +17,6 @@
             };
         };
 
-        # Single personal identity provisioned to every host, decrypted by the
-        # host key at activation. This is the private counterpart of the
-        # `caligula` recipient in .secrets/secrets.nix, so it also lets any host
-        # edit agenix secrets.
         systemd.tmpfiles.rules = [
             "d /home/${user.primary}/.ssh 0700 ${user.primary} ${user.primary} -"
         ];

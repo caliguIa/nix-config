@@ -1,6 +1,5 @@
 {inputs, ...}: {
     flake.modules.hjem.core = {
-        config,
         pkgs,
         lib,
         ...
