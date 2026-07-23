@@ -29,6 +29,7 @@ topLevel @ {user, ...}: {
             enable = true;
             flake = "/home/${user.primary}/nix-config";
             clean.enable = true;
+            clean.extraArgs = "--keep-since 4d --keep 3";
         };
         programs.command-not-found.enable = false;
         documentation = {

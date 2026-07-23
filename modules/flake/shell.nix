@@ -20,18 +20,16 @@
         deploy = pkgs.writeShellScriptBin "deploy" ''
             _deploy() {
                 local hostname="$1"
-                local remote="$2"
-                echo "=> Deploying .#$hostname to $remote"
+                echo "=> Deploying .#$hostname to root@$hostname"
                 git add .
-                nixos-rebuild switch \
-                    --flake ".#$hostname" \
-                    --target-host "$remote" \
+                nh os switch .#$hostname \
+                    --target-host "root@$hostname" \
                     --build-host localhost
             }
 
             case "''${1:-}" in
                 smiley)
-                    _deploy "smiley" "''${2:-root@smiley}"
+                    _deploy "smiley"
                     ;;
                 *)
                     echo "Usage: deploy <target>"
