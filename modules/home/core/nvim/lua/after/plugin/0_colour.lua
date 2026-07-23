@@ -7,8 +7,8 @@ require('kanso').setup({
         }
     end,
     background = {
-        dark = 'zen', -- "zen", "mist" or "pearl"
-        light = 'pearl', -- "zen", "mist" or "ink"
+        dark = 'mist', -- "zen", "ink", "mist"
+        light = 'pearl', -- "pearl"
     },
     minimal = true,
 })

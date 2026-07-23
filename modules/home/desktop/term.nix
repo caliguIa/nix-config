@@ -39,7 +39,7 @@
                     maximize = true;
                     selection-clear-on-copy = true;
                     split-inherit-working-directory = true;
-                    theme = "Kanso Ink";
+                    theme = "Kanso Mist";
                     window-decoration = "none";
                 };
             };
