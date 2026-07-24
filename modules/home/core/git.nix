@@ -50,7 +50,7 @@
                     prSections = [
                         {
                             title = "All";
-                            filters = "is:open";
+                            filters = "is:open draft:false sort:updated-desc";
                         }
                         {
                             title = "Author";

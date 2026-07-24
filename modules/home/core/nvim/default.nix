@@ -77,10 +77,6 @@
             pkgs.tree-sitter
             pkgs.gcc
         ];
-        environment.sessionVariables = {
-            EDITOR = "nvim";
-            VISUAL = "nvim";
-        };
         files = {
             ".config/nvim/init.lua".source = ./lua/init.lua;
             ".config/nvim/after".source = ./lua/after;

@@ -14,6 +14,12 @@
                         "arcmenu@arcmenu.com"
                     ];
                 };
+                settings."org/gnome/desktop/interface" = {
+                    color-scheme = "prefer-dark";
+                    # gtk-theme = "YourTheme";
+                    # icon-theme = "YourIcons";
+                    # cursor-theme = "YourCursor";
+                };
             }
         ];
 

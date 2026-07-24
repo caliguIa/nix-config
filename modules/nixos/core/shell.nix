@@ -14,6 +14,13 @@
         users.users.${user.primary}.shell = pkgs.fish;
         environment = {
             shells = [pkgs.fish];
+            variables = {
+                EDITOR = "nvim";
+                VISUAL = "nvim";
+                XDG_CACHE_HOME = "${home}/.cache";
+                XDG_CONFIG_HOME = "${home}/.config";
+                XDG_DATA_HOME = "${home}/.local/share";
+            };
             systemPackages = [pkgs.ghostty.terminfo];
             pathsToLink = ["${home}/.local/bin"];
         };
