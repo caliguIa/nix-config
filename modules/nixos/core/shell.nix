@@ -14,13 +14,6 @@
         users.users.${user.primary}.shell = pkgs.fish;
         environment = {
             shells = [pkgs.fish];
-            variables = {
-                EDITOR = "nvim";
-                XDG_CACHE_HOME = "${home}/.cache";
-                XDG_CONFIG_HOME = "${home}/.config";
-                XDG_DATA_HOME = "${home}/.local/share";
-                GTK2_RC_FILES = "${home}/.gtkrc-2.0";
-            };
             systemPackages = [pkgs.ghostty.terminfo];
             pathsToLink = ["${home}/.local/bin"];
         };

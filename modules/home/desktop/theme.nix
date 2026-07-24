@@ -20,5 +20,6 @@
             "gtk-3.0/settings.ini" = settingsIni;
             "gtk-4.0/settings.ini" = settingsIni;
         };
+        environment.sessionVariables.GTK2_RC_FILES = "$HOME/.gtkrc-2.0";
     };
 }
