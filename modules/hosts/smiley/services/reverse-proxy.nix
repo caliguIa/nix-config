@@ -8,7 +8,7 @@
             enable = true;
             package = pkgs.caddy.withPlugins {
                 plugins = ["github.com/caddy-dns/cloudflare@v0.2.4"];
-                hash = "sha256-hEHgAG0F0ozHRAPuxEqLyTATBrE+pajeXDiSNwniorg=";
+                hash = "sha256-7GoH8YLCoPmPExQxoga2FHB58zQDoZVf1BBwkVi0SsQ=";
             };
             environmentFile = config.age.secrets.cloudflare-dns-token.path;
             virtualHosts."*.smiley.calrichards.io".extraConfig = ''
@@ -54,11 +54,6 @@
                 @slsk host slsk.smiley.calrichards.io
                 handle @slsk {
                     reverse_proxy localhost:5030
-                }
-
-                @stats host stats.smiley.calrichards.io
-                handle @stats {
-                    reverse_proxy localhost:61208
                 }
 
                 @rss host rss.smiley.calrichards.io
