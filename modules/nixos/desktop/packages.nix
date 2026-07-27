@@ -9,24 +9,9 @@
         };
         programs.thunderbird.enable = true;
         programs.firefox = {
-            enable = false;
+            enable = true;
             package = pkgs.firefox-devedition;
         };
-        # below is needed until bitwarden-desktop updates to electron-41
-        # https://github.com/NixOS/nixpkgs/issues/521305
-        # electron_39-bin uses the prebuilt binary instead of building from
-        # source; it is still EOL-flagged so the insecure allow stays.
-        nixpkgs.overlays = [
-            (final: prev: {
-                bitwarden-desktop = prev.bitwarden-desktop.override {
-                    electron_39 = final.electron_39-bin;
-                };
-            })
-        ];
-        nixpkgs.config.permittedInsecurePackages = [
-            "electron-39.8.10"
-        ];
-
         environment.sessionVariables.OPENCODE_EXPERIMENTAL_OXFMT = "true";
         environment.systemPackages = with pkgs; [
             inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
