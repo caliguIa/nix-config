@@ -1,0 +1,74 @@
+local lsp = vim.lsp
+
+-- vim.lsp.enable(...) is generated into init.lua from programs.nvim-module.lsp.
+-- This file owns the zendiagram wiring and the LspAttach behaviour only.
+
+local zendiagram = require('zendiagram')
+zendiagram.setup()
+vim.diagnostic.open_float = zendiagram.open
+
+local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+    callback = function(event)
+        local safe_del = function(mode, lhs) pcall(vim.keymap.del, mode, lhs) end
+        safe_del('n', 'grr')
+        safe_del('n', 'gra')
+        safe_del('n', 'gri')
+        safe_del('n', 'grn')
+        safe_del('n', 'grt')
+        safe_del('n', 'grx')
+
+        vim.keymap.set('n', 'gd', lsp.buf.definition, { desc = 'Definition', silent = true })
+        vim.keymap.set('n', 'gr', lsp.buf.references, { desc = 'References', silent = true })
+        vim.keymap.set('n', 'gt', lsp.buf.type_definition, { desc = 'Type definition', silent = true })
+        vim.keymap.set('n', 'gD', lsp.buf.declaration, { desc = 'Declarations', silent = true })
+        vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Diagnostics', silent = true })
+        vim.keymap.set('n', '<leader>rn', lsp.buf.rename, { desc = 'Rename', silent = true })
+        vim.keymap.set('n', '<leader>ca', lsp.buf.code_action, { desc = 'Code actions', silent = true })
+
+        vim.diagnostic.config({
+            signs = false,
+            virtual_text = false,
+            underline = true,
+        })
+        local client = lsp.get_client_by_id(event.data.client_id)
+        if not client then return end
+        if client:supports_method(lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = lsp.buf.document_highlight,
+            })
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = lsp.buf.clear_references,
+            })
+            vim.api.nvim_create_autocmd('LspDetach', {
+                group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+                callback = function(e)
+                    lsp.buf.clear_references()
+                    vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = e.buf })
+                end,
+            })
+        end
+
+        if client:supports_method(lsp.protocol.Methods.textDocument_foldingRange) then
+            local win = vim.api.nvim_get_current_win()
+            vim.wo[win][0].foldmethod = 'expr'
+            vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+            vim.wo[win][0].foldtext = 'v:lua.vim.lsp.foldtext()'
+        end
+
+        if client:supports_method(lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            -- lsp.inlay_hint.enable(true, { bufnr = event.buf })
+            vim.keymap.set(
+                'n',
+                '<leader>th',
+                function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled()) end,
+                { desc = 'Toggle inlay hints' }
+            )
+        end
+    end,
+})

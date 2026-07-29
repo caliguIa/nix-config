@@ -14,6 +14,8 @@ topLevel @ {
                 directory = "/home/${user.primary}";
                 imports = [
                     topLevel.config.flake.modules.hjem.core
+                    topLevel.config.flake.modules.hjem.nvim-module
+                    {programs.nvim-module.enable = true;}
                     (topLevel.config.flake.modules.hjem."host_${hostName}" or {})
                 ];
             };
