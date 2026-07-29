@@ -1,52 +1,51 @@
 {
     flake.modules.nixos.host_karla = let
         hostname = "karla";
-    in
-        {lib, ...}: {
-            networking = {
-                hostName = hostname;
-                firewall = {
-                    allowedTCPPortRanges = [
-                        {
-                            from = 1714;
-                            to = 1764;
-                        }
-                    ];
-                    allowedUDPPortRanges = [
-                        {
-                            from = 1714;
-                            to = 1764;
-                        }
-                    ];
-                };
-                networkmanager = {
-                    enable = true;
-                    dns = lib.mkForce "none";
-                };
-                nameservers = ["127.0.0.1" "1.1.1.1"];
+    in {
+        networking = {
+            hostName = hostname;
+            firewall = {
+                allowedTCPPortRanges = [
+                    {
+                        from = 1714;
+                        to = 1764;
+                    }
+                ];
+                allowedUDPPortRanges = [
+                    {
+                        from = 1714;
+                        to = 1764;
+                    }
+                ];
             };
-            services.avahi = {
+            networkmanager = {
                 enable = true;
-                nssmdns4 = true;
+                dns = "none";
             };
-            services.dnsmasq = {
-                enable = true;
-                settings = {
-                    address = ["/local.oneupsales.dev/127.0.0.3"];
-                    server = [
-                        "1.1.1.1"
-                        "8.8.8.8"
-                    ];
-                    no-resolv = true;
-                };
-            };
-            # Tailscale for reaching smiley (SSH/SMB/admin UIs) over the tailnet.
-            # Bring up with `sudo tailscale up --accept-dns=false` so tailscaled
-            # leaves karla's dnsmasq/resolv.conf setup alone (we use public DNS
-            # for *.smiley.calrichards.io, not MagicDNS).
-            services.tailscale = {
-                enable = true;
-                openFirewall = true;
+            nameservers = ["127.0.0.1" "1.1.1.1"];
+        };
+        # Mullvad enables systemd-resolved by default, which forces
+        # networkmanager.dns = "systemd-resolved" and hijacks /etc/resolv.conf,
+        # bypassing dnsmasq. Keep it disabled so dnsmasq handles DNS.
+        services.resolved.enable = false;
+        services.avahi = {
+            enable = true;
+            nssmdns4 = true;
+        };
+        services.dnsmasq = {
+            enable = true;
+            settings = {
+                address = ["/local.oneupsales.dev/127.0.0.3"];
+                server = [
+                    "1.1.1.1"
+                    "8.8.8.8"
+                ];
+                no-resolv = true;
             };
         };
+        services.tailscale = {
+            enable = true;
+            openFirewall = true;
+        };
+    };
 }
