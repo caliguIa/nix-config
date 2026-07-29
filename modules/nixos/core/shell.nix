@@ -22,7 +22,7 @@
                 XDG_DATA_HOME = "${home}/.local/share";
             };
             systemPackages = [pkgs.ghostty.terminfo];
-            pathsToLink = ["${home}/.local/bin"];
+            pathsToLink = ["${home}/.local/bin" "${home}/.cargo/bin"];
         };
         programs.fzf.keybindings = true;
         programs.atuin = {

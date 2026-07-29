@@ -8,6 +8,8 @@
             tuicr
             strawberry
             tableplus
+            poppler
+            resvg
         ];
     };
 }
