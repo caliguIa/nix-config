@@ -3,7 +3,7 @@ local add = vim.pack.add
 vim.cmd.packadd('nvim.undotree')
 add({
     'gh:nvim-treesitter/nvim-treesitter',
-    { src = 'gh:nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
+    'gh:nvim-treesitter/nvim-treesitter-textobjects',
     'gh:Goose97/timber.nvim',
     'gh:folke/ts-comments.nvim',
     'gh:nvim-treesitter/nvim-treesitter-context',

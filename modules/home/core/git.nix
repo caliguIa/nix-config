@@ -92,6 +92,10 @@
             "gitu/config.toml" = {
                 generator = toml.generate "gitu-config.toml";
                 value = {
+                    bindings = {
+                        root.discard = ["x"];
+                        root.pull_menu = ["p"];
+                    };
                     style = {
                         separator.mods = "DIM";
                         info_msg = {
