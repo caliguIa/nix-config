@@ -5,6 +5,7 @@
             curl
             difftastic
             eza
+            fastfetch
             fd
             fzf
             gitu
