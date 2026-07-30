@@ -17,6 +17,7 @@
         agenix = {
             url = "github:ryantm/agenix";
             inputs.nixpkgs.follows = "nixpkgs";
+            inputs.home-manager.follows = "";
             inputs.darwin.follows = "";
         };
         nixos-core.url = "github:manic-systems/nixos-core";
