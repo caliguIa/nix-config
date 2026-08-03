@@ -4,10 +4,9 @@
 
         hardware.graphics = {
             enable = true;
+            enable32Bit = true;
             extraPackages = with pkgs; [
                 libva
-                libvdpau-va-gl
-                libva-vdpau-driver
             ];
         };
 
@@ -39,6 +38,7 @@
         environment.sessionVariables = {
             AMD_VULKAN_ICD = "RADV";
             RADV_PERFTEST = "gpl,sam";
+            LIBVA_DRIVER_NAME = "radeonsi";
             STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/${user.primary}/.steam/root/compatibilitytools.d";
         };
 
@@ -46,6 +46,7 @@
             mangohud
             vulkan-tools
             mesa-demos
+            libva-utils # vainfo, for verifying HW video accel
         ];
     };
 }

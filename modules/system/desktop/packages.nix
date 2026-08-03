@@ -12,7 +12,10 @@
             enable = true;
             package = pkgs.firefox-devedition;
         };
-        environment.sessionVariables.OPENCODE_EXPERIMENTAL_OXFMT = "true";
+        environment.sessionVariables = {
+            OPENCODE_EXPERIMENTAL_OXFMT = "true";
+            MOZ_DISABLE_RDD_SANDBOX = "1";
+        };
         environment.systemPackages = with pkgs; [
             inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
             ungoogled-chromium
