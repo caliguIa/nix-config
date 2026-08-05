@@ -46,7 +46,7 @@
             yaml-language-server
             phpantom-lsp
             # formatter
-            alejandra
+            nixfmt
             stylua
             sqruff
         ];

@@ -16,7 +16,7 @@ conform.setup({
         json = js_formatter,
         jsonc = js_formatter,
         markdown = js_formatter,
-        nix = { 'alejandra' },
+        nix = { 'nixfmt' },
         rust = { 'rustfmt' },
         scss = js_formatter,
         toml = { 'taplo' },
