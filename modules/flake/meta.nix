@@ -1,6 +1,6 @@
 {
-  _module.args.user = {
-    primary = "caligula";
-    media = "media";
-  };
+    _module.args.user = {
+        primary = "caligula";
+        media = "media";
+    };
 }

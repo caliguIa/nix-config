@@ -1,10 +1,10 @@
 {
-  flake.modules.nixos.desktop = { pkgs, ... }: {
-    environment.systemPackages = with pkgs; [
-      imv
-      zathura
-      ffmpeg
-      mpv
-    ];
-  };
+    flake.modules.nixos.desktop = { pkgs, ... }: {
+        environment.systemPackages = with pkgs; [
+            imv
+            zathura
+            ffmpeg
+            mpv
+        ];
+    };
 }

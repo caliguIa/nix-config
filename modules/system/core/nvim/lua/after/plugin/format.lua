@@ -30,6 +30,17 @@ conform.setup({
         -- yaml = js_formatter,
         zig = { 'zigfmt' },
     },
+    formatters = {
+        nixfmt = {
+            prepend_args = function(_, ctx)
+                local repo = vim.fn.expand('~/nix-config')
+                if ctx.dirname:sub(1, #repo) == repo then
+                    return { '--indent=4' }
+                end
+                return {}
+            end,
+        },
+    },
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {

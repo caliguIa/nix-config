@@ -1,57 +1,59 @@
 {
-  perSystem =
-    { pkgs, ... }:
-    let
-      update = pkgs.writeShellScriptBin "update" ''
-        echo "=> Updating flake inputs"
-        nix flake update
-      '';
+    perSystem =
+        { pkgs, ... }:
+        let
+            update = pkgs.writeShellScriptBin "update" ''
+                echo "=> Updating flake inputs"
+                nix flake update
+            '';
 
-      pin = pkgs.writeShellScriptBin "pin" ''
-        echo "=> pinning flake.lock"
-        git add flake.lock
-        git commit -m "flake.lock: Update"
-        git push
-      '';
+            pin = pkgs.writeShellScriptBin "pin" ''
+                echo "=> pinning flake.lock"
+                git add flake.lock
+                git commit -m "flake.lock: Update"
+                git push
+            '';
 
-      rebuild = pkgs.writeShellScriptBin "rebuild" ''
-        git add .
-        nh os switch .
-      '';
+            rebuild = pkgs.writeShellScriptBin "rebuild" ''
+                git add .
+                nh os switch .
+            '';
 
-      deploy = pkgs.writeShellScriptBin "deploy" ''
-        _deploy() {
-            local hostname="$1"
-            echo "=> Deploying .#$hostname to root@$hostname"
-            git add .
-            nh os switch .#$hostname \
-                --target-host "root@$hostname" \
-                --build-host localhost
-        }
+            deploy = pkgs.writeShellScriptBin "deploy" ''
+                _deploy() {
+                    local hostname="$1"
+                    echo "=> Deploying .#$hostname to root@$hostname"
+                    git add .
+                    nh os switch .#$hostname \
+                        --target-host "root@$hostname" \
+                        --build-host localhost
+                }
 
-        case "''${1:-}" in
-            smiley)
-                _deploy "smiley"
-                ;;
-            *)
-                echo "Usage: deploy <target>"
-                echo ""
-                echo "Targets:"
-                echo "  smiley    Deploy to smiley (root@smiley)"
-                exit 1
-                ;;
-        esac
-      '';
-    in
-    {
-      formatter = pkgs.nixfmt-tree;
-      devShells.default = pkgs.mkShellNoCC {
-        packages = [
-          update
-          pin
-          rebuild
-          deploy
-        ];
-      };
-    };
+                case "''${1:-}" in
+                    smiley)
+                        _deploy "smiley"
+                        ;;
+                    *)
+                        echo "Usage: deploy <target>"
+                        echo ""
+                        echo "Targets:"
+                        echo "  smiley    Deploy to smiley (root@smiley)"
+                        exit 1
+                        ;;
+                esac
+            '';
+        in
+        {
+            formatter = pkgs.nixfmt-tree.override {
+                settings.formatter.nixfmt.options = [ "--indent=4" ];
+            };
+            devShells.default = pkgs.mkShellNoCC {
+                packages = [
+                    update
+                    pin
+                    rebuild
+                    deploy
+                ];
+            };
+        };
 }

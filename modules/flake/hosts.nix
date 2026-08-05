@@ -1,27 +1,27 @@
 {
-  inputs,
-  config,
-  lib,
-  ...
+    inputs,
+    config,
+    lib,
+    ...
 }:
 let
-  hosts = {
-    karla = "x86_64-linux";
-    smiley = "x86_64-linux";
-    westerby = "aarch64-linux";
-  };
+    hosts = {
+        karla = "x86_64-linux";
+        smiley = "x86_64-linux";
+        westerby = "aarch64-linux";
+    };
 in
 {
-  config = {
-    flake.nixosConfigurations = lib.mapAttrs (
-      name: system:
-      inputs.nixpkgs.lib.nixosSystem {
-        specialArgs.inputs = inputs;
-        modules = [
-          { nixpkgs.hostPlatform = system; }
-          (config.flake.modules.nixos."host_${name}" or { })
-        ];
-      }
-    ) hosts;
-  };
+    config = {
+        flake.nixosConfigurations = lib.mapAttrs (
+            name: system:
+            inputs.nixpkgs.lib.nixosSystem {
+                specialArgs.inputs = inputs;
+                modules = [
+                    { nixpkgs.hostPlatform = system; }
+                    (config.flake.modules.nixos."host_${name}" or { })
+                ];
+            }
+        ) hosts;
+    };
 }
