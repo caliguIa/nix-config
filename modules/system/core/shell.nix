@@ -41,36 +41,20 @@
                 music-import = ''ssh -t smiley beets-import'';
 
                 _sep = ''
-                    set_color a4a7a4   # #a4a7a4 — mid grey (palette 7)
+                    set_color white
                     printf '    '
                     set_color normal'';
 
                 _pwd = ''
-                    set -l pwd (string replace -r "^$HOME" '~' -- $PWD)
-                    if git rev-parse --is-inside-work-tree &>/dev/null
-                      set -l root (git rev-parse --show-toplevel 2>/dev/null)
+                    if set -l root (git rev-parse --show-toplevel 2>/dev/null)
                       printf '%s%s' (basename "$root") (string replace -- "$root" "" $PWD)
                     else
-                      set -l parts (string split / -- $pwd)
+                      set -l parts (string split / -- (prompt_pwd --dir-length 0))
                       if test (count $parts) -gt 3
                         printf '…/%s/%s' $parts[-2] $parts[-1]
                       else
-                        printf '%s' $pwd
+                        string join / $parts
                       end
-                    end'';
-
-                _git = ''
-                    git rev-parse --is-inside-work-tree &>/dev/null; or return
-                    set -l branch (git symbolic-ref --short HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
-                    set -l dirty (count (git status --porcelain 2>/dev/null))
-                    _sep
-                    set_color 8ba4b0   # #8ba4b0 — branch (palette 4)
-                    printf '%s' $branch
-                    set_color normal
-                    if test $dirty -gt 0
-                      set_color c4b28a # #c4b28a — dirty (palette 3)
-                      printf ' ±%s' $dirty
-                      set_color normal
                     end'';
 
                 fish_prompt = ''
@@ -79,19 +63,19 @@
                     else
                       set -g __prompt_seen 1
                     end
-                    set_color --bold c5c9c7      # #c5c9c7 — foreground (bold)
+                    set_color --bold brwhite
                     printf '%s' $USER
                     set_color normal
-                    set_color 5c6066             # #5c6066 — dim (palette 8)
-                    printf '@%s' (string split -f1 . $hostname)
+                    set_color brblack
+                    printf '@%s' (prompt_hostname)
                     set_color normal
                     _sep
-                    set_color c5c9c7             # #c5c9c7 — foreground
+                    set_color brwhite
                     printf '%s' (_pwd)
                     set_color normal
-                    _git
+                    fish_git_prompt (_sep)'%s'
                     echo
-                    set_color --bold c5c9c7
+                    set_color --bold brwhite
                     printf '󰘧 '
                     set_color normal'';
 
@@ -151,9 +135,20 @@
                 source "${pkgs.ghostty}/share/ghostty/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
             '';
             interactiveShellInit = ''
+                set -g __fish_git_prompt_show_informative_status 1
                 set -g __fish_git_prompt_showdirtystate 1
                 set -g __fish_git_prompt_showuntrackedfiles 1
                 set -g __fish_git_prompt_showupstream auto
+
+                # layout: separator + branch, then dirty/staged/untracked marks
+                set -g __fish_git_prompt_char_stateseparator ' '
+                set -g __fish_git_prompt_color_branch blue
+                set -g __fish_git_prompt_color_dirtystate yellow
+                set -g __fish_git_prompt_color_stagedstate yellow
+                set -g __fish_git_prompt_color_untrackedfiles yellow
+                set -g __fish_git_prompt_char_dirtystate '±'
+                set -g __fish_git_prompt_char_stagedstate '+'
+                set -g __fish_git_prompt_char_untrackedfiles '?'
 
                 ${mkFunctions}
             '';
