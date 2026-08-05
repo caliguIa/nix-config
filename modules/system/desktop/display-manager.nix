@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.desktop = {
-        services.displayManager.gdm.enable = true;
-    };
+  flake.modules.nixos.desktop = {
+    services.displayManager.gdm.enable = true;
+  };
 }

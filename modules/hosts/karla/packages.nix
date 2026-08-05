@@ -1,15 +1,15 @@
 {
-    flake.modules.nixos.host_karla = {pkgs, ...}: {
-        environment.systemPackages = with pkgs; [
-            spotify
-            slack
-            beekeeper-studio
-            bruno
-            tuicr
-            strawberry
-            tableplus
-            poppler
-            resvg
-        ];
-    };
+  flake.modules.nixos.host_karla = { pkgs, ... }: {
+    environment.systemPackages = with pkgs; [
+      spotify
+      slack
+      beekeeper-studio
+      bruno
+      tuicr
+      strawberry
+      tableplus
+      poppler
+      resvg
+    ];
+  };
 }

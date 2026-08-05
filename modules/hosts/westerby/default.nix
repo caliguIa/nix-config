@@ -1,3 +1,6 @@
-{config, ...}: {
-    flake.modules.nixos.host_westerby.imports = with config.flake.modules.nixos; [core desktop];
+{ config, ... }: {
+  flake.modules.nixos.host_westerby.imports = with config.flake.modules.nixos; [
+    core
+    desktop
+  ];
 }
