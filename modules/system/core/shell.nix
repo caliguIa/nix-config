@@ -70,11 +70,14 @@
                             else
                               set -g __prompt_seen 1
                             end
-                            set_color --bold brwhite
+                            set_color brwhite
                             printf '%s' $USER
                             set_color normal
                             set_color brblack
-                            printf '@%s' (prompt_hostname)
+                            printf '@'
+                            set_color normal
+                            set_color --bold brwhite
+                            printf '%s' (prompt_hostname)
                             set_color normal
                             _sep
                             set_color brwhite
@@ -148,14 +151,15 @@
                         set -g __fish_git_prompt_showupstream auto
 
                         # layout: separator + branch, then dirty/staged/untracked marks
-                        set -g __fish_git_prompt_char_stateseparator ' '
+                        set -g __fish_git_prompt_char_stateseparator " "
                         set -g __fish_git_prompt_color_branch blue
                         set -g __fish_git_prompt_color_dirtystate yellow
                         set -g __fish_git_prompt_color_stagedstate yellow
                         set -g __fish_git_prompt_color_untrackedfiles yellow
-                        set -g __fish_git_prompt_char_dirtystate '±'
-                        set -g __fish_git_prompt_char_stagedstate '+'
-                        set -g __fish_git_prompt_char_untrackedfiles '?'
+                        set -g __fish_git_prompt_char_dirtystate "±"
+                        set -g __fish_git_prompt_char_stagedstate "+"
+                        set -g __fish_git_prompt_char_untrackedfiles "?"
+                        set -g __fish_git_prompt_char_cleanstate ""
 
                         ${mkFunctions}
                     '';
