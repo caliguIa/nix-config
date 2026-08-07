@@ -23,6 +23,7 @@ add({
     'gh:vim-test/vim-test',
     'gh:niekdomi/conflict.nvim',
     'gh:justinmk/guh.nvim',
+    'gh:WTFox/luna.nvim',
 })
 
 -- On-demand plugins, not loaded until ":packadd …".

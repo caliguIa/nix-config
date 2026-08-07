@@ -3,9 +3,9 @@ local statusline = require('mini.statusline')
 statusline.section_fileinfo = function() return vim.bo.filetype end
 statusline.section_location = function() return '%p%% %L' end
 statusline.section_filename = function()
-    vim.api.nvim_set_hl(0, 'MiniStatuslineSeparator', {
-        fg = '#4B4F52',
-    })
+    -- vim.api.nvim_set_hl(0, 'MiniStatuslineSeparator', {
+    --     fg = '#4B4F52',
+    -- })
 
     local parts = vim.split(vim.fn.expand('%'), '/', { plain = true })
     if #parts == 1 then return parts[1] end
