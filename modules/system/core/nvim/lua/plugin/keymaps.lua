@@ -1,6 +1,7 @@
 local cmd = vim.cmd
 vim.keymap.set({ 'i', 'v', 'x' }, '<C-[>', '<Esc>', { desc = 'Exit mode', silent = true })
 vim.keymap.set('n', '<leader>X', function() cmd('!chmod +x %') end, { desc = 'Make file executable', silent = true })
+vim.keymap.set({ 'n', 'v', 'x' }, '<C-b>', '<C-v>', { desc = 'Enter visual-block mode', silent = true })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Down half-page and center', silent = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Up half-page and center', silent = true })
 vim.keymap.set('n', '<esc>', cmd.noh, { desc = 'Escape and clear hlsearch', silent = true })
