@@ -27,6 +27,8 @@
             boot.kernelParams = [
                 "amdgpu.dcdebugmask=0x410"
                 "amdgpu.runpm=0"
+                # disable adaptive backlight management; fixes brightness wraparound near 100%
+                "amdgpu.abmlevel=0"
                 # disable kernel split-lock rate-limiting; avoids Proton game stutter
                 "split_lock_detect=off"
             ];

@@ -39,7 +39,13 @@ topLevel@{ user, ... }:
                 clean.enable = true;
                 clean.extraArgs = "--keep-since 4d --keep 3";
             };
+            programs.nix-index.enable = true;
+            programs.comma = {
+                enable = true;
+                enableFishIntegration = true;
+            };
             programs.command-not-found.enable = false;
+            environment.systemPackages = [ pkgs.comma ];
             documentation = {
                 enable = true;
                 doc.enable = false;
