@@ -136,6 +136,7 @@
                         gcl = "git clone";
                         gmm = "git merge origin/main";
                         undocommit = "git reset --soft HEAD^";
+                        gg = "nvim -c Neogit";
                         y = "yazi";
                         lg = "lazygit";
                     };
