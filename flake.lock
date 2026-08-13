@@ -291,7 +291,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nvim-nightly": "nvim-nightly",
-        "zen-browser": "zen-browser"
+        "zen-browser": "zen-browser",
+        "zmk-nix": "zmk-nix"
       }
     },
     "systems": {
@@ -327,6 +328,26 @@
       "original": {
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
+        "type": "github"
+      }
+    },
+    "zmk-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786235968,
+        "narHash": "sha256-45MI3unv1B4nhHgrXGEQcEyGLSenMSenGB2MO7BAiz4=",
+        "owner": "lilyinstarlight",
+        "repo": "zmk-nix",
+        "rev": "98512ec3aac8a8f6a158160565878da698c3a5ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lilyinstarlight",
+        "repo": "zmk-nix",
         "type": "github"
       }
     }

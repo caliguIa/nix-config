@@ -30,6 +30,35 @@
                 esac
             '';
 
+            zmk = pkgs.writeShellScriptBin "zmk" ''
+                set -euo pipefail
+                case "''${1:-}" in
+                    build)
+                        echo "=> Building ZMK firmware (.#zmk-firmware)"
+                        out=$(nix build --no-link --print-out-paths .#zmk-firmware)
+                        echo ""
+                        echo "=> Firmware built. .uf2 files:"
+                        ls -1 "$out"
+                        echo ""
+                        echo "Path: $out"
+                        echo ""
+                        echo "Flash with: zmk flash"
+                        ;;
+                    flash)
+                        shift
+                        exec nix run .#zmk-flash -- "$@"
+                        ;;
+                    *)
+                        echo "Usage: zmk <command>"
+                        echo ""
+                        echo "Commands:"
+                        echo "  build          Build the Lily58 firmware"
+                        echo "  flash [part]   Flash firmware (optionally a single part: left|right)"
+                        exit 1
+                        ;;
+                esac
+            '';
+
             deploy = pkgs.writeShellScriptBin "deploy" ''
                 _deploy() {
                     local hostname="$1"
@@ -64,6 +93,7 @@
                     pin
                     rb
                     deploy
+                    zmk
                 ];
             };
         };

@@ -30,5 +30,9 @@
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.home-manager.follows = "";
         };
+        zmk-nix = {
+            url = "github:lilyinstarlight/zmk-nix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 }
