@@ -14,9 +14,20 @@
                 git push
             '';
 
-            rebuild = pkgs.writeShellScriptBin "rebuild" ''
+            rb = pkgs.writeShellScriptBin "rb" ''
                 git add .
-                nh os switch .
+                case "''${1:-switch}" in
+                    switch)
+                        nh os switch .
+                        ;;
+                    boot)
+                        nh os boot .
+                        ;;
+                    *)
+                        echo "Usage: rb [switch|boot]"
+                        exit 1
+                        ;;
+                esac
             '';
 
             deploy = pkgs.writeShellScriptBin "deploy" ''
@@ -51,7 +62,7 @@
                 packages = [
                     update
                     pin
-                    rebuild
+                    rb
                     deploy
                 ];
             };
