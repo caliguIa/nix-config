@@ -7,6 +7,8 @@
                 General = {
                     Experimental = true;
                     FastConnectable = false;
+                    JustWorksRepairing = "always";
+                    Privacy = "device";
                 };
                 Policy = {
                     AutoEnable = true;

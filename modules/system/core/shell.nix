@@ -44,59 +44,21 @@
             };
             programs.fish =
                 let
-                    functions = {
-                        music-import = "ssh -t smiley beets-import";
-
-                        _sep = ''
-                            set_color white
-                            printf '    '
-                            set_color normal'';
-
-                        _pwd = ''
-                            if set -l root (git rev-parse --show-toplevel 2>/dev/null)
-                              printf '%s%s' (basename "$root") (string replace -- "$root" "" $PWD)
-                            else
-                              set -l parts (string split / -- (prompt_pwd --dir-length 0))
-                              if test (count $parts) -gt 3
-                                printf '…/%s/%s' $parts[-2] $parts[-1]
-                              else
-                                string join / $parts
-                              end
-                            end'';
-
-                        fish_prompt = ''
-                            if set -q __prompt_seen
-                              echo
-                            else
-                              set -g __prompt_seen 1
-                            end
-                            set_color brwhite
-                            printf '%s' $USER
-                            set_color normal
-                            set_color brblack
-                            printf '@'
-                            set_color normal
-                            set_color --bold brwhite
-                            printf '%s' (prompt_hostname)
-                            set_color normal
-                            _sep
-                            set_color brwhite
-                            printf '%s' (_pwd)
-                            set_color normal
-                            fish_git_prompt (_sep)'%s'
-                            echo
-                            set_color --bold brwhite
-                            printf '󰘧 '
-                            set_color normal'';
-
-                        claude-personal = ''CLAUDE_CONFIG_DIR=~/.claude-personal claude "$argv"'';
-                    };
-
-                    mkFunctions = concatStringsSep "\n\n" (
-                        mapAttrsToList (name: body: ''
-                            function ${name}
-                            ${body}
-                            end'') functions
+                    mkFunctions = (
+                        functions:
+                        concatStringsSep "\n" (
+                            mapAttrsToList (k: v: ''
+                                function ${k}
+                                ${v}
+                                end
+                            '') functions
+                        )
+                    );
+                    mkAbbrs = (
+                        abbrs:
+                        concatStringsSep "\n" (
+                            mapAttrsToList (k: v: "abbr -a ${k} --position anywhere -- ${lib.escapeShellArg v}") abbrs
+                        )
                     );
                 in
                 {
@@ -131,8 +93,8 @@
                         gst = "git status";
                         gs = "git switch";
                         gn = "git switch -c";
-                        gp = "git push";
-                        gu = "git pull";
+                        gP = "git push";
+                        gp = "git pull";
                         gfp = "git fetch --all --prune && git pull";
                         gcl = "git clone";
                         gmm = "git merge origin/main";
@@ -142,17 +104,44 @@
                         lg = "lazygit";
                     };
                     shellInit = ''
-                        # set -gx FZF_CTRL_R_COMMAND ""
                         set -gx INTELEPHENSE_KEY_PATH /run/agenix/intelephense
                         source "${pkgs.ghostty}/share/ghostty/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
                     '';
                     interactiveShellInit = ''
+                        ${mkFunctions {
+                            music-import = "ssh -t smiley beets-import";
+                            claude-personal = ''CLAUDE_CONFIG_DIR=~/.claude-personal claude "$argv"'';
+                        }}
+                        ${mkAbbrs {
+                            "..." = "../..";
+                            "...." = "../../..";
+                            "....." = "../../../..";
+                            dps = "docker ps";
+                            dcu = "docker compose up";
+                            dce = "docker compose exec";
+                            pb = "platform bash";
+                            ga = "git add";
+                            gb = "git branch";
+                            gc = "git commit";
+                            gd = "git diff";
+                            gi = "git init";
+                            gst = "git status";
+                            gs = "git switch";
+                            gP = "git push";
+                            gp = "git pull";
+                            gfp = "git fetch --all --prune && git pull";
+                            gcl = "git clone";
+                            gmm = "git merge origin/main";
+                            undocommit = "git reset --soft HEAD^";
+                            gg = "nvim -c Neogit";
+                            lg = "lazygit";
+                        }}
+                    '';
+                    promptInit = ''
                         set -g __fish_git_prompt_show_informative_status 1
                         set -g __fish_git_prompt_showdirtystate 1
                         set -g __fish_git_prompt_showuntrackedfiles 1
                         set -g __fish_git_prompt_showupstream auto
-
-                        # layout: separator + branch, then dirty/staged/untracked marks
                         set -g __fish_git_prompt_char_stateseparator " "
                         set -g __fish_git_prompt_color_branch blue
                         set -g __fish_git_prompt_color_dirtystate yellow
@@ -163,7 +152,50 @@
                         set -g __fish_git_prompt_char_untrackedfiles "?"
                         set -g __fish_git_prompt_char_cleanstate ""
 
-                        ${mkFunctions}
+                        function _sep
+                            set_color white
+                            printf '    '
+                            set_color normal
+                        end
+
+                        function _pwd
+                            if set -l root (git rev-parse --show-toplevel 2>/dev/null)
+                              printf '%s%s' (basename "$root") (string replace -- "$root" "" $PWD)
+                            else
+                              set -l parts (string split / -- (prompt_pwd --dir-length 0))
+                              if test (count $parts) -gt 3
+                                printf '…/%s/%s' $parts[-2] $parts[-1]
+                              else
+                                string join / $parts
+                              end
+                            end
+                        end
+
+                        function fish_prompt
+                            if set -q __prompt_seen
+                              echo
+                            else
+                              set -g __prompt_seen 1
+                            end
+                            set_color brwhite
+                            printf '%s' $USER
+                            set_color normal
+                            set_color brblack
+                            printf '@'
+                            set_color normal
+                            set_color --bold brwhite
+                            printf '%s' (prompt_hostname)
+                            set_color normal
+                            _sep
+                            set_color brwhite
+                            printf '%s' (_pwd)
+                            set_color normal
+                            fish_git_prompt (_sep)'%s'
+                            echo
+                            set_color --bold brwhite
+                            printf '󰘧 '
+                            set_color normal
+                        end
                     '';
                 };
         };
