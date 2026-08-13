@@ -46,6 +46,7 @@
                     wrapProgram $out/bin/zmk-uf2-flash \
                         --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.udisks ]}
                 '';
+                meta.mainProgram = "zmk-uf2-flash";
             };
         in
         {
