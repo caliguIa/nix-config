@@ -8,20 +8,7 @@
             firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
                 name = "lily58-firmware";
 
-                src = pkgs.lib.sourceFilesBySuffices ./. [
-                    ".board"
-                    ".cmake"
-                    ".conf"
-                    ".defconfig"
-                    ".dts"
-                    ".dtsi"
-                    ".json"
-                    ".keymap"
-                    ".overlay"
-                    ".shield"
-                    ".yml"
-                    "_defconfig"
-                ];
+                src = ./lily58;
 
                 board = "nice_nano";
                 shield = "lily58_%PART%";
