@@ -119,6 +119,7 @@
                         dps = "docker ps";
                         dcu = "docker compose up -d";
                         dcua = "docker compose up";
+                        dce = "docker compose exec";
                         dash = "gh dash";
                         ga = "git add";
                         gaa = "git add .";
