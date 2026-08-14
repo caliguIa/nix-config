@@ -8,7 +8,7 @@ lsp.enable({
     'phpantom_lsp',
     -- 'intelephense',
     -- 'laravel_ls',
-    'laravel_lsp',
+    -- 'laravel_lsp',
     'stylelint_lsp',
     'marksman',
     'rust_analyzer',
