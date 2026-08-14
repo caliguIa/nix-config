@@ -7,6 +7,7 @@
             enable = true;
             libraries = [ ];
         };
+        programs.localsend.enable = true;
         programs.thunderbird.enable = true;
         programs.firefox = {
             enable = true;
