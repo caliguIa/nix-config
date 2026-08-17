@@ -13,7 +13,7 @@ lsp.enable({
     'marksman',
     'rust_analyzer',
     'sqls',
-    'tsgo',
+    'tsc',
     'oxlint',
     'zls',
     'jsonls',
