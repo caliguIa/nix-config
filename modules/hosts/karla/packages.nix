@@ -6,7 +6,7 @@
             resvg
             slack
             spotify
-            # tableplus
+            tableplus
         ];
     };
 }

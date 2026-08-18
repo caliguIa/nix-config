@@ -62,7 +62,7 @@
             gnomeExtensions.just-perfection
             gnomeExtensions.gsconnect
             gnomeExtensions.arc-menu
-            gnomeExtensions.zmk-split-battery
+            gnomeExtensions.github-tray
         ];
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
         environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
