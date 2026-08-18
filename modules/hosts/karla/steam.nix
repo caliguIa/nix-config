@@ -1,10 +1,17 @@
-{ user, ... }: {
-    flake.modules.nixos.host_karla = { pkgs, ... }: {
+{ user, inputs, ... }: {
+    flake.modules.nixos.host_karla = { pkgs, ... }: let
+        # Mesa 26.1.6 from a pinned nixpkgs, to dodge the 26.2.0 radeonsi
+        # VAAPI green-box decode regression on the Radeon 780M. Remove the
+        # nixpkgs-mesa input and this override once upstream Mesa is fixed.
+        mesaPin = inputs.nixpkgs-mesa.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa;
+    in {
         services.xserver.videoDrivers = [ "amdgpu" ];
 
         hardware.graphics = {
             enable = true;
             enable32Bit = true;
+            package = mesaPin;
+            package32 = inputs.nixpkgs-mesa.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa;
             extraPackages = with pkgs; [
                 libva
             ];
