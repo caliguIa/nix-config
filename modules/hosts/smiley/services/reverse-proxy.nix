@@ -68,6 +68,26 @@
                         reverse_proxy localhost:2586
                     }
 
+                    @home host home.smiley.calrichards.io
+                    handle @home {
+                        reverse_proxy localhost:8082
+                    }
+
+                    @bookmarks host bookmarks.smiley.calrichards.io
+                    handle @bookmarks {
+                        reverse_proxy localhost:3333
+                    }
+
+                    @uptime host uptime.smiley.calrichards.io
+                    handle @uptime {
+                        reverse_proxy localhost:3001
+                    }
+
+                    @metrics host metrics.smiley.calrichards.io
+                    handle @metrics {
+                        reverse_proxy localhost:19999
+                    }
+
                     # Anything else on the wildcard is refused.
                     handle {
                         abort

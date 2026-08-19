@@ -11,6 +11,7 @@
             runuser = "${pkgs.util-linux}/bin/runuser";
             forgejo = config.services.forgejo;
             forgejoDb = "${forgejo.stateDir}/data/forgejo.db";
+            karakeepDb = "/var/lib/karakeep/db.db";
         in
         {
             systemd.tmpfiles.rules = [
@@ -39,7 +40,10 @@
                     "${forgejo.repositoryRoot}" # git repos (the actual content)
                     "${forgejo.stateDir}/data" # lfs, attachments, avatars, packages, actions
                     "${forgejo.customDir}" # app.ini + SECRET_KEY/INTERNAL_TOKEN/JWT
-                    stagingDir # Postgres dumps + consistent Forgejo SQLite copy
+                    "/var/lib/uptime-kuma" # monitors, notifications, users
+                    "/var/lib/karakeep/settings.env" # MEILI_MASTER_KEY + NEXTAUTH_SECRET (irreplaceable)
+                    "/var/lib/karakeep/assets" # saved screenshots, images, PDFs
+                    stagingDir # Postgres dumps + consistent SQLite copies (Forgejo, Karakeep)
                 ];
 
                 exclude = [
@@ -77,6 +81,12 @@
                     # can read the mode-0027 db and write the copy into the
                     # root-owned staging dir. restic then backs up the snapshot.
                     ${pkgs.sqlite}/bin/sqlite3 ${forgejoDb} ".backup '${stagingDir}/forgejo.db'"
+
+                    # Same consistent-snapshot treatment for Karakeep's SQLite
+                    # database (bookmarks, tags, lists, highlights). The
+                    # Meilisearch index is regenerable from this, so it is not
+                    # backed up.
+                    ${pkgs.sqlite}/bin/sqlite3 ${karakeepDb} ".backup '${stagingDir}/karakeep.db'"
                 '';
 
                 pruneOpts = [
