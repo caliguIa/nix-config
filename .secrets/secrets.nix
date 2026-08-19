@@ -15,6 +15,7 @@ in
     "cloudflared-media.age".publicKeys = allUsers ++ allSystems;
     "cloudflared-git.age".publicKeys = allUsers ++ allSystems;
     "forgejo-caligula-password.age".publicKeys = allUsers ++ allSystems;
+    "forgejo-turnstile-secret.age".publicKeys = allUsers ++ allSystems;
     "cloudflare-dns-token.age".publicKeys = allUsers ++ allSystems;
     "slskd-envars.age".publicKeys = allUsers ++ allSystems;
     "miniflux-admin.age".publicKeys = allUsers ++ allSystems;

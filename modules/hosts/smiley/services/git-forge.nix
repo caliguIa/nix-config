@@ -10,6 +10,7 @@
             httpPort = 3000;
             sshPort = 2222;
             domain = "git.calrichards.io";
+            turnstileSitekey = "0x4AAAAAAEViLSOyW9m3xbic";
             cfg = config.services.forgejo;
             forgejo = lib.getExe cfg.package;
             ensureUser =
@@ -38,6 +39,7 @@
                 enable = true;
                 package = pkgs.forgejo;
                 database.type = "sqlite3";
+                secrets.service.CF_TURNSTILE_SECRET = config.age.secrets.forgejo-turnstile-secret.path;
                 settings = {
                     server = {
                         DOMAIN = domain;
@@ -48,15 +50,43 @@
                         SSH_LISTEN_HOST = "0.0.0.0";
                         SSH_LISTEN_PORT = sshPort;
                         SSH_PORT = sshPort;
-                        SSH_DOMAIN = domain;
+                        SSH_DOMAIN = "smiley";
+                        LANDING_PAGE = "explore";
                     };
                     service = {
                         DISABLE_REGISTRATION = true;
+                        SHOW_REGISTRATION_BUTTON = false;
+                        DISABLE_REGULAR_ORG_CREATION = true;
+                        ENABLE_CAPTCHA = true;
+                        REQUIRE_CAPTCHA_FOR_LOGIN = true;
+                        CAPTCHA_TYPE = "cfturnstile";
+                        CF_TURNSTILE_SITEKEY = turnstileSitekey;
                     };
-                    # Public instance: don't leak repo listings to the world.
+                    repository = {
+                        DEFAULT_PRIVATE = "public";
+                        DEFAULT_PUSH_CREATE_PRIVATE = true;
+                        DISABLE_STARS = true;
+                        DISABLE_FORKS = true;
+                    };
+                    ui = {
+                        DEFAULT_SHOW_FULL_NAME = false;
+                        SHOW_USER_EMAIL = false;
+                    };
                     "service.explore".REQUIRE_SIGNIN_VIEW = false;
                     session.COOKIE_SECURE = true;
                     other.SHOW_FOOTER_VERSION = false;
+
+                    # Free in-application hardening (Cloudflare WAF is a paid
+                    # add-on). Forgejo has no built-in failed-login lockout, so
+                    # mandatory 2FA plus the Turnstile login challenge are the
+                    # primary defenses against credential stuffing on the public
+                    # login form.
+                    security = {
+                        GLOBAL_TWO_FACTOR_REQUIREMENT = "all";
+                        PASSWORD_CHECK_PWN = true;
+                        PASSWORD_COMPLEXITY = "lower,upper,digit,spec";
+                        MIN_PASSWORD_LENGTH = 12;
+                    };
                 };
             };
             systemd.services.forgejo.serviceConfig = {
