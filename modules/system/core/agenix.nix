@@ -10,6 +10,8 @@
         age.secrets = {
             passwordfile-caligula.file = ../../../.secrets/passwordfile-caligula.age;
             cloudflared-media.file = ../../../.secrets/cloudflared-media.age;
+            cloudflared-git.file = ../../../.secrets/cloudflared-git.age;
+            forgejo-caligula-password.file = ../../../.secrets/forgejo-caligula-password.age;
             cloudflare-dns-token.file = ../../../.secrets/cloudflare-dns-token.age;
             slskd-envars.file = ../../../.secrets/slskd-envars.age;
             miniflux-admin.file = ../../../.secrets/miniflux-admin.age;

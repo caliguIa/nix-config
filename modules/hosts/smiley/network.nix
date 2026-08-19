@@ -24,13 +24,15 @@
                             ];
                             allowedUDPPorts = [ 5353 ];
                         };
-                        # Tailnet: the caddy reverse proxy (80/443), SSH and SMB.
+                        # Tailnet: the caddy reverse proxy (80/443), SSH, SMB
+                        # and Forgejo's built-in git SSH server (2222).
                         tailscale0 = {
                             allowedTCPPorts = [
                                 22
                                 80
                                 443
                                 445
+                                2222
                             ];
                             allowedUDPPorts = [ 5353 ];
                         };

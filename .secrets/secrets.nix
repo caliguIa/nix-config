@@ -13,6 +13,8 @@ in
     "passwordfile-caligula.age".publicKeys = allUsers ++ allSystems;
     "intelephense.age".publicKeys = allUsers ++ allSystems;
     "cloudflared-media.age".publicKeys = allUsers ++ allSystems;
+    "cloudflared-git.age".publicKeys = allUsers ++ allSystems;
+    "forgejo-caligula-password.age".publicKeys = allUsers ++ allSystems;
     "cloudflare-dns-token.age".publicKeys = allUsers ++ allSystems;
     "slskd-envars.age".publicKeys = allUsers ++ allSystems;
     "miniflux-admin.age".publicKeys = allUsers ++ allSystems;

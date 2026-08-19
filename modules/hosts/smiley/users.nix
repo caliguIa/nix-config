@@ -6,6 +6,8 @@
                     "wheel"
                     "networkmanager"
                     "immich"
+                    "render"
+                    "video"
                     user.media
                 ];
                 ${user.media} = {
