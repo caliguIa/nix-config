@@ -5,15 +5,15 @@ Personal NixOS configuration built on flake-parts using the dendritic pattern.
 ## Structure
 
 ```
-flake.nix                # entrypoint; wires inputs into flake-parts
+flake.nix                 # entrypoint
 lib/recursivelyImport.nix # custom autoimporter
 modules/
-  flake/                 # flake-parts wiring (hosts, systems, devShell, meta)
-  hosts/                 # per-host modules
-  system/core/           # base modules for every host
-  system/desktop/        # modules for graphical hosts
-  zmk/                   # ZMK split keyboard firmware
-.secrets/                # agenix-encrypted secrets
+  flake/                  # flake-parts wiring
+  hosts/                  # per-host modules
+  system/core/            # base modules for every host
+  system/desktop/         # modules for graphical hosts
+  zmk/                    # ZMK split keyboard firmware
+.secrets/                 # agenix-encrypted secrets
 ```
 
 ## Dendritic pattern
@@ -23,8 +23,7 @@ Every `.nix` file under `modules/` is a flake-parts module, autoimported by
 
 Rather than defining config directly, modules contribute to named buckets:
 
-- `flake.modules.nixos.core` / `.desktop` / `host_<name>`
-- `flake.modules.hjem.core` / `.desktop` / `host_<name>`
+- `flake.modules.{nixos,hjem}.{core,desktop,host_<name>}`
 
 flake-parts merges these definitions, so many files can each append to the same
 bucket. Hosts compose the buckets they need via `imports`.
@@ -35,12 +34,12 @@ Defined in `modules/flake/hosts.nix`. Each maps to a platform and composes core
 and/or desktop buckets.
 
 - `karla` (x86_64) - Framework 16 laptop, desktop
-- `westerby` (aarch64) - Apple Silicon, desktop
-- `smiley` (x86_64) - server, core only
+- `westerby` (aarch64) - Apple Silicon M1 Macbook Air, desktop
+- `smiley` (x86_64) - Mac Mini server, core only
 
 ## Home / dotfiles
 
-Uses [hjem](https://github.com/feel-co/hjem) instead of home-manager. Dotfile
+Uses [hjem](https://github.com/feel-co/hjem) (not home-manager). Dotfile
 modules populate `flake.modules.hjem.*` and are imported per-user in
 `modules/system/core/hjem.nix`.
 
