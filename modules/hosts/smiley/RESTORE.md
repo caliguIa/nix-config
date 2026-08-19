@@ -35,6 +35,28 @@ switch. Restore metadata then the originals:
 Photos live at `/data/photos` (originals under `library/`); `thumbs/` and
 `encoded-video/` are excluded from backup and regenerate on first access.
 
+Forgejo (git forge, SQLite). Data restored: `repositories/` (all repos and
+commits), `data/` (LFS, issue/PR/release attachments, avatars, packages, Actions
+artifacts) and `custom/` (`app.ini` plus `SECRET_KEY`/`INTERNAL_TOKEN`/JWT
+secrets, so existing sessions and tokens survive). The live `forgejo.db` is
+excluded from the file backup; a consistent `.backup` snapshot is staged instead
+(`/var/backup/restic/forgejo.db`). Restore order matters:
+
+    systemctl stop forgejo
+    rsync -a --delete /restore/var/lib/forgejo/repositories/ /var/lib/forgejo/repositories/
+    rsync -a --delete /restore/var/lib/forgejo/data/        /var/lib/forgejo/data/
+    rsync -a --delete /restore/var/lib/forgejo/custom/      /var/lib/forgejo/custom/
+    # load the consistent DB snapshot; ensure no stale WAL/SHM linger
+    rm -f /var/lib/forgejo/data/forgejo.db-wal /var/lib/forgejo/data/forgejo.db-shm
+    install -m600 /restore/var/backup/restic/forgejo.db /var/lib/forgejo/data/forgejo.db
+    chown -R forgejo:forgejo /var/lib/forgejo
+    systemctl start forgejo
+
+The excluded `data/{tmp,queues,sessions,indexers}` are transient/regenerable;
+search indexes rebuild automatically on start. SSH git remains tailnet-only
+(port 2222 on `tailscale0`); the public HTTPS URL is served by the cloudflared
+tunnel and needs `cloudflared-git` present for `git.calrichards.io` to resolve.
+
 ## Restore a single service
 
     restic restore latest --target /restore --include /var/lib/jellyfin
@@ -74,5 +96,16 @@ secrets (`age.identityPaths` defaults to `/etc/ssh/ssh_host_ed25519_key`).
 
 ## Health checks
 
-    restic-smiley-state snapshots   # generated wrapper, auto-sources creds
-    restic-smiley-state check
+Integrity is verified automatically: the nightly `restic-backups-smiley-state`
+service runs `restic check --read-data-subset=5%` after each backup+prune, so a
+rotating sample of pack data is read back from R2 (structural metadata is always
+checked). A failure shows up in that unit's journal/status:
+
+    systemctl status restic-backups-smiley-state
+    journalctl -u restic-backups-smiley-state
+
+Manual checks (generated wrapper, auto-sources creds):
+
+    restic-smiley-state snapshots
+    restic-smiley-state check                    # structure only
+    restic-smiley-state check --read-data        # full data verification (high R2 egress)

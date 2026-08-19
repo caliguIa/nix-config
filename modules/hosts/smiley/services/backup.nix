@@ -9,6 +9,8 @@
             stagingDir = "/var/backup/restic";
             pg = config.services.postgresql.package;
             runuser = "${pkgs.util-linux}/bin/runuser";
+            forgejo = config.services.forgejo;
+            forgejoDb = "${forgejo.stateDir}/data/forgejo.db";
         in
         {
             systemd.tmpfiles.rules = [
@@ -34,7 +36,10 @@
                     "/data/files/documents" # personal docs
                     "/etc/ssh/ssh_host_ed25519_key" # so a rebuilt smiley can
                     "/etc/ssh/ssh_host_ed25519_key.pub" # decrypt agenix without re-keying
-                    stagingDir # miniflux Postgres dump (see prepare cmd)
+                    "${forgejo.repositoryRoot}" # git repos (the actual content)
+                    "${forgejo.stateDir}/data" # lfs, attachments, avatars, packages, actions
+                    "${forgejo.customDir}" # app.ini + SECRET_KEY/INTERNAL_TOKEN/JWT
+                    stagingDir # Postgres dumps + consistent Forgejo SQLite copy
                 ];
 
                 exclude = [
@@ -43,6 +48,16 @@
                     "/var/lib/jellyfin/metadata" # re-fetchable artwork/nfo
                     "/data/photos/thumbs" # immich thumbnails, regenerated from originals
                     "/data/photos/encoded-video" # immich transcodes, regenerated
+                    # Live SQLite files: backed up separately as a consistent
+                    # .backup snapshot in the staging dir, so skip the torn live
+                    # copies here.
+                    "${forgejoDb}"
+                    "${forgejoDb}-wal"
+                    "${forgejoDb}-shm"
+                    "${forgejo.stateDir}/data/tmp" # transient scratch
+                    "${forgejo.stateDir}/data/queues" # regenerable work queues
+                    "${forgejo.stateDir}/data/sessions" # login sessions, non-critical
+                    "${forgejo.stateDir}/data/indexers" # rebuildable search indexes
                 ];
 
                 extraBackupArgs = [
@@ -55,12 +70,28 @@
                     umask 077
                     ${runuser} -u postgres -- ${pg}/bin/pg_dump -Fc miniflux > ${stagingDir}/miniflux.dump
                     ${runuser} -u postgres -- ${pg}/bin/pg_dump -Fc immich > ${stagingDir}/immich.dump
+
+                    # Consistent online snapshot of Forgejo's SQLite database.
+                    # `.backup` is safe against the live WAL database and avoids
+                    # capturing a torn forgejo.db/-wal/-shm set. Run as root: it
+                    # can read the mode-0027 db and write the copy into the
+                    # root-owned staging dir. restic then backs up the snapshot.
+                    ${pkgs.sqlite}/bin/sqlite3 ${forgejoDb} ".backup '${stagingDir}/forgejo.db'"
                 '';
 
                 pruneOpts = [
                     "--keep-daily 7"
                     "--keep-weekly 5"
                     "--keep-monthly 12"
+                ];
+
+                # Verify repository integrity after each backup+prune. Structural
+                # check (index/metadata/pack listing) plus a rotating 5% sample of
+                # actual pack data read back from R2 to catch silent bit-rot,
+                # keeping egress modest. A non-empty checkOpts auto-enables the
+                # check step in the same restic-backups-smiley-state run.
+                checkOpts = [
+                    "--read-data-subset=5%"
                 ];
 
                 timerConfig = {
