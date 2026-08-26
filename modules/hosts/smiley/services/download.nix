@@ -26,6 +26,7 @@
                 settings.misc = {
                     host = "127.0.0.1";
                     port = 8085;
+                    host_whitelist = "sabnzbd.smiley.calrichards.io";
                 };
             };
             services.slskd = mediaService {

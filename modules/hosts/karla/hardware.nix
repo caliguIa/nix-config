@@ -27,19 +27,14 @@
             boot.kernelParams = [
                 "amdgpu.dcdebugmask=0x410"
                 "amdgpu.runpm=0"
-                # disable adaptive backlight management; fixes brightness wraparound near 100%
                 "amdgpu.abmlevel=0"
-                # disable kernel split-lock rate-limiting; avoids Proton game stutter
                 "split_lock_detect=off"
             ];
 
-            # skip systemd-boot menu wait; hold `space` at boot to show the menu
+            # skip systemd-boot menu, hold space at boot to show the menu
             boot.loader.timeout = 0;
 
-            # don't block boot waiting for a network lease
             systemd.services.NetworkManager-wait-online.enable = false;
-
-            # socket-activate docker instead of starting it at boot
             systemd.services.docker.wantedBy = lib.mkForce [ ];
 
             hardware.enableAllFirmware = true;

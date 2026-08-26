@@ -10,11 +10,6 @@
         };
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-        # Pinned to the last nixpkgs commit shipping Mesa 26.1.6. Mesa 26.2.0
-        # introduced a radeonsi VAAPI green-box decode regression on RDNA3
-        # (Radeon 780M / karla). Used only for hardware.graphics.package on
-        # karla; drop once upstream Mesa fixes the regression.
-        nixpkgs-mesa.url = "github:nixos/nixpkgs/5482002f056a0e1260b794366cc84f8f4e7d1ee7";
         flake-parts.url = "github:hercules-ci/flake-parts";
         nixos-hardware.url = "github:NixOS/nixos-hardware/master";
         hjem = {

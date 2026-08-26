@@ -19,7 +19,7 @@
                 # leaves the queue tables uncreated ("no such table: tasks").
                 # Build against Node 22 LTS, which is stable with this
                 # better-sqlite3.
-                package = pkgs.karakeep.override { nodejs = pkgs.nodejs_22; };
+                # package = pkgs.karakeep.override { nodejs = pkgs.nodejs_22; };
                 # Text search backend.
                 meilisearch.enable = true;
                 # Headless Chromium for full-page screenshots/archival.

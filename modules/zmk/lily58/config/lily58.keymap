@@ -10,6 +10,16 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    behaviors {
+        lt: layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo>, <&kp>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -19,14 +29,14 @@
             // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   -   |
             // |  CTRL |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
             // | SHIFT |  Z  |  X  |  C   |  V   |  B   |   "["  |  |  "]"  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-            //                     | ALT  | GUI  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  | GUI   |
+            //                     | GUI  | ALT  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  | GUI   |
 
             bindings = <
 &kp GRAVE   &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                                 &kp N6         &kp N7         &kp N8     &kp N9   &kp N0    &kp EQUAL
 &kp TAB     &kp Q   &kp W   &kp E     &kp R     &kp T                                  &kp Y          &kp U          &kp I      &kp O    &kp P     &kp MINUS
 &kp ESCAPE  &kp A   &kp S   &kp D     &kp F     &kp G                                  &kp H          &kp J          &kp K      &kp L    &kp SEMI  &kp SQT
 &kp LSHFT   &kp Z   &kp X   &kp C     &kp V     &kp B      &kp LBKT       &kp RBKT     &kp N          &kp M          &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                            &kp LALT  &kp LGUI  &kp LCTRL  &lt 1 SPACE    &lt 2 ENTER  &kp BACKSPACE  &kp RIGHT_GUI  &kp RCTRL
+                            &kp LGUI  &kp LALT  &kp LCTRL  &lt 1 SPACE    &lt 2 ENTER  &kp BACKSPACE  &kp RIGHT_GUI  &kp RCTRL
             >;
         };
 
@@ -39,7 +49,7 @@
             //                     |      |      |      |        |  |       |      |       |       |
 
             bindings = <
-&trans      &trans          &trans  &trans                &trans                 &trans                       &trans           &trans  &trans  &trans  &trans           &trans
+&trans      &kp F1          &kp F2  &kp F3                &kp F4                 &kp F5                       &kp F6           &kp F7  &kp F8  &kp F9  &kp F10          &trans
 &trans      &kp ESCAPE      &trans  &kp LEFT_BRACE        &kp RIGHT_BRACE        &trans                       &kp KP_PLUS      &kp N1  &kp N2  &kp N3  &trans           &trans
 &caps_word  &kp LEFT_SHIFT  &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL                    &kp KP_MINUS     &kp N4  &kp N5  &kp N6  &kp RIGHT_SHIFT  &trans
 &trans      &trans          &trans  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &trans     &trans    &trans  &kp KP_MULTIPLY  &kp N7  &kp N8  &kp N9  &trans           &trans

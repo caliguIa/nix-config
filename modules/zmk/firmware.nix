@@ -13,7 +13,7 @@
                 board = "nice_nano";
                 shield = "lily58_%PART%";
 
-                zephyrDepsHash = "sha256-9nQeZNViGZft1Xd8DnEllDi1MeQTd1ejTKzf1x2XlG0=";
+                zephyrDepsHash = "sha256-777sDty25V5VbWgXjYKpy1NEW/rWJEihU7DRdqfk30I=";
 
                 meta = {
                     description = "Lily58 ZMK firmware";

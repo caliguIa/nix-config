@@ -200,22 +200,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-mesa": {
-      "locked": {
-        "lastModified": 1785354278,
-        "narHash": "sha256-JaPefe4Weh/rZAq+Kkykk2v3agQjeL/MeFr9qcP7MhQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "5482002f056a0e1260b794366cc84f8f4e7d1ee7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "5482002f056a0e1260b794366cc84f8f4e7d1ee7",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1787135253,
@@ -306,7 +290,6 @@
         "nixos-core": "nixos-core",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs-mesa": "nixpkgs-mesa",
         "nvim-nightly": "nvim-nightly",
         "zen-browser": "zen-browser",
         "zmk-nix": "zmk-nix"
