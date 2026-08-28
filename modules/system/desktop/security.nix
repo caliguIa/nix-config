@@ -30,16 +30,18 @@
             };
         in
         {
-            services.gnome.gnome-keyring.enable = true;
+            # KWallet, unlocked automatically at login via PAM using the user's
+            # login password (replaces gnome-keyring + its PAM login unlock).
+            security.pam.services.sddm.kwallet.enable = true;
+            security.pam.services.login.kwallet.enable = true;
             security.pam.services.sudo.fprintAuth = true;
             security.pam.services.polkit-1.fprintAuth = true;
             security.pam.services.sudo.rules.auth.fprintd-lid = mkLidSkipRule "sudo";
             security.pam.services.polkit-1.rules.auth.fprintd-lid = mkLidSkipRule "polkit-1";
-            security.pam.services.login.enableGnomeKeyring = true;
             security.polkit.enable = true;
             environment.systemPackages = with pkgs; [
                 polkit
-                seahorse
+                kdePackages.kwalletmanager
             ];
             environment.etc."polkit-1/actions/com.bitwarden.Bitwarden.policy" = {
                 text = ''
