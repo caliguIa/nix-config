@@ -24,7 +24,7 @@ o.sidescrolloff = 8
 o.shortmess = 'aoOWFcSCs'
 o.showmatch = true
 o.showmode = false
-o.signcolumn = 'yes:1'
+o.signcolumn = 'yes'
 o.splitbelow = true
 o.splitright = true
 o.winborder = 'single'
@@ -47,7 +47,7 @@ o.virtualedit = 'block'
 o.foldenable = true
 o.foldlevelstart = 99
 o.foldmethod = 'expr'
-o.foldcolumn = '1'
+-- o.foldcolumn = '1'
 o.foldtext = ''
 o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.fillchars:append({

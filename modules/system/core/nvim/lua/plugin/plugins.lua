@@ -1,7 +1,14 @@
-local add = vim.pack.add
+vim.api.nvim_create_user_command('Update', function()
+    local inactive = vim.iter(vim.pack.get())
+        :filter(function(x) return not x.active end)
+        :map(function(x) return x.spec.name end)
+        :totable()
+    vim.pack.del(inactive)
+    vim.pack.update()
+end, { desc = 'Update plugins' })
 
 vim.cmd.packadd('nvim.undotree')
-add({
+vim.pack.add({
     'gh:nvim-treesitter/nvim-treesitter',
     'gh:nvim-treesitter/nvim-treesitter-textobjects',
     'gh:Goose97/timber.nvim',
@@ -26,12 +33,8 @@ add({
     'gh:WTFox/luna.nvim',
 })
 
--- On-demand plugins, not loaded until ":packadd …".
-add({
+vim.pack.add({
     'gh:MeanderingProgrammer/render-markdown.nvim',
 }, {
     load = function() end,
 })
-
-local dev_path = string.format('%s/dev/nvim-plugins/', vim.env.HOME)
-local function add_local_plugin(name) vim.opt.runtimepath:prepend(string.format('%s%s', dev_path, name)) end
