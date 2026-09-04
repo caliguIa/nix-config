@@ -76,11 +76,6 @@
                     session.COOKIE_SECURE = true;
                     other.SHOW_FOOTER_VERSION = false;
 
-                    # Free in-application hardening (Cloudflare WAF is a paid
-                    # add-on). Forgejo has no built-in failed-login lockout, so
-                    # mandatory 2FA plus the Turnstile login challenge are the
-                    # primary defenses against credential stuffing on the public
-                    # login form.
                     security = {
                         GLOBAL_TWO_FACTOR_REQUIREMENT = "all";
                         PASSWORD_CHECK_PWN = true;

@@ -8,25 +8,26 @@
             libraries = [ ];
         };
         programs.localsend.enable = true;
-        programs.thunderbird.enable = true;
         programs.firefox = {
             enable = true;
             package = pkgs.firefox-devedition;
         };
+        services.tlp.enable = false;
+        services.power-profiles-daemon.enable = true;
         environment.sessionVariables = {
             OPENCODE_EXPERIMENTAL_OXFMT = "true";
             MOZ_DISABLE_RDD_SANDBOX = "1";
         };
         environment.systemPackages = with pkgs; [
-            inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
-            ungoogled-chromium
-            gelly
-            opencode
-            claude-code
             bitwarden-cli
             bitwarden-desktop
-            mullvad-vpn
+            claude-code
+            gelly
             mullvad
+            mullvad-vpn
+            opencode
+            ungoogled-chromium
+            inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
         ];
     };
 }

@@ -56,5 +56,11 @@
                 mesa-demos
                 libva-utils
             ];
+
+            services.scx = {
+                enable = true;
+                scheduler = "scx_lavd";
+                extraArgs = [ "--autopilot" ]; # optional, lets it self-tune
+            };
         };
 }

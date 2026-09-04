@@ -10,6 +10,10 @@
         };
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+        # Pinned to the last known-good linux-firmware (20260622); the 20260810
+        # bump regresses AMD power/thermal behaviour. See nixpkgs#556260.
+        # Consumed only by the linux-firmware overlay, not the system as a whole.
+        nixpkgs-firmware.url = "github:nixos/nixpkgs/a7466627e66d";
         flake-parts.url = "github:hercules-ci/flake-parts";
         nixos-hardware.url = "github:NixOS/nixos-hardware/master";
         hjem = {
