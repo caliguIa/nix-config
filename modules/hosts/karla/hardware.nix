@@ -44,18 +44,18 @@
             hardware.framework.enableKmod = true;
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-            # linux-firmware 20260810 regresses AMD power/thermal handling
-            # (aggressive throttle-to-544MHz that latches). Pin back to the
-            # last known-good 20260622 via nixpkgs-firmware. See nixpkgs#556260.
-            nixpkgs.overlays = [
-                (final: prev: {
-                    linux-firmware =
-                        (import inputs.nixpkgs-firmware {
-                            inherit (prev.stdenv.hostPlatform) system;
-                            config.allowUnfree = true;
-                        }).linux-firmware;
-                })
-            ];
+            # # linux-firmware 20260810 regresses AMD power/thermal handling
+            # # (aggressive throttle-to-544MHz that latches). Pin back to the
+            # # last known-good 20260622 via nixpkgs-firmware. See nixpkgs#556260.
+            # nixpkgs.overlays = [
+            #     (final: prev: {
+            #         linux-firmware =
+            #             (import inputs.nixpkgs-firmware {
+            #                 inherit (prev.stdenv.hostPlatform) system;
+            #                 config.allowUnfree = true;
+            #             }).linux-firmware;
+            #     })
+            # ];
 
             fileSystems."/" = {
                 device = "/dev/disk/by-uuid/e4dd47e6-8455-417d-98e1-e99c0ea0f360";
