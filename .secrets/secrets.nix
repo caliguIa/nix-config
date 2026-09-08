@@ -5,6 +5,7 @@ let
     systems = {
         karla = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjJuY81Rz/0IiKRMTcrD49wEedXtyUVqh63Xpv1Wj2z";
         smiley = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJUX/lSF4W+/sLzmAOS6c1eyNmshv2IyhjQmcrBW8nu";
+	tarr = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGvEvnhR4vWmer5jw4fD3pGlGYJG50t7ZNAm2KF6NO7d";
     };
     allUsers = builtins.attrValues users;
     allSystems = builtins.attrValues systems;

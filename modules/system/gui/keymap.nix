@@ -1,7 +1,7 @@
 {
-    flake.modules.nixos.gui = { pkgs, ... }: {
+    flake.modules.nixos.gui = {lib, pkgs, ... }: {
         environment.systemPackages = with pkgs; [ keyd ];
-        services.xserver.xkb.layout = "gb";
+        services.xserver.xkb.layout = lib.mkDefault "gb";
         services.logind.settings.Login = {
             HandlePowerKey = "ignore";
             HandlePowerKeyLongPress = "poweroff";
