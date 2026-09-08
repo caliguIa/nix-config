@@ -185,22 +185,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-firmware": {
-      "locked": {
-        "lastModified": 1782200311,
-        "narHash": "sha256-sOG9/NzBYPK1jtbb2UgdbJHHmk5fnXjASi+xVH7gMU4=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a7466627e66d3afa5d488cade90860e619a790c2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "a7466627e66d",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1788057806,
@@ -306,7 +290,6 @@
         "nixos-core": "nixos-core",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs-firmware": "nixpkgs-firmware",
         "nvim-nightly": "nvim-nightly",
         "zen-browser": "zen-browser",
         "zmk-nix": "zmk-nix"

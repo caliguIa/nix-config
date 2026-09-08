@@ -21,13 +21,20 @@
         environment.systemPackages = with pkgs; [
             bitwarden-cli
             bitwarden-desktop
+            bruno
             claude-code
             gelly
             mullvad
             mullvad-vpn
             opencode
+            poppler
+            resvg
+            slack
+            spotify
+            tableplus
             ungoogled-chromium
             inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
+
         ];
     };
 }

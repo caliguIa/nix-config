@@ -34,12 +34,30 @@
             # skip systemd-boot menu, hold space at boot to show the menu
             boot.loader.timeout = 0;
 
+            services.xserver.videoDrivers = [ "amdgpu" ];
             systemd.services.NetworkManager-wait-online.enable = false;
             systemd.services.docker.wantedBy = lib.mkForce [ ];
 
             hardware.enableAllFirmware = true;
             hardware.framework.enableKmod = true;
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+            hardware.graphics = {
+                enable = true;
+                enable32Bit = true;
+                extraPackages = with pkgs; [ libva ];
+            };
+
+            environment.sessionVariables = {
+                AMD_VULKAN_ICD = "RADV";
+                RADV_PERFTEST = "gpl,sam";
+                LIBVA_DRIVER_NAME = "radeonsi";
+            };
+
+            services.scx = {
+                enable = true;
+                scheduler = "scx_lavd";
+                extraArgs = [ "--autopilot" ];
+            };
 
             fileSystems."/" = {
                 device = "/dev/disk/by-uuid/e4dd47e6-8455-417d-98e1-e99c0ea0f360";

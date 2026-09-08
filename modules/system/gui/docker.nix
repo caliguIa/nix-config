@@ -1,5 +1,5 @@
-{
-    flake.modules.nixos.host_karla = {
+{ user, ... }: {
+    flake.modules.nixos.gui = {
         virtualisation.docker = {
             enable = true;
             autoPrune.enable = true;
@@ -11,5 +11,7 @@
                 log-driver = "journald";
             };
         };
+
+        users.users.${user.primary}.extraGroups = [ "docker" ];
     };
 }

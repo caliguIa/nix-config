@@ -1,23 +1,23 @@
-{ user, ... }:
-let
-    username = user.primary;
-in
-{
+{ user, ... }: {
     flake.modules.nixos.core = { config, ... }: {
-        users.users.${username} = {
-            name = username;
-            home = "/home/${username}";
+        users.users.${user.primary} = {
+            name = user.primary;
+            home = "/home/${user.primary}";
             isNormalUser = true;
             extraGroups = [
                 "wheel"
                 "networkmanager"
+                "audio"
+                "video"
+                "realtime"
             ];
-            group = username;
+            group = user.primary;
             hashedPasswordFile = config.age.secrets.passwordfile-caligula.path;
         };
         users.users.root = {
             isSystemUser = true;
             hashedPasswordFile = config.age.secrets.passwordfile-caligula.path;
         };
+        users.groups.${user.primary} = { };
     };
 }

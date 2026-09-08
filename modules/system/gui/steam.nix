@@ -1,15 +1,7 @@
 { user, ... }: {
-    flake.modules.nixos.host_karla =
+    flake.modules.nixos.gui =
         { pkgs, ... }:
         {
-            services.xserver.videoDrivers = [ "amdgpu" ];
-
-            hardware.graphics = {
-                enable = true;
-                enable32Bit = true;
-                extraPackages = with pkgs; [ libva ];
-            };
-
             programs.steam = {
                 enable = true;
                 gamescopeSession.enable = true;
@@ -23,12 +15,10 @@
                     });
                 };
             };
-
             programs.gamescope = {
                 enable = true;
                 capSysNice = true;
             };
-
             programs.gamemode = {
                 enable = true;
                 settings = {
@@ -43,24 +33,12 @@
                 };
             };
 
-            environment.sessionVariables = {
-                AMD_VULKAN_ICD = "RADV";
-                RADV_PERFTEST = "gpl,sam";
-                LIBVA_DRIVER_NAME = "radeonsi";
-                STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/${user.primary}/.steam/root/compatibilitytools.d";
-            };
-
-            environment.systemPackages = with pkgs; [
-                mangohud
-                vulkan-tools
-                mesa-demos
-                libva-utils
+            environment.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/${user.primary}/.steam/root/compatibilitytools.d";
+            environment.systemPackages = [
+                pkgs.mangohud
+                pkgs.vulkan-tools
+                pkgs.mesa-demos
+                pkgs.libva-utils
             ];
-
-            services.scx = {
-                enable = true;
-                scheduler = "scx_lavd";
-                extraArgs = [ "--autopilot" ];
-            };
         };
 }
