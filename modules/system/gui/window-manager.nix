@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.desktop = { pkgs, ... }: {
+    flake.modules.nixos.gui = { pkgs, ... }: {
         services.desktopManager.plasma6.enable = true;
         programs.kdeconnect.enable = true;
         environment.plasma6.excludePackages = with pkgs.kdePackages; [

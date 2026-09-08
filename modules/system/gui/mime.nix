@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.desktop = {
+    flake.modules.nixos.gui = {
         xdg.mime = {
             enable = true;
             defaultApplications = {

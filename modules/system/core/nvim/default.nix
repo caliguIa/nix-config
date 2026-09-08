@@ -44,7 +44,7 @@
                 dockerfile-language-server
                 vscode-langservers-extracted
                 intelephense
-                typescript-go
+                typescript
                 sqls
                 stylelint-language-server
                 yaml-language-server

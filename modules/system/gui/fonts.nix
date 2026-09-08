@@ -26,7 +26,7 @@ let
     };
 in
 {
-    flake.modules.nixos.desktop = { pkgs, ... }: {
+    flake.modules.nixos.gui = { pkgs, ... }: {
         age.secrets = lib.listToAttrs (map mkSecret fontFiles);
 
         fonts.fontconfig.confPackages = [
@@ -40,7 +40,7 @@ in
         ];
     };
 
-    flake.modules.hjem.desktop = { pkgs, ... }: {
+    flake.modules.hjem.gui = { pkgs, ... }: {
         packages = [ pkgs.nerd-fonts.symbols-only ];
     };
 }

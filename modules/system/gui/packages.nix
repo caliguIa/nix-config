@@ -1,5 +1,5 @@
 { inputs, ... }: {
-    flake.modules.nixos.desktop = { pkgs, ... }: {
+    flake.modules.nixos.gui = { pkgs, ... }: {
         services.dbus.enable = true;
         services.mullvad-vpn.enable = true;
         programs.dconf.enable = true;

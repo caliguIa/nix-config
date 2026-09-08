@@ -1,5 +1,5 @@
 {
-    flake.modules.hjem.desktop =
+    flake.modules.hjem.gui =
         { pkgs, ... }:
         let
             server = "https://ntfy.smiley.calrichards.io";

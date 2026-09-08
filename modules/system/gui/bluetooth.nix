@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.desktop = {
+    flake.modules.nixos.gui = {
         hardware.bluetooth = {
             enable = true;
             powerOnBoot = true;

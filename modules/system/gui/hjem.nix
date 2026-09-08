@@ -4,9 +4,9 @@
     ...
 }:
 {
-    flake.modules.nixos.desktop = {
+    flake.modules.nixos.gui = {
         hjem.users.${user.primary}.imports = [
-            config.flake.modules.hjem.desktop
+            config.flake.modules.hjem.gui
         ];
     };
 }

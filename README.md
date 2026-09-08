@@ -10,8 +10,9 @@ lib/recursivelyImport.nix # custom autoimporter
 modules/
   flake/                  # flake-parts wiring
   hosts/                  # per-host modules
-  system/core/            # base modules for every host
-  system/desktop/         # modules for graphical hosts
+  system/
+    core/                 # base modules for every host
+    gui/                  # modules for graphical hosts
   zmk/                    # ZMK split keyboard firmware
 .secrets/                 # agenix-encrypted secrets
 ```
@@ -23,7 +24,7 @@ Every `.nix` file under `modules/` is a flake-parts module, autoimported by
 
 Rather than defining config directly, modules contribute to named buckets:
 
-- `flake.modules.{nixos,hjem}.{core,desktop,host_<name>}`
+- `flake.modules.{hosts,system}.{core,gui,host_<name>}`
 
 flake-parts merges these definitions, so many files can each append to the same
 bucket. Hosts compose the buckets they need via `imports`.
@@ -31,16 +32,16 @@ bucket. Hosts compose the buckets they need via `imports`.
 ## Hosts
 
 Defined in `modules/flake/hosts.nix`. Each maps to a platform and composes core
-and/or desktop buckets.
+and/or gui buckets.
 
-- `karla` (x86_64) - Framework 16 laptop, desktop
-- `westerby` (aarch64) - Apple Silicon M1 Macbook Air, desktop
-- `smiley` (x86_64) - Mac Mini server, core only
+- `karla` (x86_64) - Framework 16 laptop - core, gui
+- `westerby` (aarch64) - Apple Silicon M1 Macbook Air - core, gui
+- `smiley` (x86_64) - Mac Mini server - core
 
 ## Home / dotfiles
 
 Uses [hjem](https://github.com/feel-co/hjem) (not home-manager). Dotfile
-modules populate `flake.modules.hjem.*` and are imported per-user in
+modules populate `flake.modules.system.{core,gui}.*` and are imported in
 `modules/system/core/hjem.nix`.
 
 ## Secrets

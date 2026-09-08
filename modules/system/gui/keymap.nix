@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.desktop = { pkgs, ... }: {
+    flake.modules.nixos.gui = { pkgs, ... }: {
         environment.systemPackages = with pkgs; [ keyd ];
         services.xserver.xkb.layout = "gb";
         services.logind.settings.Login = {
