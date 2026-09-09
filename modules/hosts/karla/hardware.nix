@@ -51,6 +51,12 @@
             systemd.services.NetworkManager-wait-online.enable = false;
             systemd.services.docker.wantedBy = lib.mkForce [ ];
 
+            programs.gamemode.settings.gpu = {
+                apply_gpu_optimisations = "accept-responsibility";
+                gpu_device = 0;
+                amd_performance_level = "high";
+            };
+
             hardware.enableAllFirmware = true;
             hardware.framework.enableKmod = true;
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

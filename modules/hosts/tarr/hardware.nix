@@ -14,8 +14,8 @@
             ];
 
             environment.systemPackages = [
-                # For debugging and troubleshooting Secure Boot.
                 pkgs.sbctl
+                pkgs.lm_sensors
             ];
 
             # Lanzaboote replaces the systemd-boot module.
@@ -37,6 +37,7 @@
             boot.kernelModules = [
                 "kvm-amd"
                 "ntsync"
+                "nct6775"
             ];
 
             # skip systemd-boot menu, hold space at boot to show the menu
@@ -50,18 +51,30 @@
             fileSystems."/" = {
                 device = "/dev/mapper/luks-a647cd97-fe51-4803-a017-c095d426733b";
                 fsType = "btrfs";
+                options = [
+                    "noatime"
+                    "compress=zstd"
+                ];
             };
 
             fileSystems."/home" = {
                 device = "/dev/mapper/luks-a647cd97-fe51-4803-a017-c095d426733b";
                 fsType = "btrfs";
-                options = [ "subvol=home" ];
+                options = [
+                    "subvol=home"
+                    "noatime"
+                    "compress=zstd"
+                ];
             };
 
             fileSystems."/nix" = {
                 device = "/dev/mapper/luks-a647cd97-fe51-4803-a017-c095d426733b";
                 fsType = "btrfs";
-                options = [ "subvol=nix" ];
+                options = [
+                    "subvol=nix"
+                    "noatime"
+                    "compress=zstd"
+                ];
             };
 
             fileSystems."/boot" = {
@@ -84,8 +97,9 @@
                 extraPackages = with pkgs; [ libva ];
             };
             hardware.nvidia = {
-                open = false;
+                open = true;
                 modesetting.enable = true;
+                powerManagement.enable = true;
             };
 
             services.xserver.videoDrivers = [ "nvidia" ];
@@ -94,6 +108,12 @@
                 enable = true;
                 scheduler = "scx_lavd";
                 extraArgs = [ "--autopilot" ];
+            };
+
+            services.btrfs.autoScrub = {
+                enable = true;
+                interval = "monthly";
+                fileSystems = [ "/" ];
             };
 
             zramSwap.enable = true;
