@@ -11,7 +11,20 @@
             imports = [
                 (modulesPath + "/installer/scan/not-detected.nix")
                 inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+                inputs.lanzaboote.nixosModules.lanzaboote
             ];
+
+            environment.systemPackages = [
+                # For debugging and troubleshooting Secure Boot.
+                pkgs.sbctl
+            ];
+
+            # Lanzaboote replaces the systemd-boot module.
+            boot.loader.systemd-boot.enable = lib.mkForce false;
+            boot.lanzaboote = {
+                enable = true;
+                pkiBundle = "/var/lib/sbctl";
+            };
 
             boot.kernelPackages = pkgs.linuxPackages_latest;
             boot.initrd.availableKernelModules = [
@@ -60,13 +73,29 @@
             };
 
             fileSystems."/" = {
-                device = "/dev/disk/by-uuid/e4dd47e6-8455-417d-98e1-e99c0ea0f360";
-                fsType = "ext4";
-                options = [ "noatime" ];
+                device = "/dev/mapper/luks-023ee2dd-eacf-41e8-9032-f933736c9c3f";
+                fsType = "btrfs";
+            };
+
+            boot.initrd.luks.devices."luks-023ee2dd-eacf-41e8-9032-f933736c9c3f" = {
+                device = "/dev/disk/by-uuid/023ee2dd-eacf-41e8-9032-f933736c9c3f";
+                crypttabExtraOpts = [ "tpm2-device=auto" ];
+            };
+
+            fileSystems."/home" = {
+                device = "/dev/mapper/luks-023ee2dd-eacf-41e8-9032-f933736c9c3f";
+                fsType = "btrfs";
+                options = [ "subvol=home" ];
+            };
+
+            fileSystems."/nix" = {
+                device = "/dev/mapper/luks-023ee2dd-eacf-41e8-9032-f933736c9c3f";
+                fsType = "btrfs";
+                options = [ "subvol=nix" ];
             };
 
             fileSystems."/boot" = {
-                device = "/dev/disk/by-uuid/ED19-D1D2";
+                device = "/dev/disk/by-uuid/B9EA-152E";
                 fsType = "vfat";
                 options = [
                     "fmask=0077"
@@ -75,8 +104,6 @@
             };
 
             zramSwap.enable = true;
-            swapDevices = [
-                { device = "/dev/disk/by-uuid/830029dd-1bdc-46d7-9d31-632f42ba80c7"; }
-            ];
+            swapDevices = [ ];
         };
 }

@@ -3,7 +3,8 @@ let
         caligula = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEqh1qhmwEfKoX6jufWu2bammoitHUJaYOZuQ5nwo5Ex";
     };
     systems = {
-        karla = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjJuY81Rz/0IiKRMTcrD49wEedXtyUVqh63Xpv1Wj2z";
+        karla = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGmFBeIGL6ApYZUQ/xp8cFTiU/I7mLgVisCMVAFKg7ze";
+        karla_old = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjJuY81Rz/0IiKRMTcrD49wEedXtyUVqh63Xpv1Wj2z";
         smiley = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJUX/lSF4W+/sLzmAOS6c1eyNmshv2IyhjQmcrBW8nu";
 	tarr = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGvEvnhR4vWmer5jw4fD3pGlGYJG50t7ZNAm2KF6NO7d";
     };
