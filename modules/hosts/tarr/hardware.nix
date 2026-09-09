@@ -1,4 +1,4 @@
-{
+{ inputs, ... }: {
     flake.modules.nixos.host_tarr =
         {
             config,
@@ -8,7 +8,22 @@
             ...
         }:
         {
-            imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+            imports = [
+                (modulesPath + "/installer/scan/not-detected.nix")
+                inputs.lanzaboote.nixosModules.lanzaboote
+            ];
+
+            environment.systemPackages = [
+                # For debugging and troubleshooting Secure Boot.
+                pkgs.sbctl
+            ];
+
+            # Lanzaboote replaces the systemd-boot module.
+            boot.loader.systemd-boot.enable = lib.mkForce false;
+            boot.lanzaboote = {
+                enable = true;
+                pkiBundle = "/var/lib/sbctl";
+            };
 
             boot.initrd.availableKernelModules = [
                 "xhci_pci"
@@ -27,8 +42,10 @@
             # skip systemd-boot menu, hold space at boot to show the menu
             boot.loader.timeout = 0;
 
-            boot.initrd.luks.devices."luks-a647cd97-fe51-4803-a017-c095d426733b".device =
-                "/dev/disk/by-uuid/a647cd97-fe51-4803-a017-c095d426733b";
+            boot.initrd.luks.devices."luks-a647cd97-fe51-4803-a017-c095d426733b" = {
+                device = "/dev/disk/by-uuid/a647cd97-fe51-4803-a017-c095d426733b";
+                crypttabExtraOpts = [ "tpm2-device=auto" ];
+            };
 
             fileSystems."/" = {
                 device = "/dev/mapper/luks-a647cd97-fe51-4803-a017-c095d426733b";
@@ -66,7 +83,12 @@
                 enable32Bit = true;
                 extraPackages = with pkgs; [ libva ];
             };
+            hardware.nvidia = {
+                open = false;
+                modesetting.enable = true;
+            };
 
+            services.xserver.videoDrivers = [ "nvidia" ];
             services.xserver.xkb.layout = "us";
             services.scx = {
                 enable = true;
