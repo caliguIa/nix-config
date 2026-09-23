@@ -24,6 +24,7 @@
             bruno
             claude-code
             gelly
+            glib.bin
             mullvad
             mullvad-vpn
             opencode
