@@ -5,7 +5,8 @@
         programs.dconf.enable = true;
         programs.nix-ld = {
             enable = true;
-            libraries = [ ];
+            libraries = with pkgs; [
+            ];
         };
         programs.localsend.enable = true;
         programs.firefox = {
@@ -35,7 +36,6 @@
             tableplus
             ungoogled-chromium
             inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight
-
         ];
     };
 }
