@@ -34,6 +34,15 @@
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.home-manager.follows = "";
         };
+        dms = {
+            url = "github:AvengeMedia/DankMaterialShell";
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.flake-compat.follows = "";
+        };
+        dankcalendar = {
+            url = "github:AvengeMedia/dankcalendar";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         zmk-nix = {
             url = "github:lilyinstarlight/zmk-nix";
             inputs.nixpkgs.follows = "nixpkgs";

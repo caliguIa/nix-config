@@ -34,7 +34,7 @@ bucket. Hosts compose the buckets they need via `imports`.
 Defined in `modules/flake/hosts.nix`. Each maps to a platform and composes core
 and/or gui buckets.
 
-- `karla` (x86_64) - Framework 16 laptop - core, gui
+- `karla` (x86_64) - Framework 16 laptop - core, gui, sway (a second, Plasma-adjacent DankMaterialShell session)
 - `westerby` (aarch64) - Apple Silicon M1 Macbook Air - core, gui
 - `smiley` (x86_64) - Mac Mini server - core
 
