@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
     flake.modules.nixos.sway =
-        { config, pkgs, ... }:
+        { config, lib, pkgs, ... }:
         let
             # DMS defaults to no idle timeouts and no lock before suspend. Seeded once,
             # then owned by DMS's settings UI; missing keys fall back to DMS defaults.
@@ -45,6 +45,27 @@
             swayRunning = pkgs.writeShellScript "dms-require-sway" ''
                 exec ${config.programs.sway.package}/bin/swaymsg -t get_version >/dev/null 2>&1
             '';
+
+            # If DMS dies while locked (e.g. a lock-surface protocol error on
+            # resume), sway keeps the session locked with nothing drawn: a black
+            # screen that eats all input. logind's LockedHint is still set then,
+            # so have the restarted DMS put its lock screen back up.
+            relockAfterCrash = pkgs.writeShellScript "dms-relock-after-crash" ''
+                PATH=${lib.makeBinPath [ pkgs.systemd pkgs.jq pkgs.coreutils ]}
+                dms=${config.programs.dank-material-shell.package}/bin/dms
+                sid=$(loginctl list-sessions --json=short \
+                    | jq -r --arg u "$USER" '.[] | select(.user == $u and .seat != null) | .session' \
+                    | head -n1)
+                [ -n "$sid" ] || exit 0
+                [ "$(loginctl show-session "$sid" -p LockedHint --value)" = yes ] || exit 0
+                # The UI takes a few seconds to answer IPC after start, and "lock"
+                # succeeds even if sway later refuses the lock, so confirm it took.
+                for _ in $(seq 30); do
+                    "$dms" ipc call lock lock >/dev/null 2>&1 || true
+                    sleep 1
+                    [ "$("$dms" ipc call lock isLocked 2>/dev/null)" = true ] && exit 0
+                done
+            '';
         in
         {
             imports = [ inputs.dms.nixosModules.dank-material-shell ];
@@ -62,6 +83,7 @@
             systemd.user.services.dms.serviceConfig = {
                 ExecStartPre = [ "${seedDmsSettings}" ];
                 ExecCondition = "${swayRunning}";
+                ExecStartPost = [ "${relockAfterCrash}" ];
             };
 
             # The DMS lock screen uses this for passwords and runs fingerprint through

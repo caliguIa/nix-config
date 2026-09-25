@@ -9,8 +9,6 @@
                 # replaced by DMS; keep only what our own config execs.
                 extraPackages = with pkgs; [
                     wl-clipboard
-                    grim
-                    slurp
                     fuzzel
                 ];
                 # The user manager can outlive a Plasma login; drop its KDE env.

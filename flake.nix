@@ -39,6 +39,14 @@
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.flake-compat.follows = "";
         };
+        dank-greeter = {
+            url = "github:AvengeMedia/dank-greeter";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        dms-screen-recorder = {
+            url = "github:arqueon/dms-screen-recorder";
+            flake = false;
+        };
         dankcalendar = {
             url = "github:AvengeMedia/dankcalendar";
             inputs.nixpkgs.follows = "nixpkgs";

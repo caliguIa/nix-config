@@ -42,7 +42,12 @@
             ];
             boot.kernelParams = [
                 "amd_pstate=active"
+                # Log each suspend/resume step, to pin down where s2idle hangs.
+                "pm_debug_messages"
             ];
+            # Flush the journal often so the last lines before a hang survive a
+            # forced power-off.
+            services.journald.settings.Journal.SyncIntervalSec = "5s";
 
             # skip systemd-boot menu, hold space at boot to show the menu
             boot.loader.timeout = 0;

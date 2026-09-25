@@ -1,6 +1,41 @@
 {
     flake.modules.hjem.sway =
         { pkgs, ... }:
+        let
+            # Only blank the closed panel when docked. Undocked, logind suspends
+            # anyway, and dropping/re-adding eDP-1 under the DMS lock screen makes
+            # its lock surface commit a stale size on resume; sway kills it for the
+            # protocol error and the session stays locked on a black screen.
+            lidClosed = pkgs.writeShellScript "sway-lid-closed" ''
+                if swaymsg -t get_outputs \
+                    | ${pkgs.jq}/bin/jq -e 'any(.[]; .name != "eDP-1" and .active)' >/dev/null; then
+                    swaymsg output eDP-1 disable
+                fi
+            '';
+            lidOpened = pkgs.writeShellScript "sway-lid-opened" ''
+                if swaymsg -t get_outputs \
+                    | ${pkgs.jq}/bin/jq -e 'any(.[]; .name == "eDP-1" and (.active | not))' >/dev/null; then
+                    swaymsg output eDP-1 enable
+                fi
+            '';
+            # Docking/undocking with the lid already shut fires no lid event: bring
+            # the panel back as soon as it'd be the only output (before logind
+            # suspends and DMS locks), and blank it when docking with the lid shut.
+            outputWatcher = pkgs.writeShellScript "sway-edp-watcher" ''
+                jq=${pkgs.jq}/bin/jq
+                swaymsg -t subscribe -m '["output"]' | while read -r _; do
+                    outs=$(swaymsg -t get_outputs) || continue
+                    others=$($jq 'any(.[]; .name != "eDP-1" and .active)' <<<"$outs")
+                    edp=$($jq -r '.[] | select(.name == "eDP-1") | .active' <<<"$outs")
+                    if [ "$others" = false ] && [ "$edp" = false ]; then
+                        swaymsg output eDP-1 enable
+                    elif [ "$others" = true ] && [ "$edp" = true ] \
+                        && grep -qs closed /proc/acpi/button/lid/*/state; then
+                        swaymsg output eDP-1 disable
+                    fi
+                done
+            '';
+        in
         {
             xdg.config.files."sway/config".text = ''
                 set $mod Mod4
@@ -8,8 +43,9 @@
                 output eDP-1 scale 1.0 mode 2560x1600@165Hz adaptive_sync on
 
                 # Clamshell: logind won't suspend while docked, so blank the closed panel.
-                bindswitch --reload --locked lid:on output eDP-1 disable
-                bindswitch --reload --locked lid:off output eDP-1 enable
+                bindswitch --reload --locked lid:on exec ${lidClosed}
+                bindswitch --reload --locked lid:off exec ${lidOpened}
+                exec ${outputWatcher}
 
                 input type:touchpad {
                     natural_scroll enabled
@@ -93,8 +129,12 @@
                 bindsym --locked XF86MonBrightnessUp exec dms ipc call brightness increment 5 "backlight:amdgpu_bl1"
                 bindsym --locked XF86MonBrightnessDown exec dms ipc call brightness decrement 5 "backlight:amdgpu_bl1"
 
-                # Cancelling slurp mustn't wipe the clipboard.
-                bindsym Print exec sh -c 'g=$(slurp) && grim -g "$g" - | wl-copy'
+                # Screenshots: saved to a file and copied to the clipboard.
+                bindsym Print exec dms screenshot region
+                bindsym Ctrl+Shift+4 exec dms screenshot region
+                bindsym Ctrl+Shift+3 exec dms screenshot full
+                # Start/stop; the portal picker asks what to record.
+                bindsym Ctrl+Shift+5 exec dms ipc call screenRecorder toggleRecording
 
                 # Unlock KWallet with the login password, same as Plasma's PAM hook does.
                 exec ${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init
