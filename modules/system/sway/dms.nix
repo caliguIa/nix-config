@@ -30,6 +30,13 @@
 
                     lockBeforeSuspend = true;
                     loginctlLockIntegration = true;
+                    # Needed to wake the screen while locked. Without it, locking
+                    # re-arms the idle monitors, so when the monitor-off timeout
+                    # fires with (or before) the lock, input never registers as
+                    # "no longer idle" and the screen stays off until the 15-min
+                    # suspend. This enables DMS's input-driven lock wake monitor
+                    # (and blanks the screen as soon as it locks).
+                    lockScreenPowerOffMonitorsOnLock = true;
                 }
             );
 
