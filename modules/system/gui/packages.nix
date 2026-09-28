@@ -24,6 +24,8 @@
             bitwarden-desktop
             bruno
             claude-code
+            epiphany
+            luakit
             gelly
             glib.bin
             mullvad

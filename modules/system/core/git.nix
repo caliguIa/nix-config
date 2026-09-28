@@ -193,8 +193,8 @@
                             universal = [
                                 {
                                     key = "g";
-                                    name = "gitu";
-                                    command = "cd {{.RepoPath}} && ${getExe pkgs.gitu}\n";
+                                    name = "lazygit";
+                                    command = "cd {{.RepoPath}} && ${getExe pkgs.lazygit}\n";
                                 }
                             ];
                             prs = [

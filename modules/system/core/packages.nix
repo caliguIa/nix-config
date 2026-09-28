@@ -8,13 +8,13 @@
             fastfetch
             fd
             fzf
-            gitu
             gnumake
             gnupg
             hurl
             jq
             just
             lazydocker
+            lazygit
             ouch
             prr
             ripgrep
