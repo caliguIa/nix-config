@@ -16,7 +16,6 @@
             lazydocker
             lazygit
             ouch
-            prr
             ripgrep
             tree
             unzip

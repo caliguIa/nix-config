@@ -30,7 +30,6 @@ vim.pack.add({
     'gh:vim-test/vim-test',
     'gh:niekdomi/conflict.nvim',
     'gh:justinmk/guh.nvim',
-    'gh:WTFox/luna.nvim',
 })
 
 vim.pack.add({

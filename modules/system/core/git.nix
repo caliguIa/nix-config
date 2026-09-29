@@ -24,6 +24,7 @@
                     };
                     core = {
                         editor = "nvim";
+                        pager = "delta";
                         compression = 9;
                         whitespace = "error";
                         preloadindex = true;
@@ -42,7 +43,7 @@
                             "${ghBin} auth git-credential"
                         ];
                     };
-                    pager.diff = "diffnav";
+                    pager.diff = "delta";
                     fetch.prune = true;
                     gc.auto = 200;
                     init.defaultBranch = "main";
@@ -54,7 +55,7 @@
                     pull.default = "current";
                     interactive = {
                         singlekey = true;
-                        diffFilter = "diffnav";
+                        diffFilter = "delta --color-only";
                     };
                     status = {
                         branch = true;
@@ -64,28 +65,29 @@
                     delta = {
                         "syntax-theme" = "kanso-zen";
                         "dark" = "true";
+                        "navigate" = "true";
                         "tabs" = "2";
                         "file-style" = "omit";
                         "file-decoration-style" = "none";
-                        "line-numbers-left-format" = "{nm:>4} ";
-                        "line-numbers-right-format" = "│ {np:>4} ";
-                        "line-numbers-left-style" = "white dim";
-                        "line-numbers-right-style" = "#1f2335 dim";
-                        "line-numbers-zero-style" = "white dim";
-                        "line-numbers-plus-style" = "white dim ";
-                        "line-numbers-minus-style" = "white dim";
+                        # "line-numbers-left-format" = "{nm:>4} ";
+                        # "line-numbers-right-format" = "│ {np:>4} ";
+                        # "line-numbers-left-style" = "white dim";
+                        # "line-numbers-right-style" = "#1f2335 dim";
+                        # "line-numbers-zero-style" = "white dim";
+                        # "line-numbers-plus-style" = "white dim ";
+                        # "line-numbers-minus-style" = "white dim";
                         "wrap-left-symbol" = " ";
                         "wrap-right-symbol" = " ";
                         "wrap-right-prefix-symbol" = " ";
-                        "plus-style" = "syntax #0e250e";
-                        "plus-emph-style" = "syntax #103610";
-                        "minus-style" = "syntax #402a26";
-                        "minus-emph-style" = "syntax #45221c";
+                        # "plus-style" = "syntax #0e250e";
+                        # "plus-emph-style" = "syntax #103610";
+                        # "minus-style" = "syntax #402a26";
+                        # "minus-emph-style" = "syntax #45221c";
                         "hunk-label" = "  󰡏 ";
-                        "hunk-header-line-number-style" = "#10233A";
-                        "hunk-header-style" = "#868E99";
-                        "hunk-header-file-style" = "#868E99 dim";
-                        "hunk-header-decoration-style" = "#163050 ol ul";
+                        # "hunk-header-line-number-style" = "#10233A";
+                        # "hunk-header-style" = "#868E99";
+                        # "hunk-header-file-style" = "#868E99 dim";
+                        # "hunk-header-decoration-style" = "#163050 ol ul";
                     };
                     "url \"git@github.com:\"".insteadOf = [
                         "https://github.com/"
@@ -101,8 +103,8 @@
             programs.lazygit = {
                 enable = true;
                 settings = {
-                    git.pagers = [
-                        { useExternalDiffGitConfig = true; }
+                    git.diffRenderers = [
+                        { command = "delta --dark --paging=never"; }
                     ];
                     gui = {
                         border = "single";
