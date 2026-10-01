@@ -30,10 +30,14 @@
             };
         in
         {
-            # KWallet, unlocked automatically at login via PAM using the user's
-            # login password (replaces gnome-keyring + its PAM login unlock).
-            security.pam.services.sddm.kwallet.enable = true;
-            security.pam.services.login.kwallet.enable = true;
+            # GNOME keyring, unlocked at login via login's PAM stack with the
+            # typed password. Serves the Secret Service API/portal.
+            services.gnome.gnome-keyring.enable = true;
+            # The SSH key is decrypted by agenix without a passphrase, so an
+            # agent adds nothing.
+            services.gnome.gcr-ssh-agent.enable = false;
+            # Keyring GUI; also the SSH askpass.
+            programs.seahorse.enable = true;
             security.pam.services.sudo.fprintAuth = true;
             security.pam.services.polkit-1.fprintAuth = true;
             security.pam.services.sudo.rules.auth.fprintd-lid = mkLidSkipRule "sudo";
@@ -41,7 +45,6 @@
             security.polkit.enable = true;
             environment.systemPackages = with pkgs; [
                 polkit
-                kdePackages.kwalletmanager
             ];
             environment.etc."polkit-1/actions/com.bitwarden.Bitwarden.policy" = {
                 text = ''

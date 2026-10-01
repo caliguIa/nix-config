@@ -1,12 +1,12 @@
 { inputs, user, ... }:
 {
-    flake.modules.nixos.sway =
-        { config, lib, ... }:
+    flake.modules.nixos.gui =
+        { config, ... }:
         {
             imports = [ inputs.dank-greeter.nixosModules.default ];
 
-            # DMS's greeter on greetd, replacing SDDM. It still lists every installed
-            # session, so Plasma stays selectable.
+            # DMS's greeter on greetd. greetd's PAM substacks login, which
+            # unlocks the GNOME keyring with the typed password.
             programs.dms-greeter = {
                 enable = true;
                 compositor.name = "sway";
@@ -15,12 +15,10 @@
                 configHome = config.users.users.${user.primary}.home;
             };
 
-            # greetd's PAM substacks login, which already unlocks KWallet.
-            services.displayManager.sddm.enable = lib.mkForce false;
-
             # Fingerprint only unlocks (DMS lock, sudo, polkit), never logs in: a
-            # fingerprint login would skip KWallet, which needs the typed password.
-            # This also covers the greeter, which reads login's stack for its UI.
+            # fingerprint login would leave the keyring locked, as it needs the
+            # typed password. This also covers the greeter, which reads login's
+            # stack for its UI.
             security.pam.services.login.fprintAuth = false;
         };
 }

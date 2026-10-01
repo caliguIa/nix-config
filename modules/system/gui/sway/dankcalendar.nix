@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-    flake.modules.nixos.sway =
+    flake.modules.nixos.gui =
         { pkgs, ... }:
         {
             imports = [ inputs.dankcalendar.nixosModules.dank-calendar ];

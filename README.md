@@ -24,7 +24,10 @@ Every `.nix` file under `modules/` is a flake-parts module, autoimported by
 
 Rather than defining config directly, modules contribute to named buckets:
 
-- `flake.modules.{hosts,system}.{core,gui,host_<name>}`
+- `flake.modules.{nixos,hjem}.{core,gui,laptop,host_<name>}`
+
+`gui` is a sway + DankMaterialShell desktop with GNOME apps (Nautilus,
+GNOME keyring) and Adwaita theming.
 
 flake-parts merges these definitions, so many files can each append to the same
 bucket. Hosts compose the buckets they need via `imports`.
@@ -34,7 +37,7 @@ bucket. Hosts compose the buckets they need via `imports`.
 Defined in `modules/flake/hosts.nix`. Each maps to a platform and composes core
 and/or gui buckets.
 
-- `karla` (x86_64) - Framework 16 laptop - core, gui, sway (a second, Plasma-adjacent DankMaterialShell session)
+- `karla` (x86_64) - Framework 16 laptop - core, gui, laptop
 - `westerby` (aarch64) - Apple Silicon M1 Macbook Air - core, gui
 - `smiley` (x86_64) - Mac Mini server - core
 

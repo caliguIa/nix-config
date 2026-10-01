@@ -3,6 +3,5 @@
         core
         gui
         laptop
-        sway
     ];
 }

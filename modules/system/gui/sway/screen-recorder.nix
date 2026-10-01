@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-    flake.modules.nixos.sway =
+    flake.modules.nixos.gui =
         { pkgs, ... }:
         let
             # DMS only loads a plugin once plugin_settings.json marks it enabled.

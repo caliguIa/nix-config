@@ -1,0 +1,82 @@
+# Editor behaviour, mirroring the feel of the neovim setup
+# (modules/system/core/nvim/lua/plugin/options.lua). helix only edits code:
+# no git or multiplexer integration, and nnn (on `-`) is the file manager.
+
+theme = "kanso-mist"
+
+[editor]
+line-number = "absolute"
+cursorline = true
+mouse = true
+scrolloff = 4
+true-color = true
+bufferline = "multiple"
+color-modes = true
+default-yank-register = "+"
+# Diagnostics stay as underlines in the text with no virtual-text clutter,
+# matching nvim's `virtual_text = false, signs = false, underline = true`.
+end-of-line-diagnostics = "disable"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+center = []
+right = ["diagnostics", "selections", "position", "file-type"]
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+
+[editor.file-picker]
+hidden = false
+git-ignore = true
+
+[editor.whitespace]
+render = { tab = "all", nbsp = "all", nnbsp = "all", space = "none", newline = "none" }
+
+[editor.whitespace.characters]
+tab = "»"
+nbsp = "␣"
+nnbsp = "␣"
+
+[editor.indent-guides]
+render = true
+
+[editor.soft-wrap]
+enable = false
+
+[editor.inline-diagnostics]
+cursor-line = "disable"
+other-lines = "disable"
+
+# ---- keys -------------------------------------------------------------------
+# Muscle-memory carried over from neovim, without fighting helix idioms. No
+# git or terminal-multiplexer bindings: helix's built-in diff gutter is fine,
+# but git management and any tmux/zellij integration stay out of the editor.
+
+[keys.normal]
+C-d = ["half_page_down", "align_view_center"]
+C-u = ["half_page_up", "align_view_center"]
+esc = ["collapse_selection", "keep_primary_selection"]
+
+# `-` opens nnn as a file picker (same key as nvim). Opening a file in nnn
+# quits it and opens that file here; quitting without one re-opens the
+# current buffer. hx-nnn (helix/default.nix) gives nnn the terminal, so
+# :insert-output gets no output and the buffer is untouched.
+minus = [
+  ':insert-output hx-nnn pick "%{buffer_name}"',
+  ':redraw',
+  ':open %sh{hx-nnn path "%{buffer_name}"}',
+]
+
+[keys.normal.space]
+# Make the current file executable (nvim: <leader>X -> :!chmod +x %).
+# Shell-command args are passed raw, so the expansion must be quoted.
+x = ':sh chmod +x "%{buffer_name}"'
+# The file picker lives on `space s f` instead (below).
+f = "no_op"
+
+# nvim-style search group. It takes over `space s`, so helix's symbol picker
+# moves to `space s s`.
+[keys.normal.space.s]
+f = "file_picker"
+s = "symbol_picker"

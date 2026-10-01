@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.sway =
+    flake.modules.nixos.gui =
         { pkgs, ... }:
         {
             programs.sway = {
@@ -11,11 +11,10 @@
                     wl-clipboard
                     fuzzel
                 ];
-                # The user manager can outlive a Plasma login; drop its KDE env.
                 extraSessionCommands = ''
-                    export QT_QPA_PLATFORMTHEME=kde
-                    systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE QT_QPA_PLATFORMTHEME
-                    systemctl --user unset-environment KDE_FULL_SESSION KDE_SESSION_VERSION KDE_SESSION_UID KDE_APPLICATIONS_AS_SCOPE
+                    # qt.* sets these in environment.variables, which systemd units (and
+                    # so apps launched from DMS) never see.
+                    systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE
                 '';
             };
 
@@ -27,8 +26,16 @@
                 max_fps = 60;
             };
 
-            # kwallet.portal is UseIn=kde only.
-            xdg.portal.config.sway."org.freedesktop.impl.portal.Secret" = [ "kwallet" ];
+            # Both portals are UseIn=gnome only. The GNOME file chooser is Nautilus's;
+            # GTK's own dialog stays as the fallback.
+            xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+            xdg.portal.config.sway = {
+                "org.freedesktop.impl.portal.FileChooser" = [
+                    "gnome"
+                    "gtk"
+                ];
+                "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+            };
 
             # runXdgAutostartIfNone only covers the X11 "none" session, so sway
             # needs XDG autostart (kdeconnectd etc.) started explicitly.

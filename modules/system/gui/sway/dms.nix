@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-    flake.modules.nixos.sway =
+    flake.modules.nixos.gui =
         { config, lib, pkgs, ... }:
         let
             # DMS defaults to no idle timeouts and no lock before suspend. Seeded once,
@@ -48,11 +48,6 @@
                 fi
             '';
 
-            # The user manager can outlive a sway login into a Plasma one.
-            swayRunning = pkgs.writeShellScript "dms-require-sway" ''
-                exec ${config.programs.sway.package}/bin/swaymsg -t get_version >/dev/null 2>&1
-            '';
-
             # If DMS dies while locked (e.g. a lock-surface protocol error on
             # resume), sway keeps the session locked with nothing drawn: a black
             # screen that eats all input. logind's LockedHint is still set then,
@@ -80,7 +75,6 @@
             programs.dank-material-shell = {
                 enable = true;
                 systemd.enable = true;
-                # Plasma also reaches graphical-session.target (the default here).
                 systemd.target = "sway-session.target";
                 enableAudioWavelength = false;
                 enableDynamicTheming = false;
@@ -89,7 +83,6 @@
 
             systemd.user.services.dms.serviceConfig = {
                 ExecStartPre = [ "${seedDmsSettings}" ];
-                ExecCondition = "${swayRunning}";
                 ExecStartPost = [ "${relockAfterCrash}" ];
             };
 

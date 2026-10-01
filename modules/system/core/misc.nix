@@ -4,10 +4,9 @@
         boot.loader.efi.canTouchEfiVariables = true;
         time.timeZone = "Europe/London";
         i18n.defaultLocale = "en_GB.UTF-8";
-        # KDE reads per-category LC_* vars; set them explicitly so date, time,
-        # numbers, currency, units etc. use British formats regardless of the
-        # per-user Plasma regional state. Also ensures the en_GB locale is
-        # generated so it appears in System Settings > Region & Language.
+        # Set the per-category LC_* vars explicitly so date, time, numbers,
+        # currency, units etc. use British formats even if something sets a
+        # different LANG.
         i18n.extraLocaleSettings = {
             LC_ADDRESS = "en_GB.UTF-8";
             LC_IDENTIFICATION = "en_GB.UTF-8";

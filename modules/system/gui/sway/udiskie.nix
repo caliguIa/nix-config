@@ -1,8 +1,8 @@
 {
-    flake.modules.nixos.sway =
+    flake.modules.nixos.gui =
         { lib, pkgs, ... }:
         {
-            # Plasma's device notifier does this there; DMS has no removable-media support.
+            # DMS has no removable-media support.
             systemd.user.services.udiskie = {
                 description = "udiskie removable media automounter";
                 partOf = [ "sway-session.target" ];

@@ -1,0 +1,154 @@
+# A helix port of kanso.nvim's "mist" background, in the same spirit as the
+# `minimal = true` neovim setup (modules/system/core/nvim/lua/after/plugin/0_colour.lua):
+# few syntax colours, mostly foreground text, with colour reserved for things
+# that matter (strings, keywords, types, diagnostics, diff).
+#
+# Colours are taken directly from kanso.nvim's palette and "mist" theme table:
+# ~/.local/share/nvim/site/pack/core/opt/kanso.nvim/lua/kanso/{colors,themes}.lua
+# This is a faithful-in-spirit port, not a mechanical 1:1 highlight-group
+# transliteration -- helix's tree-sitter scopes don't map 1:1 onto neovim's
+# highlight groups, so scope grouping here is judgment-based.
+#
+# NOTE: the [palette] table must be the LAST section in this file -- TOML
+# gives every key after a table header to that table, so anything placed
+# below [palette] would silently become a palette colour instead of a scope.
+
+"ui.background" = { bg = "bg" }
+"ui.text" = "fg"
+"ui.text.focus" = { fg = "fg-bright", modifiers = ["bold"] }
+"ui.text.inactive" = "gray"
+"ui.text.directory" = "blue"
+"ui.text.info" = "fg-dim"
+
+"ui.cursor" = { fg = "bg", bg = "fg-bright" }
+"ui.cursor.primary" = { fg = "bg", bg = "fg-bright" }
+"ui.cursor.match" = { fg = "yellow", modifiers = ["bold"] }
+"ui.cursorline.primary" = { bg = "bg-dim" }
+"ui.cursorline.secondary" = { bg = "bg-dim" }
+
+"ui.selection" = { bg = "bg-visual" }
+"ui.selection.primary" = { bg = "bg-visual" }
+"ui.highlight" = { bg = "bg-select" }
+
+"ui.gutter" = { fg = "gray-darker", bg = "bg" }
+"ui.gutter.selected" = { fg = "fg-bright", bg = "bg" }
+"ui.linenr" = { fg = "gray-darker", bg = "bg" }
+"ui.linenr.selected" = { fg = "fg-bright", bg = "bg" }
+
+"ui.statusline" = { fg = "fg", bg = "bg-dim" }
+"ui.statusline.inactive" = { fg = "gray", bg = "bg-dim" }
+"ui.statusline.normal" = { fg = "bg", bg = "violet", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "bg", bg = "green", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "bg", bg = "yellow", modifiers = ["bold"] }
+"ui.statusline.separator" = "gray"
+"ui.bufferline" = { fg = "gray", bg = "bg-dim" }
+"ui.bufferline.active" = { fg = "fg-bright", bg = "bg-panel", modifiers = ["bold"] }
+"ui.bufferline.background" = { bg = "bg-dim" }
+
+"ui.popup" = { fg = "fg", bg = "bg-popup" }
+"ui.popup.info" = { fg = "fg", bg = "bg-popup" }
+"ui.window" = { fg = "bg-panel" }
+"ui.help" = { fg = "fg", bg = "bg-popup" }
+
+"ui.picker.header" = { fg = "fg-dim", modifiers = ["bold"] }
+"ui.picker.header.column" = "fg-dim"
+"ui.picker.header.column.active" = { fg = "fg-bright", modifiers = ["bold"] }
+
+"ui.menu" = { fg = "fg", bg = "bg-popup" }
+"ui.menu.selected" = { fg = "fg-bright", bg = "bg-select" }
+"ui.menu.scroll" = { fg = "bg-panel", bg = "bg-popup" }
+
+"ui.virtual.ruler" = { bg = "bg-panel" }
+"ui.virtual.whitespace" = "bg-panel"
+"ui.virtual.indent-guide" = "bg-panel"
+"ui.virtual.inlay-hint" = { fg = "gray-dark", bg = "bg-dim" }
+"ui.virtual.wrap" = "gray-darker"
+"ui.virtual.jump-label" = { fg = "bg", bg = "yellow", modifiers = ["bold"] }
+
+"warning" = "yellow"
+"error" = "red"
+"info" = "blue"
+"hint" = "gray-dark"
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+"diagnostic.error" = { underline = { color = "red", style = "curl" } }
+"diagnostic.info" = { underline = { color = "blue", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "gray-dark", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+"diff.plus" = { fg = "git-added" }
+"diff.plus.gutter" = { fg = "git-added" }
+"diff.minus" = { fg = "git-removed" }
+"diff.minus.gutter" = { fg = "git-removed" }
+"diff.delta" = { fg = "git-changed" }
+"diff.delta.gutter" = { fg = "git-changed" }
+
+"tabstop" = { bg = "bg-panel" }
+
+# ---- syntax highlighting (minimal: most things stay `fg`) -------------------
+
+"attribute" = "gray-dark"
+"type" = "aqua"
+"type.builtin" = "aqua"
+"constructor" = "fg"
+"constant" = "fg"
+"constant.builtin" = "fg"
+"constant.numeric" = "pink"
+"constant.character.escape" = "yellow"
+"string" = "green-dim"
+"string.regexp" = "red"
+"string.special" = "yellow"
+"comment" = "gray-dark"
+"variable" = "fg"
+"variable.builtin" = "fg"
+"variable.parameter" = "gray"
+"variable.other.member" = "fg"
+"label" = "violet"
+"punctuation" = "gray"
+"keyword" = "violet"
+"operator" = "gray"
+"function" = "blue"
+"function.builtin" = "blue"
+"function.macro" = "violet"
+"tag" = "violet"
+"namespace" = "aqua"
+"special" = "yellow"
+
+"markup.heading" = { fg = "blue", modifiers = ["bold"] }
+"markup.list" = "violet"
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link.url" = { fg = "blue", underline = { style = "line" } }
+"markup.link.text" = "violet"
+"markup.quote" = "gray-dark"
+"markup.raw" = "green-dim"
+
+[palette]
+bg = "#22262d"       # mistBg0
+bg-dim = "#2a2c35"   # mistBg1
+bg-panel = "#393b44" # mistBg2
+bg-select = "#393b44"
+bg-visual = "#393b44" # mistBg2
+bg-search = "#2d4f67" # altBlue2
+bg-popup = "#223249"  # altBlue1
+
+fg = "#c5c9c7"
+fg-bright = "#f2f1ef" # fg2
+fg-dim = "#a4a7a4"    # gray2
+gray = "#717c7c"
+gray-dark = "#75797f"  # gray4
+gray-darker = "#5c6066" # gray5
+
+red = "#c34043"
+yellow = "#dca561"
+green = "#98bb6c"
+green-dim = "#8a9a7b" # green3
+blue = "#658594"      # blue2
+violet = "#8992a7"    # violet2
+aqua = "#8ea4a2"
+pink = "#a292a3"
+
+git-added = "#76946a"
+git-removed = "#c34043"
+git-changed = "#dca561"

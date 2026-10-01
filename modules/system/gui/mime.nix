@@ -11,6 +11,7 @@
                 "application/zip-compressed" = "unzip.desktop";
                 "audio/*" = "mpv.desktop";
                 "image/*" = "imv.desktop";
+                "inode/directory" = "org.gnome.Nautilus.desktop";
                 "text/*" = "nvim.desktop";
                 "text/html" = [
                     "zen-twilight.desktop"

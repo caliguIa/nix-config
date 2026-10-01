@@ -1,0 +1,171 @@
+# Language server / formatter configuration, mirroring the neovim LSP set
+# (modules/system/core/nvim/lua/after/lsp/*.lua) minus anything git- or
+# multiplexer-related (helix only edits code). Anything not listed here keeps
+# helix's compiled-in defaults; see the upstream languages.toml for those:
+# https://github.com/helix-editor/helix/blob/25.07.1/languages.toml
+
+[language-server.sqls]
+command = "sqls"
+
+# Launcher that adds this host's nixos/hjem option completion inside
+# ~/nix-config (see nixd-dispatch in default.nix); a static `config` can't know the host.
+[language-server.nixd]
+command = "nixd-dispatch"
+
+[language-server.rust-analyzer.config]
+diagnostics.enable = true
+diagnostics.experimental.enable = true
+assist.importEnforceGranularity = true
+assist.importPrefix = "crate"
+cargo.allFeatures = true
+checkOnSave.command = "clippy"
+
+[language-server.emmylua-ls]
+command = "emmylua_ls"
+
+[language-server.emmylua-ls.config.emmylua]
+diagnostics = { globals = ["vim"] }
+runtime = { version = "LuaJIT" }
+semanticTokens = { enable = true }
+
+[language-server.phpantom-lsp]
+command = "phpantom_lsp"
+args = ["--stdio"]
+
+[language-server.stylelint-language-server]
+command = "stylelint-language-server"
+args = ["--stdio"]
+
+[language-server.stylelint-language-server.config.stylelint]
+snippet = ["scss", "css", "postcss"]
+validate = ["scss", "css", "postcss"]
+
+# typescript-go ("tsgo") for everything except diagnostics: tsgo only serves
+# pull diagnostics (textDocument/diagnostic), which helix 25.07 doesn't
+# implement, so typescript-language-server (push) is attached for diagnostics
+# only. Drop it once helix supports pull diagnostics.
+[language-server.tsgo]
+command = "tsgo-dispatch"
+
+[language-server.tsgo.config]
+complete_function_calls = true
+
+[language-server.tsgo.config.typescript]
+updateImportsOnFileMove = { enabled = "always" }
+suggest = { completeFunctionCalls = true }
+
+[language-server.tsgo.config.typescript.inlayHints]
+enumMemberValues = { enabled = false }
+functionLikeReturnTypes = { enabled = false }
+parameterNames = { enabled = false }
+parameterTypes = { enabled = false }
+propertyDeclarationTypes = { enabled = false }
+variableTypes = { enabled = false }
+
+# Ships per-project (devShell/node_modules), not globally installed.
+[language-server.oxlint]
+command = "oxlint"
+args = ["--lsp"]
+
+# ---- languages -------------------------------------------------------------
+# rust, go, zig, bash and docker keep helix's built-in defaults (formatting
+# via rust-analyzer/gopls/zls). As with nvim, the rust/go/zig servers and
+# oxfmt/oxlint come from project devShells, not from this editor wrapper.
+
+[[language]]
+name = "nix"
+language-servers = ["nixd"]
+auto-format = true
+formatter = { command = "nixfmt-dispatch", args = ["%{buffer_name}"] }
+
+[[language]]
+name = "toml"
+language-servers = ["taplo"]
+auto-format = true
+formatter = { command = "taplo", args = ["fmt", "-"] }
+
+[[language]]
+name = "lua"
+language-servers = ["emmylua-ls"]
+auto-format = true
+formatter = { command = "stylua", args = ["--stdin-filepath", "%{buffer_name}", "-"] }
+
+[[language]]
+name = "php"
+language-servers = ["phpantom-lsp"]
+auto-format = true
+formatter = { command = "mago", args = ["format", "--stdin-input", "--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "css"
+language-servers = ["vscode-css-language-server", "stylelint-language-server"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "scss"
+language-servers = ["vscode-css-language-server", "stylelint-language-server"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "html"
+language-servers = ["vscode-html-language-server"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "jsonc"
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "javascript"
+language-servers = ["tsgo", { name = "typescript-language-server", only-features = ["diagnostics"] }, "oxlint"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "jsx"
+language-servers = ["tsgo", { name = "typescript-language-server", only-features = ["diagnostics"] }, "oxlint"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "typescript"
+language-servers = ["tsgo", { name = "typescript-language-server", only-features = ["diagnostics"] }, "oxlint"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "tsx"
+language-servers = ["tsgo", { name = "typescript-language-server", only-features = ["diagnostics"] }, "oxlint"]
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "vue"
+auto-format = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "markdown"
+language-servers = ["marksman"]
+auto-format = true
+soft-wrap.enable = true
+formatter = { command = "oxfmt", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "yaml"
+language-servers = ["yaml-language-server"]
+
+[[language]]
+name = "sql"
+language-servers = ["sqls"]
+auto-format = true
+formatter = { command = "sqruff", args = ["fix", "-", "-f", "none", "--dialect", "ansi"] }
