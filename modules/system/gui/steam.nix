@@ -17,8 +17,18 @@
             };
             programs.gamescope = {
                 enable = true;
-                capSysNice = true;
+                # capSysNice adds a setcap wrapper at /run/wrappers/bin/gamescope, which is the
+                # ONLY gamescope on PATH when enabled. Steam launches games inside an FHS
+                # sandbox with NoNewPrivs=1, where that wrapper aborts with "failed to inherit
+                # capabilities" - so any launch option containing gamescope silently fails.
+                capSysNice = false;
             };
+            # VK_LAYER_FROG_gamescope_wsi. The gamescope package ships no Vulkan layer, so
+            # DXVK inside gamescope cannot see HDR-capable surface formats without it.
+            # Must land in /run/opengl-driver so the loader finds it inside Steam/Proton.
+            hardware.graphics.extraPackages = [ pkgs.gamescope-wsi ];
+            hardware.graphics.extraPackages32 = [ pkgs.pkgsi686Linux.gamescope-wsi ];
+
             programs.gamemode = {
                 enable = true;
                 settings = {

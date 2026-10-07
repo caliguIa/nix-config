@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ ... }: {
     flake.modules.nixos.gui = { pkgs, ... }: {
         services.dbus.enable = true;
         services.mullvad-vpn.enable = true;
@@ -6,6 +6,59 @@
         programs.nix-ld = {
             enable = true;
             libraries = with pkgs; [
+                zlib
+                zstd
+                stdenv.cc.cc
+                curl
+                openssl
+                attr
+                libssh
+                bzip2
+                libxml2
+                acl
+                libsodium
+                util-linux
+                xz
+                systemd
+
+                kdePackages.qtbase
+                libXcomposite
+                libXtst
+                libXrandr
+                libXext
+                libX11
+                libXfixes
+                libGL
+                libva
+                pipewire
+                libxcb
+                libXdamage
+                libxshmfence
+                libXxf86vm
+                libelf
+
+                # glibc_multi.bin
+                #
+                # networkmanager
+                # vulkan-loader
+                # libgbm
+                # libdrm
+                # libxcrypt
+                # coreutils
+                # pciutils
+                # zenity
+                #
+                # # Required
+                # glib
+                # gtk2
+                #
+                # freetype
+                # fontconfig
+                # xorg.libX11
+                # xorg.libXrandr
+                # xorg.libXcursor
+                # xorg.libXi
+                # libGL
             ];
         };
         programs.localsend.enable = true;
@@ -37,24 +90,6 @@
             spotify
             tableplus
             ungoogled-chromium
-            (inputs.zen-browser.packages."${pkgs.stdenvNoCC.hostPlatform.system}".twilight.override {
-                # memory: fewer content processes, no spare/bfcache pages, unload idle tabs, no local ML
-                extraPrefs = ''
-                    pref("dom.ipc.processCount", 4);
-                    pref("dom.ipc.processPrelaunch.enabled", false);
-                    pref("browser.sessionhistory.max_total_viewers", 0);
-                    pref("browser.cache.memory.capacity", 65536);
-                    pref("browser.tabs.unloadOnLowMemory", true);
-                    pref("zen.tab-unloader.enabled", true);
-                    pref("zen.tab-unloader.timeout-minutes", 15);
-                    pref("network.prefetch-next", false);
-                    pref("browser.ml.enable", false);
-                    pref("browser.ml.chat.enabled", false);
-                    pref("browser.ml.linkPreview.enabled", false);
-                    pref("browser.tabs.groups.smart.enabled", false);
-                    pref("extensions.ml.enabled", false);
-                '';
-            })
         ];
     };
 }

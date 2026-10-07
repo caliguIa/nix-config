@@ -102,6 +102,7 @@
                         gg = "nvim -c Neogit";
                         y = "yazi";
                         lg = "lazygit";
+                        nix-which-pkg = "nix run github:nix-community/nix-index-database --";
                     };
                     shellInit = ''
                         set -gx INTELEPHENSE_KEY_PATH /run/agenix/intelephense

@@ -12,10 +12,9 @@
             gnupg
             hurl
             jq
-            just
             lazydocker
             lazygit
-            ouch
+            ouch-rar
             ripgrep
             tree
             unzip
