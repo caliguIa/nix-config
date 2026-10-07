@@ -21,6 +21,11 @@
                     "PATH"
                     ":"
                     (makeBinPath tools)
+                    # Absolute path to nixpkgs' tsc (7.x, the Go port with `--lsp`),
+                    # so a project's node_modules tsc (5.x) on PATH can't shadow it.
+                    "--set"
+                    "NVIM_TSC"
+                    "${pkgs.typescript}/bin/tsc"
                 ];
             };
 

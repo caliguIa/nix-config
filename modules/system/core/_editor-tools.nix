@@ -41,6 +41,8 @@ in
         vscode-langservers-extracted
         intelephense
         typescript
+        # typescript-language-server
+        oxlint
         sqls
         stylelint-language-server
         yaml-language-server
@@ -49,5 +51,6 @@ in
         nixfmt
         stylua
         sqruff
+        vtsls
     ];
 }

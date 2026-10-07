@@ -13,7 +13,8 @@ lsp.enable({
     'marksman',
     'rust_analyzer',
     'sqls',
-    'tsc',
+    -- 'tsc', -- tsgo; temporarily swapped for ts_ls
+    -- 'ts_ls',
     'oxlint',
     'zls',
     'jsonls',
@@ -21,6 +22,7 @@ lsp.enable({
     'nixd',
     'yamlls',
     'taplo',
+    'vtsls',
 })
 
 local zendiagram = require('zendiagram')
