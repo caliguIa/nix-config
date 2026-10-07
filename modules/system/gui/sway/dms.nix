@@ -89,7 +89,7 @@
             };
 
             dmsSettings = {
-                configVersion = 35;
+                configVersion = 36;
 
                 # Appearance
                 currentThemeName = "dynamic";
@@ -170,9 +170,13 @@
                 target="${file}"
                 mkdir -p "$(dirname "$target")"
                 [ -s "$target" ] || echo '{}' > "$target"
-                jq -s '(.[0] * .[1]) + {configVersion: (.[0].configVersion // .[1].configVersion)}' \
-                    "$target" ${pkgs.writeText name (builtins.toJSON attrs)} > "$target.tmp"
-                mv "$target.tmp" "$target"
+                # On unreadable JSON leave the file alone; DMS reports it itself.
+                if jq -s '(.[0] * .[1]) + {configVersion: (.[0].configVersion // .[1].configVersion)}' \
+                    "$target" ${pkgs.writeText name (builtins.toJSON attrs)} > "$target.tmp"; then
+                    mv "$target.tmp" "$target"
+                else
+                    rm -f "$target.tmp"
+                fi
             '';
 
             applyDmsSettings = pkgs.writeShellScript "dms-apply-settings" ''
