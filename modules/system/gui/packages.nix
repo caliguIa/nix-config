@@ -5,61 +5,7 @@
         programs.dconf.enable = true;
         programs.nix-ld = {
             enable = true;
-            libraries = with pkgs; [
-                zlib
-                zstd
-                stdenv.cc.cc
-                curl
-                openssl
-                attr
-                libssh
-                bzip2
-                libxml2
-                acl
-                libsodium
-                util-linux
-                xz
-                systemd
-
-                kdePackages.qtbase
-                libXcomposite
-                libXtst
-                libXrandr
-                libXext
-                libX11
-                libXfixes
-                libGL
-                libva
-                pipewire
-                libxcb
-                libXdamage
-                libxshmfence
-                libXxf86vm
-                libelf
-
-                # glibc_multi.bin
-                #
-                # networkmanager
-                # vulkan-loader
-                # libgbm
-                # libdrm
-                # libxcrypt
-                # coreutils
-                # pciutils
-                # zenity
-                #
-                # # Required
-                # glib
-                # gtk2
-                #
-                # freetype
-                # fontconfig
-                # xorg.libX11
-                # xorg.libXrandr
-                # xorg.libXcursor
-                # xorg.libXi
-                # libGL
-            ];
+            libraries = with pkgs; [ ];
         };
         programs.localsend.enable = true;
         programs.firefox = {
@@ -81,6 +27,7 @@
             luakit
             gelly
             glib.bin
+            moonlight-qt
             mullvad
             mullvad-vpn
             opencode
