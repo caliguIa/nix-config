@@ -87,14 +87,12 @@
             };
 
             systemd.services.NetworkManager-wait-online.enable = false;
-            systemd.services.docker.wantedBy = lib.mkForce [ ];
 
             hardware.enableAllFirmware = true;
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
             hardware.graphics = {
                 enable = true;
                 enable32Bit = true;
-                extraPackages = with pkgs; [ libva ];
             };
             hardware.nvidia = {
                 open = true;

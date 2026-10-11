@@ -1,7 +1,8 @@
 { user, ... }: {
-    flake.modules.nixos.gui = {
+    flake.modules.nixos.gui = { lib, ... }: {
         virtualisation.docker = {
             enable = true;
+            enableOnBoot = false;
             autoPrune.enable = true;
             daemon.settings = {
                 dns = [

@@ -1,4 +1,4 @@
-{ user, ... }: {
+{
     flake.modules.nixos.gui =
         { pkgs, ... }:
         {
@@ -11,21 +11,13 @@
             };
             programs.gamescope = {
                 enable = true;
+                enableWsi = true;
                 capSysNice = false;
             };
-            hardware.graphics.extraPackages = [ pkgs.gamescope-wsi ];
-            hardware.graphics.extraPackages32 = [ pkgs.pkgsi686Linux.gamescope-wsi ];
-
             programs.gamemode = {
                 enable = true;
-                settings = {
-                    general = {
-                        renice = 10;
-                    };
-                };
+                settings.general.renice = 10;
             };
-
-            environment.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/${user.primary}/.steam/root/compatibilitytools.d";
             environment.systemPackages = [
                 pkgs.mangohud
                 pkgs.vulkan-tools

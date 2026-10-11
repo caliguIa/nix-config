@@ -1,6 +1,6 @@
 {
     flake.modules.nixos.host_westerby =
-        { pkgs, ... }:
+        { pkgs, lib, ... }:
         let
             widevine-firefox = pkgs.stdenvNoCC.mkDerivation {
                 name = "widevine-firefox";
@@ -23,5 +23,6 @@
                 mesa-demos
                 vulkan-tools
             ];
+            programs.steam.enable = lib.mkForce false;
         };
 }

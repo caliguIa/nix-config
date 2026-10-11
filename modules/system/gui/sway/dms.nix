@@ -142,7 +142,7 @@
                 lockBeforeSuspend = true;
                 loginctlLockIntegration = true;
                 lockScreenShowPowerActions = true;
-                enableFprint = true;
+                enableFprint = config.services.fprintd.enable;
                 # Needed to wake the screen while locked. Without it, locking
                 # re-arms the idle monitors, so when the monitor-off timeout
                 # fires with (or before) the lock, input never registers as

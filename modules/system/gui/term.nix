@@ -13,8 +13,10 @@
             };
         in
         {
-            packages = [ pkgs.ghostty ];
-
+            packages = [
+                pkgs.ghostty
+                pkgs.ghostty.terminfo
+            ];
             xdg.config.files = {
                 "ghostty/config" = {
                     generator = ghostty;

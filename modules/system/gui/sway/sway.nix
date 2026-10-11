@@ -12,9 +12,9 @@
                     fuzzel
                 ];
                 extraSessionCommands = ''
-                    # qt.* sets these in environment.variables, which systemd units (and
-                    # so apps launched from DMS) never see.
-                    systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE
+                    # sway's own config.d only imports XDG_CURRENT_DESKTOP, so systemd units
+                    # (and so apps launched from DMS) would otherwise miss the session vars.
+                    systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE
                 '';
             };
             xdg.portal.wlr.settings.screencast = {

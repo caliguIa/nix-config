@@ -52,12 +52,6 @@ in
                 # platform theme, so named icons render as its missing-icon checkerboard.
                 QS_ICON_THEME = iconTheme;
             };
-
-            qt = {
-                enable = true;
-                platformTheme = "gnome";
-                style = "adwaita-dark";
-            };
         };
 
     flake.modules.hjem.gui =

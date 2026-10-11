@@ -1,4 +1,0 @@
-{
-    flake.modules.nixos.laptop = { ... }: {
-    };
-}

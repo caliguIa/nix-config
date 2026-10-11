@@ -24,11 +24,7 @@
                     XDG_CONFIG_HOME = "${home}/.config";
                     XDG_DATA_HOME = "${home}/.local/share";
                 };
-                systemPackages = [ pkgs.ghostty.terminfo ];
-                pathsToLink = [
-                    "${home}/.local/bin"
-                    "${home}/.cargo/bin"
-                ];
+                localBinInPath = true;
             };
             programs.fzf.keybindings = true;
             programs.atuin = {
@@ -100,7 +96,6 @@
                         gmm = "git merge origin/main";
                         undocommit = "git reset --soft HEAD^";
                         gg = "nvim -c Neogit";
-                        y = "yazi";
                         lg = "lazygit";
                         nix-which-pkg = "nix run github:nix-community/nix-index-database --";
                     };
