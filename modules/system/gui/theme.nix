@@ -50,6 +50,9 @@ in
             environment.sessionVariables = {
                 XCURSOR_THEME = cursorTheme;
                 XCURSOR_SIZE = toString cursorSize;
+                # Quickshell (DMS tray, dankcalendar) gets no icon theme from the Qt
+                # platform theme, so named icons render as its missing-icon checkerboard.
+                QS_ICON_THEME = iconTheme;
             };
 
             qt = {
