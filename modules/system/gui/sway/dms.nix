@@ -1,7 +1,12 @@
 { inputs, user, ... }:
 {
     flake.modules.nixos.gui =
-        { config, lib, pkgs, ... }:
+        {
+            config,
+            lib,
+            pkgs,
+            ...
+        }:
         let
             # DMS's settings UI writes settings.json (only keys that differ from its
             # defaults) and session.json. These are merged over those files on every
@@ -17,8 +22,16 @@
                 position = 0; # top
                 screenPreferences = [ "all" ];
                 showOnLastDisplay = true;
-                leftWidgets = [ "launcherButton" "workspaceSwitcher" "focusedWindow" ];
-                centerWidgets = [ "music" "clock" "weather" ];
+                leftWidgets = [
+                    "launcherButton"
+                    "workspaceSwitcher"
+                    "focusedWindow"
+                ];
+                centerWidgets = [
+                    "music"
+                    "clock"
+                    "weather"
+                ];
                 rightWidgets = [
                     "systemTray"
                     "clipboard"
@@ -94,7 +107,9 @@
                 # Appearance
                 currentThemeName = "dynamic";
                 currentThemeCategory = "dynamic";
-                customThemeFile = "${config.users.users.${user.primary}.home}/.config/DankMaterialShell/themes/darkmatter/theme.json";
+                customThemeFile = "${
+                    config.users.users.${user.primary}.home
+                }/.config/DankMaterialShell/themes/darkmatter/theme.json";
                 radiusStrength = 8;
                 animationDuration = 200;
                 blurBorderOpacity = 0.91;
@@ -139,14 +154,17 @@
                 barConfigs = [
                     bar
                     # Disabled floating "dot" bar, to toggle on from the UI.
-                    (bar // {
-                        id = "dot1790247829978";
-                        name = "Dot";
-                        enabled = false;
-                        attachToScreenEdge = false;
-                        gothCornersEnabled = false;
-                        dot = true;
-                    })
+                    (
+                        bar
+                        // {
+                            id = "dot1790247829978";
+                            name = "Dot";
+                            enabled = false;
+                            attachToScreenEdge = false;
+                            gothCornersEnabled = false;
+                            dot = true;
+                        }
+                    )
                 ];
 
                 # Launcher prefixes for the built-in plugins.
@@ -181,7 +199,12 @@
 
             applyDmsSettings = pkgs.writeShellScript "dms-apply-settings" ''
                 set -eu
-                PATH=${lib.makeBinPath [ pkgs.jq pkgs.coreutils ]}
+                PATH=${
+                    lib.makeBinPath [
+                        pkgs.jq
+                        pkgs.coreutils
+                    ]
+                }
                 ${mergeJson "dms-settings.json" "$HOME/.config/DankMaterialShell/settings.json" dmsSettings}
                 ${mergeJson "dms-session.json" "$HOME/.local/state/DankMaterialShell/session.json" dmsSession}
             '';
@@ -191,7 +214,13 @@
             # screen that eats all input. logind's LockedHint is still set then,
             # so have the restarted DMS put its lock screen back up.
             relockAfterCrash = pkgs.writeShellScript "dms-relock-after-crash" ''
-                PATH=${lib.makeBinPath [ pkgs.systemd pkgs.jq pkgs.coreutils ]}
+                PATH=${
+                    lib.makeBinPath [
+                        pkgs.systemd
+                        pkgs.jq
+                        pkgs.coreutils
+                    ]
+                }
                 dms=${config.programs.dank-material-shell.package}/bin/dms
                 sid=$(loginctl list-sessions --json=short \
                     | jq -r --arg u "$USER" '.[] | select(.user == $u and .seat != null) | .session' \
