@@ -71,6 +71,18 @@
             });
         in
         {
-            environment.systemPackages = [ (wrapZen unwrapped { }) ];
+            environment.systemPackages = [
+                (wrapZen unwrapped { })
+                pkgs.ungoogled-chromium
+                pkgs.epiphany
+                pkgs.luakit
+            ];
+            programs.firefox = {
+                enable = true;
+                package = pkgs.firefox-devedition;
+            };
+            environment.sessionVariables = {
+                MOZ_DISABLE_RDD_SANDBOX = "1";
+            };
         };
 }

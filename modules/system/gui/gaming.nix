@@ -31,6 +31,7 @@
                 pkgs.vulkan-tools
                 pkgs.mesa-demos
                 pkgs.libva-utils
+                pkgs.moonlight-qt
             ];
         };
 }

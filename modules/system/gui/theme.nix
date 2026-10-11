@@ -9,8 +9,8 @@ in
         { lib, pkgs, ... }:
         {
             environment.systemPackages = with pkgs; [
-                adwaita-icon-theme # icons and cursors
-                gnome-themes-extra # Adwaita-dark for GTK3
+                adwaita-icon-theme
+                gnome-themes-extra
             ];
 
             fonts.packages = with pkgs; [
@@ -27,8 +27,6 @@ in
                 emoji = [ "Noto Color Emoji" ];
             };
 
-            # Defaults only: values already in the user's dconf db (e.g. left by
-            # Plasma, or set from an app) win until reset.
             programs.dconf.profiles.user.databases = [
                 {
                     settings."org/gnome/desktop/interface" = {

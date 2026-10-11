@@ -4,9 +4,6 @@
         boot.loader.efi.canTouchEfiVariables = true;
         time.timeZone = "Europe/London";
         i18n.defaultLocale = "en_GB.UTF-8";
-        # Set the per-category LC_* vars explicitly so date, time, numbers,
-        # currency, units etc. use British formats even if something sets a
-        # different LANG.
         i18n.extraLocaleSettings = {
             LC_ADDRESS = "en_GB.UTF-8";
             LC_IDENTIFICATION = "en_GB.UTF-8";
