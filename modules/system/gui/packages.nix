@@ -8,6 +8,7 @@
             bruno
             claude-code
             glib.bin
+            (callPackage ./_keyguard.nix { })
             slack
             tableplus
         ];
