@@ -49,6 +49,7 @@
             url = "github:AvengeMedia/dankcalendar";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        ableton-linux.url = "github:shibco/ableton-linux";
         zmk-nix = {
             url = "github:lilyinstarlight/zmk-nix";
             inputs.nixpkgs.follows = "nixpkgs";
