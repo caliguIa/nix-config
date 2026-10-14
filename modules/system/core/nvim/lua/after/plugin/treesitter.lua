@@ -1,9 +1,26 @@
+-- stylua: ignore
+require('nvim-treesitter').install({
+    'bash', 'css', 'fish', 'go', 'html', 'javascript', 'json', 'jsx', 'lua',
+    'markdown', 'markdown_inline', 'nix', 'nu', 'php', 'rust', 'scss', 'toml',
+    'tsx', 'typescript', 'yaml', 'zig', 'zsh',
+})
+
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
-    pattern = nil,
     callback = function(ev)
-        if not ev.match or ev.match == '' or ev.match == 'text' then vim.treesitter.stop() end
-        pcall(function() vim.treesitter.start() end)
+        if ev.match == '' or ev.match == 'text' then
+            vim.treesitter.stop(ev.buf)
+            return
+        end
+        if not pcall(vim.treesitter.start, ev.buf) then return end
+
+        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo[0][0].foldmethod = 'expr'
+
+        local lang = vim.treesitter.language.get_lang(ev.match)
+        if lang and vim.treesitter.query.get(lang, 'indents') then
+            vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
     end,
 })
 

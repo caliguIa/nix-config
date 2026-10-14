@@ -6,10 +6,6 @@ local host_options = flake .. '.nixosConfigurations.' .. host .. '.options'
 
 ---@type vim.lsp.Config
 return {
-    -- Package completion is global (uses <nixpkgs> from NIX_PATH) so it works
-    -- on any nix file. Option completion is expensive (full eval of this flake)
-    -- and only correct inside ~/nix-config, so it is enabled per-instance in
-    -- before_init based on the resolved root_dir.
     settings = {
         nixd = {
             nixpkgs = { expr = 'import <nixpkgs> { }' },
