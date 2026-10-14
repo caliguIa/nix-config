@@ -1,12 +1,5 @@
-local function ous_branch_prefix()
-    local cwd = vim.fn.getcwd()
-    if cwd:match('/ous/') then return 'OUS-' end
-    return ''
-end
-
 require('neogit').setup({
     treesitter_diff_highlight = true,
-    initial_branch_name = ous_branch_prefix(),
 })
 
 vim.g.diffs = {
