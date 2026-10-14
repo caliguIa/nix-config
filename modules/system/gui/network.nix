@@ -33,6 +33,7 @@
             settings = {
                 address = [ "/local.oneupsales.dev/127.0.0.3" ];
                 server = [
+                    "/ts.net/100.100.100.100"
                     "1.1.1.1"
                     "8.8.8.8"
                 ];
