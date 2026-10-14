@@ -1,11 +1,15 @@
+-- Thin wrapper around the `artisan` shell program (modules/system/core/artisan),
+-- which finds the project, picks docker compose vs host php and caches commands.
+
 local state = {
     has_command = false,
     commands_cache = nil,
+    -- Bumped on refresh so in-flight results from before it are discarded.
+    generation = 0,
 }
 
 local config = {
     window = { width_ratio = 0.3 },
-    docker = { service_name = 'platform' },
 }
 
 ---@return string|nil
@@ -20,107 +24,57 @@ local function find_artisan_path()
     end
 end
 
----@param laravel_path string
----@return string
-local function cache_path(laravel_path)
-    local key = laravel_path:gsub('[/\\]', '_'):gsub('^_', '')
-    return vim.fn.stdpath('cache') .. '/artisan/' .. key .. '.json'
-end
-
----@param laravel_path string
----@return table|nil
-local function read_cache(laravel_path)
-    local path = cache_path(laravel_path)
-    if vim.fn.filereadable(path) ~= 1 then return nil end
-    local ok, data = pcall(vim.fn.readfile, path)
-    if not ok then return nil end
-    local ok2, decoded = pcall(vim.json.decode, table.concat(data, '\n'))
-    -- Validate format: must be a non-empty list of objects (not legacy flat strings)
-    if not ok2 or type(decoded) ~= 'table' or #decoded == 0 or type(decoded[1]) ~= 'table' then return nil end
+---@param result vim.SystemCompleted
+---@return table|nil  list of { name, desc, has_args }
+local function decode_commands(result)
+    if result.code ~= 0 then return nil end
+    local ok, decoded = pcall(vim.json.decode, result.stdout)
+    if not ok or type(decoded) ~= 'table' or #decoded == 0 then return nil end
     return decoded
 end
 
----@param laravel_path string
----@param commands table
-local function write_cache(laravel_path, commands)
-    local dir = vim.fn.stdpath('cache') .. '/artisan'
-    if vim.fn.isdirectory(dir) == 0 then vim.fn.mkdir(dir, 'p') end
-    local ok, encoded = pcall(vim.json.encode, commands)
-    if ok then vim.fn.writefile({ encoded }, cache_path(laravel_path)) end
-end
-
----@param laravel_path string
 ---@return table
-local function build_artisan_cmd(laravel_path)
-    local has_compose = false
-    for _, f in ipairs({ 'docker-compose.yml', 'docker-compose.yaml' }) do
-        if vim.fn.filereadable(laravel_path .. '/' .. f) == 1 then
-            has_compose = true
-            break
-        end
+local function get_commands()
+    if not state.commands_cache then
+        local result = vim.system({ 'artisan', '--commands', '--json' }, { text = true }):wait()
+        -- Cache failures as {} too, so a dead container doesn't block every <Tab>.
+        state.commands_cache = decode_commands(result) or {}
     end
-
-    if not has_compose then return { 'php', vim.fn.shellescape(laravel_path .. '/artisan') } end
-
-    local compose = { 'docker', 'compose' }
-    local tty = vim.fn.has('tty') == 1 and '' or '-T'
-    return vim.list_extend(compose, { 'exec', tty, config.docker.service_name, 'php', 'artisan' })
+    return state.commands_cache
 end
 
----@param laravel_path string
----@return table  list of { name, desc, has_args }
-local function fetch_commands(laravel_path)
-    local cmd = vim.list_extend(build_artisan_cmd(laravel_path), { 'list', '--format=json' })
-    local output = vim.system(cmd, { text = true, stderr = false }):wait().stdout
-    local ok, decoded = pcall(vim.json.decode, output)
-    if not ok or not decoded.commands then return {} end
-
-    local result = {}
-    for _, c in ipairs(decoded.commands) do
-        if c.name ~= '_complete' and c.name ~= 'completion' then
-            local has_args = false
-            for arg_name in pairs((c.definition or {}).arguments or {}) do
-                if arg_name ~= 'command' then
-                    has_args = true
-                    break
-                end
-            end
-            result[#result + 1] = { name = c.name, desc = c.description, has_args = has_args }
-        end
-    end
-    return result
+-- Populate the cache in the background so the first picker/completion is instant.
+local function warm_commands()
+    local generation = state.generation
+    vim.system({ 'artisan', '--commands', '--json' }, { text = true }, function(result)
+        local commands = decode_commands(result)
+        if not commands then return end
+        vim.schedule(function()
+            if state.generation == generation then state.commands_cache = state.commands_cache or commands end
+        end)
+    end)
 end
 
----@param laravel_path string
----@return table
-local function get_commands(laravel_path)
-    local cached = read_cache(laravel_path)
-    if cached then return cached end
-    local commands = fetch_commands(laravel_path)
-    if #commands > 0 then write_cache(laravel_path, commands) end
-    return commands
-end
-
----@param laravel_path string
-local function refresh_commands(laravel_path)
+local function refresh_commands()
+    state.generation = state.generation + 1
     state.commands_cache = nil
-    local p = cache_path(laravel_path)
-    if vim.fn.filereadable(p) == 1 then vim.fn.delete(p) end
     vim.notify('artisan: refreshing...', vim.log.levels.INFO)
-    local commands = fetch_commands(laravel_path)
-    if #commands == 0 then
-        vim.notify('artisan: no commands found, cache unchanged', vim.log.levels.WARN)
-        return
-    end
-    write_cache(laravel_path, commands)
-    state.commands_cache = commands
-    vim.notify(('artisan: cached %d commands'):format(#commands), vim.log.levels.INFO)
+    vim.system({ 'artisan', '--refresh' }, { text = true }, function(result)
+        vim.schedule(function()
+            -- Anything read while the refresh ran came from the old cache file.
+            state.commands_cache = nil
+            if result.code ~= 0 then
+                vim.notify(vim.trim(result.stderr), vim.log.levels.WARN)
+                return
+            end
+            vim.notify(vim.trim(result.stdout), vim.log.levels.INFO)
+        end)
+    end)
 end
 
 ---@param opts table
 local function run_command(opts)
-    local artisan_path = find_artisan_path()
-    if not artisan_path then
+    if not find_artisan_path() then
         vim.notify('artisan: not found — are you in a Laravel project?', vim.log.levels.ERROR)
         return
     end
@@ -135,8 +89,7 @@ local function run_command(opts)
     vim.api.nvim_set_option_value('relativenumber', false, { win = win })
     vim.api.nvim_set_option_value('cursorline', false, { win = win })
 
-    local cmd = vim.list_extend(build_artisan_cmd(vim.fn.fnamemodify(artisan_path, ':h')), opts.fargs)
-    vim.fn.jobstart(cmd, { term = true })
+    vim.fn.jobstart(vim.list_extend({ 'artisan' }, opts.fargs), { term = true })
 
     vim.keymap.set('n', 'q', function() vim.api.nvim_win_close(win, true) end, {
         buffer = buf,
@@ -145,15 +98,14 @@ local function run_command(opts)
     })
 end
 
----@param laravel_path string
-local function open_picker(laravel_path)
-    if not state.commands_cache then state.commands_cache = get_commands(laravel_path) end
-    if #state.commands_cache == 0 then
+local function open_picker()
+    local commands = get_commands()
+    if #commands == 0 then
         vim.notify('artisan: no commands found', vim.log.levels.ERROR)
         return
     end
 
-    vim.ui.select(state.commands_cache, {
+    vim.ui.select(commands, {
         prompt = 'Artisan',
         format_item = function(item) return item.name .. ' - ' .. item.desc end,
     }, function(choice)
@@ -170,23 +122,20 @@ local function setup()
     local artisan_path = find_artisan_path()
     local is_laravel = artisan_path ~= nil
         and vim.fn.filereadable(vim.fn.fnamemodify(artisan_path, ':h') .. '/composer.json') == 1
+        and vim.fn.executable('artisan') == 1
 
     if is_laravel and not state.has_command then
-        local lpath = vim.fn.fnamemodify(artisan_path, ':h')
-        state.commands_cache = get_commands(lpath)
+        warm_commands()
 
         vim.api.nvim_create_user_command('Artisan', run_command, {
             desc = 'Run an Artisan command',
             nargs = '*',
-            complete = function()
-                if not state.commands_cache then state.commands_cache = get_commands(lpath) end
-                return vim.tbl_map(function(e) return e.name end, state.commands_cache)
-            end,
+            complete = function() return vim.tbl_map(function(e) return e.name end, get_commands()) end,
         })
-        vim.api.nvim_create_user_command('ArtisanPicker', function() open_picker(lpath) end, {
+        vim.api.nvim_create_user_command('ArtisanPicker', open_picker, {
             desc = 'Pick and run an Artisan command',
         })
-        vim.api.nvim_create_user_command('ArtisanRefresh', function() refresh_commands(lpath) end, {
+        vim.api.nvim_create_user_command('ArtisanRefresh', refresh_commands, {
             desc = 'Refresh the Artisan command cache',
         })
 
