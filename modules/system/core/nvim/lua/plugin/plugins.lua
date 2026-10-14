@@ -25,7 +25,7 @@ vim.pack.add({
     'cal:zendiagram.nvim',
     'gh:vim-test/vim-test',
     'gh:sindrets/diffview.nvim',
-    'gh:barrettruth/diffs.nvim',
+    'https://forge.barrettruth.com/barrettruth/diffs.nvim',
     'gh:NeogitOrg/neogit',
     'gh:FabijanZulj/blame.nvim',
     'gh:niekdomi/conflict.nvim',
