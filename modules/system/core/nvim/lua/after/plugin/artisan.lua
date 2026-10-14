@@ -1,4 +1,4 @@
--- Thin wrapper around the `artisan` shell program (modules/system/core/artisan),
+-- Thin wrapper around the `artisan` shell program (modules/system/gui/artisan),
 -- which finds the project, picks docker compose vs host php and caches commands.
 
 local state = {
@@ -12,16 +12,11 @@ local config = {
     window = { width_ratio = 0.3 },
 }
 
----@return string|nil
-local function find_artisan_path()
-    local current_dir = vim.fn.getcwd()
-    local prev_dir = ''
-    while current_dir ~= prev_dir do
-        local path = current_dir .. '/artisan'
-        if vim.fn.filereadable(path) == 1 then return path end
-        prev_dir = current_dir
-        current_dir = vim.fn.fnamemodify(current_dir, ':h')
-    end
+-- Same lookup as the shell (works from a monorepo root above the project).
+---@return boolean
+local function in_laravel_project()
+    if vim.fn.executable('artisan') ~= 1 then return false end
+    return vim.system({ 'artisan', '--root' }, { stderr = false }):wait().code == 0
 end
 
 ---@param result vim.SystemCompleted
@@ -74,11 +69,6 @@ end
 
 ---@param opts table
 local function run_command(opts)
-    if not find_artisan_path() then
-        vim.notify('artisan: not found — are you in a Laravel project?', vim.log.levels.ERROR)
-        return
-    end
-
     local buf = vim.api.nvim_create_buf(false, true)
     local width = math.floor(vim.api.nvim_get_option_value('columns', {}) * config.window.width_ratio)
     local win = vim.api.nvim_open_win(buf, true, { split = 'right', width = width, win = 0 })
@@ -119,10 +109,7 @@ local function open_picker()
 end
 
 local function setup()
-    local artisan_path = find_artisan_path()
-    local is_laravel = artisan_path ~= nil
-        and vim.fn.filereadable(vim.fn.fnamemodify(artisan_path, ':h') .. '/composer.json') == 1
-        and vim.fn.executable('artisan') == 1
+    local is_laravel = in_laravel_project()
 
     if is_laravel and not state.has_command then
         warm_commands()

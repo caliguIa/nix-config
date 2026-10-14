@@ -5,6 +5,7 @@
 #   artisan --commands [--json]   list commands (cached) as "name<TAB>description",
 #                                 or as JSON objects { name, desc, has_args }
 #   artisan --refresh             rebuild the command cache
+#   artisan --root                print the Laravel project directory
 
 service="${ARTISAN_DOCKER_SERVICE:-platform}"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/artisan"
@@ -14,16 +15,46 @@ die() {
     exit 1
 }
 
+is_laravel() {
+    [ -f "$1/artisan" ] && [ -r "$1/artisan" ] && [ -f "$1/composer.json" ]
+}
+
+# The Laravel project containing $PWD or, failing that, the single one anywhere
+# in the enclosing git repo (e.g. platform/ in a monorepo), or directly below
+# $PWD outside git.
 find_root() {
     local dir="$PWD"
     while :; do
-        if [ -f "$dir/artisan" ] && [ -r "$dir/artisan" ]; then
+        if is_laravel "$dir"; then
             printf '%s\n' "$dir"
             return 0
         fi
-        [ "$dir" = / ] && return 1
+        [ "$dir" = / ] && break
         dir="$(dirname "$dir")"
     done
+
+    local found=() git_root file
+    if git_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+        # Tracked files only, so vendor/ and node_modules/ are never searched.
+        while IFS= read -r -d '' file; do
+            dir="$git_root/$(dirname "$file")"
+            if is_laravel "$dir"; then found+=("$dir"); fi
+        done < <(git -C "$git_root" ls-files -z --full-name ':(glob)**/artisan')
+    else
+        for dir in "$PWD"/*/; do
+            dir="${dir%/}"
+            if is_laravel "$dir"; then found+=("$dir"); fi
+        done
+    fi
+    if [ "${#found[@]}" -eq 1 ]; then
+        printf '%s\n' "${found[0]}"
+        return 0
+    fi
+    if [ "${#found[@]}" -gt 1 ]; then
+        printf 'artisan: multiple projects here, cd into one of: %s\n' "${found[*]##*/}" >&2
+        return 2
+    fi
+    return 1
 }
 
 # Exec artisan with "$@". Docker compose is run from the project root so it
@@ -84,9 +115,15 @@ get_commands() {
     printf '%s\n' "$json"
 }
 
-root="$(find_root)" || die 'not found — are you in a Laravel project?'
+rc=0
+root="$(find_root)" || rc=$?
+if [ "$rc" -eq 1 ]; then die 'not found — are you in a Laravel project?'; fi
+if [ "$rc" -ne 0 ]; then exit 1; fi
 
 case "${1:-}" in
+    --root)
+        printf '%s\n' "$root"
+        ;;
     --commands)
         json="$(get_commands)" || die 'no commands found'
         if [ "${2:-}" = --json ]; then

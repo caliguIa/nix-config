@@ -7,6 +7,7 @@
                 runtimeInputs = [
                     pkgs.coreutils
                     pkgs.jq
+                    pkgs.git
                 ];
                 text = builtins.readFile ./artisan.sh;
             };
