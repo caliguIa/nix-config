@@ -16,6 +16,12 @@
                 withPython3 = false;
                 withRuby = false;
                 wrapRc = false;
+                wrapperArgs = [
+                    "--suffix"
+                    "PATH"
+                    ":"
+                    (makeBinPath tools)
+                ];
             };
 
             aliases = pkgs.runCommand "nvim-aliases" { } ''
