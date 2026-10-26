@@ -69,3 +69,4 @@ o.spelloptions = 'camel'
 
 o.wildmenu = true
 o.wildmode = 'noselect:longest:lastused,full'
+o.termguicolors = true

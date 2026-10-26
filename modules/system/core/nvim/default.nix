@@ -46,6 +46,7 @@
             files = {
                 ".config/nvim/init.lua".source = ./lua/init.lua;
                 ".config/nvim/after".source = ./lua/after;
+                ".config/nvim/colors".source = ./lua/colors;
                 ".config/nvim/plugin".source = ./lua/plugin;
             };
         };

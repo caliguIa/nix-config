@@ -102,11 +102,6 @@
 
             services.xserver.videoDrivers = [ "nvidia" ];
             services.xserver.xkb.layout = "us";
-            services.scx = {
-                enable = true;
-                scheduler = "scx_lavd";
-                extraArgs = [ "--autopilot" ];
-            };
 
             services.btrfs.autoScrub = {
                 enable = true;

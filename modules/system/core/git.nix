@@ -63,7 +63,7 @@
                         showUntrackedFiles = "all";
                     };
                     delta = {
-                        "syntax-theme" = "kanso-zen";
+                        # "syntax-theme" = "kanso-zen";
                         "dark" = "true";
                         "navigate" = "true";
                         "tabs" = "2";

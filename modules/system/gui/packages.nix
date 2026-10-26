@@ -7,8 +7,10 @@
         environment.systemPackages = with pkgs; [
             bruno
             claude-code
+            herdr
             glib.bin
             (callPackage ./_keyguard.nix { })
+            skills
             slack
             tableplus
         ];

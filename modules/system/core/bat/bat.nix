@@ -26,7 +26,7 @@
             programs.bat = {
                 enable = true;
                 package = bat;
-                settings.theme = "kanso-zen";
+                # settings.theme = "kanso-zen";
             };
         };
 }

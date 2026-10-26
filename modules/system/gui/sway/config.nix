@@ -42,10 +42,18 @@
             bindsym $mod+Shift+Down move down
             bindsym $mod+Shift+Up move up
             bindsym $mod+Shift+Right move right
+            # Vim keys on Alt instead; ghostty's split navigation sits on Ctrl+Alt.
+            bindsym Mod1+h focus left
+            bindsym Mod1+j focus down
+            bindsym Mod1+k focus up
+            bindsym Mod1+l focus right
+            bindsym Mod1+Shift+h move left
+            bindsym Mod1+Shift+j move down
+            bindsym Mod1+Shift+k move up
+            bindsym Mod1+Shift+l move right
 
             bindsym $mod+m fullscreen toggle
             bindsym $mod+r exec dms ipc call spotlight toggle
-            bindsym $mod+Return exec ghostty
             bindsym $mod+e exec nautilus --new-window
             bindsym $mod+q kill
 

@@ -36,8 +36,34 @@
                     update_check = true;
                     sync_frequency = "5m";
                     sync_address = "https://api.atuin.sh";
+                    # one shared encryption key so every host reads the same synced history
+                    # key_path = config.age.secrets.atuin-key.path;
+                    # explicit, otherwise `atuin ai` prompts and tries to rewrite the read-only config
+                    ai.enabled = true;
                 };
             };
+            # # atuin keeps its session token in meta.db with no declarative input, so log in
+            # # from the agenix password; `atuin login` no-ops when already authenticated
+            # systemd.user.services.atuin-login = {
+            #     description = "Log in to Atuin sync";
+            #     wantedBy = [ "default.target" ];
+            #     after = [ "network-online.target" ];
+            #     wants = [ "network-online.target" ];
+            #     unitConfig.ConditionUser = user.primary;
+            #     environment.ATUIN_CONFIG_DIR = "/etc/atuin";
+            #     serviceConfig = {
+            #         Type = "oneshot";
+            #         RemainAfterExit = true;
+            #         Restart = "on-failure";
+            #         RestartSec = 30;
+            #     };
+            #     script = ''
+            #         ${lib.getExe config.programs.atuin.package} login \
+            #             --username caliguIa \
+            #             --password "$(cat ${config.age.secrets.atuin-password.path})" \
+            #             --key "$(cat ${config.age.secrets.atuin-key.path})"
+            #     '';
+            # };
             programs.fish =
                 let
                     mkFunctions = (
@@ -181,6 +207,12 @@
                             set_color --bold brwhite
                             printf '%s' (prompt_hostname)
                             set_color normal
+                            if set -q ZMX_SESSION
+                              _sep
+                              set_color magenta
+                              printf '[%s]' $ZMX_SESSION
+                              set_color normal
+                            end
                             _sep
                             set_color brwhite
                             printf '%s' (_pwd)
