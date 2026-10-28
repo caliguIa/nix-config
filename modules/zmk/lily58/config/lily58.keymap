@@ -32,15 +32,15 @@
             //                     | GUI  | ALT  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  | GUI   |
 
             bindings = <
-&kp GRAVE   &kp F1  &kp F2  &kp F3        &kp F4     &kp F5                                     &kp F6         &kp F7     &kp F8          &kp F9   &kp F10   &kp EQUAL
-&kp TAB     &kp Q   &kp W   &kp E         &kp R      &kp T                                      &kp Y          &kp U      &kp I           &kp O    &kp P     &kp MINUS
-&kp ESCAPE  &kp A   &kp S   &kp D         &kp F      &kp G                                      &kp H          &kp J      &kp K           &kp L    &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z   &kp X   &kp C         &kp V      &kp B          &kp SPACE      &kp ENTER    &kp N          &kp M      &kp COMMA       &kp DOT  &kp FSLH  &kp RSHFT
-                            &kp LEFT_ALT  &kp LCTRL  &kp LEFT_META  &lt 1 SPACE    &lt 2 ENTER  &kp BACKSPACE  &kp RCTRL  &kp RIGHT_META
+&none       &none  &none  &none         &none      &none                                      &none          &none      &none          &none    &none     &none
+&kp TAB     &kp Q  &kp W  &kp E         &kp R      &kp T                                      &kp Y          &kp U      &kp I          &kp O    &kp P     &kp BACKSPACE
+&kp ESCAPE  &kp A  &kp S  &kp D         &kp F      &kp G                                      &kp H          &kp J      &kp K          &kp L    &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z  &kp X  &kp C         &kp V      &kp B          &kp SPACE      &kp ENTER    &kp N          &kp M      &kp COMMA      &kp DOT  &kp FSLH  &kp RSHFT
+                          &kp LEFT_ALT  &kp LCTRL  &kp LEFT_META  &lt 1 SPACE    &lt 2 ENTER  &kp RIGHT_GUI  &kp RCTRL  &kp RIGHT_ALT
             >;
         };
 
-        layer_1 {
+        brackets_numbers {
             // ------------------------------------------------------------------------------------------------------------
             // | BTCLR | BT1   | BT2 |  BT3 |  BT4 |  BT5 |                   |      |       |       |      |       |       |
             // | RC(1) | RC(2) |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
@@ -49,41 +49,31 @@
             //                     |      |      |      |        |  |       |      |       |       |
 
             bindings = <
-&trans      &kp N1          &kp N2  &kp N3                &kp N4                 &kp N5                       &kp N6           &kp N7  &kp N8  &kp N9  &kp N0           &trans
-&trans      &kp ESCAPE      &trans  &kp LEFT_BRACE        &kp RIGHT_BRACE        &trans                       &kp KP_PLUS      &kp N1  &kp N2  &kp N3  &trans           &trans
-&caps_word  &kp LEFT_SHIFT  &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL                    &kp KP_MINUS     &kp N4  &kp N5  &kp N6  &kp RIGHT_SHIFT  &trans
-&trans      &trans          &trans  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &trans     &trans    &trans  &kp KP_MULTIPLY  &kp N7  &kp N8  &kp N9  &trans           &trans
-                                    &trans                &trans                 &trans     &trans    &mo 3   &kp N0           &trans  &trans
+&trans      &trans         &trans            &trans          &trans                &trans                       &trans        &trans                 &trans           &trans           &trans            &trans
+&trans      &kp N1         &kp N2            &kp N3          &kp N4                &kp N5                       &kp NUMBER_6  &kp N7                 &kp N8           &kp N9           &kp N0            &trans
+&caps_word  &kp LESS_THAN  &kp LEFT_BRACKET  &kp LEFT_BRACE  &kp LEFT_PARENTHESIS  &kp EQUAL                    &kp EQUAL     &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACE  &kp RBKT         &kp GREATER_THAN  &trans
+&mo 3       &trans         &kp KP_MULTIPLY   &kp KP_MINUS    &kp KP_PLUS           &trans     &trans    &trans  &trans        &kp KP_PLUS            &kp KP_MINUS     &kp KP_MULTIPLY  &trans            &trans
+                                             &trans          &trans                &trans     &trans    &trans  &trans        &trans                 &trans
             >;
         };
 
-        layer_2 {
+        symbols_funcs {
             bindings = <
-&trans     &trans           &trans       &trans             &trans           &trans                                  &trans                    &trans                &trans            &trans          &trans             &trans
-&trans     &trans           &kp C_MUTE   &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &trans                                  &trans                    &kp C_PREVIOUS        &kp C_PLAY_PAUSE  &kp C_NEXT      &trans             &trans
-&kp POUND  &kp EXCLAMATION  &kp AT_SIGN  &kp BACKSLASH      &kp DOLLAR       &kp PERCENT                             &kp CARET                 &kp AMPERSAND         &kp ASTERISK      &kp UNDERSCORE  &kp DOUBLE_QUOTES  &kp KP_PLUS
-&trans     &trans           &trans       &trans             &kp GRAVE        &kp PIPE     &trans    &kp PRINTSCREEN  &kp LS(NON_US_BACKSLASH)  &kp NON_US_BACKSLASH  &trans            &trans          &trans             &trans
-                                         &trans             &trans           &trans       &mo 3     &trans           &trans                    &trans                &trans
+&trans     &trans           &trans       &trans         &trans      &trans                                  &trans     &trans                    &trans                &trans          &trans             &trans
+&trans     &kp F1           &kp F2       &kp F3         &kp F4      &kp F5                                  &kp F6     &kp F7                    &kp F8                &kp F9          &kp F10            &trans
+&kp POUND  &kp EXCLAMATION  &kp AT_SIGN  &kp BACKSLASH  &kp DOLLAR  &kp PERCENT                             &kp CARET  &kp AMPERSAND             &kp ASTERISK          &kp UNDERSCORE  &kp DOUBLE_QUOTES  &kp KP_PLUS
+&trans     &trans           &trans       &kp GRAVE      &kp PIPE    &trans       &trans    &kp PRINTSCREEN  &trans     &kp LS(NON_US_BACKSLASH)  &kp NON_US_BACKSLASH  &kp MINUS       &trans             &trans
+                                         &trans         &trans      &trans       &trans    &trans           &trans     &trans                    &trans
             >;
         };
 
-        layer_3 {
+        meta {
             bindings = <
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &trans  &trans  &ext_power EP_OFF                                         &trans  &trans  &trans   &trans   &trans   &trans
-&trans        &trans        &trans        &trans  &trans  &bt BT_CLR                                                &trans  &kp F1  &kp F2   &kp F3   &kp F4   &trans
-&trans        &trans        &trans        &trans  &to 0   &tog 4                                                    &trans  &kp F5  &kp F6   &kp F7   &kp F8   &trans
-&trans        &trans        &trans        &trans  &trans  &trans             &ext_power EP_ON    &ext_power EP_OFF  &trans  &kp F9  &kp F10  &kp F11  &kp F12  &trans
-                                          &trans  &trans  &trans             &trans              &trans             &trans  &trans  &trans
-            >;
-        };
-
-        game_mode {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans       &to 0      &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans  &kp SPACE    &kp ENTER  &trans  &trans  &trans
+&ext_power EP_ON  &ext_power EP_OFF  &trans  &trans  &bt BT_SEL 0  &bt BT_SEL 1                        &trans  &trans  &trans  &trans  &trans  &trans
+&trans            &trans             &trans  &trans  &trans        &trans                              &trans  &trans  &trans  &trans  &trans  &trans
+&trans            &trans             &trans  &trans  &trans        &trans                              &trans  &trans  &trans  &trans  &trans  &trans
+&trans            &trans             &trans  &trans  &trans        &trans        &bt BT_CLR    &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                                             &trans  &trans        &trans        &trans        &trans  &trans  &trans  &trans
             >;
         };
     };

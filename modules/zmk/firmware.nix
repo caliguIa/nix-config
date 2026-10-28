@@ -10,10 +10,10 @@
 
                 src = ./lily58;
 
-                board = "nice_nano";
+                board = "nice_nano//zmk";
                 shield = "lily58_%PART%";
 
-                zephyrDepsHash = "sha256-777sDty25V5VbWgXjYKpy1NEW/rWJEihU7DRdqfk30I=";
+                zephyrDepsHash = "sha256-zDnYk7iavZLcuPRrl8QUMROnvikwBGOrDa5prc2cFtk=";
 
                 meta = {
                     description = "Lily58 ZMK firmware";
