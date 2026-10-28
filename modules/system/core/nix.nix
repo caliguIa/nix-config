@@ -1,4 +1,4 @@
-topLevel@{ user, ... }:
+{ user, ... }:
 {
     flake.modules.nixos.core =
         {
@@ -7,9 +7,6 @@ topLevel@{ user, ... }:
             ...
         }:
         {
-            imports = [ topLevel.inputs.nixos-core.nixosModules.nixos-core ];
-            system.nixos-core.enable = true;
-
             nix = {
                 enable = lib.mkDefault true;
                 # Make builds run with low priority so system stays responsive
@@ -38,10 +35,12 @@ topLevel@{ user, ... }:
                 enableFishIntegration = true;
             };
             programs.command-not-found.enable = false;
+            system.tools.nixos-generate-config.enable = false;
             environment.systemPackages = [ pkgs.comma ];
             documentation = {
                 enable = true;
                 doc.enable = false;
+                info.enable = false;
                 man.enable = true;
                 nixos.enable = false;
                 dev.enable = false;

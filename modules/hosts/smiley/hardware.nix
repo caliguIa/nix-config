@@ -19,7 +19,6 @@
                 "sd_mod"
                 "sdhci_pci"
             ];
-            boot.initrd.systemd.enable = true;
             boot.kernelModules = [ "kvm-intel" ];
 
             fileSystems."/" = {

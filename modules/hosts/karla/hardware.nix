@@ -35,7 +35,6 @@
                 "usb_storage"
                 "sd_mod"
             ];
-            boot.initrd.systemd.enable = true;
             boot.kernelModules = [
                 "kvm-amd"
                 "ntsync"

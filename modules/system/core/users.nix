@@ -1,5 +1,7 @@
 { user, ... }: {
     flake.modules.nixos.core = { config, ... }: {
+        services.userborn.enable = true;
+        users.mutableUsers = false;
         users.users.${user.primary} = {
             name = user.primary;
             home = "/home/${user.primary}";
@@ -9,7 +11,6 @@
                 "networkmanager"
                 "audio"
                 "video"
-                "realtime"
             ];
             group = user.primary;
             hashedPasswordFile = config.age.secrets.passwordfile-caligula.path;

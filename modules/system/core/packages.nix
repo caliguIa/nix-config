@@ -2,7 +2,7 @@
     flake.modules.nixos.core = { pkgs, ... }: {
         environment.systemPackages = with pkgs; [
             curl
-            dgop
+            dux-gop
             eza
             fastfetch
             fd
