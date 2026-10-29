@@ -1,5 +1,5 @@
 { user, ... }: {
-    flake.modules.nixos.gui = { lib, ... }: {
+    flake.modules.nixos.gui = { ... }: {
         virtualisation.docker = {
             enable = true;
             enableOnBoot = false;

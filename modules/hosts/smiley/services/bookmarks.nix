@@ -1,6 +1,6 @@
 {
     flake.modules.nixos.host_smiley =
-        { pkgs, ... }:
+        { ... }:
         {
             # Bookmark/read-later hoarder. The NixOS module self-generates its
             # own MEILI_MASTER_KEY and NEXTAUTH_SECRET into
