@@ -13,20 +13,18 @@ let
 
     # Pins get a stable id from their space, kind and URL, so the merge can tell
     # a declared pin from one the user made by hand.
-    mkPin =
-        space: essential: pin:
-        {
-            inherit essential;
-            inherit (pin) url;
-            name = pin.name or null;
-            id = "nix-${
-                builtins.substring 0 16 (
-                    builtins.hashString "sha256" "${space.uuid}${if essential then "essential" else "pin"}${pin.url}"
-                )
-            }";
-            workspace = space.uuid;
-            container = space.container;
-        };
+    mkPin = space: essential: pin: {
+        inherit essential;
+        inherit (pin) url;
+        name = pin.name or null;
+        id = "nix-${
+            builtins.substring 0 16 (
+                builtins.hashString "sha256" "${space.uuid}${if essential then "essential" else "pin"}${pin.url}"
+            )
+        }";
+        workspace = space.uuid;
+        container = space.container;
+    };
 
     pinList = lib.concatMap (
         space: map (mkPin space false) space.pins ++ map (mkPin space true) space.essentials
@@ -54,9 +52,12 @@ let
             containers = lib.mapAttrsToList (name: c: c // { inherit name; }) containers;
         }
     );
-    declaredToolbar = pkgs.writeText "zen-declared-toolbar.json" (builtins.toJSON { pinned = pinnedWidgets; });
+    declaredToolbar = pkgs.writeText "zen-declared-toolbar.json" (
+        builtins.toJSON { pinned = pinnedWidgets; }
+    );
 in
-lib.throwIf (duplicates != [ ]) "zen: a pin is declared twice in one space (${toString (lib.unique duplicates)})"
+lib.throwIf (duplicates != [ ])
+    "zen: a pin is declared twice in one space (${toString (lib.unique duplicates)})"
     (
         pkgs.writeShellApplication {
             name = "zen-declarative";
