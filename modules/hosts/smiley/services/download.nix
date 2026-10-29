@@ -163,7 +163,7 @@
                             Password_PBKDF2 = "@ByteArray(+1ZSiSWMaiWPiLNWIHNcug==:usRLXuCrx/sxOTZ+SiM9qvT32DSVxGQWbu2pZZrOI4Fi2PXFjF6PjzoBridfI70z/CqPt9XS7ERMcould3DCMw==)";
                             AlternativeUIEnabled = true;
                             RootFolder = "${pkgs.vuetorrent}/share/vuetorrent";
-                            BanDuration = 10;
+                            BanDuration = 3600;
                         };
                     };
                 };

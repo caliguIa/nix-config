@@ -7,7 +7,6 @@
                 gamescopeSession.enable = true;
                 extraCompatPackages = with pkgs; [ proton-ge-bin ];
                 package = pkgs.steam.override { extraArgs = "--pipewire"; };
-                remotePlay.openFirewall = true;
             };
             programs.gamescope = {
                 enable = true;

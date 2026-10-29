@@ -7,8 +7,5 @@
                 package = pkgs.firefox-devedition;
             };
             environment.systemPackages = [ pkgs.ungoogled-chromium ];
-            environment.sessionVariables = {
-                MOZ_DISABLE_RDD_SANDBOX = "1";
-            };
         };
 }

@@ -11,7 +11,7 @@
                 General = {
                     Experimental = true;
                     FastConnectable = false;
-                    JustWorksRepairing = "always";
+                    JustWorksRepairing = "never";
                     Privacy = "device";
                 };
                 Policy = {

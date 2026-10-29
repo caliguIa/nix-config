@@ -6,7 +6,11 @@
         };
         services.mullvad-vpn.enable = true;
         services.mullvad-vpn.gui.enable = true;
-        programs.localsend.enable = true;
+        # Hosts that receive transfers open the port themselves.
+        programs.localsend = {
+            enable = true;
+            openFirewall = lib.mkDefault false;
+        };
 
         networking = {
             networkmanager = {

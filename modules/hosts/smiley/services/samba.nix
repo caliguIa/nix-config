@@ -23,7 +23,8 @@
         };
         services.avahi = {
             enable = true;
-            openFirewall = true;
+            # 5353 is opened per interface in network.nix.
+            openFirewall = false;
             nssmdns4 = true;
             settings.publish = {
                 "disable-publishing" = false;

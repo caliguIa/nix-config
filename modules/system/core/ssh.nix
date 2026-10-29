@@ -9,11 +9,14 @@
         ];
         services.openssh = {
             enable = true;
+            # Port 22 only over the tailnet; smiley also opens it on its LAN.
+            openFirewall = false;
             settings = {
                 PermitRootLogin = "prohibit-password";
                 PasswordAuthentication = false;
             };
         };
+        networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 22 ];
 
         systemd.tmpfiles.rules = [
             "d /home/${user.primary}/.ssh 0700 ${user.primary} ${user.primary} -"
