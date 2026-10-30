@@ -19,7 +19,10 @@ in
             inputs.nixpkgs.lib.nixosSystem {
                 modules = [
                     hostModule
-                    { networking.hostName = lib.mkDefault hostName; }
+                    {
+                        networking.hostName = lib.mkDefault hostName;
+                        nixpkgs.overlays = [ config.flake.overlays.default ];
+                    }
                 ];
             }
         )

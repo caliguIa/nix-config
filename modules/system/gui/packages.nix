@@ -9,7 +9,8 @@
             claude-code
             herdr
             glib.bin
-            (callPackage ./_keyguard.nix { })
+            keyguard
+            laravel-artisan
             skills
             slack
             tableplus
