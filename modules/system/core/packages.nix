@@ -6,9 +6,7 @@
             eza
             fastfetch
             fd
-            fzf
             jq
-            lazygit
             ouch-rar
             ripgrep
             tree
