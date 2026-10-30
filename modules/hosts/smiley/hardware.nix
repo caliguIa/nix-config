@@ -39,7 +39,6 @@
             swapDevices = [
                 { device = "/dev/disk/by-uuid/f61df574-ebc2-4430-ad1f-ddb1a919bd8a"; }
             ];
-            zramSwap.enable = true;
 
             nixpkgs.hostPlatform = "x86_64-linux";
             hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

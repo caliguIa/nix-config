@@ -5,6 +5,7 @@
             dev
             gaming
             gui
+            workstation
             laptop
         ];
         hjem.users.${user.primary}.imports = [ config.flake.modules.hjem.host_karla ];

@@ -20,13 +20,12 @@
             ];
 
             # Lanzaboote replaces the systemd-boot module.
-            boot.loader.systemd-boot.enable = lib.mkForce false;
+            boot.loader.systemd-boot.enable = false;
             boot.lanzaboote = {
                 enable = true;
                 pkiBundle = "/var/lib/sbctl";
             };
 
-            boot.kernelPackages = pkgs.linuxPackages_latest;
             boot.initrd.availableKernelModules = [
                 "nvme"
                 "xhci_pci"
@@ -48,12 +47,7 @@
             # forced power-off.
             services.journald.settings.Journal.SyncIntervalSec = "5s";
 
-            # skip systemd-boot menu, hold space at boot to show the menu
-            boot.loader.timeout = 0;
-
             services.xserver.videoDrivers = [ "amdgpu" ];
-            systemd.services.NetworkManager-wait-online.enable = false;
-            systemd.services.docker.wantedBy = lib.mkForce [ ];
 
             programs.gamemode.settings.gpu = {
                 apply_gpu_optimisations = "accept-responsibility";
@@ -61,14 +55,9 @@
                 amd_performance_level = "high";
             };
 
-            hardware.enableAllFirmware = true;
             hardware.framework.enableKmod = true;
             nixpkgs.hostPlatform = "x86_64-linux";
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-            hardware.graphics = {
-                enable = true;
-                enable32Bit = true;
-            };
 
             environment.sessionVariables = {
                 AMD_VULKAN_ICD = "RADV";
@@ -113,7 +102,6 @@
                 ];
             };
 
-            zramSwap.enable = true;
             swapDevices = [ ];
         };
 }

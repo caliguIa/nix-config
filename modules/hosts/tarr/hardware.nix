@@ -19,7 +19,7 @@
             ];
 
             # Lanzaboote replaces the systemd-boot module.
-            boot.loader.systemd-boot.enable = lib.mkForce false;
+            boot.loader.systemd-boot.enable = false;
             boot.lanzaboote = {
                 enable = true;
                 pkiBundle = "/var/lib/sbctl";
@@ -33,15 +33,11 @@
                 "usbhid"
                 "sd_mod"
             ];
-            boot.kernelPackages = pkgs.linuxPackages_latest;
             boot.kernelModules = [
                 "kvm-amd"
                 "ntsync"
                 "nct6775"
             ];
-
-            # skip systemd-boot menu, hold space at boot to show the menu
-            boot.loader.timeout = 0;
 
             boot.initrd.luks.devices."luks-a647cd97-fe51-4803-a017-c095d426733b" = {
                 device = "/dev/disk/by-uuid/a647cd97-fe51-4803-a017-c095d426733b";
@@ -86,15 +82,8 @@
                 ];
             };
 
-            systemd.services.NetworkManager-wait-online.enable = false;
-
             nixpkgs.hostPlatform = "x86_64-linux";
-            hardware.enableAllFirmware = true;
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-            hardware.graphics = {
-                enable = true;
-                enable32Bit = true;
-            };
             hardware.nvidia = {
                 open = true;
                 modesetting.enable = true;
@@ -109,7 +98,6 @@
                 fileSystems = [ "/" ];
             };
 
-            zramSwap.enable = true;
             swapDevices = [ ];
         };
 }

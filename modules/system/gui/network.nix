@@ -1,9 +1,6 @@
 {
     flake.modules.nixos.gui = { lib, ... }: {
-        services.tailscale = {
-            enable = true;
-            openFirewall = true;
-        };
+        systemd.services.NetworkManager-wait-online.enable = false;
         services.mullvad-vpn.enable = true;
         services.mullvad-vpn.gui.enable = true;
         # Hosts that receive transfers open the port themselves.

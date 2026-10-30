@@ -12,6 +12,7 @@
 
             config = {
                 services.fstrim.enable = lib.mkDefault true;
+                hardware.graphics.enable = true;
             };
         };
 }

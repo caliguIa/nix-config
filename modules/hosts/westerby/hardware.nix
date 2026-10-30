@@ -27,7 +27,6 @@
 
         # boot.loader, time.timeZone and i18n.defaultLocale come from core (core/misc.nix).
         hardware = {
-            graphics.enable = true;
             bluetooth.enable = true;
             asahi.enable = true;
             asahi.setupAsahiSound = true;

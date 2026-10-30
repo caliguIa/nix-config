@@ -35,10 +35,6 @@
             };
         };
         programs.ssh.startAgent = true;
-        services.tailscale = {
-            enable = true;
-            openFirewall = true;
-            extraSetFlags = [ "--ssh" ];
-        };
+        services.tailscale.extraSetFlags = [ "--ssh" ];
     };
 }
