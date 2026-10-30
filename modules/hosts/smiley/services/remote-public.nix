@@ -1,5 +1,9 @@
-{
+{ secret, ... }: {
     flake.modules.nixos.host_smiley = { config, ... }: {
+        age.secrets = {
+            cloudflared-git.file = secret "cloudflared-git";
+            cloudflared-media.file = secret "cloudflared-media";
+        };
         services.cloudflared = {
             enable = true;
             tunnels."517d082d-7099-4ba5-a3ff-2d8d4eca0021" = {

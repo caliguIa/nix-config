@@ -1,4 +1,4 @@
-{
+{ secret, ... }: {
     flake.modules.nixos.host_smiley =
         {
             pkgs,
@@ -6,6 +6,7 @@
             ...
         }:
         {
+            age.secrets.cloudflare-dns-token.file = secret "cloudflare-dns-token";
             services.caddy = {
                 enable = true;
                 package = pkgs.caddy.withPlugins {

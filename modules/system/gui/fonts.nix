@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, secret, ... }:
 let
     # Berkeley Mono is proprietary, so the raw font files cannot live
     # unencrypted in this public repo. They are stored as agenix secrets and
@@ -19,7 +19,7 @@ let
     mkSecret = name: {
         name = "font-${name}";
         value = {
-            file = ../../../.secrets/fonts/${name}.age;
+            file = secret "fonts/${name}";
             path = "${fontDir}/${name}";
             mode = "444";
         };

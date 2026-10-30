@@ -1,4 +1,4 @@
-{
+{ secret, ... }: {
     flake.modules.nixos.host_smiley =
         {
             pkgs,
@@ -35,6 +35,10 @@
                 '';
         in
         {
+            age.secrets = {
+                forgejo-caligula-password.file = secret "forgejo-caligula-password";
+                forgejo-turnstile-secret.file = secret "forgejo-turnstile-secret";
+            };
             services.forgejo = {
                 enable = true;
                 package = pkgs.forgejo;

@@ -1,5 +1,6 @@
-{
+{ secret, ... }: {
     flake.modules.nixos.host_smiley = { config, ... }: {
+        age.secrets.miniflux-admin.file = secret "miniflux-admin";
         services.miniflux = {
             enable = true;
             adminCredentialsFile = config.age.secrets.miniflux-admin.path;

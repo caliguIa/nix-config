@@ -1,4 +1,4 @@
-{ user, ... }: {
+{ user, secret, ... }: {
     flake.modules.nixos.core =
         {
             config,
@@ -13,6 +13,13 @@
             home = config.users.users.${user.primary}.home;
         in
         {
+            # Read through INTELEPHENSE_KEY_PATH below.
+            age.secrets.intelephense = {
+                file = secret "intelephense";
+                owner = user.primary;
+                group = user.primary;
+                mode = "400";
+            };
             users.defaultUserShell = pkgs.fish;
             users.users.${user.primary}.shell = pkgs.fish;
             environment = {

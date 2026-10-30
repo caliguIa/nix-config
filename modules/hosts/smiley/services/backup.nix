@@ -1,4 +1,4 @@
-{
+{ secret, ... }: {
     flake.modules.nixos.host_smiley =
         {
             pkgs,
@@ -14,6 +14,7 @@
             karakeepDb = "/var/lib/karakeep/db.db";
         in
         {
+            age.secrets.restic-r2.file = secret "restic-r2";
             systemd.tmpfiles.rules = [
                 "d /var/backup 0700 root root -"
                 "d ${stagingDir} 0700 root root -"

@@ -1,5 +1,6 @@
-{ user, ... }: {
+{ user, secret, ... }: {
     flake.modules.nixos.core = { config, ... }: {
+        age.secrets.passwordfile-caligula.file = secret "passwordfile-caligula";
         services.userborn.enable = true;
         users.mutableUsers = false;
         users.users.${user.primary} = {

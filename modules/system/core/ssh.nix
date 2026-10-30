@@ -1,4 +1,4 @@
-{ user, ... }: {
+{ user, secret, ... }: {
     flake.modules.nixos.core = {
         users.users.${user.primary}.openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwI2yD8dyhY0ga1r/bTgYBTRpkrlzT2FNKq/v+dx5// accounts@cal.rip"
@@ -22,7 +22,7 @@
             "d /home/${user.primary}/.ssh 0700 ${user.primary} ${user.primary} -"
         ];
         age.secrets.caligula-ssh-key = {
-            file = ../../../.secrets/caligula-ssh-key.age;
+            file = secret "caligula-ssh-key";
             path = "/home/${user.primary}/.ssh/id_ed25519";
             owner = user.primary;
             group = user.primary;

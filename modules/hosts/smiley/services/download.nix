@@ -1,4 +1,4 @@
-{
+{ secret, ... }: {
     flake.modules.nixos.host_smiley =
         {
             pkgs,
@@ -110,6 +110,7 @@
             );
         in
         {
+            age.secrets.slskd-envars.file = secret "slskd-envars";
             systemd.tmpfiles.rules = map mediaDir [
                 "/data/downloads"
                 "/data/downloads/complete"
