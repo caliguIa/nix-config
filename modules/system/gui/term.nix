@@ -1,4 +1,12 @@
 {
+    flake.modules.nixos.gui =
+        { pkgs, ... }:
+        {
+            programs.fish.interactiveShellInit = ''
+                source "${pkgs.ghostty}/share/ghostty/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+            '';
+        };
+
     flake.modules.hjem.gui =
         {
             pkgs,

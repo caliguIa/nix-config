@@ -1,4 +1,4 @@
-{ user, secret, ... }: {
+{ user, ... }: {
     flake.modules.nixos.core =
         {
             config,
@@ -13,13 +13,6 @@
             home = config.users.users.${user.primary}.home;
         in
         {
-            # Read through INTELEPHENSE_KEY_PATH below.
-            age.secrets.intelephense = {
-                file = secret "intelephense";
-                owner = user.primary;
-                group = user.primary;
-                mode = "400";
-            };
             users.defaultUserShell = pkgs.fish;
             users.users.${user.primary}.shell = pkgs.fish;
             environment = {
@@ -106,11 +99,6 @@
                         dev = "cd ${home}/dev";
                         ls = "eza --color=always --long -a --git --icons=always";
                         cat = "bat";
-                        dps = "docker ps";
-                        dcu = "docker compose up -d";
-                        dcua = "docker compose up";
-                        dce = "docker compose exec";
-                        dash = "gh dash";
                         ga = "git add";
                         gaa = "git add .";
                         gap = "git add --patch";
@@ -127,14 +115,9 @@
                         gcl = "git clone";
                         gmm = "git merge origin/main";
                         undocommit = "git reset --soft HEAD^";
-                        gg = "nvim -c Neogit";
                         lg = "lazygit";
                         nix-which-pkg = "nix run github:nix-community/nix-index-database --";
                     };
-                    shellInit = ''
-                        set -gx INTELEPHENSE_KEY_PATH /run/agenix/intelephense
-                        source "${pkgs.ghostty}/share/ghostty/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-                    '';
                     interactiveShellInit = ''
                         ${mkFunctions {
                             music-import = "ssh -t smiley beets-import";
@@ -144,9 +127,6 @@
                             "..." = "../..";
                             "...." = "../../..";
                             "....." = "../../../..";
-                            dps = "docker ps";
-                            dcu = "docker compose up";
-                            dce = "docker compose exec";
                             pb = "platform bash";
                             ga = "git add";
                             gb = "git branch";
@@ -161,7 +141,6 @@
                             gcl = "git clone";
                             gmm = "git merge origin/main";
                             undocommit = "git reset --soft HEAD^";
-                            gg = "nvim -c Neogit";
                             lg = "lazygit";
                         }}
                     '';

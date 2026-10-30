@@ -7,10 +7,7 @@
             fastfetch
             fd
             fzf
-            gnumake
-            gnupg
             jq
-            lazydocker
             lazygit
             ouch-rar
             ripgrep

@@ -2,6 +2,7 @@
     flake.modules.nixos.host_karla = {
         imports = with config.flake.modules.nixos; [
             core
+            dev
             gui
             laptop
         ];

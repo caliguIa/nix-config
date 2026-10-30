@@ -1,10 +1,3 @@
--- stylua: ignore
-require('nvim-treesitter').install({
-    'bash', 'css', 'fish', 'go', 'html', 'javascript', 'json', 'jsx', 'lua',
-    'markdown', 'markdown_inline', 'nix', 'nu', 'php', 'rust', 'scss', 'toml',
-    'tsx', 'typescript', 'yaml', 'zig', 'zsh',
-})
-
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
     callback = function(ev)

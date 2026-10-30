@@ -1,52 +1,91 @@
-{ inputs, ... }: {
-    flake.modules.hjem.core =
+# System-wide nvim, built from the `nvim` option so other buckets (dev) can
+# swap the package and add plugins/tools. Lua config: ./lua (hjem.core).
+{ ... }:
+{
+    flake.modules.nixos.core =
         {
-            pkgs,
+            config,
             lib,
+            pkgs,
             ...
         }:
         let
-            inherit (lib.meta) getExe;
-            inherit (lib.strings) makeBinPath;
+            inherit (lib) mkOption types;
+            cfg = config.nvim;
 
-            inherit (import ../_editor-tools.nix { inherit pkgs; }) tools;
-
-            neovim = pkgs.wrapNeovimUnstable inputs.nvim-nightly.packages.${pkgs.stdenvNoCC.system}.neovim {
+            neovim = pkgs.wrapNeovimUnstable cfg.package {
+                viAlias = true;
+                vimAlias = true;
                 withNodeJs = false;
                 withPython3 = false;
                 withRuby = false;
                 wrapRc = false;
+                inherit (cfg) waylandSupport;
+                plugins =
+                    cfg.plugins
+                    ++ map (plugin: {
+                        inherit plugin;
+                        optional = true;
+                    }) cfg.optionalPlugins;
                 wrapperArgs = [
                     "--suffix"
                     "PATH"
                     ":"
-                    (makeBinPath tools)
+                    (lib.makeBinPath cfg.tools)
                 ];
             };
 
-            aliases = pkgs.runCommand "nvim-aliases" { } ''
-                mkdir -p $out/bin
-                ln -s ${getExe neovim} $out/bin/vi
-                ln -s ${getExe neovim} $out/bin/vim
-                cat > $out/bin/vimdiff <<EOF
-                #!${pkgs.runtimeShell}
-                exec ${getExe neovim} -d "\$@"
-                EOF
-                chmod +x $out/bin/vimdiff
+            vimdiff = pkgs.writeShellScriptBin "vimdiff" ''
+                exec ${lib.getExe neovim} -d "$@"
             '';
         in
         {
-            packages = [
-                neovim
-                aliases
-                pkgs.tree-sitter
-                pkgs.gcc
-            ];
-            files = {
-                ".config/nvim/init.lua".source = ./lua/init.lua;
-                ".config/nvim/after".source = ./lua/after;
-                ".config/nvim/colors".source = ./lua/colors;
-                ".config/nvim/plugin".source = ./lua/plugin;
+            options.nvim = {
+                package = mkOption {
+                    type = types.package;
+                    default = pkgs.neovim-unwrapped;
+                    description = "Unwrapped neovim to wrap.";
+                };
+                plugins = mkOption {
+                    type = types.listOf types.package;
+                    default = [ ];
+                    description = "Plugins loaded at startup.";
+                };
+                optionalPlugins = mkOption {
+                    type = types.listOf types.package;
+                    default = [ ];
+                    description = "Plugins installed under pack/*/opt, loaded with :packadd.";
+                };
+                tools = mkOption {
+                    type = types.listOf types.package;
+                    default = [ ];
+                    description = "Packages appended to nvim's PATH only (LSP servers, formatters).";
+                };
+                waylandSupport = mkOption {
+                    type = types.bool;
+                    default = false;
+                    description = "Put wl-clipboard on nvim's PATH. Off for headless hosts: it drags in xdg-utils and perl.";
+                };
+                finalPackage = mkOption {
+                    type = types.package;
+                    readOnly = true;
+                    default = neovim;
+                    description = "The wrapped nvim.";
+                };
             };
+
+            config = {
+                nvim.plugins = [ pkgs.vimPlugins.oil-nvim ];
+                environment.systemPackages = [
+                    neovim
+                    vimdiff
+                ];
+            };
+        };
+
+    flake.modules.hjem.core =
+        { lib, ... }:
+        {
+            files = import ./_link.nix { inherit lib; } ./lua;
         };
 }

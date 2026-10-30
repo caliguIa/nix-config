@@ -25,10 +25,6 @@ lsp.enable({
     'vtsls',
 })
 
-local zendiagram = require('zendiagram')
-zendiagram.setup()
-vim.diagnostic.open_float = zendiagram.open
-
 local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),

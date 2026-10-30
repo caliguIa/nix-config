@@ -9,7 +9,8 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight on yank',
     group = vim.api.nvim_create_augroup('highlight_yank', { clear = true }),
-    callback = function() vim.hl.hl_op({ higroup = 'Visual', timeout = 300 }) end,
+    -- hl_op is nightly-only; smiley runs stock neovim, which has on_yank.
+    callback = function() (vim.hl.hl_op or vim.hl.on_yank)({ higroup = 'Visual', timeout = 300 }) end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -39,26 +40,6 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     pattern = { '*.txt' },
     callback = function()
         if vim.o.filetype == 'help' then vim.cmd.wincmd('L') end
-    end,
-})
-
--- 'end' progress events carry no title, so remember it from 'begin'.
-local progress_titles = {}
-vim.api.nvim_create_autocmd('LspProgress', {
-    group = vim.api.nvim_create_augroup('lsp_progress_notify', { clear = true }),
-    callback = function(ev)
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if not client then return end
-        local token = ev.data.params.token
-        local value = ev.data.params.value
-        if value.kind == 'begin' then
-            progress_titles[token] = value.title
-            return
-        end
-        if value.kind ~= 'end' then return end
-        local title = progress_titles[token] or value.message or ''
-        progress_titles[token] = nil
-        vim.notify(('[%s] %s %s'):format(client.name, '✓', title))
     end,
 })
 

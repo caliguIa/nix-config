@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.core =
+    flake.modules.nixos.dev =
         {
             pkgs,
             lib,
@@ -57,7 +57,7 @@
             '';
         };
 
-    flake.modules.hjem.core =
+    flake.modules.hjem.dev =
         { pkgs, ... }:
         let
             toml = pkgs.formats.toml { };

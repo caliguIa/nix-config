@@ -1,5 +1,5 @@
 {
-    flake.modules.nixos.gui = {
+    flake.modules.nixos.dev = {
         programs.direnv = {
             enable = true;
             enableFishIntegration = true;
