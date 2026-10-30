@@ -23,9 +23,9 @@
         };
 
         swapDevices = [ ];
+        nixpkgs.hostPlatform = "aarch64-linux";
 
-        # boot.loader, time.timeZone, i18n.defaultLocale and nixpkgs.hostPlatform
-        # all come from core (core/misc.nix) + the per-host system in flake/hosts.nix.
+        # boot.loader, time.timeZone and i18n.defaultLocale come from core (core/misc.nix).
         hardware = {
             graphics.enable = true;
             bluetooth.enable = true;

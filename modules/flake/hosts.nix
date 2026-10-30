@@ -5,24 +5,23 @@
     ...
 }:
 let
-    hosts = {
-        karla = "x86_64-linux";
-        smiley = "x86_64-linux";
-        tarr = "x86_64-linux";
-        westerby = "aarch64-linux";
-    };
+    prefix = "host_";
 in
 {
-    config = {
-        flake.nixosConfigurations = lib.mapAttrs (
-            name: system:
+    # flake.modules.nixos.host_<name> -> nixosConfigurations.<name>. Each host's
+    # hardware.nix sets nixpkgs.hostPlatform; modules close over flake-parts `inputs`.
+    config.flake.nixosConfigurations = lib.mapAttrs' (
+        moduleName: hostModule:
+        let
+            hostName = lib.removePrefix prefix moduleName;
+        in
+        lib.nameValuePair hostName (
             inputs.nixpkgs.lib.nixosSystem {
-                specialArgs.inputs = inputs;
                 modules = [
-                    { nixpkgs.hostPlatform = system; }
-                    (config.flake.modules.nixos."host_${name}" or { })
+                    hostModule
+                    { networking.hostName = lib.mkDefault hostName; }
                 ];
             }
-        ) hosts;
-    };
+        )
+    ) (lib.filterAttrs (name: _: lib.hasPrefix prefix name) config.flake.modules.nixos);
 }

@@ -88,6 +88,7 @@
 
             systemd.services.NetworkManager-wait-online.enable = false;
 
+            nixpkgs.hostPlatform = "x86_64-linux";
             hardware.enableAllFirmware = true;
             hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
             hardware.graphics = {
