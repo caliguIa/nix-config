@@ -31,6 +31,11 @@ conform.setup({
         zig = { 'zigfmt' },
     },
     formatters = {
+        -- The project's own mago (composer require --dev carthage-software/mago);
+        -- there is no global one, so PHP is left alone outside such projects.
+        mago_format = {
+            command = require('conform.util').find_executable({ 'vendor/bin/mago' }, 'mago'),
+        },
         nixfmt = {
             prepend_args = function(_, ctx)
                 local repo = vim.fn.expand('~/nix-config')

@@ -9,7 +9,7 @@
             inherit (lib.meta) getExe;
             inherit (lib.strings) makeBinPath;
 
-            inherit (import ../_editor-tools.nix { inherit pkgs; }) tools mago;
+            inherit (import ../_editor-tools.nix { inherit pkgs; }) tools;
 
             neovim = pkgs.wrapNeovimUnstable inputs.nvim-nightly.packages.${pkgs.stdenvNoCC.system}.neovim {
                 withNodeJs = false;
@@ -39,7 +39,6 @@
             packages = [
                 neovim
                 aliases
-                mago
                 pkgs.tree-sitter
                 pkgs.gcc
             ];

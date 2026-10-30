@@ -22,3 +22,4 @@ require('oil').setup({
     view_options = { show_hidden = true, case_insensitive = true },
 })
 vim.keymap.set('n', '<leader>fe', vim.cmd.Oil, { desc = 'File explorer', silent = true })
+vim.keymap.set('n', '-', vim.cmd.Oil, { desc = 'Parent directory (oil)', silent = true })

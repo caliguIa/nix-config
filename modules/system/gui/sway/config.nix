@@ -58,6 +58,7 @@
             bindsym $mod+minus splitv
             bindsym $mod+t layout toggle tabbed split
             bindsym $mod+Shift+space floating toggle
+            bindsym $mod+Return exec ghostty
             bindsym $mod+Shift+c reload
             bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Exit' 'swaymsg exit'
             # Fallback launcher if DMS itself is down.
