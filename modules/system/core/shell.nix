@@ -3,13 +3,9 @@
         {
             config,
             pkgs,
-            lib,
             ...
         }:
         let
-            inherit (lib.attrsets) mapAttrsToList;
-            inherit (lib.strings) concatStringsSep;
-
             home = config.users.users.${user.primary}.home;
         in
         {
@@ -20,9 +16,6 @@
                 variables = {
                     EDITOR = "nvim";
                     VISUAL = "nvim";
-                    XDG_CACHE_HOME = "${home}/.cache";
-                    XDG_CONFIG_HOME = "${home}/.config";
-                    XDG_DATA_HOME = "${home}/.local/share";
                 };
                 localBinInPath = true;
             };
@@ -33,7 +26,7 @@
                 settings = {
                     dialect = "uk";
                     auto_sync = true;
-                    update_check = true;
+                    update_check = false;
                     sync_frequency = "5m";
                     sync_address = "https://api.atuin.sh";
                     # one shared encryption key so every host reads the same synced history
@@ -64,152 +57,112 @@
             #             --key "$(cat ${config.age.secrets.atuin-key.path})"
             #     '';
             # };
-            programs.fish =
-                let
-                    mkFunctions = (
-                        functions:
-                        concatStringsSep "\n" (
-                            mapAttrsToList (k: v: ''
-                                function ${k}
-                                ${v}
-                                end
-                            '') functions
-                        )
-                    );
-                    mkAbbrs = (
-                        abbrs:
-                        concatStringsSep "\n" (
-                            mapAttrsToList (k: v: "abbr -a ${k} --position anywhere -- ${lib.escapeShellArg v}") abbrs
-                        )
-                    );
-                in
-                {
-                    enable = true;
-                    shellAliases = {
-                        ".." = "cd ..";
-                        "..." = "cd ../..";
-                        "...." = "cd ../../..";
-                        "....." = "cd ../../../..";
-                        ":q" = "exit";
-                        dl = "cd ${home}/Downloads";
-                        dt = "cd ${home}/Desktop";
-                        cf = "cd ${home}/.config";
-                        nc = "cd ${home}/nix-config";
-                        ous = "cd ${home}/ous";
-                        dev = "cd ${home}/dev";
-                        ls = "eza --color=always --long -a --git --icons=always";
-                        cat = "bat";
-                        ga = "git add";
-                        gaa = "git add .";
-                        gap = "git add --patch";
-                        gb = "git branch";
-                        gc = "git commit";
-                        gd = "git diff";
-                        gi = "git init";
-                        gst = "git status";
-                        gs = "git switch";
-                        gn = "git switch -c";
-                        gP = "git push";
-                        gp = "git pull";
-                        gfp = "git fetch --all --prune && git pull";
-                        gcl = "git clone";
-                        gmm = "git merge origin/main";
-                        undocommit = "git reset --soft HEAD^";
-                        lg = "lazygit";
-                        nix-which-pkg = "nix run github:nix-community/nix-index-database --";
-                    };
-                    interactiveShellInit = ''
-                        ${mkFunctions {
-                            music-import = "ssh -t smiley beets-import";
-                            claude-personal = ''CLAUDE_CONFIG_DIR=~/.claude-personal claude "$argv"'';
-                        }}
-                        ${mkAbbrs {
-                            "..." = "../..";
-                            "...." = "../../..";
-                            "....." = "../../../..";
-                            pb = "platform bash";
-                            ga = "git add";
-                            gb = "git branch";
-                            gc = "git commit";
-                            gd = "git diff";
-                            gi = "git init";
-                            gst = "git status";
-                            gs = "git switch";
-                            gP = "git push";
-                            gp = "git pull";
-                            gfp = "git fetch --all --prune && git pull";
-                            gcl = "git clone";
-                            gmm = "git merge origin/main";
-                            undocommit = "git reset --soft HEAD^";
-                            lg = "lazygit";
-                        }}
-                    '';
-                    promptInit = ''
-                        set -g __fish_git_prompt_show_informative_status 1
-                        set -g __fish_git_prompt_showdirtystate 1
-                        set -g __fish_git_prompt_showuntrackedfiles 1
-                        set -g __fish_git_prompt_showupstream auto
-                        set -g __fish_git_prompt_char_stateseparator " "
-                        set -g __fish_git_prompt_color_branch blue
-                        set -g __fish_git_prompt_color_dirtystate yellow
-                        set -g __fish_git_prompt_color_stagedstate yellow
-                        set -g __fish_git_prompt_color_untrackedfiles yellow
-                        set -g __fish_git_prompt_char_dirtystate "±"
-                        set -g __fish_git_prompt_char_stagedstate "+"
-                        set -g __fish_git_prompt_char_untrackedfiles "?"
-                        set -g __fish_git_prompt_char_cleanstate ""
-
-                        function _sep
-                            set_color white
-                            printf '    '
-                            set_color normal
-                        end
-
-                        function _pwd
-                            if set -l root (git rev-parse --show-toplevel 2>/dev/null)
-                              printf '%s%s' (basename "$root") (string replace -- "$root" "" $PWD)
-                            else
-                              set -l parts (string split / -- (prompt_pwd --dir-length 0))
-                              if test (count $parts) -gt 3
-                                printf '…/%s/%s' $parts[-2] $parts[-1]
-                              else
-                                string join / $parts
-                              end
-                            end
-                        end
-
-                        function fish_prompt
-                            if set -q __prompt_seen
-                              echo
-                            else
-                              set -g __prompt_seen 1
-                            end
-                            set_color brwhite
-                            printf '%s' $USER
-                            set_color normal
-                            set_color brblack
-                            printf '@'
-                            set_color normal
-                            set_color --bold brwhite
-                            printf '%s' (prompt_hostname)
-                            set_color normal
-                            if set -q ZMX_SESSION
-                              _sep
-                              set_color magenta
-                              printf '[%s]' $ZMX_SESSION
-                              set_color normal
-                            end
-                            _sep
-                            set_color brwhite
-                            printf '%s' (_pwd)
-                            set_color normal
-                            fish_git_prompt (_sep)'%s'
-                            echo
-                            set_color --bold brwhite
-                            printf '󰘧 '
-                            set_color normal
-                        end
-                    '';
+            programs.fish = {
+                enable = true;
+                # Plain replacements stay aliases; everything else is an abbr so
+                # history shows the real command.
+                shellAliases = {
+                    ls = "eza --color=auto --long -a --git --icons=auto";
+                    cat = "bat";
                 };
+                shellAbbrs = {
+                    ":q" = "exit";
+                    dl = "cd ${home}/Downloads";
+                    dt = "cd ${home}/Desktop";
+                    cf = "cd ${home}/.config";
+                    nc = "cd ${home}/nix-config";
+                    ous = "cd ${home}/ous";
+                    dev = "cd ${home}/dev";
+                    pb = "platform bash";
+                    ga = "git add";
+                    gaa = "git add .";
+                    gap = "git add --patch";
+                    gb = "git branch";
+                    gc = "git commit";
+                    gd = "git diff";
+                    gi = "git init";
+                    gst = "git status";
+                    gs = "git switch";
+                    gn = "git switch -c";
+                    gP = "git push";
+                    gp = "git pull";
+                    gfp = "git fetch --all --prune && git pull";
+                    gcl = "git clone";
+                    gmm = "git merge origin/main";
+                    undocommit = "git reset --soft HEAD^";
+                    lg = "lazygit";
+                    nix-which-pkg = "nix run github:nix-community/nix-index-database --";
+                };
+                shellFunctions = {
+                    music-import.body = "ssh -t smiley beets-import $argv";
+                    claude-personal.body = "CLAUDE_CONFIG_DIR=~/.claude-personal claude $argv";
+                };
+                # shellAbbrs can't set --position; dot-paths expand anywhere (`cd ...`).
+                interactiveShellInit = ''
+                    abbr -a ... --position anywhere -- ../..
+                    abbr -a .... --position anywhere -- ../../..
+                    abbr -a ..... --position anywhere -- ../../../..
+                '';
+                promptInit = ''
+                    set -g __fish_git_prompt_show_informative_status 1
+                    set -g __fish_git_prompt_showdirtystate 1
+                    set -g __fish_git_prompt_showuntrackedfiles 1
+                    set -g __fish_git_prompt_showupstream auto
+                    set -g __fish_git_prompt_char_stateseparator " "
+                    set -g __fish_git_prompt_color_branch blue
+                    set -g __fish_git_prompt_color_dirtystate yellow
+                    set -g __fish_git_prompt_color_stagedstate yellow
+                    set -g __fish_git_prompt_color_untrackedfiles yellow
+                    set -g __fish_git_prompt_char_dirtystate "±"
+                    set -g __fish_git_prompt_char_stagedstate "+"
+                    set -g __fish_git_prompt_char_untrackedfiles "?"
+                    set -g __fish_git_prompt_char_cleanstate ""
+
+                    function _sep
+                        set_color white
+                        printf '    '
+                        set_color normal
+                    end
+
+                    function _pwd
+                        if set -l root (git rev-parse --show-toplevel 2>/dev/null)
+                          printf '%s%s' (basename "$root") (string replace -- "$root" "" $PWD)
+                        else
+                          set -l parts (string split / -- (prompt_pwd --dir-length 0))
+                          if test (count $parts) -gt 3
+                            printf '…/%s/%s' $parts[-2] $parts[-1]
+                          else
+                            string join / $parts
+                          end
+                        end
+                    end
+
+                    function fish_prompt
+                        if set -q __prompt_seen
+                          echo
+                        else
+                          set -g __prompt_seen 1
+                        end
+                        set_color brwhite
+                        printf '%s' $USER
+                        set_color normal
+                        set_color brblack
+                        printf '@'
+                        set_color normal
+                        set_color --bold brwhite
+                        printf '%s' (prompt_hostname)
+                        set_color normal
+                        _sep
+                        set_color brwhite
+                        printf '%s' (_pwd)
+                        set_color normal
+                        fish_git_prompt (_sep)'%s'
+                        echo
+                        set_color --bold brwhite
+                        printf '󰘧 '
+                        set_color normal
+                    end
+                '';
+            };
         };
 }
