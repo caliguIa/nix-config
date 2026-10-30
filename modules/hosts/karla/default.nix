@@ -3,6 +3,7 @@
         imports = with config.flake.modules.nixos; [
             core
             dev
+            gaming
             gui
             laptop
         ];
