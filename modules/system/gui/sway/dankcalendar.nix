@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
     flake.modules.nixos.gui =
-        { pkgs, ... }:
+        { lib, ... }:
         {
             imports = [ inputs.dankcalendar.nixosModules.dank-calendar ];
             programs.dank-calendar = {
@@ -9,6 +9,6 @@
                 systemd.enable = true;
                 systemd.target = "sway-session.target";
             };
-            systemd.user.services.dcal.path = [ pkgs.xdg-utils ];
+            systemd.user.services.dcal.path = lib.mkForce [ ];
         };
 }

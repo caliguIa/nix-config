@@ -13,7 +13,23 @@
 #define SYM  2
 #define META 3
 
+/* Super+hjkl sends arrows (Super is dropped), as keyd does on the laptop. */
+#define GUI_ARROW(name, key, arrow) \
+    name: name { \
+        compatible = "zmk,behavior-mod-morph"; \
+        #binding-cells = <0>; \
+        bindings = <&kp key>, <&kp arrow>; \
+        mods = <(MOD_LGUI|MOD_RGUI)>; \
+    };
+
 / {
+    behaviors {
+        GUI_ARROW(gui_h, H, LEFT)
+        GUI_ARROW(gui_j, J, DOWN)
+        GUI_ARROW(gui_k, K, UP)
+        GUI_ARROW(gui_l, L, RIGHT)
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -22,7 +38,7 @@
             bindings = <
 &none      &none  &none  &none     &none      &none                                    &none     &none      &none      &none     &none     &none
 &kp TAB    &kp Q  &kp W  &kp E     &kp R      &kp T                                    &kp Y     &kp U      &kp I      &kp O     &kp P     &kp BSPC
-&kp ESC    &kp A  &kp S  &kp D     &kp F      &kp G                                    &kp H     &kp J      &kp K      &kp L     &kp SEMI  &kp SQT
+&kp ESC    &kp A  &kp S  &kp D     &kp F      &kp G                                    &gui_h    &gui_j     &gui_k     &gui_l    &kp SEMI  &kp SQT
 &kp LSHFT  &kp Z  &kp X  &kp C     &kp V      &kp B      &kp SPACE      &kp ENTER      &kp N     &kp M      &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
                          &kp LALT  &kp LCTRL  &kp LGUI   &lt NUM SPACE  &lt SYM ENTER  &kp RGUI  &kp RCTRL  &kp RALT
             >;
@@ -44,8 +60,8 @@
             bindings = <
 &trans     &trans    &trans  &trans     &trans     &trans                          &trans     &trans          &trans     &trans     &trans   &trans
 &trans     &kp F1    &kp F2  &kp F3     &kp F4     &kp F5                          &kp F6     &kp F7          &kp F8     &kp F9     &kp F10  &trans
-&kp POUND  &kp EXCL  &kp AT  &kp BSLH   &kp DLLR   &kp PRCNT                       &kp CARET  &kp AMPS        &kp STAR   &kp UNDER  &kp DQT  &kp KP_PLUS
-&trans     &trans    &trans  &kp GRAVE  &kp PIPE   &trans     &trans  &kp PSCRN    &trans     &kp LS(NUBS)    &kp NUBS   &kp MINUS  &trans   &trans
+&kp TILDE  &kp EXCL  &kp DQT  &kp POUND  &kp DLLR   &kp PRCNT                       &kp CARET  &kp AMPS  &kp STAR  &kp UNDER  &kp AT  &kp KP_PLUS
+&trans     &trans    &trans   &kp GRAVE  &kp TILDE  &trans     &trans  &kp PSCRN    &trans     &kp PIPE  &kp BSLH  &kp MINUS  &trans  &trans
                              &trans     &trans     &trans     &trans  &trans       &trans     &trans          &trans
             >;
         };

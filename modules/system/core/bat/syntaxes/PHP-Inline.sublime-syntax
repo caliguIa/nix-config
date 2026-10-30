@@ -1,8 +1,6 @@
 %YAML 1.2
 ---
 name: PHP Inline
-file_extensions:
-  - php
 scope: source.php.inline
 contexts:
   main:

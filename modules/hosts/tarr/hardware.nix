@@ -101,7 +101,6 @@
             };
 
             services.xserver.videoDrivers = [ "nvidia" ];
-            services.xserver.xkb.layout = "us";
 
             services.btrfs.autoScrub = {
                 enable = true;

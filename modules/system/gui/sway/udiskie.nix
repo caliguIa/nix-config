@@ -3,6 +3,8 @@
         { lib, pkgs, ... }:
         {
             systemd.user.services.udiskie = {
+                # Inherit the session PATH so it can find the user's file manager.
+                enableDefaultPath = false;
                 description = "udiskie removable media automounter";
                 partOf = [ "sway-session.target" ];
                 after = [ "sway-session.target" ];

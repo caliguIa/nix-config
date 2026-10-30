@@ -17,6 +17,6 @@
             # Plain package: the plugin records via the portal, so the
             # cap_sys_admin gsr-kms-server wrapper isn't needed.
             environment.systemPackages = [ pkgs.gpu-screen-recorder ];
-            systemd.user.services.dms.serviceConfig.ExecStartPre = [ "${enableScreenRecorder}" ];
+            systemd.user.services.dms.serviceConfig.ExecStartPre = [ "-${enableScreenRecorder}" ];
         };
 }

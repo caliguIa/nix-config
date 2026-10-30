@@ -2,12 +2,6 @@ require('neogit').setup({
     treesitter_diff_highlight = true,
 })
 
-vim.g.diffs = {
-    integrations = {
-        neogit = true,
-    },
-}
-
 vim.g.git_branch = ''
 
 local function update_git_branch()

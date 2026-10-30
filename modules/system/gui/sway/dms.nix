@@ -249,7 +249,8 @@
             };
 
             systemd.user.services.dms.serviceConfig = {
-                ExecStartPre = [ "${applyDmsSettings}" ];
+                ExecStartPre = [ "-${applyDmsSettings}" ];
+                # Not best-effort: a failed relock restarts DMS for another try.
                 ExecStartPost = [ "${relockAfterCrash}" ];
             };
 

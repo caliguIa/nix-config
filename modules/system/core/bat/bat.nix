@@ -10,7 +10,7 @@
 
             batCache = pkgs.runCommand "bat-cache" { nativeBuildInputs = [ pkgs.bat ]; } ''
                 mkdir -p $out
-                bat cache --build --source ${batSrc} --target $out --blank
+                bat cache --build --source ${batSrc} --target $out
             '';
 
             bat = pkgs.symlinkJoin {

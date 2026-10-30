@@ -1,10 +1,7 @@
 {
-    flake.modules.hjem.gui = {
+    flake.modules.hjem.gui = { osConfig, ... }: {
         xdg.config.files."sway/config".text = ''
             set $mod Mod4
-
-            # Host, laptop and theme specifics (outputs, lid, backlight, cursor).
-            include ~/.config/sway/config.d/*
 
             input type:touchpad {
                 natural_scroll enabled
@@ -14,7 +11,7 @@
             }
 
             input type:keyboard {
-                xkb_layout gb
+                xkb_layout ${osConfig.services.xserver.xkb.layout}
             }
 
             default_border pixel 2
@@ -104,6 +101,10 @@
 
             # DMS itself starts via its systemd user unit, bound to sway-session.target.
             include /etc/sway/config.d/*
+
+            # Host, laptop and theme specifics (outputs, lid, backlight, cursor).
+            # Last, so they can override anything above.
+            include ~/.config/sway/config.d/*
         '';
     };
 }

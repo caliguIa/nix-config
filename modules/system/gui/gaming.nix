@@ -1,4 +1,4 @@
-{
+{ user, ... }: {
     flake.modules.nixos.gui =
         { pkgs, ... }:
         {
@@ -17,6 +17,8 @@
                 enable = true;
                 settings.general.renice = 10;
             };
+            # gamemode's governor/GPU helpers are polkit-limited to this group.
+            users.users.${user.primary}.extraGroups = [ "gamemode" ];
             environment.systemPackages = [
                 pkgs.mangohud
                 pkgs.vulkan-tools

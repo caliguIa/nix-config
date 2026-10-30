@@ -24,6 +24,8 @@
                 after = [ "graphical-session.target" ];
                 partOf = [ "graphical-session.target" ];
                 wantedBy = [ "graphical-session.target" ];
+                # ntfy runs handlers via `sh -c`; the user unit's default PATH has no sh.
+                path = [ pkgs.bash ];
                 serviceConfig = {
                     ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe ${server}/${builtins.concatStringsSep "," topics} ${notify}/bin/ntfy-notify-exec";
                     Restart = "always";
