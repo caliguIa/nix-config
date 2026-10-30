@@ -11,10 +11,6 @@ let
         "BerkeleyMono-Bold.otf"
         "BerkeleyMono-Oblique.otf"
         "BerkeleyMono-Bold-Oblique.otf"
-        "BerkeleyMono-Regular.ttf"
-        "BerkeleyMono-Bold.ttf"
-        "BerkeleyMono-Oblique.ttf"
-        "BerkeleyMono-Bold-Oblique.ttf"
     ];
     mkSecret = name: {
         name = "font-${name}";

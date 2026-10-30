@@ -6,7 +6,6 @@ lsp.enable({
     'dockerls',
     'gopls',
     'phpantom_lsp',
-    -- 'intelephense',
     -- 'laravel_ls',
     -- 'laravel_lsp',
     'stylelint_lsp',

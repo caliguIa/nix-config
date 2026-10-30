@@ -1,6 +1,6 @@
 {
     perSystem =
-        { pkgs, ... }:
+        { pkgs, inputs', ... }:
         let
             update = pkgs.writeShellApplication {
                 name = "update";
@@ -201,6 +201,7 @@
                     drvs
                     cdiff
                     pkgs.nvd
+                    inputs'.agenix.packages.default
                 ];
             };
         };

@@ -19,7 +19,6 @@
                     docker-compose-language-service
                     dockerfile-language-server
                     vscode-langservers-extracted
-                    intelephense
                     typescript
                     # typescript-language-server
                     oxlint
