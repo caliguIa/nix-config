@@ -15,7 +15,7 @@
                 credentialsFile = config.age.secrets.cloudflared-media.path;
                 ingress = {
                     "music.calrichards.io" = "http://localhost:4533";
-                    # "audiobooks.calrichards.io" = "http://localhost:8113";
+                    "audiobooks.calrichards.io" = "http://localhost:8113";
                     # "jellyfin.calrichards.io" = "http://localhost:8096";
                     # "photos.calrichards.io" = "http://localhost:2283";
                     # "books.calrichards.io" = "http://localhost:8083";
