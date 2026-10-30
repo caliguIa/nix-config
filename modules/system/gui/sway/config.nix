@@ -39,11 +39,11 @@
             bindsym $mod+Shift+Down move down
             bindsym $mod+Shift+Up move up
             bindsym $mod+Shift+Right move right
-            # Vim keys on Alt instead; ghostty's split navigation sits on Ctrl+Alt.
-            bindsym Mod1+h focus left
-            bindsym Mod1+j focus down
-            bindsym Mod1+k focus up
-            bindsym Mod1+l focus right
+            # Vim keys on Ctrl+Alt; plain Alt+hjkl is ghostty's split navigation.
+            bindsym Ctrl+Mod1+h focus left
+            bindsym Ctrl+Mod1+j focus down
+            bindsym Ctrl+Mod1+k focus up
+            bindsym Ctrl+Mod1+l focus right
             bindsym Mod1+Shift+h move left
             bindsym Mod1+Shift+j move down
             bindsym Mod1+Shift+k move up

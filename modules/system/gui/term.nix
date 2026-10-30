@@ -37,10 +37,10 @@
                             "ctrl+space>h=new_split:down"
                             "ctrl+space>equal=equalize_splits"
                             "ctrl+space>q=close_surface"
-                            "ctrl+alt+h=goto_split:left"
-                            "ctrl+alt+j=goto_split:down"
-                            "ctrl+alt+k=goto_split:up"
-                            "ctrl+alt+l=goto_split:right"
+                            "alt+h=goto_split:left"
+                            "alt+j=goto_split:down"
+                            "alt+k=goto_split:up"
+                            "alt+l=goto_split:right"
                             "ctrl+enter=unbind"
                         ];
                         maximize = true;
