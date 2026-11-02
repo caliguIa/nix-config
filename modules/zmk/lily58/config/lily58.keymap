@@ -8,12 +8,12 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
-#define BASE 0
-#define NUM  1
-#define SYM  2
-#define META 3
+#define BASE  0
+#define LEFT  1
+#define RIGHT 2
+#define META  3
 
-/* Super+hjkl sends arrows (Super is dropped), as keyd does on the laptop. */
+/* Super+hjkl = arrows */
 #define GUI_ARROW(name, key, arrow) \
     name: name { \
         compatible = "zmk,behavior-mod-morph"; \
@@ -28,41 +28,41 @@
         GUI_ARROW(gui_j, J, DOWN)
         GUI_ARROW(gui_k, K, UP)
         GUI_ARROW(gui_l, L, RIGHT)
+};
+
+keymap {
+    compatible = "zmk,keymap";
+
+    base {
+        display-name = "base";
+        bindings = <
+&kp TILDE  &kp N1 &kp N2 &kp N3    &kp N4     &kp N5                                     &kp N6    &kp N7     &kp N8     &kp N9    &kp N0    &kp EQUAL
+&kp TAB    &kp Q  &kp W  &kp E     &kp R      &kp T                                      &kp Y     &kp U      &kp I      &kp O     &kp P     &kp BSPC
+&kp ESC    &kp A  &kp S  &kp D     &kp F      &kp G                                      &gui_h    &gui_j     &gui_k     &gui_l    &kp SEMI  &kp SQT
+&kp LSHFT  &kp Z  &kp X  &kp C     &kp V      &kp B     &kp LBKT        &kp RBKT         &kp N     &kp M      &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
+                         &kp LALT  &kp LCTRL  &kp LGUI  &lt LEFT SPACE  &lt RIGHT ENTER  &kp RGUI  &kp RCTRL  &kp RALT
+        >;
     };
 
-    keymap {
-        compatible = "zmk,keymap";
-
-        base {
-            display-name = "Base";
-            bindings = <
-&none      &none  &none  &none     &none      &none                                    &none     &none      &none      &none     &none     &none
-&kp TAB    &kp Q  &kp W  &kp E     &kp R      &kp T                                    &kp Y     &kp U      &kp I      &kp O     &kp P     &kp BSPC
-&kp ESC    &kp A  &kp S  &kp D     &kp F      &kp G                                    &gui_h    &gui_j     &gui_k     &gui_l    &kp SEMI  &kp SQT
-&kp LSHFT  &kp Z  &kp X  &kp C     &kp V      &kp B      &kp SPACE      &kp ENTER      &kp N     &kp M      &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
-                         &kp LALT  &kp LCTRL  &kp LGUI   &lt NUM SPACE  &lt SYM ENTER  &kp RGUI  &kp RCTRL  &kp RALT
+    left {
+        display-name = "left";
+        bindings = <
+&trans      &kp F1  &kp F2  &kp F3  &kp F4        &kp F5                    &kp F6     &kp F7        &kp F8    &kp F9    &kp F10   &trans
+&trans      &trans  &trans  &trans  &kp UNDER     &kp LBRC                  &trans     &kp UNDER     &trans    &trans    &trans    &trans
+&trans      &kp N1  &kp N2  &kp N3  &kp N4        &kp N5                    &kp CARET  &kp AMPS      &kp STAR  &kp LPAR  &kp RPAR  &kp KP_PLUS
+&mo META    &trans  &trans  &trans  &kp KP_MINUS  &kp LBKT  &trans  &trans  &trans     &kp KP_MINUS  &trans    &trans    &trans    &trans
+                                    &trans        &trans    &trans  &trans  &trans     &trans        &trans    &trans
             >;
         };
 
-        brackets_numbers {
-            display-name = "Numbers";
+        right {
+            display-name = "right";
             bindings = <
-&trans      &trans  &trans           &trans          &trans       &trans                    &trans     &trans       &trans           &trans           &trans  &trans
-&trans      &kp N1  &kp N2           &kp N3          &kp N4       &kp N5                    &kp N6     &kp N7       &kp N8           &kp N9           &kp N0  &trans
-&caps_word  &kp LT  &kp LBKT         &kp LBRC        &kp LPAR     &kp EQUAL                 &kp EQUAL  &kp RPAR     &kp RBRC         &kp RBKT         &kp GT  &trans
-&mo META    &trans  &kp KP_MULTIPLY  &kp KP_MINUS    &kp KP_PLUS  &trans     &trans  &trans  &trans     &kp KP_PLUS  &kp KP_MINUS     &kp KP_MULTIPLY  &trans  &trans
-                                     &trans          &trans       &trans     &trans  &trans  &trans     &trans       &trans
-            >;
-        };
-
-        symbols_funcs {
-            display-name = "Symbols";
-            bindings = <
-&trans     &trans    &trans  &trans     &trans     &trans                          &trans     &trans          &trans     &trans     &trans   &trans
-&trans     &kp F1    &kp F2  &kp F3     &kp F4     &kp F5                          &kp F6     &kp F7          &kp F8     &kp F9     &kp F10  &trans
-&kp TILDE  &kp EXCL  &kp DQT  &kp POUND  &kp DLLR   &kp PRCNT                       &kp CARET  &kp AMPS  &kp STAR  &kp UNDER  &kp AT  &kp KP_PLUS
-&trans     &trans    &trans   &kp GRAVE  &kp TILDE  &trans     &trans  &kp PSCRN    &trans     &kp PIPE  &kp BSLH  &kp MINUS  &trans  &trans
-                             &trans     &trans     &trans     &trans  &trans       &trans     &trans          &trans
+&trans     &trans    &trans  &trans     &trans     &trans                        &trans     &trans    &trans     &trans  &trans   &trans
+&trans     &trans    &trans  &trans     &trans     &trans                        &kp RBRC   &trans    &trans     &trans  &trans   &trans
+&kp TILDE  &kp EXCL  &kp DQT &kp POUND  &kp DLLR   &kp PRCNT                     &kp N6     &kp N7    &kp N8     &kp N9  &kp N0   &kp EQUAL
+&trans     &trans    &trans  &trans     &kp GRAVE  &trans     &trans  &kp PSCRN  &kp RBKT   &kp PIPE  &kp BSLH   &trans  &trans   &trans
+                             &trans     &trans     &trans     &trans  &trans     &trans     &trans    &trans
             >;
         };
 
