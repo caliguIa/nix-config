@@ -32,21 +32,21 @@
             inputs.home-manager.follows = "";
         };
         dms = {
-            url = "github:AvengeMedia/DankMaterialShell";
+            url = "github:duxlabs-dev/dux-shell";
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.flake-compat.follows = "";
         };
         dank-greeter = {
-            url = "github:AvengeMedia/dank-greeter";
+            url = "github:duxlabs-dev/dux-greeter";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        dankcalendar = {
+            url = "github:duxlabs-dev/dux-calendar";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         dms-screen-recorder = {
             url = "github:arqueon/dms-screen-recorder";
             flake = false;
-        };
-        dankcalendar = {
-            url = "github:AvengeMedia/dankcalendar";
-            inputs.nixpkgs.follows = "nixpkgs";
         };
         ableton-linux.url = "github:shibco/ableton-linux";
         zmk-nix = {
