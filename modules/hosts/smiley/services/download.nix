@@ -152,6 +152,18 @@
                 };
             };
             services.qbittorrent = mediaService {
+                # Pinned: 5.3.0 is broken for us. Drop once a fixed release lands.
+                package = pkgs.qbittorrent-nox.overrideAttrs (
+                    finalAttrs: _: {
+                        version = "5.2.4";
+                        src = pkgs.fetchFromGitHub {
+                            owner = "qbittorrent";
+                            repo = "qBittorrent";
+                            rev = "release-${finalAttrs.version}";
+                            hash = "sha256-HCfcwO8GEi4Ixfa+Ue2vgWyp407R3VDGRoLxUqJl1eM=";
+                        };
+                    }
+                );
                 webuiPort = 8080;
                 serverConfig = {
                     LegalNotice.Accepted = true;
