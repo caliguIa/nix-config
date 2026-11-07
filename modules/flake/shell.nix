@@ -64,26 +64,41 @@
                 text = ''
                     case "''${1:-}" in
                         build)
-                            echo "=> Building ZMK firmware (.#zmk-firmware)"
-                            out=$(nix build --no-link --print-out-paths .#zmk-firmware)
+                            if [ "''${2:-}" = reset ]; then
+                                pkg=zmk-settings-reset
+                                label="settings-reset firmware"
+                                flashcmd="zmk flash reset"
+                            else
+                                pkg=zmk-firmware
+                                label="ZMK firmware"
+                                flashcmd="zmk flash"
+                            fi
+                            echo "=> Building $label (.#$pkg)"
+                            out=$(nix build --no-link --print-out-paths ".#$pkg")
                             echo ""
                             echo "=> Firmware built. .uf2 files:"
                             ls -1 "$out"
                             echo ""
                             echo "Path: $out"
                             echo ""
-                            echo "Flash with: zmk flash"
+                            echo "Flash with: $flashcmd"
                             ;;
                         flash)
                             shift
+                            if [ "''${1:-}" = reset ]; then
+                                shift
+                                exec nix run .#zmk-flash-reset -- "$@"
+                            fi
                             exec nix run .#zmk-flash -- "$@"
                             ;;
                         *)
                             echo "Usage: zmk <command>"
                             echo ""
                             echo "Commands:"
-                            echo "  build          Build the Lily58 firmware"
-                            echo "  flash [part]   Flash firmware (optionally a single part: left|right)"
+                            echo "  build                Build the Lily58 firmware"
+                            echo "  build reset          Build the settings-reset firmware"
+                            echo "  flash [part]         Flash firmware (optionally a single part: left|right)"
+                            echo "  flash reset [part]   Flash settings-reset (optionally a single part: left|right)"
                             exit 1
                             ;;
                     esac
