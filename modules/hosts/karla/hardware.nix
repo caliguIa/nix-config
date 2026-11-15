@@ -65,12 +65,6 @@
                 LIBVA_DRIVER_NAME = "radeonsi";
             };
 
-            services.scx = {
-                enable = true;
-                scheduler = "scx_lavd";
-                extraArgs = [ "--autopilot" ];
-            };
-
             fileSystems."/" = {
                 device = "/dev/mapper/luks-023ee2dd-eacf-41e8-9032-f933736c9c3f";
                 fsType = "btrfs";
