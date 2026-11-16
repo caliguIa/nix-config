@@ -95,19 +95,30 @@
                 }
             ];
 
-            categoryConfig = lib.listToAttrs (
-                map (c: {
-                    name = c;
-                    value = {
+            categoryConfig =
+                lib.listToAttrs (
+                    map (c: {
                         name = c;
-                        script = "sabnzbd-postprocess";
-                        dir = c;
-                        pp = 3;
-                        priority = 0;
-                        newzbin = "";
-                    };
-                }) categories
-            );
+                        value = {
+                            name = c;
+                            script = "sabnzbd-postprocess";
+                            dir = c;
+                            pp = 3;
+                            priority = 0;
+                            newzbin = "";
+                        };
+                    }) categories
+                )
+                // lib.genAttrs [ "sonarr" "radarr" ] (c: {
+                    # Imported by Sonarr/Radarr themselves (see arr.nix), so no
+                    # post-process script: the job must stay where it landed.
+                    name = c;
+                    script = "None";
+                    dir = c;
+                    pp = 3;
+                    priority = 0;
+                    newzbin = "";
+                });
         in
         {
             age.secrets.slskd-envars.file = secret "slskd-envars";
@@ -120,6 +131,8 @@
                 "/data/downloads/complete/books"
                 "/data/downloads/complete/comics"
                 "/data/downloads/complete/music"
+                "/data/downloads/complete/sonarr"
+                "/data/downloads/complete/radarr"
                 "/data/downloads/incomplete"
             ];
             services.sabnzbd = mediaService {
@@ -152,18 +165,6 @@
                 };
             };
             services.qbittorrent = mediaService {
-                # Pinned: 5.3.0 is broken for us. Drop once a fixed release lands.
-                package = pkgs.qbittorrent-nox.overrideAttrs (
-                    finalAttrs: _: {
-                        version = "5.2.4";
-                        src = pkgs.fetchFromGitHub {
-                            owner = "qbittorrent";
-                            repo = "qBittorrent";
-                            rev = "release-${finalAttrs.version}";
-                            hash = "sha256-HCfcwO8GEi4Ixfa+Ue2vgWyp407R3VDGRoLxUqJl1eM=";
-                        };
-                    }
-                );
                 webuiPort = 8080;
                 serverConfig = {
                     LegalNotice.Accepted = true;

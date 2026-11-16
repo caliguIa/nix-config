@@ -11,7 +11,7 @@
                 enable = true;
                 package = pkgs.caddy.withPlugins {
                     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
-                    hash = "sha256-tubXIDCJnO2mvdnPlZclwDhNGaeeYLSt7lnni3+pXDo=";
+                    hash = "sha256-QSiwKqKvSxhksWBF4/MlBOpyXba5xOQ2sRwA0R7399E=";
                 };
                 environmentFile = config.age.secrets.cloudflare-dns-token.path;
                 virtualHosts."*.smiley.calrichards.io".extraConfig = ''
@@ -87,6 +87,26 @@
                     @metrics host metrics.smiley.calrichards.io
                     handle @metrics {
                         reverse_proxy localhost:19999
+                    }
+
+                    @prowlarr host prowlarr.smiley.calrichards.io
+                    handle @prowlarr {
+                        reverse_proxy localhost:9696
+                    }
+
+                    @sonarr host sonarr.smiley.calrichards.io
+                    handle @sonarr {
+                        reverse_proxy localhost:8989
+                    }
+
+                    @radarr host radarr.smiley.calrichards.io
+                    handle @radarr {
+                        reverse_proxy localhost:7878
+                    }
+
+                    @requests host requests.smiley.calrichards.io
+                    handle @requests {
+                        reverse_proxy localhost:5055
                     }
 
                     # Anything else on the wildcard is refused.

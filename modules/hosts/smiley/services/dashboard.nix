@@ -25,6 +25,7 @@
                             { Audiobookshelf.href = "https://audiobooks.smiley.calrichards.io"; }
                             { "Calibre-web".href = "https://books.smiley.calrichards.io"; }
                             { Immich.href = "https://photos.smiley.calrichards.io"; }
+                            { Seerr.href = "https://requests.smiley.calrichards.io"; }
                         ];
                     }
                     {
@@ -32,6 +33,9 @@
                             { qBittorrent.href = "https://qbittorrent.smiley.calrichards.io"; }
                             { SABnzbd.href = "https://sabnzbd.smiley.calrichards.io"; }
                             { slskd.href = "https://slsk.smiley.calrichards.io"; }
+                            { Prowlarr.href = "https://prowlarr.smiley.calrichards.io"; }
+                            { Sonarr.href = "https://sonarr.smiley.calrichards.io"; }
+                            { Radarr.href = "https://radarr.smiley.calrichards.io"; }
                         ];
                     }
                     {
