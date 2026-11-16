@@ -24,6 +24,8 @@
             services.prowlarr = {
                 enable = true;
                 openFirewall = false;
+                # No in-app login: reachable only via Caddy on the tailnet.
+                settings.auth.method = "External";
                 settings.server = {
                     bindaddress = "127.0.0.1";
                     port = 9696;
@@ -31,6 +33,8 @@
             };
 
             services.sonarr = mediaService {
+                # No in-app login: reachable only via Caddy on the tailnet.
+                settings.auth.method = "External";
                 settings.server = {
                     bindaddress = "127.0.0.1";
                     port = 8989;
@@ -38,6 +42,8 @@
             };
 
             services.radarr = mediaService {
+                # No in-app login: reachable only via Caddy on the tailnet.
+                settings.auth.method = "External";
                 settings.server = {
                     bindaddress = "127.0.0.1";
                     port = 7878;
