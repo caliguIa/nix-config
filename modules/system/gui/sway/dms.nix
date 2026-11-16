@@ -123,17 +123,20 @@
                 acMonitorTimeout = 600; # 10 min
                 acLockTimeout = 600; # 10 min
                 acSuspendTimeout = 0; # never suspend on AC
+                # Always balanced. power-saver sets the firmware platform profile to
+                # low-power, which starves the GPU/fabric clocks enough that adaptive
+                # sync on eDP-1 hitches for ~0.5s every second or two.
                 acProfileName = "1"; # balanced
 
                 batteryMonitorTimeout = 300; # 5 min
                 batteryLockTimeout = 300; # 5 min
                 batterySuspendTimeout = 900; # 15 min
                 batterySuspendBehavior = 0; # 0 = Suspend (not hibernate)
-                batteryProfileName = "0"; # power-saver
+                batteryProfileName = "1"; # balanced (see acProfileName)
                 batteryNotifyLow = true;
 
-                # Force power-saver below batteryLowThreshold (20%).
-                batteryAutoPowerSaver = true;
+                # Would force power-saver below 20%, bringing back the VRR hitching.
+                batteryAutoPowerSaver = false;
                 # Forces 60Hz on battery and re-applies on every output change,
                 # fighting sway's own mode; adaptive sync saves the power instead.
                 lowerDisplayRefreshRateOnBattery = false;
