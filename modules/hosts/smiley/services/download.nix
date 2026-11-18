@@ -158,7 +158,7 @@
                 settings = {
                     directories.downloads = "/data/downloads/complete/music";
                     directories.incomplete = "/data/downloads/incomplete";
-                    integration.scripts.beets-import = {
+                    integrations.scripts.beets-import = {
                         on = [ "DownloadDirectoryComplete" ];
                         run.executable = lib.getExe slskdImport;
                     };
