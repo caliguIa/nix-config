@@ -13,6 +13,7 @@
             laravel-artisan
             skills
             slack
+            supersonic
             tableplus
         ];
     };
