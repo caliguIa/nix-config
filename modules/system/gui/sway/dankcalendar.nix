@@ -5,7 +5,7 @@
         {
             imports = [ inputs.dankcalendar.nixosModules.dank-calendar ];
             programs.dank-calendar = {
-                enable = false;
+                enable = true;
                 systemd.enable = true;
                 systemd.target = "sway-session.target";
             };

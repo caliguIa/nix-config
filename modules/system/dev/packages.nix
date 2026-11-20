@@ -5,6 +5,7 @@
             environment.systemPackages = with pkgs; [
                 gnumake
                 gnupg
+                herdr-desktop
                 lazydocker
             ];
         };
