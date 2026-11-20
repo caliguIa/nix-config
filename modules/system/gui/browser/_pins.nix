@@ -69,5 +69,54 @@ rec {
                 }
             ];
         }
+        {
+            name = "Music";
+            uuid = "{e9f6d757-a46f-4248-b06b-500890ae5859}";
+            icon = "chrome://browser/skin/zen-icons/selectable/music.svg";
+            container = containers.personal.userContextId;
+            essentials = [ ];
+            pins = [
+                {
+                    name = "Miniflux Music";
+                    url = "https://rss.calrichards.io/category/12/feeds";
+                }
+                {
+                    name = "slskd";
+                    url = "https://slsk.smiley.calrichards.io";
+                }
+                {
+                    name = "Navidrome";
+                    url = "https://music.smiley.calrichards.io";
+                }
+                {
+                    name = "ListenBrainz";
+                    url = "https://listenbrainz.org/user/caIigula/";
+                }
+                {
+                    name = "Sounds of the Universe";
+                    url = "https://soundsoftheuniverse.com/";
+                }
+                {
+                    name = "Phonica";
+                    url = "https://www.phonicarecords.com/";
+                }
+                {
+                    name = "Boomkat";
+                    url = "https://boomkat.com/";
+                }
+                {
+                    name = "Juno Records";
+                    url = "https://www.juno.co.uk/";
+                }
+                {
+                    name = "Bandcamp";
+                    url = "https://bandcamp.com/";
+                }
+                {
+                    name = "Hard Wax";
+                    url = "https://hardwax.com/";
+                }
+            ];
+        }
     ];
 }
